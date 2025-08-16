@@ -1065,6 +1065,9 @@ const struct Tileset gTileset_General_ORAS =
     .metatiles = gMetatiles_General_ORAS,
     .metatileAttributes = gMetatileAttributes_General_ORAS,
     .callback = NULL,
+    .palettes_summer = gTilesetPalettes_General_Summer,
+    .palettes_autumn = gTilesetPalettes_General_Autumn,
+    .palettes_winter = gTilesetPalettes_General_Winter,
 };
 
 const struct Tileset gTileset_Petalburg_ORAS =
@@ -1076,6 +1079,9 @@ const struct Tileset gTileset_Petalburg_ORAS =
     .metatiles = gMetatiles_Petalburg_ORAS,
     .metatileAttributes = gMetatileAttributes_Petalburg_ORAS,
     .callback = NULL,
+    .palettes_summer = gTilesetPalettes_Petalburg_ORAS_Summer,
+    .palettes_autumn = gTilesetPalettes_Petalburg_ORAS_Autumn,
+    .palettes_winter = gTilesetPalettes_Petalburg_ORAS_Winter,
 };
 
 const struct Tileset gTileset_Slateport_ORAS =
@@ -1087,6 +1093,9 @@ const struct Tileset gTileset_Slateport_ORAS =
     .metatiles = gMetatiles_Slateport_ORAS,
     .metatileAttributes = gMetatileAttributes_Slateport_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Dewford_ORAS =
@@ -1098,6 +1107,9 @@ const struct Tileset gTileset_Dewford_ORAS =
     .metatiles = gMetatiles_Dewford_ORAS,
     .metatileAttributes = gMetatileAttributes_Dewford_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_BattleFrontierOutsideEast_ORAS =
@@ -1109,6 +1121,9 @@ const struct Tileset gTileset_BattleFrontierOutsideEast_ORAS =
     .metatiles = gMetatiles_BattleFrontierOutsideEast_ORAS,
     .metatileAttributes = gMetatileAttributes_BattleFrontierOutsideEast_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_BattleFrontierOutsideWest_ORAS =
@@ -1120,6 +1135,9 @@ const struct Tileset gTileset_BattleFrontierOutsideWest_ORAS =
     .metatiles = gMetatiles_BattleFrontierOutsideWest_ORAS,
     .metatileAttributes = gMetatileAttributes_BattleFrontierOutsideWest_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_EverGrande_ORAS =
@@ -1131,6 +1149,9 @@ const struct Tileset gTileset_EverGrande_ORAS =
     .metatiles = gMetatiles_EverGrande_ORAS,
     .metatileAttributes = gMetatileAttributes_EverGrande_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Fallarbor_ORAS =
@@ -1142,6 +1163,9 @@ const struct Tileset gTileset_Fallarbor_ORAS =
     .metatiles = gMetatiles_Fallarbor_ORAS,
     .metatileAttributes = gMetatileAttributes_Fallarbor_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Fortree_ORAS =
@@ -1153,6 +1177,9 @@ const struct Tileset gTileset_Fortree_ORAS =
     .metatiles = gMetatiles_Fortree_ORAS,
     .metatileAttributes = gMetatileAttributes_Fortree_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Lavaridge_ORAS =
@@ -1164,6 +1191,9 @@ const struct Tileset gTileset_Lavaridge_ORAS =
     .metatiles = gMetatiles_Lavaridge_ORAS,
     .metatileAttributes = gMetatileAttributes_Lavaridge_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Lilycove_ORAS =
@@ -1175,6 +1205,9 @@ const struct Tileset gTileset_Lilycove_ORAS =
     .metatiles = gMetatiles_Lilycove_ORAS,
     .metatileAttributes = gMetatileAttributes_Lilycove_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Mauville_ORAS =
@@ -1186,6 +1219,9 @@ const struct Tileset gTileset_Mauville_ORAS =
     .metatiles = gMetatiles_Mauville_ORAS,
     .metatileAttributes = gMetatileAttributes_Mauville_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Mossdeep_ORAS =
@@ -1197,6 +1233,9 @@ const struct Tileset gTileset_Mossdeep_ORAS =
     .metatiles = gMetatiles_Mossdeep_ORAS,
     .metatileAttributes = gMetatileAttributes_Mossdeep_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Rustboro_ORAS =
@@ -1208,6 +1247,9 @@ const struct Tileset gTileset_Rustboro_ORAS =
     .metatiles = gMetatiles_Rustboro_ORAS,
     .metatileAttributes = gMetatileAttributes_Rustboro_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_Sootopolis_ORAS =
@@ -1219,4 +1261,7 @@ const struct Tileset gTileset_Sootopolis_ORAS =
     .metatiles = gMetatiles_Sootopolis_ORAS,
     .metatileAttributes = gMetatileAttributes_Sootopolis_ORAS,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = NULL,
+    .palettes_winter = NULL,
 };

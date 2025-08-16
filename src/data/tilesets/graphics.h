@@ -1673,6 +1673,57 @@ const u16 gTilesetPalettes_Petalburg_ORAS[][16] =
 
 const u32 gTilesetTiles_Petalburg_ORAS[] = INCBIN_U32("data/tilesets/secondary/petalburg_oras/tiles.4bpp.lz");
 
+const u16 gTilesetPalettes_Petalburg_ORAS_Summer[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/summer/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/summer/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/summer/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/summer/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/summer/12.gbapal"),
+};
+
+const u16 gTilesetPalettes_Petalburg_ORAS_Autumn[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/autumn/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/autumn/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/autumn/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/autumn/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/autumn/12.gbapal"),
+};
+
+const u16 gTilesetPalettes_Petalburg_ORAS_Winter[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/winter/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/winter/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/winter/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/winter/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/winter/12.gbapal"),
+};
+
 const u16 gTilesetPalettes_Slateport_ORAS[][16] =
 {
     INCBIN_U16("data/tilesets/secondary/slateport_oras/palettes/00.gbapal"),
