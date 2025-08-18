@@ -14,6 +14,7 @@
 #include "region_map.h"
 #include "roamer.h"
 #include "rtc.h"
+#include "seasons.h"
 #include "sound.h"
 #include "string_util.h"
 #include "text.h"
@@ -62,10 +63,11 @@
 #define MAX_AREA_MARKERS 32 // Maximum number of circular spot highlights
 
 #define LABEL_WINDOW_BG 1
-#define NUM_LABEL_WINDOWS 2
+#define NUM_LABEL_WINDOWS 3
 
 enum PokedexAreaLabels
 {
+    DEX_AREA_LABEL_SEASON,
     DEX_AREA_LABEL_TIME_OF_DAY,
     DEX_AREA_LABEL_AREA_UNKNOWN
 };
@@ -110,6 +112,7 @@ struct
 } static EWRAM_DATA *sPokedexAreaScreen = NULL;
 
 EWRAM_DATA u8 gAreaTimeOfDay = 0;
+EWRAM_DATA u8 gAreaSeason = 0;
 
 static void FindMapsWithMon(u16);
 static void BuildAreaGlowTilemap(void);
@@ -633,6 +636,29 @@ static void DoAreaGlow(void)
     }
 }
 
+static const u8 *GetSeasonsTextWithButton(enum Seasons seasons)
+{
+   static const u8 gText_Spring[] = _("{DPAD_LEFTRIGHT} SPRING");
+   static const u8 gText_Summer[] = _("{DPAD_LEFTRIGHT} SUMMER");
+   static const u8 gText_Autumn[] = _("{DPAD_LEFTRIGHT} AUTUMN");
+   static const u8 gText_Winter[] = _("{DPAD_LEFTRIGHT} WINTER");
+
+   switch (gAreaSeason)
+   {
+    case SEASON_SPRING:
+        return gText_Spring;
+    case SEASON_SUMMER:
+        return gText_Summer;
+    case SEASON_AUTUMN:
+        return gText_Autumn;
+    case SEASON_WINTER:
+        return gText_Winter;
+    default:
+        return gText_Spring;
+   }
+
+}
+
 static const u8 *GetTimeOfDayTextWithButton(enum TimeOfDay timeOfDay)
 {
     static const u8 gText_Morning[] = _("{DPAD_UPDOWN} MORNING");
@@ -650,7 +676,7 @@ static const u8 *GetTimeOfDayTextWithButton(enum TimeOfDay timeOfDay)
         return gText_Night;
     case TIME_DAY:
     default:
-        return gText_Day;
+        return gText_Morning;
     }
 }
 
@@ -709,7 +735,7 @@ bool32 ShouldShowAreaUnknownLabel(void)
 
 #define tState data[0]
 
-void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum TimeOfDay timeOfDay, enum PokedexAreaScreenState areaState)
+void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum Seasons season, enum TimeOfDay timeOfDay, enum PokedexAreaScreenState areaState)
 {
     u8 taskId;
 

@@ -3,7 +3,8 @@ import re
 import os
 
 
-IS_ENABLED            = False
+IS_TIME_ENABLED       = False
+IS_SEASONS_ENABLED    = False
 DEXNAV_ENABLED        = False
 
 # C string vars
@@ -23,6 +24,12 @@ fieldData = []
 fieldInfoStrings = []
 fieldStrings = []
 
+#season encounter data
+SEASON_DEFAULT     = ""
+SEASON_DEFAULT_LABEL = "SEASON_DEFAULT"
+SEASON_DEFAULT_INDEX = 0
+SEASONS_COUNT = SEASON_DEFAULT_INDEX + 1
+
 # time of day encounter data
 TIME_DEFAULT       = ""
 TIME_DEFAULT_LABEL = "TIME_OF_DAY_DEFAULT"
@@ -33,6 +40,7 @@ TIMES_OF_DAY_COUNT = TIME_DEFAULT_INDEX + 1
 baseStruct          = "const struct WildPokemon"
 structLabel         = ""
 structMonType       = ""
+structSeason        = ""
 structTime          = ""
 structMap           = ""
 
@@ -63,6 +71,38 @@ printEncounterRateMacros        = mainSwitch
 printEncounterStructsInfoString = mainSwitch
 printEncounterStructs           = mainSwitch
 
+class Seasons():
+    def __init__(self):
+        self.vals = []
+        self.lvals = []
+        self.fvals = []
+        self.count = 0
+
+    def __len__(self):
+        return self.count
+    
+    # for debugging purposes
+    def __str__(self):
+        return str([self.vals, self.lvals, self.fvals, self.count])
+
+    def add(self, val):
+        self.vals.append(val)
+        self.lvals.append(val.lower())
+        self.fvals.append(GetSeasonLabelFromString(val).capitalize())
+        self.count += 1
+    
+    def indexOf(self, val):
+        tempArr = [self.vals, self.lvals, self.fvals]
+
+        for tvals in tempArr:
+            i = 0
+            for season in tvals:
+                if val in season:
+                    return i
+
+                i += 1
+        # return -1 here so it returns a consistent type and can be checked against < 0
+        return -1
 
 class TimeOfDay():
     def __init__(self):
@@ -106,13 +146,22 @@ def ImportWildEncounterFile():
 
     global MON_HEADERS
 
+    global SEASONS
+    SEASONS= SetupUserSeasonsEnum(Seasons())
+
     global TIME_OF_DAY
     TIME_OF_DAY = SetupUserTimeEnum(TimeOfDay())
 
-    global IS_ENABLED
+    global IS_SEASONS_ENABLED
+    global SEASONS_COUNT
+    if IsSeasonsEnabled():
+        IS_SEASONS_ENABLED = True
+        SEASONS_COUNT = len(SEASONS)
+
+    global IS_TIME_ENABLED
     global TIMES_OF_DAY_COUNT
-    if IsConfigEnabled():
-        IS_ENABLED = True
+    if IsTimeEnabled():
+        IS_TIME_ENABLED = True
         TIMES_OF_DAY_COUNT = len(TIME_OF_DAY)
     
     global DEXNAV_ENABLED
@@ -122,6 +171,7 @@ def ImportWildEncounterFile():
     global fieldStrings
     global structLabel
     global structMonType
+    global structSeason
     global structTime
     global structMap
     global baseStructLabel
@@ -187,6 +237,7 @@ def ImportWildEncounterFile():
             if printWarningAndInclude:
                 PrintGeneratedWarningText()
                 print('#include "rtc.h"')
+                print('#include "seasons.h"')
                 print("\n")
 
             PrintEncounterRateMacros()
@@ -204,9 +255,20 @@ def ImportWildEncounterFile():
 
             encounterCount[headerIndex] += 1
             headersArray = []
+
+            structSeason = SEASON_DEFAULT_INDEX
+            if IS_SEASONS_ENABLED:
+                seasonCounter = 0
+                while seasonCounter < SEASONS_COUNT:
+                    tempfSeason = f"_{SEASONS.fvals[seasonCounter]}"
+                    tempSeason = SEASONS.vals[seasonCounter]
+                    if tempfSeason in structLabel or tempSeason in structLabel:
+                        structSeason = seasonCounter
+
+                seasonCounter += 1
             
             structTime = TIME_DEFAULT_INDEX
-            if IS_ENABLED:
+            if IS_TIME_ENABLED:
                 timeCounter = 0
                 while timeCounter < TIMES_OF_DAY_COUNT:
                     tempfTime = f"_{TIME_OF_DAY.fvals[timeCounter]}"
@@ -232,8 +294,8 @@ def ImportWildEncounterFile():
                             fieldInfoStrings[fieldCounter] = f"{structLabel}_{structMonType}{structInfo}"
                             fieldStrings[fieldCounter] = f"{structLabel}_{structMonType}"
                         else:
-                            fieldInfoStrings[fieldCounter] = f"{structLabel}_{TIME_OF_DAY.fvals[structTime]}_{structMonType}{structInfo}"
-                            fieldStrings[fieldCounter] = f"{structLabel}_{TIME_OF_DAY.fvals[structTime]}_{structMonType}"
+                            fieldInfoStrings[fieldCounter] = f"{structLabel}_{SEASONS.fvals[structSeason]}_{TIME_OF_DAY.fvals[structTime]}_{structMonType}{structInfo}"
+                            fieldStrings[fieldCounter] = f"{structLabel}_{SEASONS.fvals[structSeason]}_{TIME_OF_DAY.fvals[structTime]}_{structMonType}"
                     else:
                         structMonType = ""
                         continue
@@ -275,7 +337,7 @@ def GetStructLabelWithoutTime(label):
     labelLength = len(label)
     timeLength = 0
 
-    if not IS_ENABLED:
+    if not IS_TIME_ENABLED:
         return label
     
     timeCounter = 0
@@ -290,7 +352,7 @@ def GetStructLabelWithoutTime(label):
 
 
 def GetStructTimeWithoutLabel(label):
-    if not IS_ENABLED:
+    if not IS_TIME_ENABLED:
         return TIME_DEFAULT_INDEX
     
     timeCounter = 0
@@ -487,6 +549,19 @@ def PrintEncounterRateMacros():
         fieldCounter += 1
     print()
 
+def GetSeasonLabelFromString(string):
+    season = "SEASON"
+    season_ = "SEASON_"
+
+    if string == "SEASONS_COUNT":
+        return string
+    
+    if season_ in string.upper():
+        return string[len(season_):len(string)]
+    elif season in string.upper():
+        return string[len(season):len(string)]
+    return string
+
 
 def GetTimeLabelFromString(string):
     time = "TIME"
@@ -524,15 +599,21 @@ def PrintGeneratedWarningText():
     print("//")
     print("\n")
 
-
-def IsConfigEnabled():
-    CONFIG_ENABLED_PAT = re.compile(r"#define OW_TIME_OF_DAY_ENCOUNTERS\s+(?P<cfg_val>[^ ]*)")
+def IsTimeEnabled():
+    TIME_ENABLED_PAT = re.compile(r"#define OW_TIME_OF_DAY_ENCOUNTERS\s+(?P<cfg_val>[^ ]*)")
 
     with open("./include/config/overworld.h", "r") as overworld_config_file:
         config_overworld = overworld_config_file.read()
-        config_setting = CONFIG_ENABLED_PAT.search(config_overworld)
+        config_setting = TIME_ENABLED_PAT.search(config_overworld)
         return config_setting is not None and config_setting.group("cfg_val") in ("TRUE", "1")
+    
+def IsSeasonsEnabled():
+    SEASONS_ENABLED_PAT = re.compile(r"#define OW_SEASONAL_ENCOUNTERS\s+(?P<cfg_val>[^ ]*)")
 
+    with open("./include/config/overworld.h", "r") as overworld_config_file:
+        config_overworld = overworld_config_file.read()
+        config_setting = SEASONS_ENABLED_PAT.search(config_overworld)
+        return config_setting is not None and config_setting.group("cfg_val") in ("TRUE", "1")
 
 def IsDexnavEnabled():
     CONFIG_ENABLED_PAT = re.compile(r"#define DEXNAV_ENABLED\s+(?P<cfg_val>[^ ]*)")
@@ -541,7 +622,14 @@ def IsDexnavEnabled():
         config_overworld = overworld_config_file.read()
         config_setting = CONFIG_ENABLED_PAT.search(config_overworld)
         return config_setting is not None and config_setting.group("cfg_val") in ("TRUE", "1")
+    
+def GetSeasonsEnum():
+    DEFAULT_SEASON_PAT = re.compile(r"enum\s+Seasons\s*\{(?P<seasons_val>[\s*\w+,\=\d*]+)\s*\}\s*\;")
 
+    with open("./include/seasons.h", "r") as seasons_include_file:
+        include_seasons = seasons_include_file.read()
+        include_enum = DEFAULT_SEASON_PAT.search(include_seasons)
+        return include_enum.group("seasons_val")
 
 def GetTimeEnum():
     DEFAULT_TIME_PAT = re.compile(r"enum\s+TimeOfDay\s*\{(?P<rtc_val>[\s*\w+,\=\d*]+)\s*\}\s*\;")
@@ -551,10 +639,36 @@ def GetTimeEnum():
         include_enum = DEFAULT_TIME_PAT.search(include_rtc)
         return include_enum.group("rtc_val")
 
-
 def CheckEmpty(string):
     return string == "" or string.isspace() or string == "\n"
 
+def SetupUserSeasonsEnum(season):
+    enum_string = GetSeasonsEnum()
+    enum_string = enum_string.split(",")
+
+    # check for extra element from trailing comma
+    if CheckEmpty(enum_string[-1]):
+        enum_string.pop(-1)
+
+    # we don't need the `TIMES_OF_DAY_COUNT` value, so - 1 from the value of len(enum_string)
+    strCount = 0
+    while strCount < len(enum_string) - 1:
+        tempStr = enum_string[strCount].strip("\n ")
+
+        """
+        we need to ignore any value assignments, as the times will need to correspond
+        with the elements in the array.
+        """
+        if "=" in tempStr:
+            tempStr = tempStr[0:tempStr.index("=")]
+            tempStr = tempStr.strip(" ")
+
+        #double check we didn't catch any empty values
+        if not CheckEmpty(enum_string[strCount]):
+            season.add(tempStr)
+
+        strCount += 1
+    return season
 
 def SetupUserTimeEnum(timeOfDay):
     enum_string = GetTimeEnum()

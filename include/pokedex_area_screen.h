@@ -2,8 +2,10 @@
 #define GUARD_POKEDEX_AREA_SCREEN_H
 
 #include "rtc.h"
+#include "seasons.h"
 
 extern u8 gAreaTimeOfDay;
+extern u8 gAreaSeason;
 
 enum PokedexAreaScreenState
 {

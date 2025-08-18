@@ -2,6 +2,7 @@
 #define GUARD_WILD_ENCOUNTER_H
 
 #include "rtc.h"
+#include "seasons.h"
 #include "constants/wild_encounter.h"
 
 #define HEADER_NONE 0xFFFF
@@ -40,9 +41,8 @@ struct WildPokemonHeader
 {
     u8 mapGroup;
     u8 mapNum;
-    const struct WildEncounterTypes encounterTypes[TIMES_OF_DAY_COUNT];
+    const struct WildEncounterTypes encounterTypes[SEASONS_COUNT][TIMES_OF_DAY_COUNT];
 };
-
 
 extern const struct WildPokemonHeader gWildMonHeaders[];
 extern bool8 gIsFishingEncounter;
@@ -68,5 +68,7 @@ u8 ChooseWildMonIndex_WaterRock(void);
 u8 ChooseHiddenMonIndex(void);
 bool32 MapHasNoEncounterData(void);
 enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area);
+enum Seasons GetSeasonForEncounters(u32 headerId, enum WildPokemonArea area);
+struct SeasonTime GetSeasonTimeForEncounters(u32 headerId, enum WildPokemonArea area);
 
 #endif // GUARD_WILD_ENCOUNTER_H
