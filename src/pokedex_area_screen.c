@@ -237,6 +237,22 @@ static const struct SpriteTemplate sAreaUnknownSpriteTemplate =
 };
 
 static const u8 sFontColor_AreaInfo[3] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, 5};
+
+static const struct WindowTemplate sSeasonsWindowLabelTemplates[] =
+{
+    [DEX_AREA_LABEL_SEASON] =
+    {
+        .bg = LABEL_WINDOW_BG,
+        .tilemapLeft = 22,
+        .tilemapTop = 8,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 0,
+        .baseBlock = 0x16c
+    }
+
+};
+
 static const struct WindowTemplate sTimeOfDayWindowLabelTemplates[] =
 {
     [DEX_AREA_LABEL_TIME_OF_DAY] =
@@ -344,7 +360,7 @@ static void FindMapsWithMon(u16 species)
     // Add regular species to the area map
     for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
     {
-        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaTimeOfDay], species))
+        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaSeason][gAreaTimeOfDay], species))
         {
             switch (gWildMonHeaders[i].mapGroup)
             {
@@ -680,6 +696,19 @@ static const u8 *GetTimeOfDayTextWithButton(enum TimeOfDay timeOfDay)
     }
 }
 
+static void AddSeasonsLabels(void)
+{
+    u32 i;
+
+    RemoveAllWindowsOnBg(LABEL_WINDOW_BG);
+
+    for (i = 0; i < NUM_LABEL_WINDOWS; i++)
+    {
+        sPokedexAreaScreen->areaScreenLabelIds[i] = AddWindow(&sSeasonsWindowLabelTemplates[i]);
+        FillWindowPixelBuffer(sPokedexAreaScreen->areaScreenLabelIds[i], PIXEL_FILL(0));
+    }
+}
+
 static void AddTimeOfDayLabels(void)
 {
     u32 i;
@@ -743,6 +772,7 @@ void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum Seasons s
     sPokedexAreaScreen->species = species;
     sPokedexAreaScreen->screenSwitchState = screenSwitchState;
     sPokedexAreaScreen->areaState = areaState;
+    gAreaSeason = season;
     gAreaTimeOfDay = timeOfDay;
     screenSwitchState[0] = 0;
 
@@ -791,11 +821,11 @@ static void Task_ShowPokedexAreaScreen(u8 taskId)
         CreateAreaMarkerSprites();
         break;
     case 7:
-        if(!OW_TIME_OF_DAY_ENCOUNTERS)
+        if(!OW_TIME_OF_DAY_ENCOUNTERS && !OW_SEASONAL_ENCOUNTERS)
             LoadAreaUnknownGraphics();
         break;
     case 8:
-        if(!OW_TIME_OF_DAY_ENCOUNTERS)
+        if(!OW_TIME_OF_DAY_ENCOUNTERS && !OW_SEASONAL_ENCOUNTERS)
             CreateAreaUnknownSprites();
         break;
     case 9:
@@ -804,6 +834,12 @@ static void Task_ShowPokedexAreaScreen(u8 taskId)
     case 10:
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_ALL);
         StartAreaGlow();
+        if (OW_SEASONAL_ENCOUNTERS)
+        {
+            AddSeasonsLabels();
+            ShowEncounterInfoLabel();
+
+        }
         if (OW_TIME_OF_DAY_ENCOUNTERS)
         {
             AddTimeOfDayLabels();

@@ -395,19 +395,19 @@ enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area
         {
         default:
         case WILD_AREA_LAND:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].landMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->landMonsInfo;
             break;
         case WILD_AREA_WATER:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].waterMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->waterMonsInfo;
             break;
         case WILD_AREA_ROCKS:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].rockSmashMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->rockSmashMonsInfo;
             break;
         case WILD_AREA_FISHING:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].fishingMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->fishingMonsInfo;
             break;
         case WILD_AREA_HIDDEN:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay].hiddenMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->hiddenMonsInfo;
             break;
         }
     }
@@ -436,19 +436,19 @@ enum Seasons GetSeasonForEncounters(u32 headerId, enum WildPokemonArea area)
         {
         default:
         case WILD_AREA_LAND:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season].landMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->landMonsInfo;
             break;
         case WILD_AREA_WATER:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season].waterMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->waterMonsInfo;
             break;
         case WILD_AREA_ROCKS:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season].rockSmashMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->rockSmashMonsInfo;
             break;
         case WILD_AREA_FISHING:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season].fishingMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->fishingMonsInfo;
             break;
         case WILD_AREA_HIDDEN:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season].hiddenMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->hiddenMonsInfo;
             break;
         }
     }

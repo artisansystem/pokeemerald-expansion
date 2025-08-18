@@ -2,7 +2,6 @@ import json
 import re
 import os
 
-
 IS_TIME_ENABLED       = False
 IS_SEASONS_ENABLED    = False
 DEXNAV_ENABLED        = False
@@ -265,7 +264,7 @@ def ImportWildEncounterFile():
                     if tempfSeason in structLabel or tempSeason in structLabel:
                         structSeason = seasonCounter
 
-                seasonCounter += 1
+                    seasonCounter += 1
             
             structTime = TIME_DEFAULT_INDEX
             if IS_TIME_ENABLED:
@@ -290,7 +289,7 @@ def ImportWildEncounterFile():
                 for areaTable in encounter:
                     if fieldData[fieldCounter]["name"] in areaTable:
                         structMonType = fieldData[fieldCounter]["pascalName"]
-                        if f"_{TIME_OF_DAY.fvals[structTime]}" in structLabel:
+                        if f"_{SEASONS.fvals[structTime]}" and f"_{TIME_OF_DAY.fvals[structTime]}" in structLabel:
                             fieldInfoStrings[fieldCounter] = f"{structLabel}_{structMonType}{structInfo}"
                             fieldStrings[fieldCounter] = f"{structLabel}_{structMonType}"
                         else:
@@ -332,6 +331,35 @@ def PrintStructContent(contentList):
         print(f"{tabStr}{{ {monList[0]}, {monList[1]}, {monList[2]} }},")
     return
 
+def GetStructLabelWithoutSeason(label):
+    labelLength = len(label)
+    seasonLength = 0
+
+    if not IS_SEASONS_ENABLED:
+        return label
+    
+    seasonCounter = 0
+    while seasonCounter < SEASONS_COUNT:
+        tempSeason = SEASONS.fvals[seasonCounter]
+        if tempSeason in label:
+            seasonLength = len(tempSeason)
+            return label[:(labelLength - (seasonLength + 1))]
+
+        seasonCounter += 1
+    return label
+
+def GetStructSeasonWithoutLabel(label):
+    if not IS_SEASONS_ENABLED:
+        return SEASON_DEFAULT_INDEX
+    
+    seasonCounter = 0
+    while seasonCounter < SEASONS_COUNT:
+        tempSeason = f"_{SEASONS.fvals[seasonCounter]}"
+        if tempSeason in label:
+            return seasonCounter
+
+        seasonCounter += 1
+    return SEASON_DEFAULT_INDEX
 
 def GetStructLabelWithoutTime(label):
     labelLength = len(label)
@@ -350,7 +378,6 @@ def GetStructLabelWithoutTime(label):
         timeCounter += 1
     return label
 
-
 def GetStructTimeWithoutLabel(label):
     if not IS_TIME_ENABLED:
         return TIME_DEFAULT_INDEX
@@ -364,34 +391,39 @@ def GetStructTimeWithoutLabel(label):
         timeCounter += 1
     return TIME_DEFAULT_INDEX
 
-
 def AssembleMonHeaderContent():
     SetupMonInfoVars()
 
     tempHeaderLabel = GetWildMonHeadersLabel()
+    tempHeaderSeasonIndex = GetStructSeasonWithoutLabel(structLabel)
     tempHeaderTimeIndex = GetStructTimeWithoutLabel(structLabel)
-    structLabelNoTime = GetStructLabelWithoutTime(structLabel)
+    structLabelNoSeason = GetStructLabelWithoutSeason(structLabel)
     
     if tempHeaderLabel not in headerStructTable:
         headerStructTable[tempHeaderLabel] = {}
         headerStructTable[tempHeaderLabel]["groupNum"] = headerIndex
 
-    if structLabelNoTime not in headerStructTable[tempHeaderLabel]:
-        headerStructTable[tempHeaderLabel][structLabelNoTime] = {}
-        headerStructTable[tempHeaderLabel][structLabelNoTime]["headerType"] = GetWildMonHeadersLabel()
-        headerStructTable[tempHeaderLabel][structLabelNoTime]["mapGroup"] = structMap
-        headerStructTable[tempHeaderLabel][structLabelNoTime]["mapNum"] = structMap
-        headerStructTable[tempHeaderLabel][structLabelNoTime]["encounterTotalCount"] = encounterTotalCount[headerIndex]
-        headerStructTable[tempHeaderLabel][structLabelNoTime]["encounter_types"] = []
+    if structLabelNoSeason not in headerStructTable[tempHeaderLabel]:
+        headerStructTable[tempHeaderLabel][structLabelNoSeason] = {}
+        headerStructTable[tempHeaderLabel][structLabelNoSeason]["headerType"] = GetWildMonHeadersLabel()
+        headerStructTable[tempHeaderLabel][structLabelNoSeason]["mapGroup"] = structMap
+        headerStructTable[tempHeaderLabel][structLabelNoSeason]["mapNum"] = structMap
+        headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounterTotalCount"] = encounterTotalCount[headerIndex]
+        headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"] = []
 
-        timeCounter = 0
-        while timeCounter < TIMES_OF_DAY_COUNT:
-            headerStructTable[tempHeaderLabel][structLabelNoTime]["encounter_types"].append([])
-            timeCounter += 1
+        seasonCounter = 0
+        while seasonCounter < SEASONS_COUNT:
+            headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"].append([])
+
+            timeCounter = 0
+            while timeCounter < TIMES_OF_DAY_COUNT:
+                headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"][seasonCounter].append([])
+                timeCounter += 1
+            seasonCounter += 1
 
     fieldCounter = 0
     while fieldCounter < len(fieldData):
-        headerStructTable[tempHeaderLabel][structLabelNoTime]["encounter_types"][tempHeaderTimeIndex].append(fieldInfoStrings[fieldCounter])
+        headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"][tempHeaderSeasonIndex][tempHeaderTimeIndex].append(fieldInfoStrings[fieldCounter])
         fieldCounter += 1
 
 
@@ -431,26 +463,34 @@ def PrintWildMonHeadersContent():
                         PrintEncounterHeaders(f"{TabStr(2)}.encounterTypes =")
                         PrintEncounterHeaders(TabStr(2) + "{")
 
-                        timeCounter = 0
-                        while timeCounter < TIMES_OF_DAY_COUNT:
-                            monInfo = headerStructTable[group][label][stat][timeCounter]
-                            PrintEncounterHeaders(f"{TabStr(3)}[{TIME_OF_DAY.vals[timeCounter]}] = ")
+                        seasonCounter = 0
 
-                            infoIndex = 0
-                            while infoIndex < len(fieldData):
-                                if infoIndex == 0:
-                                    PrintEncounterHeaders(TabStr(3) + "{")
+                        while seasonCounter < SEASONS_COUNT:
 
-                                if len(monInfo) == 0:
-                                    PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = NULL,")
-                                else:
-                                    PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = {monInfo[infoIndex]},")
+                            timeCounter = 0
+                            
+                            while timeCounter < TIMES_OF_DAY_COUNT:
+                            
+                                monInfo = headerStructTable[group][label][stat][seasonCounter][timeCounter]
+                                PrintEncounterHeaders(f"{TabStr(3)}[{SEASONS.vals[seasonCounter]}][{TIME_OF_DAY.vals[timeCounter]}] = ")
 
-                                if infoIndex == len(fieldData) - 1:
-                                    PrintEncounterHeaders(TabStr(3) + "},")
+                                infoIndex = 0
+                                while infoIndex < len(fieldData):
+                                    if infoIndex == 0:
+                                        PrintEncounterHeaders(TabStr(3) + "{")
 
-                                infoIndex += 1
-                            timeCounter += 1
+                                    if len(monInfo) == 0:
+                                        PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = NULL,")
+                                    else:
+                                        PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = {monInfo[infoIndex]},")
+
+                                    if infoIndex == len(fieldData) - 1:
+                                        PrintEncounterHeaders(TabStr(3) + "},")
+
+                                    infoIndex += 1
+                                timeCounter += 1
+                            seasonCounter += 1
+                        
                         PrintEncounterHeaders(TabStr(2) + "},")
                 PrintEncounterHeaders(tabStr + "},")
 
@@ -459,26 +499,31 @@ def PrintWildMonHeadersContent():
                     PrintEncounterHeaders(f"{TabStr(2)}.mapGroup = {GetMapGroupEnum(MAP_UNDEFINED)},")
                     PrintEncounterHeaders(f"{TabStr(2)}.mapNum = {GetMapGroupEnum(MAP_UNDEFINED, labelCount + 1)},")
 
-                    nullCount = 0
-                    while nullCount < TIMES_OF_DAY_COUNT:
-                        if nullCount == 0:
-                            PrintEncounterHeaders(f"{TabStr(2)}.encounterTypes =")
-                            PrintEncounterHeaders(TabStr(2)+ "{")
+                    nullCountSeason = 0
+                    while nullCountSeason < SEASONS_COUNT:
 
-                        PrintEncounterHeaders(f"{TabStr(3)}[{TIME_OF_DAY.vals[nullCount]}] = ")
+                        nullCountTime   = 0
+                        while nullCountTime < TIMES_OF_DAY_COUNT:
+                            if nullCountSeason == 0 and nullCountTime == 0:
+                                PrintEncounterHeaders(f"{TabStr(2)}.encounterTypes =")
+                                PrintEncounterHeaders(TabStr(2)+ "{")
 
-                        nullIndex = 0
-                        while nullIndex <= len(fieldData) - 1:
-                            if nullIndex == 0:
-                                PrintEncounterHeaders(TabStr(3) + "{")
+                            PrintEncounterHeaders(f"{TabStr(3)}[{SEASONS.vals[nullCountSeason]}][{TIME_OF_DAY.vals[nullCountTime]}] = ")
 
-                            PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(nullIndex)} = NULL,")
+                            nullIndex = 0
+                            while nullIndex <= len(fieldData) - 1:
+                                if nullIndex == 0:
+                                    PrintEncounterHeaders(TabStr(3) + "{")
 
-                            if nullIndex == len(fieldData) - 1:
-                                PrintEncounterHeaders(TabStr(3) + "},")
+                                PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(nullIndex)} = NULL,")
 
-                            nullIndex += 1
-                        nullCount += 1
+                                if nullIndex == len(fieldData) - 1:
+                                    PrintEncounterHeaders(TabStr(3) + "},")
+
+                                nullIndex += 1
+                            nullCountTime += 1
+                        nullCountSeason += 1
+
                     PrintEncounterHeaders(TabStr(2) + "},")
                     PrintEncounterHeaders(tabStr + "},")
                 labelCount += 1
