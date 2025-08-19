@@ -4,8 +4,8 @@
 #include "rtc.h"
 #include "seasons.h"
 
-extern u8 gAreaTimeOfDay;
 extern u8 gAreaSeason;
+extern u8 gAreaTimeOfDay;
 
 enum PokedexAreaScreenState
 {

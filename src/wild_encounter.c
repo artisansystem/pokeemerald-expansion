@@ -381,6 +381,7 @@ enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area
 {
     const struct WildPokemonInfo *wildMonInfo;
     enum TimeOfDay timeOfDay = GetTimeOfDay();
+    enum Seasons season = CurrentSeasonGet();
 
     if (!OW_TIME_OF_DAY_ENCOUNTERS)
         return TIME_OF_DAY_DEFAULT;
@@ -395,19 +396,19 @@ enum TimeOfDay GetTimeOfDayForEncounters(u32 headerId, enum WildPokemonArea area
         {
         default:
         case WILD_AREA_LAND:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->landMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].landMonsInfo;
             break;
         case WILD_AREA_WATER:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->waterMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].waterMonsInfo;
             break;
         case WILD_AREA_ROCKS:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->rockSmashMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].rockSmashMonsInfo;
             break;
         case WILD_AREA_FISHING:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->fishingMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].fishingMonsInfo;
             break;
         case WILD_AREA_HIDDEN:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[timeOfDay]->hiddenMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].hiddenMonsInfo;
             break;
         }
     }
@@ -422,6 +423,7 @@ enum Seasons GetSeasonForEncounters(u32 headerId, enum WildPokemonArea area)
 {
     const struct WildPokemonInfo *wildMonInfo;
     enum Seasons season = CurrentSeasonGet();
+    enum TimeOfDay timeOfDay = GetTimeOfDay();
 
     if (!OW_SEASONAL_ENCOUNTERS)
         return SEASON_DEFAULT;
@@ -436,19 +438,19 @@ enum Seasons GetSeasonForEncounters(u32 headerId, enum WildPokemonArea area)
         {
         default:
         case WILD_AREA_LAND:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->landMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].landMonsInfo;
             break;
         case WILD_AREA_WATER:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->waterMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].waterMonsInfo;
             break;
         case WILD_AREA_ROCKS:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->rockSmashMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].rockSmashMonsInfo;
             break;
         case WILD_AREA_FISHING:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->fishingMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].fishingMonsInfo;
             break;
         case WILD_AREA_HIDDEN:
-            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season]->hiddenMonsInfo;
+            wildMonInfo = gWildMonHeaders[headerId].encounterTypes[season][timeOfDay].hiddenMonsInfo;
             break;
         }
     }
@@ -461,8 +463,6 @@ enum Seasons GetSeasonForEncounters(u32 headerId, enum WildPokemonArea area)
 
 struct SeasonTime GetSeasonTimeForEncounters(u32 headerId, enum WildPokemonArea area)
 {
-    const struct WildPokemonInfo *wildMonInfo;
-
     struct SeasonTime seasonTime;
     seasonTime.season = GetSeasonForEncounters(headerId, area);
     seasonTime.timeOfDay = GetTimeOfDayForEncounters(headerId, area);

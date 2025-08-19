@@ -397,33 +397,35 @@ def AssembleMonHeaderContent():
     tempHeaderLabel = GetWildMonHeadersLabel()
     tempHeaderSeasonIndex = GetStructSeasonWithoutLabel(structLabel)
     tempHeaderTimeIndex = GetStructTimeWithoutLabel(structLabel)
-    structLabelNoSeason = GetStructLabelWithoutSeason(structLabel)
+    # structLabelNoTime = GetStructLabelWithoutTime(structLabel)
+    # structLabelNoSeason = GetStructLabelWithoutSeason(structLabel)
+    mapKey = structMap
     
     if tempHeaderLabel not in headerStructTable:
         headerStructTable[tempHeaderLabel] = {}
         headerStructTable[tempHeaderLabel]["groupNum"] = headerIndex
 
-    if structLabelNoSeason not in headerStructTable[tempHeaderLabel]:
-        headerStructTable[tempHeaderLabel][structLabelNoSeason] = {}
-        headerStructTable[tempHeaderLabel][structLabelNoSeason]["headerType"] = GetWildMonHeadersLabel()
-        headerStructTable[tempHeaderLabel][structLabelNoSeason]["mapGroup"] = structMap
-        headerStructTable[tempHeaderLabel][structLabelNoSeason]["mapNum"] = structMap
-        headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounterTotalCount"] = encounterTotalCount[headerIndex]
-        headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"] = []
+    if mapKey not in headerStructTable[tempHeaderLabel]:
+        headerStructTable[tempHeaderLabel][mapKey] = {}
+        headerStructTable[tempHeaderLabel][mapKey]["headerType"] = GetWildMonHeadersLabel()
+        headerStructTable[tempHeaderLabel][mapKey]["mapGroup"] = structMap
+        headerStructTable[tempHeaderLabel][mapKey]["mapNum"] = structMap
+        headerStructTable[tempHeaderLabel][mapKey]["encounterTotalCount"] = encounterTotalCount[headerIndex]
+        headerStructTable[tempHeaderLabel][mapKey]["encounter_types"] = []
 
         seasonCounter = 0
         while seasonCounter < SEASONS_COUNT:
-            headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"].append([])
+            headerStructTable[tempHeaderLabel][mapKey]["encounter_types"].append([])
 
             timeCounter = 0
             while timeCounter < TIMES_OF_DAY_COUNT:
-                headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"][seasonCounter].append([])
+                headerStructTable[tempHeaderLabel][mapKey]["encounter_types"][seasonCounter].append([])
                 timeCounter += 1
             seasonCounter += 1
 
     fieldCounter = 0
     while fieldCounter < len(fieldData):
-        headerStructTable[tempHeaderLabel][structLabelNoSeason]["encounter_types"][tempHeaderSeasonIndex][tempHeaderTimeIndex].append(fieldInfoStrings[fieldCounter])
+        headerStructTable[tempHeaderLabel][mapKey]["encounter_types"][tempHeaderSeasonIndex][tempHeaderTimeIndex].append(fieldInfoStrings[fieldCounter])
         fieldCounter += 1
 
 
