@@ -33,6 +33,7 @@
 #include "rtc.h"
 #include "scanline_effect.h"
 #include "shop.h"
+#include "seasons.h"
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
@@ -3712,6 +3713,7 @@ static u8 LoadInfoScreen(struct PokedexListItem *item, u8 monSpriteId)
     u8 taskId;
 
     sPokedexListItem = item;
+    gAreaSeason = CurrentSeasonGetForDex();
     gAreaTimeOfDay = GetTimeOfDayForDex();
     taskId = CreateTask(Task_LoadInfoScreen, 0);
     gTasks[taskId].tScrolling = FALSE;
@@ -3891,7 +3893,7 @@ static void Task_HandleInfoScreenInput(u8 taskId)
         return;
     }
 
-    if ((JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+    if (JOY_NEW(R_BUTTON))
     {
         sPokedexView->selectedScreen = AREA_SCREEN;
         BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
@@ -3971,7 +3973,7 @@ static void Task_LoadAreaScreen(u8 taskId)
         gMain.state++;
         break;
     case 2:
-        DisplayPokedexAreaScreen(NationalPokedexNumToSpeciesHGSS(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState, gAreaTimeOfDay, DEX_SHOW_AREA_SCREEN);
+        DisplayPokedexAreaScreen(NationalPokedexNumToSpeciesHGSS(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState, gAreaSeason, gAreaTimeOfDay, DEX_SHOW_AREA_SCREEN);
         SetVBlankCallback(gPokedexVBlankCB);
         sPokedexView->screenSwitchState = 0;
         gMain.state = 0;
@@ -3995,7 +3997,7 @@ static void Task_ReloadAreaScreen(u8 taskId)
         gMain.state++;
         break;
     case 2:
-        DisplayPokedexAreaScreen(NationalPokedexNumToSpeciesHGSS(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState, gAreaTimeOfDay, DEX_UPDATE_AREA_SCREEN);
+        DisplayPokedexAreaScreen(NationalPokedexNumToSpeciesHGSS(sPokedexListItem->dexNum), &sPokedexView->screenSwitchState, gAreaSeason, gAreaTimeOfDay, DEX_UPDATE_AREA_SCREEN);
         gMain.state = 0;
         gTasks[taskId].func = Task_WaitForAreaScreenInput;
         break;
@@ -5012,7 +5014,7 @@ static void Task_HandleStatsScreenInput(u8 taskId)
     }
 
     //Switch screens
-    if ((JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+    if (JOY_NEW(L_BUTTON))
     {
         sPokedexView->selectedScreen = INFO_SCREEN;
         BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
@@ -5020,7 +5022,7 @@ static void Task_HandleStatsScreenInput(u8 taskId)
         gTasks[taskId].func = Task_SwitchScreensFromStatsScreen;
         PlaySE(SE_PIN);
     }
-    if ((JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+    if (JOY_NEW(R_BUTTON))
     {
         if (!sPokedexListItem->owned)
             PlaySE(SE_FAILURE);
@@ -6209,7 +6211,7 @@ static void Task_HandleEvolutionScreenInput(u8 taskId)
     }
 
     //Switch screens
-    if ((JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+    if (JOY_NEW(L_BUTTON))
     {
         sPokedexView->selectedScreen = STATS_SCREEN;
         BeginNormalPaletteFade(0xFFFFFFEB, 0, 0, 0x10, RGB_BLACK);
@@ -6217,7 +6219,7 @@ static void Task_HandleEvolutionScreenInput(u8 taskId)
         gTasks[taskId].func = Task_SwitchScreensFromEvolutionScreen;
         PlaySE(SE_PIN);
     }
-    if ((JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR)))
+    if (JOY_NEW(R_BUTTON))
     {
         if (!sPokedexListItem->owned)
             PlaySE(SE_FAILURE);
@@ -7290,8 +7292,7 @@ static void Task_HandleCryScreenInput(u8 taskId)
             PlaySE(SE_PC_OFF);
             return;
         }
-        if (JOY_NEW(DPAD_LEFT)
-         || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+        if (JOY_NEW(L_BUTTON))
         {
             BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
             m4aMPlayContinue(&gMPlayInfo_BGM);
@@ -7300,8 +7301,7 @@ static void Task_HandleCryScreenInput(u8 taskId)
             PlaySE(SE_DEX_PAGE);
             return;
         }
-        if (JOY_NEW(DPAD_RIGHT)
-         || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+        if (JOY_NEW(R_BUTTON))
         {
             if (!sPokedexListItem->owned)
             {
@@ -7464,8 +7464,7 @@ static void Task_HandleSizeScreenInput(u8 taskId)
         gTasks[taskId].func = Task_SwitchScreensFromSizeScreen;
         PlaySE(SE_PC_OFF);
     }
-    else if (JOY_NEW(DPAD_LEFT)
-     || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+    else if (JOY_NEW(L_BUTTON))
     {
         BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 0, 0x10, RGB_BLACK);
         sPokedexView->screenSwitchState = 2;

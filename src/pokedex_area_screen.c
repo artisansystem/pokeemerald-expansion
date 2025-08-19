@@ -14,6 +14,7 @@
 #include "region_map.h"
 #include "roamer.h"
 #include "rtc.h"
+#include "seasons.h"
 #include "sound.h"
 #include "string_util.h"
 #include "text.h"
@@ -62,10 +63,11 @@
 #define MAX_AREA_MARKERS 32 // Maximum number of circular spot highlights
 
 #define LABEL_WINDOW_BG 1
-#define NUM_LABEL_WINDOWS 2
+#define NUM_LABEL_WINDOWS 3
 
 enum PokedexAreaLabels
 {
+    DEX_AREA_LABEL_SEASON,
     DEX_AREA_LABEL_TIME_OF_DAY,
     DEX_AREA_LABEL_AREA_UNKNOWN
 };
@@ -109,6 +111,7 @@ struct
     /*0xFC8*/ u8 areaState;
 } static EWRAM_DATA *sPokedexAreaScreen = NULL;
 
+EWRAM_DATA u8 gAreaSeason = 0;
 EWRAM_DATA u8 gAreaTimeOfDay = 0;
 
 static void FindMapsWithMon(u16);
@@ -127,7 +130,7 @@ static void CreateAreaUnknownSprites(void);
 static void Task_HandlePokedexAreaScreenInput(u8);
 static void ResetPokedexAreaMapBg(void);
 static void DestroyAreaScreenSprites(void);
-static void AddTimeOfDayLabels(void);
+static void AddSeasonTimeLabels(void);
 static void ShowEncounterInfoLabel(void);
 static void ShowAreaUnknownLabel(void);
 static void PrintAreaLabelText(const u8 *text, enum PokedexAreaLabels labelId, int textXPos);
@@ -234,8 +237,20 @@ static const struct SpriteTemplate sAreaUnknownSpriteTemplate =
 };
 
 static const u8 sFontColor_AreaInfo[3] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, 5};
-static const struct WindowTemplate sTimeOfDayWindowLabelTemplates[] =
+
+static const struct WindowTemplate sSeasonTimeWindowLabelTemplates[] =
 {
+    [DEX_AREA_LABEL_SEASON] =
+    {
+        .bg = LABEL_WINDOW_BG,
+        .tilemapLeft = 22,
+        .tilemapTop = 16,
+        .width = 8,
+        .height = 2,
+        .paletteNum = 0,
+        .baseBlock = 0x15C
+    },
+    
     [DEX_AREA_LABEL_TIME_OF_DAY] =
     {
         .bg = LABEL_WINDOW_BG,
@@ -341,7 +356,7 @@ static void FindMapsWithMon(u16 species)
     // Add regular species to the area map
     for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
     {
-        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaTimeOfDay], species))
+        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaSeason][gAreaTimeOfDay], species))
         {
             switch (gWildMonHeaders[i].mapGroup)
             {
@@ -633,6 +648,29 @@ static void DoAreaGlow(void)
     }
 }
 
+static const u8 *GetSeasonsTextWithButton(enum Seasons season)
+{
+   static const u8 gText_Spring[] = _("{DPAD_LEFTRIGHT} SPRING");
+   static const u8 gText_Summer[] = _("{DPAD_LEFTRIGHT} SUMMER");
+   static const u8 gText_Autumn[] = _("{DPAD_LEFTRIGHT} AUTUMN");
+   static const u8 gText_Winter[] = _("{DPAD_LEFTRIGHT} WINTER");
+
+   switch (gAreaSeason)
+   {
+    case SEASON_SPRING:
+        return gText_Spring;
+    case SEASON_SUMMER:
+        return gText_Summer;
+    case SEASON_AUTUMN:
+        return gText_Autumn;
+    case SEASON_WINTER:
+        return gText_Winter;
+    default:
+        return gText_Spring;
+   }
+
+}
+
 static const u8 *GetTimeOfDayTextWithButton(enum TimeOfDay timeOfDay)
 {
     static const u8 gText_Morning[] = _("{DPAD_UPDOWN} MORNING");
@@ -644,17 +682,18 @@ static const u8 *GetTimeOfDayTextWithButton(enum TimeOfDay timeOfDay)
     {
     case TIME_MORNING:
         return gText_Morning;
+    case TIME_DAY:
+        return gText_Day;
     case TIME_EVENING:
         return gText_Evening;
     case TIME_NIGHT:
         return gText_Night;
-    case TIME_DAY:
     default:
-        return gText_Day;
+        return gText_Morning;
     }
 }
 
-static void AddTimeOfDayLabels(void)
+static void AddSeasonTimeLabels(void)
 {
     u32 i;
 
@@ -663,17 +702,20 @@ static void AddTimeOfDayLabels(void)
 
     for (i = 0; i < NUM_LABEL_WINDOWS; i ++)
     {
-        sPokedexAreaScreen->areaScreenLabelIds[i] = AddWindow(&sTimeOfDayWindowLabelTemplates[i]);
+        sPokedexAreaScreen->areaScreenLabelIds[i] = AddWindow(&sSeasonTimeWindowLabelTemplates[i]);
         FillWindowPixelBuffer(sPokedexAreaScreen->areaScreenLabelIds[i], PIXEL_FILL(0));
     }
 }
 
 static void ShowEncounterInfoLabel(void)
 {
+    const u8 *gText_Season = GetSeasonsTextWithButton(gAreaSeason);
     const u8 *gText_TimeOfDay = GetTimeOfDayTextWithButton(gAreaTimeOfDay);
-    int stringXPos = GetStringCenterAlignXOffset(FONT_NORMAL, gText_TimeOfDay, 64);
+    int stringXPosSeason = GetStringCenterAlignXOffset(FONT_NORMAL, gText_Season, 64);
+    int stringXPosTime = GetStringCenterAlignXOffset(FONT_NORMAL, gText_TimeOfDay, 64);
 
-    PrintAreaLabelText(gText_TimeOfDay, DEX_AREA_LABEL_TIME_OF_DAY, stringXPos);
+    PrintAreaLabelText(gText_Season, DEX_AREA_LABEL_SEASON, stringXPosSeason);
+    PrintAreaLabelText(gText_TimeOfDay, DEX_AREA_LABEL_TIME_OF_DAY, stringXPosTime);
 }
 
 static void ShowAreaUnknownLabel(void)
@@ -709,7 +751,7 @@ bool32 ShouldShowAreaUnknownLabel(void)
 
 #define tState data[0]
 
-void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum TimeOfDay timeOfDay, enum PokedexAreaScreenState areaState)
+void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum Seasons season, enum TimeOfDay timeOfDay, enum PokedexAreaScreenState areaState)
 {
     u8 taskId;
 
@@ -717,6 +759,7 @@ void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum TimeOfDay
     sPokedexAreaScreen->species = species;
     sPokedexAreaScreen->screenSwitchState = screenSwitchState;
     sPokedexAreaScreen->areaState = areaState;
+    gAreaSeason = season;
     gAreaTimeOfDay = timeOfDay;
     screenSwitchState[0] = 0;
 
@@ -765,11 +808,11 @@ static void Task_ShowPokedexAreaScreen(u8 taskId)
         CreateAreaMarkerSprites();
         break;
     case 7:
-        if(!OW_TIME_OF_DAY_ENCOUNTERS)
+        if(!OW_TIME_OF_DAY_ENCOUNTERS && !OW_SEASONAL_ENCOUNTERS)
             LoadAreaUnknownGraphics();
         break;
     case 8:
-        if(!OW_TIME_OF_DAY_ENCOUNTERS)
+        if(!OW_TIME_OF_DAY_ENCOUNTERS && !OW_SEASONAL_ENCOUNTERS)
             CreateAreaUnknownSprites();
         break;
     case 9:
@@ -778,9 +821,9 @@ static void Task_ShowPokedexAreaScreen(u8 taskId)
     case 10:
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_ALL);
         StartAreaGlow();
-        if (OW_TIME_OF_DAY_ENCOUNTERS)
+        if (OW_TIME_OF_DAY_ENCOUNTERS && OW_SEASONAL_ENCOUNTERS)
         {
-            AddTimeOfDayLabels();
+            AddSeasonTimeLabels();
             ShowEncounterInfoLabel();
             if (ShouldShowAreaUnknownLabel())
                 ShowAreaUnknownLabel();
@@ -806,6 +849,7 @@ static void Task_UpdatePokedexAreaScreen(u8 taskId)
     switch (gTasks[taskId].tState)
     {
     case 0:
+        ClearAreaWindowLabel(DEX_AREA_LABEL_SEASON);
         ClearAreaWindowLabel(DEX_AREA_LABEL_TIME_OF_DAY);
         ClearAreaWindowLabel(DEX_AREA_LABEL_AREA_UNKNOWN);
         ResetSpriteData();
@@ -837,7 +881,7 @@ static void Task_UpdatePokedexAreaScreen(u8 taskId)
     case 5:
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_ALL);
         StartAreaGlow();
-        AddTimeOfDayLabels();
+        AddSeasonTimeLabels();
         ShowEncounterInfoLabel();
         if (ShouldShowAreaUnknownLabel())
             ShowAreaUnknownLabel();
@@ -871,12 +915,12 @@ static void Task_HandlePokedexAreaScreenInput(u8 taskId)
             gTasks[taskId].data[1] = 1;
             PlaySE(SE_DEX_PAGE);
         }
-        else if (JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+        else if (JOY_NEW(L_BUTTON))
         {
             gTasks[taskId].data[1] = 1;
             PlaySE(SE_DEX_PAGE);
         }
-        else if (JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+        else if (JOY_NEW(R_BUTTON))
         {
             if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(sPokedexAreaScreen->species), FLAG_GET_CAUGHT))
             {
@@ -900,6 +944,20 @@ static void Task_HandlePokedexAreaScreenInput(u8 taskId)
             sPokedexAreaScreen->areaState = DEX_UPDATE_AREA_SCREEN;
             PlaySE(SE_DEX_PAGE);
         }
+        else if (JOY_NEW(DPAD_LEFT) && OW_SEASONAL_ENCOUNTERS == TRUE)
+        {
+            gTasks[taskId].data[1] = 3;
+            gAreaSeason = TryDecrementSeason(gAreaSeason);
+            sPokedexAreaScreen->areaState = DEX_UPDATE_AREA_SCREEN;
+            PlaySE(SE_DEX_PAGE);
+        }
+        else if (JOY_NEW(DPAD_RIGHT) && OW_SEASONAL_ENCOUNTERS == TRUE)
+        {
+            gTasks[taskId].data[1] = 3;
+            gAreaSeason = TryIncrementSeason(gAreaSeason);
+            sPokedexAreaScreen->areaState = DEX_UPDATE_AREA_SCREEN;
+            PlaySE(SE_DEX_PAGE);
+        }
         else
         {
             // screen needs to fade if its doing anything except updating the area screen
@@ -915,8 +973,9 @@ static void Task_HandlePokedexAreaScreenInput(u8 taskId)
         if (gPaletteFade.active)
             return;
         DestroyAreaScreenSprites();
-        if (OW_TIME_OF_DAY_ENCOUNTERS)
+        if (OW_TIME_OF_DAY_ENCOUNTERS && OW_SEASONAL_ENCOUNTERS)
         {
+            ClearAreaWindowLabel(DEX_AREA_LABEL_SEASON);
             ClearAreaWindowLabel(DEX_AREA_LABEL_TIME_OF_DAY);
             ClearAreaWindowLabel(DEX_AREA_LABEL_AREA_UNKNOWN);
             RemoveAllWindowsOnBg(LABEL_WINDOW_BG);
