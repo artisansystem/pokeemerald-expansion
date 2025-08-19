@@ -71,12 +71,14 @@ enum EncounterType
 
 void EndDexNavSearch(u8 taskId);
 void Task_OpenDexNavFromStartMenu(u8 taskId);
+void Task_OpenDexNavFromPokenav(u8 taskId);
 bool8 TryStartDexNavSearch(void);
 void TryIncrementSpeciesSearchLevel(void);
 void ResetDexNavSearch(void);
 bool8 TryFindHiddenPokemon(void);
 u32 CalculateDexNavShinyRolls(void);
 void IncrementDexNavChain(void);
+u32 PokeNavMenuDexNavCallback(void);
 
 extern u16 gDexNavSpecies;
 

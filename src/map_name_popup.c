@@ -504,16 +504,40 @@ void HideMapNamePopUpWindow(void)
     }
 }
 
+static const u8 sText_Sunday[] = _("SUN.");
+static const u8 sText_Monday[] = _("MON.");
+static const u8 sText_Tuesday[] = _("TUES.");
+static const u8 sText_Wednesday[] = _("WED.");
+static const u8 sText_Thursday[] = _("THURS.");
+static const u8 sText_Friday[] = _("FRI.");
+static const u8 sText_Saturday[] = _("SAT.");
+static const u8 * const sDayOfWeekStrings[7] =
+{
+    sText_Sunday,
+    sText_Monday,
+    sText_Tuesday,
+    sText_Wednesday,
+    sText_Thursday,
+    sText_Friday,
+    sText_Saturday,
+};
+
 static void UpdateSecondaryPopUpWindow(u8 secondaryPopUpWindowId)
 {
     u8 mapDisplayHeader[24];
     u8 *withoutPrefixPtr = &(mapDisplayHeader[0]);
+    u16 dayOfWeek;
+    const u8 *str;
 
     if (OW_POPUP_BW_TIME_MODE != OW_POPUP_BW_TIME_NONE)
     {
         RtcCalcLocalTime();
+        dayOfWeek= gLocalTime.days % 7;
+        str = sDayOfWeekStrings[dayOfWeek];
         FormatDecimalTimeWithoutSeconds(withoutPrefixPtr, gLocalTime.hours, gLocalTime.minutes, OW_POPUP_BW_TIME_MODE == OW_POPUP_BW_TIME_24_HR);
+        AddTextPrinterParameterized(secondaryPopUpWindowId, FONT_SMALL, str, GetStringRightAlignXOffset(FONT_SMALL, str, DISPLAY_WIDTH) + 200, 8, TEXT_SKIP_DRAW, NULL);
         AddTextPrinterParameterized(secondaryPopUpWindowId, FONT_SMALL, mapDisplayHeader, GetStringRightAlignXOffset(FONT_SMALL, mapDisplayHeader, DISPLAY_WIDTH) - 5, 8, TEXT_SKIP_DRAW, NULL);
+
     }
     CopyWindowToVram(secondaryPopUpWindowId, COPYWIN_FULL);
 }

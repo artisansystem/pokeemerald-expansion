@@ -47,6 +47,7 @@
 #include "link.h"
 #include "frontier_pass.h"
 #include "start_menu.h"
+#include "seasons.h"
 
 /*
     Full Screen Start Menu
@@ -1242,19 +1243,35 @@ static const u8 * const sDayOfWeekStrings[7] =
 static const u8 sText_AM[] = _("AM");
 static const u8 sText_PM[] = _("PM");
 
+static const u8 sText_Spring[] = _("SPRING");
+static const u8 sText_Summer[] = _("SUMMER");
+static const u8 sText_Autumn[] = _("AUTUMN");
+static const u8 sText_Winter[] = _("WINTER");
+static const u8 * const sSeasonStrings[4] =
+{
+    sText_Spring,
+    sText_Summer,
+    sText_Autumn,
+    sText_Winter,
+};
+
 static void PrintMapNameAndTime(void) //this code is ripped froom different parts of pokeemerald and is a mess because of that, but it all works
 {
     u8 mapDisplayHeader[24];
     u8 *withoutPrefixPtr;
     u8 x;
-    const u8 *str, *suffix = NULL;
+    const u8 *seasonStr, *str, *suffix = NULL;
     u8 sTimeTextColors[] = {TEXT_COLOR_TRANSPARENT, 2, 3};
 
     u16 hours;
     u16 minutes;
     u16 dayOfWeek;
+    enum Seasons season;
     s32 width;
     u32 y, totalWidth;
+
+    season = CurrentSeasonGet();
+    seasonStr = sSeasonStrings[season];
 
     FillWindowPixelBuffer(WINDOW_TOP_BAR, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
 
@@ -1302,24 +1319,25 @@ static void PrintMapNameAndTime(void) //this code is ripped froom different part
     x = 64;
     y = 1;
 
-    if(dayOfWeek == 2) // adjust x position if dayofweek Thurs/Tues because the words are longer
-        x += 8;
-    if(dayOfWeek == 4)
-        x += 12;
+    // if(season == 2) // adjust x position if dayofweek Thurs/Tues because the words are longer
+    //    x += 8;
+    // if(season == 4)
+    x += 12;
 
     totalWidth = width + 30;
     x -= totalWidth;
 
     str = sDayOfWeekStrings[dayOfWeek];
 
-    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NORMAL, 10, y, sTimeTextColors, TEXT_SKIP_DRAW, str); //print dayof week
+    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NARROW, 10, y, sTimeTextColors, TEXT_SKIP_DRAW, seasonStr);
+    // AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NORMAL, 10, y, sTimeTextColors, TEXT_SKIP_DRAW, str); //print dayof week
     ConvertIntToDecimalStringN(gStringVar4, hours, STR_CONV_MODE_RIGHT_ALIGN, 3);
-    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NORMAL, x, y, sTimeTextColors, TEXT_SKIP_DRAW, gStringVar4); //these three print the time, you can put the colon to only print half the time to flash it if you want
+    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NARROW, x, y, sTimeTextColors, TEXT_SKIP_DRAW, gStringVar4); //these three print the time, you can put the colon to only print half the time to flash it if you want
     x += 18;
-    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NORMAL, x, y, sTimeTextColors, TEXT_SKIP_DRAW, gText_Colon2);
+    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NARROW, x, y, sTimeTextColors, TEXT_SKIP_DRAW, gText_Colon2);
     x += width;
     ConvertIntToDecimalStringN(gStringVar4, minutes, STR_CONV_MODE_LEADING_ZEROS, 2);
-    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NORMAL, x, y, sTimeTextColors, TEXT_SKIP_DRAW, gStringVar4);
+    AddTextPrinterParameterized3(WINDOW_TOP_BAR, FONT_NARROW, x, y, sTimeTextColors, TEXT_SKIP_DRAW, gStringVar4);
 
 #if (FLAG_CLOCK_MODE != 0)
     if (suffix != NULL)
