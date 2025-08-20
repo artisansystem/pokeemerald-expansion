@@ -997,7 +997,9 @@
 // HOPO BERRY
 // LEGEND PLATE
 
-#define ITEMS_COUNT 829
+#define ITEM_POKEVIAL 829 // Pokevial Branch
+
+#define ITEMS_COUNT 830
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations
@@ -1077,5 +1079,9 @@
 
 // Enigma Berry dummy constant
 #define EFFECT_ITEM_ENIGMA_BERRY_EREADER    1
+
+// Check if the item is one that can be used on a Pokémon.
+//#define ITEM_HAS_EFFECT(item) ((item) >= ITEM_POTION && (item) <= MAX_BERRY_INDEX)
+#define ITEM_HAS_EFFECT(item) (((item) == ITEM_POKEVIAL) || ((item) >= ITEM_POTION && (item) <= MAX_BERRY_INDEX)) //Modified by Pokevial Branch
 
 #endif  // GUARD_CONSTANTS_ITEMS_H
