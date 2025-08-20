@@ -62,6 +62,7 @@
 #include "constants/vars.h"
 #include "constants/weather.h"
 #include "constants/pokevial.h"
+#include "constants/quests.h"
 #include "constants/field_mugshots.h"
 #include "constants/new_shop.h"
 	.include "asm/macros.inc"
