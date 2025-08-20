@@ -455,7 +455,7 @@ Route101_EventScript_BirchsBag::
 # 228 "data/maps/Route101/scripts.pory"
 	waitmovement 0
 # 229 "data/maps/Route101/scripts.pory"
-	special ChooseStarter
+	callnative StartNewPokeballCaseUI
 # 230 "data/maps/Route101/scripts.pory"
 	waitstate
 # 231 "data/maps/Route101/scripts.pory"
