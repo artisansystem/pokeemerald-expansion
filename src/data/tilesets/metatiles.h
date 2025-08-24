@@ -252,3 +252,12 @@ const u16 gMetatileAttributes_Rustboro_ORAS[] = INCBIN_U16("data/tilesets/second
 
 const u16 gMetatiles_Sootopolis_ORAS[] = INCBIN_U16("data/tilesets/secondary/sootopolis_oras/metatiles.bin");
 const u16 gMetatileAttributes_Sootopolis_ORAS[] = INCBIN_U16("data/tilesets/secondary/sootopolis_oras/metatile_attributes.bin");
+
+const u16 gMetatiles_PorytilesPrimaryTest[] = INCBIN_U16("data/tilesets/primary/porytiles_primary_test/metatiles.bin");
+const u16 gMetatileAttributes_PorytilesPrimaryTest[] = INCBIN_U16("data/tilesets/primary/porytiles_primary_test/metatile_attributes.bin");
+
+const u16 gMetatiles_PorytilesSecondaryTest[] = INCBIN_U16("data/tilesets/secondary/porytiles_secondary_test/metatiles.bin");
+const u16 gMetatileAttributes_PorytilesSecondaryTest[] = INCBIN_U16("data/tilesets/secondary/porytiles_secondary_test/metatile_attributes.bin");
+
+const u16 gMetatiles_PorytilePrimaryTutorial[] = INCBIN_U16("data/tilesets/primary/porytile_primary_tutorial/metatiles.bin");
+const u16 gMetatileAttributes_PorytilePrimaryTutorial[] = INCBIN_U16("data/tilesets/primary/porytile_primary_tutorial/metatile_attributes.bin");

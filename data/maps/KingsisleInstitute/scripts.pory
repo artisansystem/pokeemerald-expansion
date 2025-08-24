@@ -1,0 +1,9 @@
+mapscripts KingsisleInstitute_MapScripts {}
+
+script DormSign{
+    msgbox("SOLGALEO HALL", MSGBOX_SIGN)
+}
+
+
+
+

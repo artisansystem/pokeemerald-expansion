@@ -33,7 +33,9 @@
     "gMapGroup_IndoorRoute113",
     "gMapGroup_IndoorRoute123",
     "gMapGroup_IndoorRoute119",
-    "gMapGroup_IndoorRoute124"
+    "gMapGroup_IndoorRoute124",
+    "gMapGroup_Custom_TownsAndRoutes",
+    "gMapGroup_IndoorKingsisle"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",
@@ -620,5 +622,12 @@
   ],
   "gMapGroup_IndoorRoute124": [
     "Route124_DivingTreasureHuntersHouse"
+  ],
+  "gMapGroup_Custom_TownsAndRoutes": [
+    "KingsisleInstitute",
+    "PorytilesTestMap"
+  ],
+  "gMapGroup_IndoorKingsisle": [
+    "KingsisleDorm_1F"
   ]
 }

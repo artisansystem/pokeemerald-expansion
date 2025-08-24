@@ -1265,3 +1265,35 @@ const struct Tileset gTileset_Sootopolis_ORAS =
     .palettes_autumn = NULL,
     .palettes_winter = NULL,
 };
+const struct Tileset gTileset_PorytilesPrimaryTest =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_PorytilesPrimaryTest,
+    .palettes = gTilesetPalettes_PorytilesPrimaryTest,
+    .metatiles = gMetatiles_PorytilesPrimaryTest,
+    .metatileAttributes = gMetatileAttributes_PorytilesPrimaryTest,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_PorytilesSecondaryTest =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_PorytilesSecondaryTest,
+    .palettes = gTilesetPalettes_PorytilesSecondaryTest,
+    .metatiles = gMetatiles_PorytilesSecondaryTest,
+    .metatileAttributes = gMetatileAttributes_PorytilesSecondaryTest,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_PorytilePrimaryTutorial =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_PorytilePrimaryTutorial,
+    .palettes = gTilesetPalettes_PorytilePrimaryTutorial,
+    .metatiles = gMetatiles_PorytilePrimaryTutorial,
+    .metatileAttributes = gMetatileAttributes_PorytilePrimaryTutorial,
+    .callback = NULL,
+};
