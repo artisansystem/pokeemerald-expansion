@@ -261,3 +261,6 @@ const u16 gMetatileAttributes_PorytilesSecondaryTest[] = INCBIN_U16("data/tilese
 
 const u16 gMetatiles_PorytilePrimaryTutorial[] = INCBIN_U16("data/tilesets/primary/porytile_primary_tutorial/metatiles.bin");
 const u16 gMetatileAttributes_PorytilePrimaryTutorial[] = INCBIN_U16("data/tilesets/primary/porytile_primary_tutorial/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Primary_Custom[] = INCBIN_U16("data/tilesets/primary/general_primary_custom/metatiles.bin");
+const u16 gMetatileAttributes_General_Primary_Custom[] = INCBIN_U16("data/tilesets/primary/general_primary_custom/metatile_attributes.bin");

@@ -1297,3 +1297,14 @@ const struct Tileset gTileset_PorytilePrimaryTutorial =
     .metatileAttributes = gMetatileAttributes_PorytilePrimaryTutorial,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Primary_Custom =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Primary_Custom,
+    .palettes = gTilesetPalettes_General_Primary_Custom,
+    .metatiles = gMetatiles_General_Primary_Custom,
+    .metatileAttributes = gMetatileAttributes_General_Primary_Custom,
+    .callback = NULL,
+};

@@ -4436,7 +4436,7 @@
       "name": "PorytilesTestMap_Layout",
       "width": 20,
       "height": 20,
-      "primary_tileset": "gTileset_PorytilePrimaryTutorial",
+      "primary_tileset": "gTileset_General_Primary_Custom",
       "secondary_tileset": "gTileset_PorytilesSecondaryTest",
       "border_filepath": "data/layouts/PorytilesTestMap/border.bin",
       "blockdata_filepath": "data/layouts/PorytilesTestMap/map.bin"
