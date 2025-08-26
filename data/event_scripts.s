@@ -1167,3 +1167,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/KingsisleDorm_1F/scripts.inc"
 
 	.include "data/maps/PorytilesTestMap/scripts.inc"
+
+	.include "data/maps/KingsisleDorm_2F/scripts.inc"
+
+	.include "data/maps/HeadmastersHouse_1F/scripts.inc"

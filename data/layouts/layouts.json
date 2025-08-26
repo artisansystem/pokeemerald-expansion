@@ -4416,8 +4416,8 @@
       "name": "KingsisleInstitute_Layout",
       "width": 40,
       "height": 50,
-      "primary_tileset": "gTileset_General_ORAS",
-      "secondary_tileset": "gTileset_Rustboro_ORAS",
+      "primary_tileset": "gTileset_General_Primary_Custom",
+      "secondary_tileset": "gTileset_General_Secondary_Custom",
       "border_filepath": "data/layouts/KingsisleInstitute/border.bin",
       "blockdata_filepath": "data/layouts/KingsisleInstitute/map.bin"
     },
@@ -4434,12 +4434,32 @@
     {
       "id": "LAYOUT_PORYTILES_TEST_MAP",
       "name": "PorytilesTestMap_Layout",
-      "width": 20,
+      "width": 21,
       "height": 20,
       "primary_tileset": "gTileset_General_Primary_Custom",
-      "secondary_tileset": "gTileset_PorytilesSecondaryTest",
+      "secondary_tileset": "gTileset_General_Secondary_Museum",
       "border_filepath": "data/layouts/PorytilesTestMap/border.bin",
       "blockdata_filepath": "data/layouts/PorytilesTestMap/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_DORM_2F",
+      "name": "KingsisleDorm_2F_Layout",
+      "width": 20,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "border_filepath": "data/layouts/KingsisleDorm_2F/border.bin",
+      "blockdata_filepath": "data/layouts/KingsisleDorm_2F/map.bin"
+    },
+    {
+      "id": "LAYOUT_HEADMASTERS_HOUSE_1F",
+      "name": "HeadmastersHouse_1F_Layout",
+      "width": 20,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_LilycoveMuseum",
+      "border_filepath": "data/layouts/HeadmastersHouse_1F/border.bin",
+      "blockdata_filepath": "data/layouts/HeadmastersHouse_1F/map.bin"
     }
   ]
 }

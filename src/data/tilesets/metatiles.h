@@ -264,3 +264,9 @@ const u16 gMetatileAttributes_PorytilePrimaryTutorial[] = INCBIN_U16("data/tiles
 
 const u16 gMetatiles_General_Primary_Custom[] = INCBIN_U16("data/tilesets/primary/general_primary_custom/metatiles.bin");
 const u16 gMetatileAttributes_General_Primary_Custom[] = INCBIN_U16("data/tilesets/primary/general_primary_custom/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Custom[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Custom[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Museum[] = INCBIN_U16("data/tilesets/secondary/general_secondary_museum/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Museum[] = INCBIN_U16("data/tilesets/secondary/general_secondary_museum/metatile_attributes.bin");

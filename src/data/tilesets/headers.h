@@ -1308,3 +1308,25 @@ const struct Tileset gTileset_General_Primary_Custom =
     .metatileAttributes = gMetatileAttributes_General_Primary_Custom,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Secondary_Custom =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Custom,
+    .palettes = gTilesetPalettes_General_Secondary_Custom,
+    .metatiles = gMetatiles_General_Secondary_Custom,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Custom,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Secondary_Museum =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Museum,
+    .palettes = gTilesetPalettes_General_Secondary_Museum,
+    .metatiles = gMetatiles_General_Secondary_Museum,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Museum,
+    .callback = NULL,
+};

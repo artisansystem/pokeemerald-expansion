@@ -1234,6 +1234,10 @@
     {
       "id": "MAPSEC_KINGSISLE",
       "name": "KINGSISLE INSTITUTE"
+    },
+    {
+      "id": "MAPSEC_HEADMASTERS_HOUSE",
+      "name": "HEADMASTERS HOUSE"
     }
   ]
 }

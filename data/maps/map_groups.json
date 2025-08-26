@@ -628,6 +628,8 @@
     "PorytilesTestMap"
   ],
   "gMapGroup_IndoorKingsisle": [
-    "KingsisleDorm_1F"
+    "KingsisleDorm_1F",
+    "KingsisleDorm_2F",
+    "HeadmastersHouse_1F"
   ]
 }
