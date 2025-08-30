@@ -1330,3 +1330,25 @@ const struct Tileset gTileset_General_Secondary_Museum =
     .metatileAttributes = gMetatileAttributes_General_Secondary_Museum,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Secondary_Academy =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Academy,
+    .palettes = gTilesetPalettes_General_Secondary_Academy,
+    .metatiles = gMetatiles_General_Secondary_Academy,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Academy,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Primary_Academy =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Primary_Academy,
+    .palettes = gTilesetPalettes_General_Primary_Academy,
+    .metatiles = gMetatiles_General_Primary_Academy,
+    .metatileAttributes = gMetatileAttributes_General_Primary_Academy,
+    .callback = NULL,
+};

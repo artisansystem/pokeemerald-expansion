@@ -348,6 +348,12 @@ static const struct SpritePalette sSpritePalette_NewGameBirch =
     .tag = 0x1006
 };
 
+static const struct SpritePalette sSpritePalette_NewGameUriel =
+{
+    .data = sNewGameBirch_Pal,
+    .tag = 0x1006
+};
+
 static const union AnimCmd sAnim_NewGameBirch[] =
 {
     ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
@@ -360,6 +366,17 @@ static const union AnimCmd *const sAnimTable_NewGameBirch[] =
 };
 
 static const struct SpriteTemplate sSpriteTemplate_NewGameBirch =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 0x1006,
+    .oam = &sOam_64x64,
+    .anims = sAnimTable_NewGameBirch,
+    .images = sPicTable_NewGameBirch,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+static const struct SpriteTemplate sSpriteTemplate_NewGameUriel =
 {
     .tileTag = TAG_NONE,
     .paletteTag = 0x1006,
@@ -938,6 +955,12 @@ u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
 {
     LoadSpritePalette(&sSpritePalette_NewGameBirch);
     return CreateSprite(&sSpriteTemplate_NewGameBirch, x, y, subpriority);
+}
+
+u8 AddNewGameUrielObject(s16 x, s16 y, u8 subpriority)
+{
+    LoadSpritePalette(&sSpritePalette_NewGameUriel);
+    return CreateSprite(&sSpriteTemplate_NewGameUriel, x, y, subpriority);
 }
 
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)

@@ -35,6 +35,7 @@ struct WindowTemplate
     u16 baseBlock;
 };
 
+
 #define DUMMY_WIN_TEMPLATE          \
 {                                   \
     .bg = 0xFF,                     \

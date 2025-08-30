@@ -1171,3 +1171,11 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/KingsisleDorm_2F/scripts.inc"
 
 	.include "data/maps/HeadmastersHouse_1F/scripts.inc"
+
+	.include "data/maps/KINGSISLE_GATEHOUSE/scripts.inc"
+
+	.include "data/maps/KingsisleInstitute_Academy/scripts.inc"
+
+	.include "data/maps/KingsisleInstitute_Academy_2/scripts.inc"
+
+	.include "data/maps/Academy_Gatehouse/scripts.inc"

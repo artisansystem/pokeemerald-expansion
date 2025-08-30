@@ -76,8 +76,12 @@ static u16 GetBattlerPokeballItemId(u8 battler);
 #define GFX_TAG_PARK_BALL    55025
 #define GFX_TAG_BEAST_BALL   55026
 #define GFX_TAG_CHERISH_BALL 55027
+#define GFX_TAG_KABA_BALL    55030
 
-const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] =
+static const u32 sBallGfx_Kaba[] = INCBIN_U32("graphics/kaba_speech/intro_ball.4bpp.smol");
+static const u16 sBallPal_Kaba[] = INCBIN_U16("graphics/kaba_speech/intro_ball.gbapal");
+
+const struct CompressedSpriteSheet gBallSpriteSheets[] =
 {
     [BALL_STRANGE] = {gBallGfx_Strange, 384, GFX_TAG_STRANGE_BALL},
     [BALL_POKE]    = {gBallGfx_Poke,    384, GFX_TAG_POKE_BALL},
@@ -107,9 +111,10 @@ const struct CompressedSpriteSheet gBallSpriteSheets[POKEBALL_COUNT] =
     [BALL_PARK]    = {gBallGfx_Park,    384, GFX_TAG_PARK_BALL},
     [BALL_BEAST]   = {gBallGfx_Beast,   384, GFX_TAG_BEAST_BALL},
     [BALL_CHERISH] = {gBallGfx_Cherish, 384, GFX_TAG_CHERISH_BALL},
+    [BALL_KABA]    = {sBallGfx_Kaba,   1536, GFX_TAG_KABA_BALL},
 };
 
-const struct SpritePalette gBallSpritePalettes[POKEBALL_COUNT] =
+const struct SpritePalette gBallSpritePalettes[] =
 {
     [BALL_STRANGE] = {gBallPal_Strange, GFX_TAG_STRANGE_BALL},
     [BALL_POKE]    = {gBallPal_Poke,    GFX_TAG_POKE_BALL},
@@ -139,6 +144,7 @@ const struct SpritePalette gBallSpritePalettes[POKEBALL_COUNT] =
     [BALL_PARK]    = {gBallPal_Park,    GFX_TAG_PARK_BALL},
     [BALL_BEAST]   = {gBallPal_Beast,   GFX_TAG_BEAST_BALL},
     [BALL_CHERISH] = {gBallPal_Cherish, GFX_TAG_CHERISH_BALL},
+    [BALL_KABA]    = {sBallPal_Kaba,    GFX_TAG_KABA_BALL},
 };
 
 static const struct OamData sBallOamData =
@@ -152,6 +158,23 @@ static const struct OamData sBallOamData =
     .x = 0,
     .matrixNum = 0,
     .size = SPRITE_SIZE(16x16),
+    .tileNum = 0,
+    .priority = 2,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const struct OamData sIntroBallOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(32x32),
     .tileNum = 0,
     .priority = 2,
     .paletteNum = 0,
@@ -202,6 +225,26 @@ static const union AnimCmd sBallAnimSeq2[] =
     ANIMCMD_END,
 };
 
+static const union AnimCmd sIntroBallAnimSeq0[] =
+{
+    ANIMCMD_FRAME(0, 1),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sIntroBallAnimSeq1[] =
+{
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(32, 5),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd sIntroBallAnimSeq2[] =
+{
+    ANIMCMD_FRAME(16, 5),
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_END,
+};
+
 static const union AnimCmd *const sBallAnimSequences[] =
 {
     sBallAnimSeq0,
@@ -213,6 +256,13 @@ static const union AnimCmd *const sBallAnimSequences[] =
     sBallAnimSeq4,
     sBallAnimSeq5,
     sBallAnimSeq6,
+};
+
+static const union AnimCmd *const sIntroBallAnimSequences[] =
+{
+    sIntroBallAnimSeq0,
+    sIntroBallAnimSeq1,
+    sIntroBallAnimSeq2,
 };
 
 static const union AffineAnimCmd sAffineAnim_BallRotate_0[] =
@@ -254,7 +304,7 @@ static const union AffineAnimCmd *const sAffineAnim_BallRotate[] =
     [BALL_AFFINE_ANIM_4] = sAffineAnim_BallRotate_4,
 };
 
-const struct SpriteTemplate gBallSpriteTemplates[POKEBALL_COUNT] =
+const struct SpriteTemplate gBallSpriteTemplates[] =
 {
     [BALL_STRANGE] =
     {
@@ -534,6 +584,16 @@ const struct SpriteTemplate gBallSpriteTemplates[POKEBALL_COUNT] =
         .anims = sBallAnimSequences,
         .images = NULL,
         .affineAnims = sAffineAnim_BallRotate,
+        .callback = SpriteCB_BallThrow,
+    },
+    [BALL_KABA] =
+    {
+        .tileTag = GFX_TAG_KABA_BALL,
+        .paletteTag = GFX_TAG_KABA_BALL,
+        .oam = &sIntroBallOamData,
+        .anims = sIntroBallAnimSequences,
+        .images = NULL,
+        .affineAnims = gDummySpriteAffineAnimTable,
         .callback = SpriteCB_BallThrow,
     },
 };
@@ -1298,6 +1358,32 @@ void CreatePokeballSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, 
     gSprites[monSpriteId].invisible = TRUE;
 }
 
+void CreateKababallSpriteToReleaseMon(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subpriority, u8 delay, u32 fadePalettes, u16 species)
+{
+    u8 spriteId;
+
+    LoadCompressedSpriteSheetUsingHeap(&gBallSpriteSheets[BALL_KABA]);
+    LoadSpritePalette(&gBallSpritePalettes[BALL_KABA]);
+    spriteId = CreateSprite(&gBallSpriteTemplates[BALL_KABA], x, y, subpriority);
+
+    gSprites[spriteId].sMonSpriteId = monSpriteId;
+    gSprites[spriteId].sFinalMonX = gSprites[monSpriteId].x;
+    gSprites[spriteId].sFinalMonY = gSprites[monSpriteId].y;
+
+    gSprites[monSpriteId].x = x;
+    gSprites[monSpriteId].y = y;
+    gSprites[monSpriteId].sSpecies = species;
+
+    gSprites[spriteId].sDelay = delay;
+    gSprites[spriteId].sMonPalNum = monPalNum;
+    gSprites[spriteId].sFadePalsLo = fadePalettes;
+    gSprites[spriteId].sFadePalsHi = fadePalettes >> 16;
+    gSprites[spriteId].oam.priority = oamPriority;
+    gSprites[spriteId].callback = SpriteCB_PokeballReleaseMon;
+
+    gSprites[monSpriteId].invisible = TRUE;
+}
+
 static void SpriteCB_PokeballReleaseMon(struct Sprite *sprite)
 {
     if (sprite->sDelay == 0)
@@ -1400,6 +1486,24 @@ u8 CreateTradePokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPri
     gSprites[spriteId].callback = SpriteCB_TradePokeball;
     return spriteId;
 }
+
+u8 CreateIntroPokeballSprite(u8 monSpriteId, u8 monPalNum, u8 x, u8 y, u8 oamPriority, u8 subPriority, u8 delay, u32 fadePalettes)
+{
+    u8 spriteId;
+
+    LoadCompressedSpriteSheetUsingHeap(&gBallSpriteSheets[BALL_KABA]);
+    LoadSpritePalette(&gBallSpritePalettes[BALL_KABA]);
+    spriteId = CreateSprite(&gBallSpriteTemplates[BALL_KABA], x, y, subPriority);
+    gSprites[spriteId].sMonSpriteId = monSpriteId;
+    gSprites[spriteId].sDelay = delay;
+    gSprites[spriteId].sMonPalNum = monPalNum;
+    gSprites[spriteId].sFadePalsLo = fadePalettes;
+    gSprites[spriteId].sFadePalsHi = fadePalettes >> 16;
+    gSprites[spriteId].oam.priority = oamPriority;
+    gSprites[spriteId].callback = SpriteCB_TradePokeball;
+    return spriteId;
+}
+
 
 static void SpriteCB_TradePokeball(struct Sprite *sprite)
 {

@@ -134,7 +134,8 @@
 
 #define MALE 0
 #define FEMALE 1
-#define GENDER_COUNT 2
+#define NONBINARY 2
+#define GENDER_COUNT 3
 
 #define NUM_BARD_SONG_WORDS    6
 #define NUM_STORYTELLER_TALES  4

@@ -1,0 +1,37 @@
+mapscripts KINGSISLE_GATEHOUSE_MapScripts {}
+
+script JealousStudent{
+    speakername(CommonName_Text_Student)
+    if (flag(FLAG_RECIEVED_SITRUS_BERRIES)){
+        msgbox(LookingForward, MSGBOX_NPC)
+    } elif (flag(FLAG_BADGE01_GET)){
+        msgbox(BadgeSurprise, MSGBOX_NPC)
+        lock
+        giveitem(ITEM_SITRUS_BERRY, 3)
+        if(var(VAR_RESULT) == FALSE){
+            speakername(CommonName_Text_Student)
+            msgbox(BagIsFull)
+        } else {
+            setflag(FLAG_RECIEVED_SITRUS_BERRIES)
+        }
+        release
+    } else {
+        msgbox(JealousTangent, MSGBOX_NPC)  
+    }
+}
+
+text BagIsFull{
+    format("Woah, you're carrying way too much stuff. Come back after you've stored some!")
+}
+
+text JealousTangent{
+    format("They're actually letting you leave the Institute?\p Lucky! I feel like I've been stuck in class since my first day here... two years ago!")
+}
+
+text BadgeSurprise{
+    format("Wait, you actually got a badge? No way! Fine, then, hotshot. Take these. Hopefully they'll help you on your climb to the top!")
+}
+
+text LookingForward{
+    format("Guess there's nowhere to go but up for you, huh? I'll be cheering you on!")
+}

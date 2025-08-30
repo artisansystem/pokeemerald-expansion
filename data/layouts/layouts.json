@@ -1346,8 +1346,8 @@
       "name": "PetalburgWoods_Layout",
       "width": 48,
       "height": 44,
-      "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Rustboro",
+      "primary_tileset": "gTileset_General_ORAS",
+      "secondary_tileset": "gTileset_Rustboro_ORAS",
       "border_filepath": "data/layouts/PetalburgWoods/border.bin",
       "blockdata_filepath": "data/layouts/PetalburgWoods/map.bin"
     },
@@ -4414,8 +4414,8 @@
     {
       "id": "LAYOUT_KINGSISLE_INSTITUTE",
       "name": "KingsisleInstitute_Layout",
-      "width": 40,
-      "height": 50,
+      "width": 41,
+      "height": 52,
       "primary_tileset": "gTileset_General_Primary_Custom",
       "secondary_tileset": "gTileset_General_Secondary_Custom",
       "border_filepath": "data/layouts/KingsisleInstitute/border.bin",
@@ -4434,7 +4434,7 @@
     {
       "id": "LAYOUT_PORYTILES_TEST_MAP",
       "name": "PorytilesTestMap_Layout",
-      "width": 21,
+      "width": 20,
       "height": 20,
       "primary_tileset": "gTileset_General_Primary_Custom",
       "secondary_tileset": "gTileset_General_Secondary_Museum",
@@ -4460,6 +4460,46 @@
       "secondary_tileset": "gTileset_LilycoveMuseum",
       "border_filepath": "data/layouts/HeadmastersHouse_1F/border.bin",
       "blockdata_filepath": "data/layouts/HeadmastersHouse_1F/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_GATEHOUSE",
+      "name": "KINGSISLE_GATEHOUSE_Layout",
+      "width": 10,
+      "height": 20,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonCenter",
+      "border_filepath": "data/layouts/KINGSISLE_GATEHOUSE/border.bin",
+      "blockdata_filepath": "data/layouts/KINGSISLE_GATEHOUSE/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_INSTITUTE_ACADEMY",
+      "name": "KingsisleInstitute_Academy_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General_Primary_Custom",
+      "secondary_tileset": "gTileset_General_Secondary_Custom",
+      "border_filepath": "data/layouts/KingsisleInstitute_Academy/border.bin",
+      "blockdata_filepath": "data/layouts/KingsisleInstitute_Academy/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_INSTITUTE_ACADEMY_2",
+      "name": "KingsisleInstitute_Academy_2_Layout",
+      "width": 20,
+      "height": 25,
+      "primary_tileset": "gTileset_General_Primary_Custom",
+      "secondary_tileset": "gTileset_General_Secondary_Academy",
+      "border_filepath": "data/layouts/KingsisleInstitute_Academy_2/border.bin",
+      "blockdata_filepath": "data/layouts/KingsisleInstitute_Academy_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_ACADEMY_GATEHOUSE",
+      "name": "Academy_Gatehouse_Layout",
+      "width": 20,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonCenter",
+      "border_filepath": "data/layouts/Academy_Gatehouse/border.bin",
+      "blockdata_filepath": "data/layouts/Academy_Gatehouse/map.bin"
     }
   ]
 }

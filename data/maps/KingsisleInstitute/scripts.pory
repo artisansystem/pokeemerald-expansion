@@ -1,9 +1,27 @@
 mapscripts KingsisleInstitute_MapScripts {}
 
+raw `
+CommonName_Text_Student:
+    .string "Student$"
+`
+
 script DormSign{
     msgbox("SOLGALEO HALL", MSGBOX_SIGN)
 }
 
+script NadiaLab{
+	msgbox("PROFESSOR NADIA'S LAB", MSGBOX_SIGN)
+}
 
+script SecurityOffice{
+    msgbox("KINGSISLE SECURITY OFFICE", MSGBOX_SIGN)
+}
 
+script Kingsisle_MagicGuy{
+    speakername(CommonName_Text_Student)
+    msgbox(MagicIsAmazing, MSGBOX_NPC)
+}
 
+text MagicIsAmazing{
+    format("Magic is amazing!\p I heard that students at the top of their class are able to travel to other Underground sectors using teleportation circles!")
+}

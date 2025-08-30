@@ -26,6 +26,8 @@
 #include "test_runner.h"
 #include "constants/rgb.h"
 
+__attribute__((used)) char end; // satisfies newlib
+
 static void VBlankIntr(void);
 static void HBlankIntr(void);
 static void VCountIntr(void);

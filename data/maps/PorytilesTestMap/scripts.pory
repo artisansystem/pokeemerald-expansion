@@ -1,1 +1,5 @@
 mapscripts PorytilesTestMap_MapScripts {}
+
+script HouseSign{
+    msgbox("HEADMASTER'S HOUSE", MSGBOX_SIGN)
+}

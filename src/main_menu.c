@@ -40,6 +40,9 @@
 #include "mystery_gift_menu.h"
 #include "ui_main_menu.h"
 #include "main_menu.h"
+#include "uriel_speech.h"
+#include "kaba_speech.h"
+#include <stdbool.h>
 
 /*
  * Main menu state machine
@@ -246,6 +249,7 @@ static void MainMenu_FormatSavegamePokedex(void);
 static void MainMenu_FormatSavegameTime(void);
 static void MainMenu_FormatSavegameBadges(void);
 static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8, u8, u8, u8, u8, u8);
+static bool8 sKabaSpeechStarted = FALSE;
 
 // .rodata
 
@@ -476,7 +480,8 @@ static const union AffineAnimCmd *const sSpriteAffineAnimTable_PlayerShrink[] =
 
 static const struct MenuAction sMenuActions_Gender[] = {
     {COMPOUND_STRING("BOY"), {NULL}},
-    {COMPOUND_STRING("GIRL"), {NULL}}
+    {COMPOUND_STRING("GIRL"), {NULL}},
+    {COMPOUND_STRING("NON-BINARY"), {NULL}}
 };
 
 static const u8 *const sMalePresetNames[] = {
@@ -523,6 +528,16 @@ static const u8 *const sFemalePresetNames[] = {
     COMPOUND_STRING("TERRA"),
     COMPOUND_STRING("LUCY"),
     COMPOUND_STRING("HALIE")
+};
+
+static const u8 *const sNonbinaryPresetNames[] = {
+    COMPOUND_STRING("ALEX"),
+    COMPOUND_STRING("ROWAN"),
+    COMPOUND_STRING("RIVER"),
+    COMPOUND_STRING("AVERY"),
+    COMPOUND_STRING("SKYLAR"),
+    COMPOUND_STRING("PARKER"),
+    COMPOUND_STRING("BRIAR"),
 };
 
 // The number of male vs. female names is assumed to be the same.
@@ -1080,7 +1095,8 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
             default:
                 gPlttBufferUnfaded[0] = RGB_BLACK;
                 gPlttBufferFaded[0] = RGB_BLACK;
-                gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+                DoKabaSpeech();
+                DestroyTask(taskId);
                 break;
             case ACTION_CONTINUE:
                 gPlttBufferUnfaded[0] = RGB_BLACK;
@@ -1375,6 +1391,23 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void) // Combination of the Above fu
     LoadMessageBoxGfx(0, 0xFC, BG_PLTT_ID(15));
     PutWindowTilemap(0);
     CopyWindowToVram(0, COPYWIN_FULL);
+}
+
+void CB2_NewGameUrielSpeech_FromNewMainMenu(void)
+{
+    DoUrielSpeech();
+}
+
+// Callback to start Kaba speech safely
+void CB2_NewGameKabaSpeech_FromNewMainMenu(void)
+{
+    static bool initialized = FALSE;
+    
+    if (!initialized)
+    {
+    DoKabaSpeech();
+    initialized = TRUE;
+    }
 }
 
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)

@@ -43,6 +43,8 @@
 #include "mystery_event_menu.h"
 #include "mystery_gift_menu.h"
 #include "link.h"
+#include "uriel_speech.h"
+#include "kaba_speech.h"
 
 /*
  * 
@@ -342,26 +344,33 @@ static const struct SpriteTemplate sSpriteTemplate_IconBox =
 void Task_OpenMainMenu(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
+    
     if (!gPaletteFade.active)
     {   
         switch (data[0]) // This data[0] comes from the main_menu.c Task_DisplayMainMenu, 
         {                //  where the UI is initialized by swapping a task func with this one 
             case HAS_NO_SAVED_GAME:
             default:
-                SetMainCallback2(CB2_NewGameBirchSpeech_FromNewMainMenu);
-                DestroyTask(taskId);
+                // gPlttBufferUnfaded[0] = RGB_BLACK;
+                // gPlttBufferFaded[0] = RGB_BLACK;
+                // CleanupOverworldWindowsAndTilemaps();
+                // DestroyTask(taskId);
+                SetMainCallback2(CB2_NewGameKabaSpeech_FromNewMainMenu);
                 return;
+            
             case HAS_SAVED_GAME:       
             case HAS_MYSTERY_GIFT:
             case HAS_MYSTERY_EVENTS:
                 menuType = data[0];
-                break;
+                CleanupOverworldWindowsAndTilemaps();
+                MainMenu_Init(CB2_InitTitleScreen);  // if need to bail go to title screen
+                DestroyTask(taskId);
+                return;        
         }
-        CleanupOverworldWindowsAndTilemaps();
-        MainMenu_Init(CB2_InitTitleScreen); // if need to bail go to title screen
-        DestroyTask(taskId);
+
     }
 }
+
 
 //
 //  Setup Menu Functions
@@ -903,7 +912,7 @@ static void Task_MainMenuMain(u8 taskId)
                 sSelectedOption = HW_WIN_CONTINUE;
                 break;
             case HW_WIN_NEW_GAME:
-                sMainMenuDataPtr->savedCallback = CB2_NewGameBirchSpeech_FromNewMainMenu;
+                sMainMenuDataPtr->savedCallback = CB2_NewGameUrielSpeech_FromNewMainMenu;
                 sSelectedOption = HW_WIN_CONTINUE;
                 break;
             case HW_WIN_OPTIONS:

@@ -35,7 +35,8 @@
     "gMapGroup_IndoorRoute119",
     "gMapGroup_IndoorRoute124",
     "gMapGroup_Custom_TownsAndRoutes",
-    "gMapGroup_IndoorKingsisle"
+    "gMapGroup_IndoorKingsisle",
+    "gMapGroup_Gatehouses"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",
@@ -94,7 +95,8 @@
     "Underwater_Route128",
     "Underwater_Route129",
     "Underwater_Route105",
-    "Underwater_Route125"
+    "Underwater_Route125",
+    "KingsisleInstitute_Academy"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",
@@ -625,11 +627,16 @@
   ],
   "gMapGroup_Custom_TownsAndRoutes": [
     "KingsisleInstitute",
-    "PorytilesTestMap"
+    "PorytilesTestMap",
+    "KingsisleInstitute_Academy_2"
   ],
   "gMapGroup_IndoorKingsisle": [
     "KingsisleDorm_1F",
     "KingsisleDorm_2F",
     "HeadmastersHouse_1F"
+  ],
+  "gMapGroup_Gatehouses": [
+    "KINGSISLE_GATEHOUSE",
+    "Academy_Gatehouse"
   ]
 }

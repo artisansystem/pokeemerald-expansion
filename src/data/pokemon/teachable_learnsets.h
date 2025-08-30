@@ -54,6 +54,7 @@
 // - MOVE_SKILL_SWAP                                   //
 // - MOVE_SNATCH                                       //
 // - MOVE_OVERHEAT                                     //
+// - MOVE_VOLT_SWITCH                                  //
 // - MOVE_CUT                                          //
 // - MOVE_FLY                                          //
 // - MOVE_SURF                                         //
@@ -938,6 +939,7 @@ static const u16 sPichuTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_2_CROSS_EVOS
@@ -982,6 +984,7 @@ static const u16 sPikachuTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -1027,6 +1030,7 @@ static const u16 sRaichuTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -1067,6 +1071,7 @@ static const u16 sRaichuAlolaTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_ALOLAN_FORMS
@@ -3712,6 +3717,7 @@ static const u16 sGeodudeAlolaTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -3752,6 +3758,7 @@ static const u16 sGravelerAlolaTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -3795,6 +3802,7 @@ static const u16 sGolemAlolaTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_ALOLAN_FORMS
@@ -4224,6 +4232,7 @@ static const u16 sMagnemiteTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -4253,6 +4262,7 @@ static const u16 sMagnetonTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -4284,6 +4294,7 @@ static const u16 sMagnezoneTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_4_CROSS_EVOS
@@ -5095,6 +5106,7 @@ static const u16 sVoltorbTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -5124,6 +5136,7 @@ static const u16 sElectrodeTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -5148,6 +5161,7 @@ static const u16 sVoltorbHisuiTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -5172,6 +5186,7 @@ static const u16 sElectrodeHisuiTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_HISUIAN_FORMS
@@ -6848,6 +6863,7 @@ static const u16 sElekidTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_2_CROSS_EVOS
@@ -6894,6 +6910,7 @@ static const u16 sElectabuzzTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -6944,6 +6961,7 @@ static const u16 sElectivireTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_4_CROSS_EVOS
@@ -7411,6 +7429,7 @@ static const u16 sJolteonTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -8132,6 +8151,7 @@ static const u16 sZapdosTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -9128,6 +9148,7 @@ static const u16 sChinchouTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_WATERFALL,
     MOVE_WATER_PULSE,
     MOVE_UNAVAILABLE,
@@ -9158,6 +9179,7 @@ static const u16 sLanturnTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_WATERFALL,
     MOVE_WATER_PULSE,
     MOVE_UNAVAILABLE,
@@ -9407,6 +9429,7 @@ static const u16 sMareepTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -9450,6 +9473,7 @@ static const u16 sFlaaffyTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -9494,6 +9518,7 @@ static const u16 sAmpharosTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MAREEP
@@ -10451,6 +10476,7 @@ static const u16 sForretressTeachableLearnset[] = {
     MOVE_SWIFT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_PINECO
@@ -12027,6 +12053,7 @@ static const u16 sRaikouTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_RAIKOU
@@ -14282,6 +14309,7 @@ static const u16 sNosepassTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -14319,6 +14347,7 @@ static const u16 sProbopassTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_GEN_4_CROSS_EVOS
@@ -14770,6 +14799,7 @@ static const u16 sElectrikeTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -14802,6 +14832,7 @@ static const u16 sManectricTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_ELECTRIKE
@@ -14840,6 +14871,7 @@ static const u16 sPlusleTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_PLUSLE
@@ -14877,6 +14909,7 @@ static const u16 sMinunTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MINUN
@@ -18664,6 +18697,7 @@ static const u16 sShinxTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -18694,6 +18728,7 @@ static const u16 sLuxioTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -18726,6 +18761,7 @@ static const u16 sLuxrayTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SHINX
@@ -19091,6 +19127,7 @@ static const u16 sPachirisuTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_PACHIRISU
@@ -20347,6 +20384,7 @@ static const u16 sRotomTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_ROTOM
@@ -21920,6 +21958,7 @@ static const u16 sBlitzleTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -21951,6 +21990,7 @@ static const u16 sZebstrikaTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_BLITZLE
@@ -24187,6 +24227,7 @@ static const u16 sEmolgaTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_EMOLGA
@@ -24418,6 +24459,7 @@ static const u16 sJoltikTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -24445,6 +24487,7 @@ static const u16 sGalvantulaTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_JOLTIK
@@ -24523,6 +24566,7 @@ static const u16 sKlinkTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -24542,6 +24586,7 @@ static const u16 sKlangTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -24562,6 +24607,7 @@ static const u16 sKlinklangTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_KLINK
@@ -24593,6 +24639,7 @@ static const u16 sEelektrikTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -24633,6 +24680,7 @@ static const u16 sEelektrossTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_TYNAMO
@@ -25825,6 +25873,7 @@ static const u16 sCobalionTeachableLearnset[] = {
     MOVE_TAUNT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_COBALION
@@ -25968,6 +26017,7 @@ static const u16 sThundurusTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_THUNDURUS
@@ -26050,6 +26100,7 @@ static const u16 sZekromTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_ZEKROM
@@ -27757,6 +27808,7 @@ static const u16 sHelioptileTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -27795,6 +27847,7 @@ static const u16 sHelioliskTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_HELIOPTILE
@@ -28006,6 +28059,7 @@ static const u16 sDedenneTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_DEDENNE
@@ -29206,6 +29260,7 @@ static const u16 sGrubbinTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -29228,6 +29283,7 @@ static const u16 sCharjabugTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -29254,6 +29310,7 @@ static const u16 sVikavoltTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_GRUBBIN
@@ -30445,6 +30502,7 @@ static const u16 sTogedemaruTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_TOGEDEMARU
@@ -30730,6 +30788,7 @@ static const u16 sTapuKokoTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_TAPU_KOKO
@@ -31017,6 +31076,7 @@ static const u16 sXurkitreeTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_XURKITREE
@@ -31161,6 +31221,7 @@ static const u16 sMagearnaTeachableLearnset[] = {
     MOVE_SWIFT,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MAGEARNA
@@ -31321,6 +31382,7 @@ static const u16 sZeraoraTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_ZERAORA
@@ -31925,6 +31987,7 @@ static const u16 sYamperTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -31945,6 +32008,7 @@ static const u16 sBoltundTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_YAMPER
@@ -32260,6 +32324,7 @@ static const u16 sToxtricityAmpedTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -32290,6 +32355,7 @@ static const u16 sToxtricityLowKeyTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_TOXEL
@@ -32785,6 +32851,7 @@ static const u16 sMorpekoTeachableLearnset[] = {
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
     MOVE_TORMENT,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MORPEKO
@@ -33301,6 +33368,7 @@ static const u16 sRegielekiTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_REGIELEKI
@@ -33773,6 +33841,7 @@ static const u16 sPawmiTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -33792,6 +33861,7 @@ static const u16 sPawmoTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -33819,6 +33889,7 @@ static const u16 sPawmotTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_PAWMI
@@ -34108,6 +34179,7 @@ static const u16 sTadbulbTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_WATER_PULSE,
     MOVE_UNAVAILABLE,
 };
@@ -34127,6 +34199,7 @@ static const u16 sBelliboltTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
     MOVE_TOXIC,
+    MOVE_VOLT_SWITCH,
     MOVE_WATER_PULSE,
     MOVE_UNAVAILABLE,
 };
@@ -34145,6 +34218,7 @@ static const u16 sWattrelTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 
@@ -34161,6 +34235,7 @@ static const u16 sKilowattrelTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_WATTREL
@@ -35091,6 +35166,7 @@ static const u16 sSandyShocksTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_SANDY_SHOCKS
@@ -35112,6 +35188,7 @@ static const u16 sIronTreadsTeachableLearnset[] = {
     MOVE_SANDSTORM,
     MOVE_SLEEP_TALK,
     MOVE_THUNDER,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_IRON_TREADS
@@ -35161,6 +35238,7 @@ static const u16 sIronHandsTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_PUNCH,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_IRON_HANDS
@@ -35239,6 +35317,7 @@ static const u16 sIronThornsTeachableLearnset[] = {
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_PUNCH,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_IRON_THORNS
@@ -35530,6 +35609,7 @@ static const u16 sMiraidonTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_MIRAIDON
@@ -35751,6 +35831,7 @@ static const u16 sRagingBoltTeachableLearnset[] = {
     MOVE_THUNDER,
     MOVE_THUNDERBOLT,
     MOVE_THUNDER_WAVE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_RAGING_BOLT
@@ -35792,6 +35873,7 @@ static const u16 sIronCrownTeachableLearnset[] = {
     MOVE_REST,
     MOVE_SLEEP_TALK,
     MOVE_SWORDS_DANCE,
+    MOVE_VOLT_SWITCH,
     MOVE_UNAVAILABLE,
 };
 #endif //P_FAMILY_IRON_CROWN
