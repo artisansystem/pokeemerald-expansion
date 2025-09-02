@@ -3682,6 +3682,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst, bool8 re
             dst->statStages[i] = DEFAULT_STAT_STAGE;
 
     memset(&dst->volatiles, 0, sizeof(struct Volatiles));
+    }
 }
 
 void CopyPartyMonToBattleData(u32 battler, u32 partyIndex, bool8 resetStats)

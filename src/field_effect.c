@@ -268,6 +268,10 @@ extern const struct SpriteTemplate *const gFieldEffectObjectTemplatePointers[];
 static const u32 sNewGameBirch_Gfx[] = INCBIN_U32("graphics/birch_speech/birch.4bpp");
 static const u32 sUnusedBirchBeauty[] = INCBIN_U32("graphics/birch_speech/unused_beauty.4bpp");
 static const u16 sNewGameBirch_Pal[16] = INCBIN_U16("graphics/birch_speech/birch.gbapal");
+static const u32 sNewGamePlatformLeft_Gfx[] = INCBIN_U32("graphics/uriel_speech/shadow-left.4bpp");
+static const u32 sNewGamePlatformRight_Gfx[] = INCBIN_U32("graphics/uriel_speech/shadow-right.4bpp");
+static const u16 sNewGamePlatformLeft_Pal[16] = INCBIN_U16("graphics/uriel_speech/shadow-left.gbapal");
+static const u16 sNewGamePlatformRight_Pal[16] = INCBIN_U16("graphics/uriel_speech/shadow-right.gbapal");
 
 static const u32 sPokeballGlow_Gfx[] = INCBIN_U32("graphics/field_effects/pics/pokeball_glow.4bpp");
 static const u16 sPokeballGlow_Pal[16] = INCBIN_U16("graphics/field_effects/palettes/pokeball_glow.gbapal");
@@ -320,6 +324,20 @@ static const struct OamData sOam_64x64 =
     .paletteNum = 0,
 };
 
+static const struct OamData sOam_64x32 =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x32),
+    .x = 0,
+    .size = SPRITE_SIZE(64x32),
+    .tileNum = 0,
+    .priority = 0,
+    .paletteNum = 0,
+};
+
 static const struct OamData sOam_8x8 =
 {
     .y = 0,
@@ -353,6 +371,17 @@ static const struct SpriteFrameImage sPicTable_NewGameBirch[] =
     obj_frame_tiles(sNewGameBirch_Gfx)
 };
 
+static const struct SpriteFrameImage sPicTable_NewGamePlatformLeft[] =
+{
+    obj_frame_tiles(sNewGamePlatformLeft_Gfx)
+};
+
+static const struct SpriteFrameImage sPicTable_NewGamePlatformRight[] =
+{
+    obj_frame_tiles(sNewGamePlatformRight_Gfx)
+};
+
+
 static const struct SpritePalette sSpritePalette_NewGameBirch =
 {
     .data = sNewGameBirch_Pal,
@@ -365,6 +394,19 @@ static const struct SpritePalette sSpritePalette_NewGameUriel =
     .tag = 0x1006
 };
 
+static const struct SpritePalette sSpritePalette_NewGamePlatformLeft =
+{
+    .data = sNewGamePlatformLeft_Pal,
+    .tag = 0x9000,
+};
+
+static const struct SpritePalette sSpritePalette_NewGamePlatformRight =
+{
+    .data = sNewGamePlatformRight_Pal,
+    .tag = 0x9001,
+};
+
+
 static const union AnimCmd sAnim_NewGameBirch[] =
 {
     ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
@@ -374,6 +416,17 @@ static const union AnimCmd sAnim_NewGameBirch[] =
 static const union AnimCmd *const sAnimTable_NewGameBirch[] =
 {
     sAnim_NewGameBirch
+};
+
+static const union AnimCmd sAnim_NewGamePlatform[] =
+{
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnimTable_NewGamePlatform[] =
+{
+    sAnim_NewGamePlatform
 };
 
 static const struct SpriteTemplate sSpriteTemplate_NewGameBirch =
@@ -394,6 +447,28 @@ static const struct SpriteTemplate sSpriteTemplate_NewGameUriel =
     .oam = &sOam_64x64,
     .anims = sAnimTable_NewGameBirch,
     .images = sPicTable_NewGameBirch,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+const struct SpriteTemplate sSpriteTemplate_NewGamePlatformLeft =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 0x9000,
+    .oam = &sOam_64x32,
+    .anims = sAnimTable_NewGamePlatform,
+    .images = sPicTable_NewGamePlatformLeft,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+const struct SpriteTemplate sSpriteTemplate_NewGamePlatformRight =
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 0x9001,
+    .oam = &sOam_64x32,
+    .anims = sAnimTable_NewGamePlatform,
+    .images = sPicTable_NewGamePlatformRight,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
@@ -972,6 +1047,18 @@ u8 AddNewGameUrielObject(s16 x, s16 y, u8 subpriority)
 {
     LoadSpritePalette(&sSpritePalette_NewGameUriel);
     return CreateSprite(&sSpriteTemplate_NewGameUriel, x, y, subpriority);
+}
+
+u8 AddNewGamePlatformObjectLeft(s16 x, s16 y, u8 subpriority)
+{
+    LoadSpritePalette(&sSpritePalette_NewGamePlatformLeft);
+    return CreateSprite(&sSpriteTemplate_NewGamePlatformLeft, x, y, subpriority);
+}
+
+u8 AddNewGamePlatformObjectRight(s16 x, s16 y, u8 subpriority)
+{
+    LoadSpritePalette(&sSpritePalette_NewGamePlatformRight);
+    return CreateSprite(&sSpriteTemplate_NewGamePlatformRight, x, y, subpriority);
 }
 
 u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)

@@ -13,264 +13,53 @@
 #include "malloc.h"
 #include "task.h"
 #include "menu.h"
+#include "main_menu.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "strings.h"
 #include "trainer_pokemon_sprites.h"
 #include "pokeball.h"
+#include "pokemon.h"
 #include "naming_screen.h"
 #include "overworld.h"
 #include "uriel_speech.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
-
-/*! @brief
- * This file controls Elder Kaba's speech sequence, made
- * seperately from src/main_menu.c to avoid too big of
- * conflicts and just makes the sequence much cleaner to
- * read.
- *
- * Below is the order of functions that'll run the intro.
- * 
- * DoUrielSpeech
- *      Move the game state into Elder Kaba's Speech.
- * 
- * Task_UrielSpeech_Begin
- *      Basic UI-loading code, so stuff like initializing
- *      registers settings, bgs, windows and sprites goes
- *      here.
- *      There's two functions that do this, but
- *      Task_UrielSpeech_Begin is only for loading
- *      the intro the first time.
- * 
- * Task_UrielSpeech_FadeInEverything
- *      Waits for the palette fading from black
- *      (by Task_UrielSpeech_Begin) to slowly
- *      fades in Kaba's mugshot and the messagebox
- *      Also delays by 30 frames to perfectly
- *      prints sUrielSpeech_Greetings.
- * 
- * Task_UrielSpeech_GreetingsTraveler
- *      Waits for sUrielSpeech_Greetings to be done
- *      printing. When its completely done, it'll
- *      print sUrielSpeech_AndThis and continue to the
- *      next function below.
- * 
- * Task_UrielSpeech_AndThis
- *      Waits for sUrielSpeech_AndThis to be done
- *      printing. When its completely done, it'll
- *      starts the Joltik sequence.
- * 
- * Task_UrielSpeech_ReleaseJoltikFromPokeball
- *      Delay 30 frames before releasing Joltik.
- * 
- * Task_UrielSpeech_JoltikAPokemon
- *      Wait for Joltik's cry finished and delay for
- *      192+ frames. After that, it'll print
- *      sUrielSpeech_JoltikAPokemon and continue on.
- * 
- * Task_UrielSpeech_MainTalk
- *      Waits for sUrielSpeech_JoltikAPokemon to be
- *      done printing. When its completely done,
- *      it'll print sUrielSpeech_MainTalk.
- * 
- * Task_UrielSpeech_ReturnJoltik
- *      Waits for sUrielSpeech_MainTalk to be done
- *      printing, Once its completely done, it'll
- *      begin to do Joltik returning to its
- *      Pokeball's sequence.
- * 
- * Task_UrielSpeech_FadeOutPokeball
- *      Waits for the Joltik returning to its
- *      Pokeball's sequence to be done. Once the
- *      Pokeball sprite has SpriteCallbackDummy as
- *      its sprite callback, begin fading out everything.
- *      (except the background, of course)
- * 
- * Task_UrielSpeech_FadeOutEverything
- *      Waits for sUrielSpeech->fadeFinished to be TRUE.
- *      Once it is TRUE, it'll remove the Joltik and
- *      Pokeball sprites, messagebox and Kaba's mugshot.
- *      It'll also spawn Ao and Aka's mugshots. Everything
- *      currently is faded out at this point aka unseen so
- *      its "safe" to do.
- * 
- * Task_UrielSpeech_FadeInPlayerMugshotChoice
- *      Starts fading in the player gender choice with a
- *      delay of 60 frames. Also sets up delay to 60 frames.
- * 
- * Task_UrielSpeech_SetupPlayerMugshotChoice
- *      Waits for the previous fade to finish with
- *      fadeFinished. Once it is done, it'll first delay
- *      by 60 frames and then prints sUrielSpeech_GenderChoice,
- *      set MUGSHOT_AO as the chosenMugshot and set delay to 30
- *      frames.
- * 
- * Task_UrielSpeech_WaitForPlayerMugshotChoice
- *      Waits for player's input for selecting the gender.
- *      However, it'll first delay by 30 frames prior once.
- *      DPAD_LEFT/RIGHT for selecting between Ao and Aka
- *      (wrapped selection so if you go DPAD_LEFT from Ao,
- *      it'll go to Aka etc), and A_BUTTON to confirm
- *      selection.
- * 
- * Task_UrielSpeech_MoveChosenMugshot
- *      Move and fade away the unchosen mugshot, while also
- *      moving the chosen mugshot to the center of the screen.
- *      After all that cool jazz is done, print
- *      sUrielSpeech_ConfirmChosenGender.
- * 
- * Task_UrielSpeech_SpawnYesNoMenuForPlayerMugshot
- *      Spawns in the Yes/No menu for confirming chosen
- *      gender mugshot, with a delay for 15 frames first.
- *      Also sets sUrielSpeech->playerHasName to FALSE
- *      for "safety".
- * 
- * Task_UrielSpeech_HandleConfirmChosenMugshotInput
- *      Handles the Yes/No menu input. if YES, continue
- *      to naming the player. Otherwise if NO/pressed B,
- *      go back to the choosing gender mugshot sequence.
- * 
- * Task_UrielSpeech_AskForName
- *      Either prints sUrielSpeech_ThisIsChildhoodFriend or
- *      sUrielSpeech_AskPlayerName depending if the player
- *      has already been named or not.
- * 
- * Task_UrielSpeech_MoveMugshotsBack
- *      Similar to Task_UrielSpeech_MoveChosenMugshot, but
- *      it restores back to the original position of the
- *      character's pics for gender selection.
- * 
- * Task_UrielSpeech_WaitBeforeNamingScreen
- *      Waits for the player to press the A/B button. If one
- *      of them pressed, it'll fade the screen to back
- * 
- * Task_UrielSpeech_DoNamingScreen
- *      Waits for the fade to black to be finished to
- *      call the naming screen for either rival or player
- *      depending if the player has a name yet, also sets
- *      a default name for both to avoid having a null name
- *      when the player is not writing anything in the
- *      naming screen. This also destroys the platform
- *      sprites and destroys the entire task.
- * 
- * Task_UrielSpeech_ConfirmChosenName
- *      Returns from the naming screen, print either
- *      sUrielSpeech_SoThisIsRival or sUrielSpeech_SoYourePlayer
- *      depending on who is being named. Also creates the
- *      Yes/No menu again, this time for confirming the
- *      player's name.
- * 
- * Task_UrielSpeech_HandleConfirmNameInput
- *      Handles player's input for confirming the rival/
- *      player's name choice.
- *      If YES, continue to name Rival or finishing both.
- *      Otherwise if NO/B button pressed, do naming
- *      sequence from the start again
- * 
- * Task_UrielSpeech_ConfirmPlayerName
- *      Waits for sUrielSpeech_ConfirmPlayerName to be finished
- *      AND also pressing either the A/B button. If conditions
- *      were met, clear the messagebox and fade out player to
- *      name rival.
- * 
- * Task_UrielSpeech_YourJourneyStartsHere
- *      Delays for 30 frames, and then starts to print
- *      sUrielSpeech_YourJourneyStartsHere.
- * 
- * Task_UrielSpeech_CloseMsgbox
- *      Waits for sUrielSpeech_YourJourneyStartsHere to be
- *      finished AND also pressing either the A/B button. If
- *      conditions were met, clear the messagebox and fade
- *      away.
- * 
- * Task_UrielSpeech_FadeAwayEverything
- *      Waits for 40 frames delay, then fade everything
- *      to black whilst playing SE_EXIT.
- * 
- * Task_UrielSpeech_Cleanup
- *      When the fading is done, waits for 30 frames and
- *      clean up everything and warp to new game to finish
- *      off the intro.
- * 
- * Finally, here is the helper functions.
- * 
- * UrielSpeech_DrawCharacterMugshot (u8 id)
- *      Draws the mugshot of either Kaba, Ao and Aka
- *      depending on the `id` argument.
- *      The way I did them is making them tilemaps.
- * 
- * UrielSpeech_PrintMessageBox (const u8 *str)
- *      Prints a message from `str` to the messagebox's
- *      window (WIN_TEXT) and copy everything to VRAM.
- * 
- * UrielSpeech_CreateMonSprite (void)
- *      Creates a sprite of Joltik and hides it.
- * 
- * UrielSpeech_CreatePlatformSprites (bool32 hide)
- *      Creates a platform consisting of 2 64x32 sprites.
- *      Set `hide` to TRUE to hide these sprites, the reason
- *      is because they can be both visible and invisible.
- * 
- * UrielSpeech_DestroyPlatformSprites (void)
- *      Destroys the platform sprites, and set the spriteIds
- *      to SPRITE_NONE.
- * 
- * UrielSpeech_BeginFade (u8 fadeOut, u8 delay, u8 spriteType)
- *      A basic function taken from FRLG to either fade in or
- *      fade out depending if `fadeOut` is set. It can also
- *      delays for several frames before the fading. `spriteType`
- *      indicates what value to be used for the
- *      REG_OFFSET_BLDCNT register.
- * 
- * UrielSpeech_SetDefaultName
- *      Sets a default name for both Player and Rival.
- *      "Aka" for male, "Ao" for female.
- * 
- * CB2_UrielSpeech_ReturnFromNamingScreen
- *      This basically does what Task_UrielSpeech_Begin did,
- *      but as a callback2 and returns with either Aka/Ao
- *      shown on a platform instead of Kaba.
- * 
- */
+#include "title_screen.h"
+#include "stddef.h"
+#include "string.h"
+#include "stdint.h"
+#include "field_effect.h"
 
 // Define, enum, struct definitions
 
-// If you want to edit these sprite pos defines, dont touch the `+ 32`!
-// positions for joltik + pokeball
 #define MON_POS_X 100 
 #define MON_POS_Y 75
-// positions for platform (they're split into two sprites!)
-#define PLAT_POS_X 56 + 32
-#define PLAT_POS_Y 83 + 16
-// this is pos difference for the second platform sprite
-#define PLAT_POS_X2 64
 
 // bg pos
 #define JACOB_MUGSHOT_CENTER_POS 30
 #define EMILY_MUGSHOT_CENTER_POS  29
 #define BRIAR_MUGSHOT_CENTER_POS  28
 
-#define PLAT_SPRITE_ID_COUNT 2
+#define tWindowId data[1]
+#define tPlayerSpriteId data[2]
+#define tPrevCursorPos data[3]
+#define tIsDoneFadingSprites data[4]
+#define tNextSpriteId data[5]
+#define tPlayerGender data[6]
+
+#define WINDOWID_YES_NO 1
 
 // tSpriteType, for fade in/out
 enum SpriteTypes
 {
-    SPRITE_TYPE_PLATFORM = 0,
-    SPRITE_TYPE_POKE_BALL,
     // these arent technically sprites but close nuff :)
-    SPRITE_TYPE_MUGSHOT_1,
+    SPRITE_TYPE_MUGSHOT_1 = 0,
     SPRITE_TYPE_MUGSHOT_2,
-//    SPRITE_TYPE_MUGSHOT_3,
+    SPRITE_TYPE_MUGSHOT_3,
     // similar to above but not quite
     SPRITE_TYPE_PLAYER,
-    SPRITE_TYPE_RIVAL,
     SPRITE_TYPE_NONE,
-};
-
-enum SpriteTags
-{
-    TAG_PLATFORM = 0x9000,
 };
 
 enum Bgs
@@ -281,7 +70,7 @@ enum Bgs
     // kaba and player/rival sprites
     BG_MUGSHOT_1,
     BG_MUGSHOT_2,
-//    BG_MUGSHOT_3,
+    // BG_MUGSHOT_3,
     // BG_BG feels stupid but this isn't any better either,
     // suggestions welcome (for context this is for the red bg)
     BG_INTRO,
@@ -320,10 +109,14 @@ struct UrielSpeech
     u16 introTilemapBuffer[0x800];
     u16 pic1TilemapBuffer[0x800];
     u16 pic2TilemapBuffer[0x800];
-//    u16 pic3TilemapBuffer[0x800];
+    // u16 pic3TilemapBuffer[0x800];
     u8 monSpriteId;
-    u8 ballSpriteId;
-    u8 platformSpriteIds[PLAT_SPRITE_ID_COUNT]; // the platform is made out of 2 64x32sprites
+    u8 urielSpriteId;
+    u8 platformSpriteIdLeft;
+    u8 platformSpriteIdRight;
+    u8 maleStudentSpriteId;
+    u8 femaleStudentSpriteId;
+    u8 enbyStudentSpriteId;
     s16 alphaCoeff;
     s16 alphaCoeff2;
     s16 timer;
@@ -331,88 +124,149 @@ struct UrielSpeech
     s16 counter;
     bool32 fadeFinished:1;
     bool32 playerHasName:1;
-    u8 chosenMugshot;
+    bool32 playerHasLastName:1;
+    u8 chosenSprite;
 };
 
 // EWRAM data
 static EWRAM_DATA struct UrielSpeech *sUrielSpeech = NULL;
 
+// Globals
+static u8 sDebugWindowId;
+
 // Function declarations
 static void Task_UrielSpeech_Begin(u8);
 static void Task_UrielSpeech_FadeInEverything(u8);
 static void Task_UrielSpeech_Welcome(u8);
+static void Task_UrielSpeech_Acceptance(u8);
 static void Task_UrielSpeech_ThisIs(u8);
 static void Task_UrielSpeech_ReleaseAlakazamFromPokeball(u8);
 static void Task_UrielSpeech_AlakazamAPokemon(u8);
 static void Task_UrielSpeech_MainSpeech(u8);
-static void Task_UrielSpeech_ReturnJoltik(u8);
-static void Task_UrielSpeech_FadeOutPokeball(u8);
-static void Task_UrielSpeech_FadeOutEverything(u8);
-static void Task_UrielSpeech_FadeInPlayerMugshotChoice(u8);
-static void Task_UrielSpeech_SetupPlayerMugshotChoice(u8);
-static void Task_UrielSpeech_WaitForPlayerMugshotChoice(u8);
-static void Task_UrielSpeech_MoveChosenMugshot(u8);
-static void Task_UrielSpeech_SpawnYesNoMenuForPlayerMugshot(u8);
-static void Task_UrielSpeech_HandleConfirmChosenMugshotInput(u8);
-static void Task_UrielSpeech_MoveMugshotsBack(u8);
-static void Task_UrielSpeech_AskForName(u8);
-static void Task_UrielSpeech_WaitBeforeNamingScreen(u8);
-static void Task_UrielSpeech_DoNamingScreen(u8);
-static void Task_UrielSpeech_ConfirmChosenName(u8);
-static void Task_UrielSpeech_HandleConfirmNameInput(u8);
-static void Task_UrielSpeech_ConfirmPlayerName(u8);
-static void Task_UrielSpeech_YourJourneyStartsHere(u8);
+static void Task_UrielSpeech_Registration(u8);
+static void Task_UrielSpeech_PlatformFade(u8);
+static void Task_UrielSpeech_SlidePlatformAway(u8);
+static void Task_UrielSpeech_StartPlayerFadeIn(u8);
+static void Task_UrielSpeech_GenderSelect(u8);
+static void Task_UrielSpeech_WaitToShowGenderMenu(u8);
+static void UrielSpeech_ShowGenderMenu(u8);
+static void Task_UrielSpeech_ChooseGender(u8);
+static void Task_UrielSpeech_SwitchGenderSprite(u8);
+static void Task_UrielSpeech_SlideOutOldGenderSprite(u8);
+static void Task_UrielSpeech_SlideInNewGenderSprite(u8);
+static s8 UrielSpeech_ProcessGenderMenuInput(void);
+static void Task_UrielSpeech_YourName(u8);
+static void Task_UrielSpeech_WaitForWhatsYourNameToPrint(u8);
+static void Task_UrielSpeech_WaitPressBeforeNameChoice(u8);
+static void Task_UrielSpeech_StartNamingScreen(u8);
+static void Task_UrielSpeech_ReturnFromNamingScreenShowTextbox(u8);
+static void Task_UrielSpeech_ConfirmFirstName(u8);
+static void Task_UrielSpeech_CreateFirstNameYesNo(u8);
+static void Task_UrielSpeech_ProcessFirstNameYesNoMenu(u8);
+static void Task_UrielSpeech_YourLastName(u8);
+static void Task_UrielSpeech_WaitForWhatsYourLastNameToPrint(u8);
+static void Task_UrielSpeech_WaitPressBeforeLastNameChoice(u8);
+static void Task_UrielSpeech_StartNamingScreen2(u8);
+static void Task_UrielSpeech_ReturnFromNamingScreen2ShowTextbox(u8);
+static void Task_UrielSpeech_ConfirmLastName(u8);
+static void Task_UrielSpeech_CreateLastNameYesNo(u8);
+static void Task_UrielSpeech_ProcessLastNameYesNoMenu(u8);
+static void Task_UrielSpeech_SlidePlatformAway2(u8);
+static void Task_UrielSpeech_ReshowUriel(u8);
+static void Task_UrielSpeech_NiceToMeetYou(u8);
 static void Task_UrielSpeech_CloseMsgbox(u8);
 static void Task_UrielSpeech_FadeAwayEverything(u8);
 static void Task_UrielSpeech_Cleanup(u8);
 
+// Helper Functions
 static void UrielSpeech_DrawCharacterMugshot(u8);
 static inline void UrielSpeech_PrintMessageBox(const u8 *);
 static void UrielSpeech_CreateMonSprite(void);
-static void UrielSpeech_CreatePlatformSprites(bool32 hide);
-static void UrielSpeech_DestroyPlatformSprites(void);
+static void UrielSpeech_CreateUrielSprite(void);
+static void UrielSpeech_CreatePlatformSprite(void);
+static void UrielSpeech_CreatePlayerSprites(void);
+static void Task_UrielSpeech_FadeOut(u8);
+static void Task_UrielSpeech_FadeIn(u8);
 static void UrielSpeech_BeginFade(u8, u8, u8);
 static void UrielSpeech_SetDefaultName(void);
 static void CB2_UrielSpeech_ReturnFromNamingScreen(void);
+static void UrielSpeech_SetDefaultLastName(void);
+static void CB2_UrielSpeech_ReturnFromNamingScreen2(void);
+static void WindowFunc_DrawStandardFrame(u8 bg, u8 tilemapLeft, u8 tilemapTop, u8 width, u8 height, u8 paletteNum);
+
+// Debug Functions
+// static void DebugPrintOnScreen(const char *str);
+// static void DebugPrintHexPointerWithPrefix(const char *prefix, const void *ptr);
+// static void AsciiToGameText(const char *ascii, u8 *dest);
+// static void Debug_SetMainCallback2(MainCallback callback);
+// static void DebugPrintPointer(const u8 *label, void *ptr);
+// static void DebugPrintU8(const u8 *label, u8 value);
+
+
 
 // Const data
-static const u8 sUrielSpeech_Aka[] = _("Aka");
-static const u8 sUrielSpeech_Ao[]  = _("Ao");
+extern const struct SpriteTemplate sSpriteTemplate_NewGamePlatformLeft;
+extern const struct SpriteTemplate sSpriteTemplate_NewGamePlatformRight;
+
+static const u8 sUrielSpeech_Jacob[] = _("Jacob");
+static const u8 sUrielSpeech_Emily[]  = _("Emily");
+static const u8 sUrielSpeech_Briar[] = _("Briar");
+
+static const u8 sUrielSpeech_Boy[] = _("BOY");
+static const u8 sUrielSpeech_Girl[] = _("GIRL");
+static const u8 sUrielSpeech_Nonbinary[] = _("NON-BINARY");
+
+static const struct MenuAction sMenuActions_GenderSelect[] =
+{
+    { sUrielSpeech_Boy,       { .void_u8 = NULL } },
+    { sUrielSpeech_Girl,      { .void_u8 = NULL } },
+    { sUrielSpeech_Nonbinary, { .void_u8 = NULL } },
+};
 
 static const u8 sUrielSpeech_Welcome[] = _(
     "Hello. My name is Uriel Dawnsinger.\p"
 	"I am the headmaster of the prestigious\n"
-	"Kingsisle Institute.\n"
-	"Please allow me to offer you this letter\n"
-	"of acceptance for our upcoming fall term.\p"
+	"Kingsisle Institute.\p"
+);
+ 
+static const u8 sUrielSpeech_Acceptance[] = _(
+    "Please allow me to offer you this letter\n"
+	"of acceptance for our upcoming fall\l"
+    "term.\p"
 );
 
 static const u8 sUrielSpeech_ThisIs[] = _(
-    "The world of the Institute is inhabited\n"
-	"by creatures known as Pokémon.\p"
-    "Let me show you what we call a Pokémon.\p"
+    "The world of the Institute, known as\n"
+    "the Underground, is inhabited by\l"
+	"creatures known as Pokémon.\p"
+    "Let me show you what we call a\n" 
+    "Pokémon.\p"
 );
 
 static const u8 sUrielSpeech_AlakazamAPokemon[] = _(
-    "This Alakazam is my personal partner Pokémon.\p"
+    "This Alakazam is my personal partner\n"
+    "Pokémon.\p"
 );
 
 static const u8 sUrielSpeech_MainSpeech[] = _(
     "When the Gods brought us to this world,\n"
-	"they also trusted us with caring for its\n"
-	"creatures. The Undergound is a place of\l"
-	"various cultures and species, but\l"
-	"caring for Pokémon is something we all\l"
-	"have in common.\p"
+	"they also trusted us with caring for\p"
+	"its creatures. The Underground is a\n"
+	"place of various cultures and species,\p"
+	"but caring for Pokémon is something we\n"
+	"all have in common.\p"
 	"While we live alongside Pokémon, there\n"
-	"is still much we do not know about them.\n"
-	"This is why the Kingsisle Institute was\l"
+	"is still much we do not know about them.\p"
+	"This is why the Kingsisle Institute was\n"
 	"founded: to unravel the mysteries\l"
 	"surrounding Pokémon.\p"
 );
 
 static const u8 sUrielSpeech_Registration[] = _(
     "Now, let's get your papers in order.\p"
+);
+
+static const u8 sUrielSpeech_GenderSelect[] = _(
 	"How do you identify?\p"
 );
 
@@ -422,24 +276,36 @@ static const u8 sUrielSpeech_HowDoYouLook[] = _(
 );
 
 static const u8 sUrielSpeech_AskPlayerName[] = _(
-    "And your full name?\p"
+    "And your first name?\p"
+);
+
+static const u8 sUrielSpeech_ConfirmFirstName[] = _(
+    "So it's {PLAYER}?\p"
+);
+
+static const u8 sUrielSpeech_AskPlayerLastName[] = _(
+    "All right. What about your last name?\p"
+);
+
+static const u8 sUrielSpeech_ConfirmPlayerLastName[] = _(
+    "{PLAYER_LAST_NAME}, is it?\p"
 );
 
 static const u8 sUrielSpeech_NiceToMeetYou[] = _(
     "Nice to meet you, {PLAYER} {PLAYER_LAST_NAME}.\n"
-    "There's a lot to prepare before your\n"
-	"first day, so how about we get going?\n"
-	"I'll be expecting you later. Come see me\l"
+    "There's a lot to prepare before your\l"
+	"first day, so how about we get going?\p"
+	"I'll be expecting you later. Come see me\n"
 	"once you've settled in.\p"
 );
 
 static const u16 sUrielSpeech_BgGfx[] = INCBIN_U16("graphics/uriel_speech/bg.4bpp");
 static const u16 sUrielSpeech_BgPal[] = INCBIN_U16("graphics/uriel_speech/bg.gbapal");
-static const u32 sUrielSpeech_BgMap[] = INCBIN_U32("graphics/uriel_speech/bg.bin");
+static const u32 sUrielSpeech_BgMap[] = INCBIN_U32("graphics/uriel_speech/bg.bin.smolTM");
 
 static const u16 sUrielSpeech_UrielPicGfx[] = INCBIN_U16("graphics/uriel_speech/pics/uriel.4bpp");
 static const u16 sUrielSpeech_UrielPicPal[] = INCBIN_U16("graphics/uriel_speech/pics/uriel.gbapal");
-static const u32 sUrielSpeech_UrielPicMap[] = INCBIN_U32("graphics/uriel_speech/pics/uriel.bin");
+static const u32 sUrielSpeech_UrielPicMap[] = INCBIN_U32("graphics/uriel_speech/pics/uriel.bin.smolTM");
 
 //! NOTE: both aka and ao has the same palette as of writing
 static const u16 sUrielSpeech_PlayerPicPal[] = INCBIN_U16("graphics/uriel_speech/pics/ao.gbapal");
@@ -474,16 +340,16 @@ static const struct BgTemplate sUrielSpeech_BgTemplates[BG_COUNT] =
         .mapBaseIndex = 28,
         .priority = 2,
     },
-//    [BG_MUGSHOT_3] = {
-//        .bg = 3,
-//        .charBaseIndex = 2,
-//        .mapBaseIndex = 26,
-//        .priority = 3,
-//    },
+    // [BG_MUGSHOT_3] = {
+    //     .bg = 2,
+    //     .charBaseIndex = 2,
+    //     .mapBaseIndex = 26,
+    //     .priority = 2,
+    // },
     [BG_INTRO] = {
         .bg = 3,
         .charBaseIndex = 3,
-        .mapBaseIndex = 27,
+        .mapBaseIndex = 25,
         .priority = 3,
     },
 };
@@ -514,63 +380,15 @@ static const struct WindowTemplate sUrielSpeech_YesNoWindow =
     .baseBlock = (26*4)+1,
 };
 
-static const struct SpriteSheet sUrielSpeech_PlatformSpriteSheet = 
+static const struct WindowTemplate sUrielSpeech_GenderWindow =
 {
-    .data = sUrielSpeech_PlatformGfx,
-    .size = 2048, // 64x128/2
-    .tag = TAG_PLATFORM,
-};
-
-static const struct SpritePalette sUrielSpeech_PlatformSpritePalette =
-{
-    .data = sUrielSpeech_PlatformPal,
-    .tag = TAG_PLATFORM,
-};
-
-static const struct OamData sUrielSpeech_PlatformOamData =
-{
-    .y = 0,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = FALSE,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(64x32),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(64x32),
-    .tileNum = 0,
-    .priority = 3,
-    .paletteNum = 0,
-    .affineParam = 0,
-};
-
-static const union AnimCmd sUrielSpeech_PlatformLeft[] =
-{
-    ANIMCMD_FRAME(0, 1),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd sUrielSpeech_PlatformRight[] =
-{
-    ANIMCMD_FRAME(32, 1),
-    ANIMCMD_END,
-};
-
-static const union AnimCmd *const sUrielSpeech_PlatformAnims[] =
-{
-    sUrielSpeech_PlatformLeft,
-    sUrielSpeech_PlatformRight
-};
-
-static const struct SpriteTemplate sUrielSpeech_PlatformTemplate =
-{
-    .tileTag = TAG_PLATFORM,
-    .paletteTag = TAG_PLATFORM,
-    .oam = &sUrielSpeech_PlatformOamData,
-    .anims = sUrielSpeech_PlatformAnims,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
+    .bg = BG_TEXT,
+    .tilemapLeft = 4,
+    .tilemapTop = 5,
+    .width = 9,
+    .height = 6,
+    .paletteNum = 15,
+    .baseBlock = (26*4)+2,
 };
 
 // Code
@@ -601,6 +419,7 @@ static void Task_UrielSpeech_Begin(u8 taskId)
     switch(gMain.state)
     {
         case STATE_RESET:
+            // DebugPrintOnScreen("STATE RESET");
             SetVBlankCallback(NULL);
             SetHBlankCallback(NULL);
             DmaFill16(3, 0, VRAM, VRAM_SIZE);
@@ -608,12 +427,19 @@ static void Task_UrielSpeech_Begin(u8 taskId)
             ScanlineEffect_Stop();
             ResetSpriteData();
             FreeAllSpritePalettes();
-            ResetTempTileDataBuffers();
+            ResetTempTileDataBuffers(); 
             break;
         case STATE_ALLOC:
+            // DebugPrintOnScreen("STATE ALLOC");
             sUrielSpeech = AllocZeroed(sizeof(*sUrielSpeech));
+            // if (!sUrielSpeech)
+            // {
+            //     DebugPrintOnScreen("ALLOC FAILED");
+            // }
+            // DebugPrintOnScreen("ALLOC OK");
             break;
         case STATE_REGS:
+            // DebugPrintOnScreen("STATE REGS");
             SetGpuReg(REG_OFFSET_WIN0H, 0);
             SetGpuReg(REG_OFFSET_WIN0V, 0);
             SetGpuReg(REG_OFFSET_WIN1H, 0);
@@ -624,26 +450,32 @@ static void Task_UrielSpeech_Begin(u8 taskId)
             SetGpuReg(REG_OFFSET_BLDALPHA, 0);
             SetGpuReg(REG_OFFSET_BLDY, 0);
             SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            // DebugPrintOnScreen("STATE REGS COMPLETE");
             break;
         case STATE_BGS:
+            // DebugPrintOnScreen("STATE_BGS");
             ResetBgsAndClearDma3BusyFlags(0);
             InitBgsFromTemplates(0, sUrielSpeech_BgTemplates, ARRAY_COUNT(sUrielSpeech_BgTemplates));
             SetBgTilemapBuffer(BG_INTRO, sUrielSpeech->introTilemapBuffer);
             SetBgTilemapBuffer(BG_MUGSHOT_1, sUrielSpeech->pic1TilemapBuffer);
             SetBgTilemapBuffer(BG_MUGSHOT_2, sUrielSpeech->pic2TilemapBuffer);
-//            SetBgTilemapBuffer(BG_MUGSHOT_3, sUrielSpeech->pic3TilemapBuffer);
+            // SetBgTilemapBuffer(BG_MUGSHOT_3, sUrielSpeech->pic3TilemapBuffer);
             ResetBgPositions();
             break;
         case STATE_BG_GFX:
+            // DebugPrintOnScreen("STATE BG GFX");
             UrielSpeech_CreateMonSprite();
-            UrielSpeech_CreatePlatformSprites(TRUE);
+            UrielSpeech_CreateUrielSprite();
+            UrielSpeech_CreatePlatformSprite();
+            UrielSpeech_CreatePlayerSprites();
             LoadPalette(sUrielSpeech_BgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
             LoadBgTiles(BG_INTRO, sUrielSpeech_BgGfx, sizeof(sUrielSpeech_BgGfx), 0);
-            CopyToBgTilemapBuffer(BG_INTRO, sUrielSpeech_BgMap, 0, 0);
+            CopyToBgTilemapBuffer(BG_INTRO, sUrielSpeech_BgMap, 0, 0); 
             CopyBgTilemapBufferToVram(BG_INTRO);
-            UrielSpeech_DrawCharacterMugshot(MUGSHOT_URIEL);
+            // UrielSpeech_DrawCharacterMugshot(MUGSHOT_URIEL);
             break;
         case STATE_WINDOWS:
+            // DebugPrintOnScreen("STATE WINDOWS");
             InitWindows(sUrielSpeech_WindowTemplates);
             InitTextBoxGfxAndPrinters();
             Menu_LoadStdPalAt(BG_PLTT_ID(13));
@@ -651,6 +483,7 @@ static void Task_UrielSpeech_Begin(u8 taskId)
             BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
             break;
         case STATE_FINISH:
+            // DebugPrintOnScreen("STATE FINISH");
             BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
             SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
             SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG3 | BLDCNT_EFFECT_BLEND);
@@ -659,7 +492,7 @@ static void Task_UrielSpeech_Begin(u8 taskId)
             ShowBg(BG_INTRO);
             ShowBg(BG_MUGSHOT_1);
             ShowBg(BG_MUGSHOT_2);
-//            ShowBg(BG_MUGSHOT_3);
+            // ShowBg(BG_MUGSHOT_3);
             ShowBg(BG_TEXT);
             SetVBlankCallback(VBlankCB_UrielSpeech);
             PlayBGM(MUS_GSC_ROUTE38);
@@ -673,10 +506,27 @@ static void Task_UrielSpeech_Begin(u8 taskId)
 
 static void Task_UrielSpeech_FadeInEverything(u8 taskId)
 {
+    u32 spriteId;
+
     if (!gPaletteFade.active)
     {
         sUrielSpeech->timer = 30;
-        UrielSpeech_BeginFade(FALSE, 0xd8, SPRITE_TYPE_NONE);
+        UrielSpeech_BeginFade(FALSE, 0, SPRITE_TYPE_NONE);
+        spriteId = sUrielSpeech->urielSpriteId;
+        gSprites[spriteId].x = 136;
+        gSprites[spriteId].y = 60;
+        gSprites[spriteId].invisible = FALSE;
+        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        spriteId = sUrielSpeech->platformSpriteIdLeft;
+        gSprites[spriteId].x = 90;
+        gSprites[spriteId].y = 95;
+        gSprites[spriteId].invisible = FALSE;
+        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        spriteId = sUrielSpeech->platformSpriteIdRight;
+        gSprites[spriteId].x = 154;
+        gSprites[spriteId].y = 95;
+        gSprites[spriteId].invisible = FALSE;
+        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
         gTasks[taskId].func = Task_UrielSpeech_Welcome;
     }
 }
@@ -690,8 +540,17 @@ static void Task_UrielSpeech_Welcome(u8 taskId)
             sUrielSpeech->timer--;
             return;
         }
-
+        
         UrielSpeech_PrintMessageBox(sUrielSpeech_Welcome);
+        gTasks[taskId].func = Task_UrielSpeech_Acceptance;
+    }
+}
+
+static void Task_UrielSpeech_Acceptance(u8 taskId)
+{
+    if (!IsTextPrinterActive(WIN_TEXT))
+    {
+        UrielSpeech_PrintMessageBox(sUrielSpeech_Acceptance);
         gTasks[taskId].func = Task_UrielSpeech_ThisIs;
     }
 }
@@ -701,7 +560,7 @@ static void Task_UrielSpeech_ThisIs(u8 taskId)
     if (!IsTextPrinterActive(WIN_TEXT))
     {
         UrielSpeech_PrintMessageBox(sUrielSpeech_ThisIs);
-        sUrielSpeech->timer = 60;
+        sUrielSpeech->timer = 30;
         gTasks[taskId].func = Task_UrielSpeech_ReleaseAlakazamFromPokeball;
     }
 }
@@ -719,7 +578,7 @@ static void Task_UrielSpeech_ReleaseAlakazamFromPokeball(u8 taskId)
 
         spriteId = sUrielSpeech->monSpriteId;
         gSprites[spriteId].invisible = FALSE;
-        CreatePokeballSpriteToReleaseMon(spriteId, gSprites[spriteId].oam.paletteNum, MON_POS_X, MON_POS_Y, 0, 0, 32, 0x00007FFF, SPECIES_ALAKAZAM);
+        CreatePokeballSpriteToReleaseMon(spriteId, gSprites[spriteId].oam.paletteNum, 112, 58, 0, 0, 32, 0x00007FFF, SPECIES_ALAKAZAM);
         gTasks[taskId].func = Task_UrielSpeech_AlakazamAPokemon;
         sUrielSpeech->timer = 0;
     }
@@ -743,7 +602,535 @@ static void Task_UrielSpeech_MainSpeech(u8 taskId)
     if (!IsTextPrinterActive(WIN_TEXT))
     {
         UrielSpeech_PrintMessageBox(sUrielSpeech_MainSpeech);
-        //gTasks[taskId].func = Task_UrielSpeech_ReturnJoltik;
+        gTasks[taskId].func = Task_UrielSpeech_Registration;
+    }
+}
+
+static void Task_UrielSpeech_Registration(u8 taskId)
+{
+    if (!IsTextPrinterActive(WIN_TEXT))
+    {
+        UrielSpeech_PrintMessageBox(sUrielSpeech_Registration);
+        gTasks[taskId].func = Task_UrielSpeech_PlatformFade;
+    }
+}
+
+static void Task_UrielSpeech_PlatformFade(u8 taskId)
+{
+
+    if(!IsTextPrinterActive(WIN_TEXT))
+    {
+        // make the sprites fade out somehow
+        gSprites[sUrielSpeech->platformSpriteIdLeft].oam.priority  = 1;
+        gSprites[sUrielSpeech->platformSpriteIdRight].oam.priority = 1;
+        // Uriel and mon in front
+        gSprites[sUrielSpeech->urielSpriteId].oam.priority = 0;
+        gSprites[sUrielSpeech->monSpriteId].oam.priority   = 0;
+
+        // Setup blending: fade OBJ (sprites) into BG
+        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_EFFECT_BLEND);
+
+        // Initial coefficients: fully visible OBJ
+        sUrielSpeech->alphaCoeff = 16;
+        sUrielSpeech->alphaCoeff2 = 0;
+        sUrielSpeech->fadeTimer = 0;
+        SetGpuReg(REG_OFFSET_BLDALPHA, (sUrielSpeech->alphaCoeff2 << 8) | sUrielSpeech->alphaCoeff);
+        SetGpuReg(REG_OFFSET_BLDY, 0);
+
+        gSprites[sUrielSpeech->urielSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+        gSprites[sUrielSpeech->monSpriteId].oam.objMode   = ST_OAM_OBJ_BLEND;
+        
+        gTasks[CreateTask(Task_UrielSpeech_FadeOut, 0)];
+        
+        sUrielSpeech->timer = 64;
+        gTasks[taskId].func = Task_UrielSpeech_SlidePlatformAway;
+    }
+}
+
+static void Task_UrielSpeech_SlidePlatformAway(u8 taskId)
+{
+    // Convenience aliases for readability
+    u8 leftId  = sUrielSpeech->platformSpriteIdLeft;
+    u8 rightId = sUrielSpeech->platformSpriteIdRight;
+
+    // Move both halves left until the left half’s x <= -100
+    if (gSprites[leftId].x > -100)
+    {
+        gSprites[leftId].x  -= 2;
+        gSprites[rightId].x -= 2;
+    }
+    else
+    {
+        // Clamp to final position
+        gSprites[leftId].x  = -100;
+        gSprites[rightId].x = gSprites[leftId].x + 64; // keep them aligned
+
+        // Switch to next task phase
+        gTasks[taskId].func = Task_UrielSpeech_StartPlayerFadeIn;
+    }
+}
+
+static void Task_UrielSpeech_StartPlayerFadeIn(u8 taskId)
+{
+    // fade in platform and male player sprite
+    u32 spriteId;
+
+    if (sUrielSpeech->fadeFinished)
+    {
+        spriteId = sUrielSpeech->urielSpriteId;
+        gSprites[spriteId].invisible = TRUE;
+        spriteId = sUrielSpeech->monSpriteId;
+        gSprites[spriteId].invisible = TRUE;
+        
+        if (sUrielSpeech->timer)
+        {
+            sUrielSpeech->timer--;
+        }
+        else
+        {
+            SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG3 | BLDCNT_TGT2_OBJ | BLDCNT_EFFECT_BLEND);
+            sUrielSpeech->alphaCoeff  = 0;   // target1 (player) starts invisible
+            sUrielSpeech->alphaCoeff2 = 16;  // target2 (background/platform) fully visible
+            sUrielSpeech->fadeTimer   = 0;
+            SetGpuReg(REG_OFFSET_BLDALPHA, (sUrielSpeech->alphaCoeff2 << 8) | sUrielSpeech->alphaCoeff);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            gTasks[CreateTask(Task_UrielSpeech_FadeIn, 0)];
+            spriteId = sUrielSpeech->maleStudentSpriteId;
+            gSprites[spriteId].x = 180;
+            gSprites[spriteId].y = 60;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            gTasks[taskId].tPlayerSpriteId = spriteId;
+            gTasks[taskId].tPlayerGender = MALE;
+            spriteId = sUrielSpeech->platformSpriteIdLeft;
+            gSprites[spriteId].x = 155;
+            gSprites[spriteId].y = 95;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            spriteId = sUrielSpeech->platformSpriteIdRight;
+            gSprites[spriteId].x = 200;
+            gSprites[spriteId].y = 95;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            
+            gTasks[taskId].func = Task_UrielSpeech_GenderSelect;
+        }
+    }
+}
+
+static void Task_UrielSpeech_GenderSelect(u8 taskId)
+{
+    UrielSpeech_PrintMessageBox(sUrielSpeech_GenderSelect);
+    gTasks[taskId].func = Task_UrielSpeech_WaitToShowGenderMenu;
+}
+
+static void Task_UrielSpeech_WaitToShowGenderMenu(u8 taskId)
+{
+    if(!IsTextPrinterActive(WIN_TEXT))
+    {
+        UrielSpeech_ShowGenderMenu(taskId);
+    }
+}
+
+static void UrielSpeech_ShowGenderMenu(u8 taskId)
+{
+    u8 windowId;
+
+    // Create window
+    windowId = AddWindow(&sUrielSpeech_GenderWindow);
+    gTasks[taskId].tWindowId = windowId;
+
+    // Draw frame around it
+    DrawStdWindowFrame(windowId, FALSE);
+
+    // Print options
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_Boy,        8, 1, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_Girl,       8, 17, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_Nonbinary,  8, 33, TEXT_SKIP_DRAW, NULL);
+
+    // Initialize cursor
+    InitMenuInUpperLeftCorner(windowId, 3, 0, TRUE);
+
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+
+    gTasks[taskId].func = Task_UrielSpeech_ChooseGender;
+
+}
+
+static void Task_UrielSpeech_ChooseGender(u8 taskId)
+{
+    int gender = UrielSpeech_ProcessGenderMenuInput();
+
+    // Handle confirmation (A press)
+    if (gender == MALE || gender == FEMALE || gender == NONBINARY)
+    {
+        PlaySE(SE_SELECT);
+        gSaveBlock2Ptr->playerGender = gender;
+        gTasks[taskId].func = Task_UrielSpeech_YourName;
+        return;
+    }
+    // Handle cursor movement → sprite swap
+    Task_UrielSpeech_SwitchGenderSprite(taskId);
+}
+
+static void Task_UrielSpeech_SwitchGenderSprite(u8 taskId)
+{
+    u8 cursorPos = Menu_GetCursorPos();
+    u8 oldSpriteId = gTasks[taskId].tPlayerSpriteId;
+    u8 newSpriteId = SPRITE_NONE;
+
+    // Determine which sprite to show based on cursor
+    switch (cursorPos)
+    {
+        case 0: newSpriteId = sUrielSpeech->maleStudentSpriteId; break;
+        case 1: newSpriteId = sUrielSpeech->femaleStudentSpriteId; break;
+        case 2: newSpriteId = sUrielSpeech->enbyStudentSpriteId; break;
+        default: newSpriteId = sUrielSpeech->maleStudentSpriteId; break;
+    }
+
+    // Safety check: do nothing if the sprite ID is invalid
+    if (newSpriteId >= MAX_SPRITES || !gSprites[newSpriteId].inUse)
+        return;
+
+    // If the selected sprite is already active, skip
+    if (oldSpriteId == newSpriteId)
+        return;
+
+    // Fade out old sprite
+    gSprites[oldSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+    gSprites[oldSpriteId].invisible = FALSE;
+    sUrielSpeech->alphaCoeff = 16;       // starting alpha
+    sUrielSpeech->alphaCoeff2 = 0;
+    gTasks[taskId].tIsDoneFadingSprites = 0;
+    gTasks[taskId].tNextSpriteId = newSpriteId;
+
+    // Change task to handle slide/fade animation
+    gTasks[taskId].func = Task_UrielSpeech_SlideOutOldGenderSprite;
+}
+
+
+static void Task_UrielSpeech_SlideOutOldGenderSprite(u8 taskId)
+{
+    u8 oldSpriteId = gTasks[taskId].tPlayerSpriteId;
+    u8 newSpriteId = gTasks[taskId].tNextSpriteId;
+
+    if (gTasks[taskId].tIsDoneFadingSprites == 0)
+    {
+        // Slide old sprite out to the right while fading
+        gSprites[oldSpriteId].x += 4;
+        sUrielSpeech->alphaCoeff--;
+        sUrielSpeech->alphaCoeff2++;
+        SetGpuReg(REG_OFFSET_BLDALPHA, (sUrielSpeech->alphaCoeff2 << 8) + sUrielSpeech->alphaCoeff);
+
+        if (sUrielSpeech->alphaCoeff == 0)
+            gTasks[taskId].tIsDoneFadingSprites = 1;
+    }
+    else
+    {
+        // Hide old sprite
+        gSprites[oldSpriteId].invisible = TRUE;
+
+        // Show new sprite
+        gSprites[newSpriteId].x = DISPLAY_WIDTH;
+        gSprites[newSpriteId].y = 60;  // Adjust as needed
+        gSprites[newSpriteId].invisible = FALSE;
+        gSprites[newSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+
+        // Update task to handle sliding new sprite in
+        gTasks[taskId].tPlayerSpriteId = newSpriteId;
+        gTasks[taskId].func = Task_UrielSpeech_SlideInNewGenderSprite;
+    }
+}
+
+static void Task_UrielSpeech_SlideInNewGenderSprite(u8 taskId)
+{
+    u8 spriteId = gTasks[taskId].tPlayerSpriteId;
+
+    // Slide sprite in from right
+    if (gSprites[spriteId].x > 180) // target x position
+    {
+        gSprites[spriteId].x -= 4;
+
+        // Fade in
+        if (sUrielSpeech->alphaCoeff < 16)
+        {
+            sUrielSpeech->alphaCoeff++;
+            sUrielSpeech->alphaCoeff2--;
+            SetGpuReg(REG_OFFSET_BLDALPHA, (sUrielSpeech->alphaCoeff2 << 8) + sUrielSpeech->alphaCoeff);
+        }
+    }
+    else
+    {
+        // Snap to final position
+        gSprites[spriteId].x = 180;
+        gSprites[spriteId].oam.objMode = ST_OAM_OBJ_NORMAL; // normal rendering after blend
+        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 0)); // optional: reset alpha
+
+        // Mark fade complete
+        gTasks[taskId].tIsDoneFadingSprites = 1;
+
+        // Switch back to normal menu handling or next task
+        gTasks[taskId].func = Task_UrielSpeech_ChooseGender;
+    }
+}
+
+static s8 UrielSpeech_ProcessGenderMenuInput(void)
+{
+    return Menu_ProcessInputNoWrap();
+}
+
+static void Task_UrielSpeech_YourName(u8 taskId)
+{
+    UrielSpeech_PrintMessageBox(sUrielSpeech_AskPlayerName);
+    gTasks[taskId].func = Task_UrielSpeech_WaitForWhatsYourNameToPrint;
+}
+
+static void Task_UrielSpeech_WaitForWhatsYourNameToPrint(u8 taskId)
+{
+    if(!IsTextPrinterActive(WIN_TEXT))
+    {
+        gTasks[taskId].func = Task_UrielSpeech_WaitPressBeforeNameChoice;
+    }
+}
+
+static void Task_UrielSpeech_WaitPressBeforeNameChoice(u8 taskId)
+{
+    if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
+    {
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gTasks[taskId].func = Task_UrielSpeech_StartNamingScreen;
+    }
+}
+
+static void Task_UrielSpeech_StartNamingScreen(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        UrielSpeech_SetDefaultName();
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, sUrielSpeech->chosenSprite, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen);
+        FreeAllWindowBuffers();
+        DestroyTask(taskId);
+    }
+}
+
+static void Task_UrielSpeech_ReturnFromNamingScreenShowTextbox(u8 taskId)
+{
+    gTasks[taskId].func = Task_UrielSpeech_ConfirmFirstName;
+}
+
+static void Task_UrielSpeech_ConfirmFirstName(u8 taskId)
+{
+    UrielSpeech_PrintMessageBox(sUrielSpeech_ConfirmFirstName);
+    gTasks[taskId].func = Task_UrielSpeech_CreateFirstNameYesNo;
+}
+
+static void Task_UrielSpeech_CreateFirstNameYesNo(u8 taskId)
+{
+    if(!IsTextPrinterActive(WIN_TEXT))
+    {
+        CreateYesNoMenuParameterized(5, 3, 0xF3, 0xDF, 2, 15);
+        CallWindowFunction(WINDOWID_YES_NO, WindowFunc_DrawStandardFrame);
+        CopyWindowToVram(WINDOWID_YES_NO, COPYWIN_FULL);
+        gTasks[taskId].func = Task_UrielSpeech_ProcessFirstNameYesNoMenu;
+    }
+}
+
+static void Task_UrielSpeech_ProcessFirstNameYesNoMenu(u8 taskId)
+{
+    s32 input = Menu_ProcessInputNoWrapClearOnChoose();
+
+    switch(input)
+    {
+    case 0: // YES
+    {
+        PlaySE(SE_SELECT);
+        sUrielSpeech->timer = 40;
+        
+        sUrielSpeech->playerHasName = TRUE;
+        gTasks[taskId].func = Task_UrielSpeech_YourLastName;
+        
+        break;
+    }
+    case 1: // NO
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_UrielSpeech_YourName;
+        break;
+    }
+}
+
+static void Task_UrielSpeech_YourLastName(u8 taskId)
+{
+    UrielSpeech_PrintMessageBox(sUrielSpeech_AskPlayerLastName);
+    gTasks[taskId].func = Task_UrielSpeech_WaitForWhatsYourLastNameToPrint;
+}
+
+static void Task_UrielSpeech_WaitForWhatsYourLastNameToPrint(u8 taskId)
+{
+    if(!IsTextPrinterActive(WIN_TEXT))
+    {
+        gTasks[taskId].func = Task_UrielSpeech_WaitPressBeforeLastNameChoice;
+    }
+}
+
+static void Task_UrielSpeech_WaitPressBeforeLastNameChoice(u8 taskId)
+{
+    if ((JOY_NEW(A_BUTTON)) || (JOY_NEW(B_BUTTON)))
+    {
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
+        gTasks[taskId].func = Task_UrielSpeech_StartNamingScreen2;
+    }
+}
+
+static void Task_UrielSpeech_StartNamingScreen2(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        UrielSpeech_SetDefaultLastName();
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerLastName, sUrielSpeech->chosenSprite, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen2);
+        FreeAllWindowBuffers();
+        DestroyTask(taskId);
+    }
+}
+
+static void Task_UrielSpeech_ReturnFromNamingScreen2ShowTextbox(u8 taskId)
+{
+    gTasks[taskId].func = Task_UrielSpeech_ConfirmLastName;
+}
+
+static void Task_UrielSpeech_ConfirmLastName(u8 taskId)
+{
+    UrielSpeech_PrintMessageBox(sUrielSpeech_ConfirmPlayerLastName);
+    gTasks[taskId].func = Task_UrielSpeech_CreateLastNameYesNo;
+}
+
+static void Task_UrielSpeech_CreateLastNameYesNo(u8 taskId)
+{
+    if(!IsTextPrinterActive(WIN_TEXT))
+    {
+        CreateYesNoMenuParameterized(5, 3, 0xF3, 0xDF, 2, 15);
+        CallWindowFunction(WINDOWID_YES_NO, WindowFunc_DrawStandardFrame);
+        CopyWindowToVram(WINDOWID_YES_NO, COPYWIN_FULL);
+        gTasks[taskId].func = Task_UrielSpeech_ProcessLastNameYesNoMenu;
+    }
+}
+
+static void Task_UrielSpeech_ProcessLastNameYesNoMenu(u8 taskId)
+{
+    s32 input = Menu_ProcessInputNoWrapClearOnChoose();
+
+    switch(input)
+    {
+    case 0: // YES
+    {
+        PlaySE(SE_SELECT);
+        sUrielSpeech->timer = 40;
+        
+        sUrielSpeech->playerHasLastName = TRUE;
+        gTasks[taskId].func = Task_UrielSpeech_SlidePlatformAway2;
+        
+        break;
+    }
+    case 1: // NO
+    case MENU_B_PRESSED:
+        PlaySE(SE_SELECT);
+        gTasks[taskId].func = Task_UrielSpeech_YourLastName;
+        break;
+    }
+}
+
+static void Task_UrielSpeech_SlidePlatformAway2(u8 taskId)
+{
+    // Convenience aliases for readability
+    u8 leftId  = sUrielSpeech->platformSpriteIdLeft;
+    u8 rightId = sUrielSpeech->platformSpriteIdRight;
+
+    // Move both halves left until the left half’s x <= -100
+    if (gSprites[leftId].x > 200)
+    {
+        gSprites[leftId].x  += 2;
+        gSprites[rightId].x += 2;
+    }
+    else
+    {
+        // Clamp to final position
+        gSprites[leftId].x  = 200;
+        gSprites[rightId].x = gSprites[leftId].x + 64; // keep them aligned
+
+        // Switch to next task phase
+        gTasks[taskId].func = Task_UrielSpeech_ReshowUriel;
+    }
+}
+
+static void Task_UrielSpeech_ReshowUriel(u8 taskId)
+{
+    // reshow uriel, then
+    UrielSpeech_BeginFade(FALSE, 0, SPRITE_TYPE_NONE);
+    gSprites[sUrielSpeech->maleStudentSpriteId].invisible = TRUE;
+    gSprites[sUrielSpeech->femaleStudentSpriteId].invisible = TRUE;
+    gSprites[sUrielSpeech->enbyStudentSpriteId].invisible = TRUE;
+    gSprites[sUrielSpeech->urielSpriteId].x = 136;
+    gSprites[sUrielSpeech->urielSpriteId].y = 60;
+    gSprites[sUrielSpeech->urielSpriteId].invisible = FALSE;
+    gSprites[sUrielSpeech->urielSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+    gSprites[sUrielSpeech->platformSpriteIdLeft].x = 90;
+    gSprites[sUrielSpeech->platformSpriteIdLeft].y = 95;
+    gSprites[sUrielSpeech->platformSpriteIdLeft].invisible = FALSE;
+    gSprites[sUrielSpeech->platformSpriteIdLeft].oam.objMode = ST_OAM_OBJ_BLEND;
+    gSprites[sUrielSpeech->platformSpriteIdRight].x = 154;
+    gSprites[sUrielSpeech->platformSpriteIdRight].y = 95;
+    gSprites[sUrielSpeech->platformSpriteIdRight].invisible = FALSE;
+    gSprites[sUrielSpeech->platformSpriteIdRight].oam.objMode = ST_OAM_OBJ_BLEND;
+    gTasks[taskId].func = Task_UrielSpeech_NiceToMeetYou;
+}
+
+static void Task_UrielSpeech_NiceToMeetYou(u8 taskId)
+{
+    UrielSpeech_PrintMessageBox(sUrielSpeech_NiceToMeetYou);
+    gTasks[taskId].func = Task_UrielSpeech_CloseMsgbox;
+}
+
+static void Task_UrielSpeech_CloseMsgbox(u8 taskId)
+{
+    if ((!IsTextPrinterActive(WIN_TEXT)) && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
+    {
+        ClearDialogWindowAndFrameToTransparent(WIN_TEXT, TRUE);
+        gTasks[taskId].func = Task_UrielSpeech_FadeAwayEverything;
+    }
+}
+
+static void Task_UrielSpeech_FadeAwayEverything(u8 taskId)
+{
+    if (sUrielSpeech->timer)
+    {
+        sUrielSpeech->timer--;
+    }
+    else
+    {
+        PlaySE(SE_M_TELEPORT);
+        sUrielSpeech->timer = 60;
+        BeginNormalPaletteFade(0xEFFFEFFF, 0, 0, 16, RGB_WHITE);
+        gTasks[taskId].func = Task_UrielSpeech_Cleanup;
+    }
+}
+
+static void Task_UrielSpeech_Cleanup(u8 taskId)
+{
+    if (!gPaletteFade.active)
+    {
+        if (sUrielSpeech->timer)
+        {
+            sUrielSpeech->timer--;
+        }
+        else
+        {
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
+            FreeAllWindowBuffers();
+            FREE_AND_SET_NULL(sUrielSpeech);
+            SetMainCallback2(CB2_NewGame);
+            DestroyTask(taskId);
+        }
     }
 }
 
@@ -765,12 +1152,12 @@ static void UrielSpeech_DrawCharacterMugshot(u8 id)
             CopyToBgTilemapBufferRect(BG_MUGSHOT_1, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
             CopyBgTilemapBufferToVram(BG_MUGSHOT_1);
             return;
-//        case MUGSHOT_ENBY_STUDENT: // enby
-//            LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
-//            LoadBgTiles(BG_MUGSHOT_3, sUrielSpeech_AoPicGfx, sizeof(sUrielSpeech_AoPicGfx), 0x50);
-//            CopyToBgTilemapBufferRect(BG_MUGSHOT_3, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
-//            CopyBgTilemapBufferToVram(BG_MUGSHOT_3);
-//            return;
+    //    case MUGSHOT_ENBY_STUDENT: // enby
+    //        LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+    //        LoadBgTiles(BG_MUGSHOT_3, sUrielSpeech_AoPicGfx, sizeof(sUrielSpeech_AoPicGfx), 0x50);
+    //        CopyToBgTilemapBufferRect(BG_MUGSHOT_3, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
+    //        CopyBgTilemapBufferToVram(BG_MUGSHOT_3);
+    //        return;
         case MUGSHOT_URIEL:
             LoadPalette(sUrielSpeech_UrielPicPal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
             LoadBgTiles(BG_MUGSHOT_1, sUrielSpeech_UrielPicGfx, sizeof(sUrielSpeech_UrielPicGfx), 0);
@@ -781,7 +1168,6 @@ static void UrielSpeech_DrawCharacterMugshot(u8 id)
             return;
     }
 }
-
 
 static inline void UrielSpeech_PrintMessageBox(const u8 *str)
 {
@@ -806,53 +1192,79 @@ static void UrielSpeech_CreateMonSprite(void)
     gSprites[sUrielSpeech->monSpriteId].invisible = TRUE;
 }
 
-static void UrielSpeech_CreatePlatformSprites(bool32 hide)
+
+static void UrielSpeech_CreateUrielSprite(void)
 {
-    u32 leftSpriteId, rightSpriteId;
-    LoadSpriteSheet(&sUrielSpeech_PlatformSpriteSheet);
-    LoadSpritePalette(&sUrielSpeech_PlatformSpritePalette);
-    leftSpriteId = CreateSprite(&sUrielSpeech_PlatformTemplate, PLAT_POS_X, PLAT_POS_Y, 0);
-    rightSpriteId = CreateSprite(&sUrielSpeech_PlatformTemplate, PLAT_POS_X, PLAT_POS_Y, 0);
-    gSprites[rightSpriteId].x2 = PLAT_POS_X2;
-    StartSpriteAnim(&gSprites[leftSpriteId], 0);
-    StartSpriteAnim(&gSprites[rightSpriteId], 1);
-    gSprites[leftSpriteId].invisible = hide;
-    gSprites[rightSpriteId].invisible = hide;
-    sUrielSpeech->platformSpriteIds[0] = leftSpriteId;
-    sUrielSpeech->platformSpriteIds[1] = rightSpriteId;
+    sUrielSpeech->urielSpriteId = AddNewGameUrielObject(0x88, 0x3C, 1);
+    gSprites[sUrielSpeech->urielSpriteId].callback = SpriteCallbackDummy;
+    gSprites[sUrielSpeech->urielSpriteId].oam.priority = 0;
+    gSprites[sUrielSpeech->urielSpriteId].invisible = TRUE;
+    
 }
 
-static void UrielSpeech_DestroyPlatformSprites(void)
+static void UrielSpeech_CreatePlatformSprite(void)
 {
-    DestroySprite(&gSprites[sUrielSpeech->platformSpriteIds[1]]);
-    DestroySpriteAndFreeResources(&gSprites[sUrielSpeech->platformSpriteIds[0]]);
-    sUrielSpeech->platformSpriteIds[0] = SPRITE_NONE;
-    sUrielSpeech->platformSpriteIds[1] = SPRITE_NONE;
+    // Left half
+    sUrielSpeech->platformSpriteIdLeft = AddNewGamePlatformObjectLeft(130, 60, 2);
+    gSprites[sUrielSpeech->platformSpriteIdLeft].callback = SpriteCallbackDummy;
+    gSprites[sUrielSpeech->platformSpriteIdLeft].oam.priority = 0;
+    gSprites[sUrielSpeech->platformSpriteIdLeft].invisible = TRUE;
+
+    // Right half
+    sUrielSpeech->platformSpriteIdRight = AddNewGamePlatformObjectRight(194, 60, 2);
+    gSprites[sUrielSpeech->platformSpriteIdRight].callback = SpriteCallbackDummy;
+    gSprites[sUrielSpeech->platformSpriteIdRight].oam.priority = 0;
+    gSprites[sUrielSpeech->platformSpriteIdRight].invisible = TRUE;
+}
+
+static void UrielSpeech_CreatePlayerSprites(void)
+{
+    sUrielSpeech->maleStudentSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_BRENDAN), 120, 60, 0, NULL);
+    gSprites[sUrielSpeech->maleStudentSpriteId].callback = SpriteCallbackDummy;
+    gSprites[sUrielSpeech->maleStudentSpriteId].oam.priority = 0;
+    gSprites[sUrielSpeech->maleStudentSpriteId].invisible = TRUE;
+    sUrielSpeech->femaleStudentSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_MAY), 120, 60, 0, NULL);
+    gSprites[sUrielSpeech->femaleStudentSpriteId].callback = SpriteCallbackDummy;
+    gSprites[sUrielSpeech->femaleStudentSpriteId].oam.priority = 0;
+    gSprites[sUrielSpeech->femaleStudentSpriteId].invisible = TRUE;
+    sUrielSpeech->enbyStudentSpriteId = CreateTrainerSprite(FacilityClassToPicIndex(FACILITY_CLASS_WALLY), 120, 60, 0, NULL);
+    gSprites[sUrielSpeech->enbyStudentSpriteId].callback = SpriteCallbackDummy;
+    gSprites[sUrielSpeech->enbyStudentSpriteId].oam.priority = 0;
+    gSprites[sUrielSpeech->enbyStudentSpriteId].invisible = TRUE;
+
 }
 
 #define tSpriteType data[0]
 
 static void Task_UrielSpeech_FadeOut(u8 taskId)
 {
-    u32 i = 0;
     if (sUrielSpeech->alphaCoeff == 0)
     {
         sUrielSpeech->fadeFinished = TRUE;
-        switch (gTasks[taskId].tSpriteType)
-        {
-            case SPRITE_TYPE_PLATFORM:
-            {
-                for (i = 0; i < PLAT_SPRITE_ID_COUNT; i++)
-                    gSprites[sUrielSpeech->platformSpriteIds[i]].invisible = TRUE;
-            }
-                break;
-            case SPRITE_TYPE_POKE_BALL:
-                gSprites[sUrielSpeech->ballSpriteId].invisible = TRUE;
-                break;
-            default:
-            case SPRITE_TYPE_NONE:
-                break;
-        }
+        DestroyTask(taskId);
+    }
+    else if (sUrielSpeech->fadeTimer)
+    {
+        sUrielSpeech->fadeTimer--;
+    }
+    else
+    {
+        sUrielSpeech->fadeTimer = 0;
+        sUrielSpeech->alphaCoeff--;
+        sUrielSpeech->alphaCoeff2++;
+
+        // Update blend
+        SetGpuReg(REG_OFFSET_BLDALPHA,
+            (sUrielSpeech->alphaCoeff2 << 8) | sUrielSpeech->alphaCoeff);
+    }
+}
+
+static void Task_UrielSpeech_FadeIn(u8 taskId)
+{
+    if (sUrielSpeech->alphaCoeff == 16)
+    {
+        // Done fading in
+        sUrielSpeech->fadeFinished = TRUE;
         DestroyTask(taskId);
     }
     else
@@ -864,73 +1276,11 @@ static void Task_UrielSpeech_FadeOut(u8 taskId)
         else
         {
             sUrielSpeech->fadeTimer = 0;
-            sUrielSpeech->alphaCoeff--;
-            sUrielSpeech->alphaCoeff2++;
-            if (sUrielSpeech->alphaCoeff == 8)
-            {
-                switch (gTasks[taskId].tSpriteType)
-                {
-                    case SPRITE_TYPE_PLATFORM:
-                    {
-                        for (i = 0; i < PLAT_SPRITE_ID_COUNT; i++)
-                            gSprites[sUrielSpeech->platformSpriteIds[i]].invisible ^= TRUE;
-                    }
-                        break;
-                    case SPRITE_TYPE_POKE_BALL:
-                        gSprites[sUrielSpeech->ballSpriteId].invisible ^= TRUE;
-                        break;
-                    default:
-                    case SPRITE_TYPE_NONE:
-                        break;
-                }
-            }
-            SetGpuReg(REG_OFFSET_BLDALPHA, (sUrielSpeech->alphaCoeff2 * 256) + sUrielSpeech->alphaCoeff);
-        }
-    }
-}
+            sUrielSpeech->alphaCoeff++;   // player gets stronger
+            sUrielSpeech->alphaCoeff2--;  // background fades slightly
 
-static void Task_UrielSpeech_FadeIn(u8 taskId)
-{
-    u32 i = 0;
-
-    if (sUrielSpeech->alphaCoeff == 16)
-    {
-        if (!gPaletteFade.active)
-        {
-            sUrielSpeech->fadeFinished = TRUE;
-            DestroyTask(taskId);
-        }
-    }
-    else
-    {
-        if (sUrielSpeech->fadeTimer != 0)
-        {
-            sUrielSpeech->fadeTimer--;
-        }
-        else
-        {
-            sUrielSpeech->fadeTimer = 0;
-            sUrielSpeech->alphaCoeff++;
-            sUrielSpeech->alphaCoeff2--;
-            if (sUrielSpeech->alphaCoeff == 8)
-            {
-                switch (gTasks[taskId].tSpriteType)
-                {
-                    case SPRITE_TYPE_PLATFORM:
-                    {
-                        for (i = 0; i < PLAT_SPRITE_ID_COUNT; i++)
-                            gSprites[sUrielSpeech->platformSpriteIds[i]].invisible ^= TRUE;
-                    }
-                        break;
-                    case SPRITE_TYPE_POKE_BALL:
-                        gSprites[sUrielSpeech->ballSpriteId].invisible ^= TRUE;
-                        break;
-                    default:
-                    case SPRITE_TYPE_NONE:
-                        break;
-                }
-            }
-            SetGpuReg(REG_OFFSET_BLDALPHA, (sUrielSpeech->alphaCoeff2 * 256) + sUrielSpeech->alphaCoeff);
+            SetGpuReg(REG_OFFSET_BLDALPHA,
+                (sUrielSpeech->alphaCoeff2 << 8) | sUrielSpeech->alphaCoeff);
         }
     }
 }
@@ -955,21 +1305,8 @@ static void UrielSpeech_BeginFade(u8 fadeOut, u8 delay, u8 spriteType)
     sUrielSpeech->alphaCoeff2 = bldTarget2;
     sUrielSpeech->fadeTimer = delay;
 
-//    if (spriteType == SPRITE_TYPE_PLAYER)
-//    {
-//        spriteType = (sUrielSpeech->chosenMugshot == MUGSHOT_AO) ? SPRITE_TYPE_MUGSHOT_1 : SPRITE_TYPE_MUGSHOT_2;
-//    }
-//    else if (spriteType == SPRITE_TYPE_RIVAL)
-//    {
-//        spriteType = (sUrielSpeech->chosenMugshot == MUGSHOT_AO) ? SPRITE_TYPE_MUGSHOT_2 : SPRITE_TYPE_MUGSHOT_1;
-//    }
-
     switch(spriteType)
     {
-    case SPRITE_TYPE_PLATFORM:
-    case SPRITE_TYPE_POKE_BALL:
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT1_OBJ | BLDCNT_TGT2_BG3 | BLDCNT_EFFECT_BLEND);
-        break;
     case SPRITE_TYPE_MUGSHOT_1:
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_TGT2_OBJ | BLDCNT_TGT2_BG3 | BLDCNT_EFFECT_BLEND);
         break;
@@ -982,8 +1319,30 @@ static void UrielSpeech_BeginFade(u8 fadeOut, u8 delay, u8 spriteType)
     case SPRITE_TYPE_NONE:
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT1_BG1 | BLDCNT_TGT1_BG2 | BLDCNT_TGT2_BG3 | BLDCNT_EFFECT_BLEND);
         break;
-    default:
-        break;
+    case SPRITE_TYPE_PLAYER:
+        switch (gSaveBlock2Ptr->playerGender)
+        {
+            case MALE:
+                gSprites[sUrielSpeech->maleStudentSpriteId].x = 180;
+                gSprites[sUrielSpeech->maleStudentSpriteId].y = 60;
+                gSprites[sUrielSpeech->maleStudentSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+                gSprites[sUrielSpeech->maleStudentSpriteId].invisible = FALSE;
+                break;
+            case FEMALE:
+                gSprites[sUrielSpeech->femaleStudentSpriteId].x = 180;
+                gSprites[sUrielSpeech->femaleStudentSpriteId].y = 60;
+                gSprites[sUrielSpeech->femaleStudentSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+                gSprites[sUrielSpeech->femaleStudentSpriteId].invisible = FALSE;
+                break;
+            case NONBINARY:
+                gSprites[sUrielSpeech->enbyStudentSpriteId].x = 180;
+                gSprites[sUrielSpeech->enbyStudentSpriteId].y = 60;
+                gSprites[sUrielSpeech->enbyStudentSpriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+                gSprites[sUrielSpeech->enbyStudentSpriteId].invisible = FALSE;
+                break;
+            default:
+                break;
+        }
     }
 
     SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(bldTarget1, bldTarget2));
@@ -994,3 +1353,382 @@ static void UrielSpeech_BeginFade(u8 fadeOut, u8 delay, u8 spriteType)
     gTasks[taskId].tSpriteType = spriteType;
 }
 
+static void UrielSpeech_SetDefaultName(void)
+{
+    // sets default name if player doesn't pick one, defaults are Jacob/Emily/Briar
+}
+
+static void CB2_UrielSpeech_ReturnFromNamingScreen(void)
+{
+    switch(gMain.state)
+    {
+        case STATE_RESET:
+            SetVBlankCallback(NULL);
+            SetHBlankCallback(NULL);
+            DmaFill16(3, 0, VRAM, VRAM_SIZE);
+            ResetPaletteFade();
+            ScanlineEffect_Stop();
+            ResetSpriteData();
+            ResetTasks();
+            FreeAllSpritePalettes();
+            ResetTempTileDataBuffers();
+            break;
+        case STATE_ALLOC: // unused here
+            break;
+        case STATE_REGS:
+            SetGpuReg(REG_OFFSET_WIN0H, 0);
+            SetGpuReg(REG_OFFSET_WIN0V, 0);
+            SetGpuReg(REG_OFFSET_WIN1H, 0);
+            SetGpuReg(REG_OFFSET_WIN1V, 0);
+            SetGpuReg(REG_OFFSET_WININ, 0);
+            SetGpuReg(REG_OFFSET_WINOUT, 0);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            break;
+        case STATE_BGS:
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, sUrielSpeech_BgTemplates, ARRAY_COUNT(sUrielSpeech_BgTemplates));
+            SetBgTilemapBuffer(BG_INTRO, sUrielSpeech->introTilemapBuffer);
+            SetBgTilemapBuffer(BG_MUGSHOT_1, sUrielSpeech->pic1TilemapBuffer);
+            SetBgTilemapBuffer(BG_MUGSHOT_2, sUrielSpeech->pic2TilemapBuffer);
+            ResetBgPositions();
+            break;
+        case STATE_BG_GFX:
+            // DebugPrintOnScreen("STATE BG GFX");
+            UrielSpeech_CreateMonSprite();
+            UrielSpeech_CreateUrielSprite();
+            UrielSpeech_CreatePlatformSprite();
+            UrielSpeech_CreatePlayerSprites();
+            LoadPalette(sUrielSpeech_BgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+            LoadBgTiles(BG_INTRO, sUrielSpeech_BgGfx, sizeof(sUrielSpeech_BgGfx), 0);
+            CopyToBgTilemapBuffer(BG_INTRO, sUrielSpeech_BgMap, 0, 0); 
+            CopyBgTilemapBufferToVram(BG_INTRO);
+            // UrielSpeech_DrawCharacterMugshot(MUGSHOT_URIEL);
+        case STATE_WINDOWS:
+            InitWindows(sUrielSpeech_WindowTemplates);
+            InitTextBoxGfxAndPrinters();
+            Menu_LoadStdPalAt(BG_PLTT_ID(13));
+            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+            break;
+        case STATE_FINISH:
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            
+            UrielSpeech_BeginFade(FALSE, 0, SPRITE_TYPE_NONE);
+            UrielSpeech_BeginFade(FALSE, 0, SPRITE_TYPE_PLAYER);
+
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_BG1HOFS, -60);
+            SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+            ShowBg(BG_INTRO);
+            ShowBg(BG_TEXT);
+            
+            gSprites[sUrielSpeech->platformSpriteIdLeft].x = 155;
+            gSprites[sUrielSpeech->platformSpriteIdLeft].y = 95;
+            gSprites[sUrielSpeech->platformSpriteIdLeft].invisible = FALSE;
+            gSprites[sUrielSpeech->platformSpriteIdLeft].oam.objMode = ST_OAM_OBJ_BLEND;
+            
+            gSprites[sUrielSpeech->platformSpriteIdRight].x = 200;
+            gSprites[sUrielSpeech->platformSpriteIdRight].y = 95;
+            gSprites[sUrielSpeech->platformSpriteIdRight].invisible = FALSE;
+            gSprites[sUrielSpeech->platformSpriteIdRight].oam.objMode = ST_OAM_OBJ_BLEND;
+            
+            SetVBlankCallback(VBlankCB_UrielSpeech);
+            SetMainCallback2(CB2_UrielSpeech);
+            sUrielSpeech->timer = 30;
+            CreateTask(Task_UrielSpeech_ConfirmFirstName, 0);
+            gMain.state = 0;
+            return;
+    }
+
+    DebugPrintf("state: %d", gMain.state);
+    gMain.state++;
+}
+
+static void UrielSpeech_SetDefaultLastName(void)
+{
+    // sets default last name if the player doesn't pick one
+}
+
+static void CB2_UrielSpeech_ReturnFromNamingScreen2(void)
+{
+    switch(gMain.state)
+    {
+        case STATE_RESET:
+            SetVBlankCallback(NULL);
+            SetHBlankCallback(NULL);
+            DmaFill16(3, 0, VRAM, VRAM_SIZE);
+            ResetPaletteFade();
+            ScanlineEffect_Stop();
+            ResetSpriteData();
+            ResetTasks();
+            FreeAllSpritePalettes();
+            ResetTempTileDataBuffers();
+            break;
+        case STATE_ALLOC: // unused here
+            break;
+        case STATE_REGS:
+            SetGpuReg(REG_OFFSET_WIN0H, 0);
+            SetGpuReg(REG_OFFSET_WIN0V, 0);
+            SetGpuReg(REG_OFFSET_WIN1H, 0);
+            SetGpuReg(REG_OFFSET_WIN1V, 0);
+            SetGpuReg(REG_OFFSET_WININ, 0);
+            SetGpuReg(REG_OFFSET_WINOUT, 0);
+            SetGpuReg(REG_OFFSET_BLDCNT, 0);
+            SetGpuReg(REG_OFFSET_BLDALPHA, 0);
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_DISPCNT, 0);
+            break;
+        case STATE_BGS:
+            ResetBgsAndClearDma3BusyFlags(0);
+            InitBgsFromTemplates(0, sUrielSpeech_BgTemplates, ARRAY_COUNT(sUrielSpeech_BgTemplates));
+            SetBgTilemapBuffer(BG_INTRO, sUrielSpeech->introTilemapBuffer);
+            SetBgTilemapBuffer(BG_MUGSHOT_1, sUrielSpeech->pic1TilemapBuffer);
+            SetBgTilemapBuffer(BG_MUGSHOT_2, sUrielSpeech->pic2TilemapBuffer);
+            ResetBgPositions();
+            break;
+        case STATE_BG_GFX:
+            // DebugPrintOnScreen("STATE BG GFX");
+            UrielSpeech_CreateMonSprite();
+            UrielSpeech_CreateUrielSprite();
+            UrielSpeech_CreatePlatformSprite();
+            UrielSpeech_CreatePlayerSprites();
+            LoadPalette(sUrielSpeech_BgPal, BG_PLTT_ID(0), PLTT_SIZE_4BPP);
+            LoadBgTiles(BG_INTRO, sUrielSpeech_BgGfx, sizeof(sUrielSpeech_BgGfx), 0);
+            CopyToBgTilemapBuffer(BG_INTRO, sUrielSpeech_BgMap, 0, 0); 
+            CopyBgTilemapBufferToVram(BG_INTRO);
+            // UrielSpeech_DrawCharacterMugshot(MUGSHOT_URIEL);
+        case STATE_WINDOWS:
+            InitWindows(sUrielSpeech_WindowTemplates);
+            InitTextBoxGfxAndPrinters();
+            Menu_LoadStdPalAt(BG_PLTT_ID(13));
+            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+            break;
+        case STATE_FINISH:
+            BeginNormalPaletteFade(PALETTES_ALL, 0, 16, 0, RGB_BLACK);
+            SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
+            
+            UrielSpeech_BeginFade(FALSE, 0, SPRITE_TYPE_NONE);
+            UrielSpeech_BeginFade(FALSE, 0, SPRITE_TYPE_PLAYER);
+
+            SetGpuReg(REG_OFFSET_BLDY, 0);
+            SetGpuReg(REG_OFFSET_BG1HOFS, -60);
+            SetGpuReg(REG_OFFSET_BG2HOFS, 0);
+            ShowBg(BG_INTRO);
+            ShowBg(BG_TEXT);
+            
+            gSprites[sUrielSpeech->platformSpriteIdLeft].x = 155;
+            gSprites[sUrielSpeech->platformSpriteIdLeft].y = 95;
+            gSprites[sUrielSpeech->platformSpriteIdLeft].invisible = FALSE;
+            gSprites[sUrielSpeech->platformSpriteIdLeft].oam.objMode = ST_OAM_OBJ_BLEND;
+            
+            gSprites[sUrielSpeech->platformSpriteIdRight].x = 200;
+            gSprites[sUrielSpeech->platformSpriteIdRight].y = 95;
+            gSprites[sUrielSpeech->platformSpriteIdRight].invisible = FALSE;
+            gSprites[sUrielSpeech->platformSpriteIdRight].oam.objMode = ST_OAM_OBJ_BLEND;
+            
+            SetVBlankCallback(VBlankCB_UrielSpeech);
+            SetMainCallback2(CB2_UrielSpeech);
+            sUrielSpeech->timer = 30;
+            CreateTask(Task_UrielSpeech_ConfirmLastName, 0);
+            gMain.state = 0;
+            return;
+    }
+
+    DebugPrintf("state: %d", gMain.state);
+    gMain.state++;
+}
+
+static void WindowFunc_DrawStandardFrame(u8 bg, u8 tilemapLeft, u8 tilemapTop, u8 width, u8 height, u8 paletteNum)
+{
+    int i;
+
+    FillBgTilemapBufferRect(bg,
+                            STD_WINDOW_BASE_TILE_NUM + 0,
+                            tilemapLeft - 1,
+                            tilemapTop - 1,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(bg,
+                            STD_WINDOW_BASE_TILE_NUM + 1,
+                            tilemapLeft,
+                            tilemapTop - 1,
+                            width,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(bg,
+                            STD_WINDOW_BASE_TILE_NUM + 2,
+                            tilemapLeft + width,
+                            tilemapTop - 1,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+
+    for (i = tilemapTop; i < tilemapTop + height; i++)
+    {
+        FillBgTilemapBufferRect(bg,
+                                STD_WINDOW_BASE_TILE_NUM + 3,
+                                tilemapLeft - 1,
+                                i,
+                                1,
+                                1,
+                                STD_WINDOW_PALETTE_NUM);
+        FillBgTilemapBufferRect(bg,
+                                STD_WINDOW_BASE_TILE_NUM + 5,
+                                tilemapLeft + width,
+                                i,
+                                1,
+                                1,
+                                STD_WINDOW_PALETTE_NUM);
+    }
+
+    FillBgTilemapBufferRect(bg,
+                            STD_WINDOW_BASE_TILE_NUM + 6,
+                            tilemapLeft - 1,
+                            tilemapTop + height,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(bg,
+                            STD_WINDOW_BASE_TILE_NUM + 7,
+                            tilemapLeft,
+                            tilemapTop + height,
+                            width,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+    FillBgTilemapBufferRect(bg,
+                            STD_WINDOW_BASE_TILE_NUM + 8,
+                            tilemapLeft + width,
+                            tilemapTop + height,
+                            1,
+                            1,
+                            STD_WINDOW_PALETTE_NUM);
+}
+
+// // Debug Functions
+
+// static void DebugPrintOnScreen(const char *str)
+// {
+//     static u8 converted[64]; // enough for our debug messages
+//     sDebugWindowId = 0xFF;
+
+//     if (sDebugWindowId == 0xFF)
+//     {
+//         struct WindowTemplate template = {
+//             .bg = 0,
+//             .tilemapLeft = 1,
+//             .tilemapTop = 1,
+//             .width = 28,
+//             .height = 2,
+//             .paletteNum = 15,
+//             .baseBlock = 1,
+//         };
+//         sDebugWindowId = AddWindow(&template);
+//         PutWindowTilemap(sDebugWindowId);
+//         FillWindowPixelBuffer(sDebugWindowId, PIXEL_FILL(0));
+//     }
+
+//     FillWindowPixelBuffer(sDebugWindowId, PIXEL_FILL(0));
+
+//     AsciiToGameText(str, converted);
+//     AddTextPrinterParameterized(sDebugWindowId, FONT_NORMAL, converted, 0, 0, 0, NULL);
+
+//     CopyWindowToVram(sDebugWindowId, COPYWIN_GFX | COPYWIN_MAP);
+// }
+
+// static void DebugPrintHexPointerWithPrefix(const char *prefix, const void *ptr)
+// {
+//     char buf[20]; // enough for prefix + "0xXXXXXXXX" + null
+//     int i = 0;
+
+//     // Copy prefix
+//     while (*prefix && i < 8) // limit to 8 chars for safety
+//         buf[i++] = *prefix++;
+
+//     // Add "0x"
+//     buf[i++] = '0';
+//     buf[i++] = 'x';
+
+//     // Convert pointer to 8-digit hex
+//     u32 val = (u32)ptr;
+//     for (int j = 0; j < 8; j++)
+//     {
+//         u8 nibble = (val >> ((7 - j) * 4)) & 0xF;
+//         if (nibble < 10)
+//             buf[i++] = '0' + nibble;
+//         else
+//             buf[i++] = 'A' + (nibble - 10);
+//     }
+
+//     buf[i] = '\0'; // null-terminate
+//     DebugPrintOnScreen(buf);
+// }
+
+// static void AsciiToGameText(const char *ascii, u8 *dest)
+// {
+//     while (*ascii)
+//     {
+//         char c = *ascii++;
+//         if (c >= '0' && c <= '9')
+//             *dest++ = CHAR_0 + (c - '0');
+//         else if (c >= 'A' && c <= 'Z')
+//             *dest++ = CHAR_A + (c - 'A');
+//         else if (c >= 'a' && c <= 'z')
+//             *dest++ = CHAR_a + (c - 'a'); // if lowercase exists
+//         else if (c == 'x')
+//             *dest++ = CHAR_x; // you’ll need to define CHAR_x in your font table
+//         else
+//             *dest++ = CHAR_SPACE;
+//     }
+//     *dest = EOS; // End of string marker
+// }
+
+// static void Debug_SetMainCallback2(MainCallback callback)
+// {
+//     DebugPrintHexPointerWithPrefix("SetMCB2:", callback);
+//     SetMainCallback2(callback); // call the real one
+// }
+
+// static void DebugPrintPointer(const u8 *label, void *ptr)
+// {
+//     u8 buf[32];
+//     u32 val = (u32)ptr;
+
+//     // Convert pointer to hex string in buf[0..7]
+//     for (int i = 0; i < 8; i++)
+//     {
+//         u8 nibble = (val >> ((7-i)*4)) & 0xF;
+//         buf[i] = nibble < 10 ? '0'+nibble : 'A'+(nibble-10);
+//     }
+//     buf[8] = EOS; // terminate string
+
+//     // Copy label into a separate buffer to avoid overlap
+//     u8 final[40];
+//     StringCopy(final, label);
+//     StringAppend(final, (const u8 *)":0x");
+//     StringAppend(final, buf);
+
+//     DebugPrintOnScreen((const char *)final);
+// }
+
+// static void DebugPrintU8(const u8 *label, u8 value)
+// {
+//     static char buf[32]; // ensure big enough
+//     int i = 0;
+
+//     // Copy the label (as proper ASCII string)
+//     while (*label && i < (int)(sizeof(buf) - 4)) {
+//         buf[i++] = *label++;
+//     }
+
+//     // Append ":<value>"
+//     buf[i++] = ':';
+//     buf[i++] = '0' + (value / 10);
+//     buf[i++] = '0' + (value % 10);
+//     buf[i] = '\0';  // <- CRITICAL: null terminate
+
+//     DebugPrintOnScreen(buf);
+// }

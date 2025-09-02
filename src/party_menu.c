@@ -8036,7 +8036,6 @@ void CursorCb_MoveItem(u8 taskId)
     }
 }
 
-<<<<<<< HEAD
 //Start Pokevial Branch
 static bool8 IsMonNotFullyHealed(void)
 {
@@ -8202,11 +8201,9 @@ static void Task_PokevialLoop(u8 taskId)
 #undef tUsedOnSlot
 #undef tHadEffect
 #undef tLastSlotUsed
-=======
 static void FieldCallback_RockClimb(void)
 {
     gFieldEffectArguments[0] = GetCursorSelectionMonId();
     FieldEffectStart(FLDEFF_USE_ROCK_CLIMB);
 }
 
->>>>>>> 7056aaba6eda97a83aa22765c8dff3ca39e69920

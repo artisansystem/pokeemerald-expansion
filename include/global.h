@@ -570,7 +570,6 @@ struct RankingHall2P
 struct SaveBlock2
 {
     /*0x00*/ u8 playerName[PLAYER_NAME_LENGTH + 1];
-    /*0x01*/ u8 playerLastName[PLAYER_NAME_LENGTH + 1];
     /*0x08*/ u8 playerGender; // MALE, FEMALE, NONBINARY
     /*0x09*/ u8 specialSaveWarpFlags;
     /*0x0A*/ u8 playerTrainerId[TRAINER_ID_LENGTH];
@@ -613,6 +612,7 @@ struct SaveBlock2
 
     u8 questData[QUEST_FLAGS_COUNT * QUEST_STATES];
     u8 subQuests[SUB_FLAGS_COUNT];
+    u8 playerLastName[PLAYER_NAME_LENGTH + 1];
 }; 
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;

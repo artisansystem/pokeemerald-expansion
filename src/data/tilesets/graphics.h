@@ -1652,7 +1652,7 @@ const u16 gTilesetPalettes_General_ORAS[][16] =
     INCBIN_U16("data/tilesets/primary/general_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_General_ORAS[] = INCBIN_U32("data/tilesets/primary/general_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_General_ORAS[] = INCBIN_U32("data/tilesets/primary/general_oras/tiles.4bpp.smol");
 
 const u16 gTilesetPalettes_Petalburg_ORAS[][16] =
 {
@@ -1671,7 +1671,7 @@ const u16 gTilesetPalettes_Petalburg_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/petalburg_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Petalburg_ORAS[] = INCBIN_U32("data/tilesets/secondary/petalburg_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Petalburg_ORAS[] = INCBIN_U32("data/tilesets/secondary/petalburg_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Petalburg_ORAS_Summer[][16] =
 {
@@ -1741,7 +1741,7 @@ const u16 gTilesetPalettes_Slateport_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/slateport_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Slateport_ORAS[] = INCBIN_U32("data/tilesets/secondary/slateport_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Slateport_ORAS[] = INCBIN_U32("data/tilesets/secondary/slateport_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Dewford_ORAS[][16] =
 {
@@ -1760,7 +1760,7 @@ const u16 gTilesetPalettes_Dewford_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/dewford_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Dewford_ORAS[] = INCBIN_U32("data/tilesets/secondary/dewford_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Dewford_ORAS[] = INCBIN_U32("data/tilesets/secondary/dewford_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_BattleFrontierOutsideEast_ORAS[][16] =
 {
@@ -1779,7 +1779,7 @@ const u16 gTilesetPalettes_BattleFrontierOutsideEast_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/battle_frontier_outside_east_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_BattleFrontierOutsideEast_ORAS[] = INCBIN_U32("data/tilesets/secondary/battle_frontier_outside_east_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_BattleFrontierOutsideEast_ORAS[] = INCBIN_U32("data/tilesets/secondary/battle_frontier_outside_east_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_BattleFrontierOutsideWest_ORAS[][16] =
 {
@@ -1798,7 +1798,7 @@ const u16 gTilesetPalettes_BattleFrontierOutsideWest_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/battle_frontier_outside_west_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_BattleFrontierOutsideWest_ORAS[] = INCBIN_U32("data/tilesets/secondary/battle_frontier_outside_west_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_BattleFrontierOutsideWest_ORAS[] = INCBIN_U32("data/tilesets/secondary/battle_frontier_outside_west_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_EverGrande_ORAS[][16] =
 {
@@ -1817,7 +1817,7 @@ const u16 gTilesetPalettes_EverGrande_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/ever_grande_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_EverGrande_ORAS[] = INCBIN_U32("data/tilesets/secondary/ever_grande_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_EverGrande_ORAS[] = INCBIN_U32("data/tilesets/secondary/ever_grande_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Fallarbor_ORAS[][16] =
 {
@@ -1836,7 +1836,7 @@ const u16 gTilesetPalettes_Fallarbor_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/fallarbor_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Fallarbor_ORAS[] = INCBIN_U32("data/tilesets/secondary/fallarbor_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Fallarbor_ORAS[] = INCBIN_U32("data/tilesets/secondary/fallarbor_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Fortree_ORAS[][16] =
 {
@@ -1855,7 +1855,7 @@ const u16 gTilesetPalettes_Fortree_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/fortree_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Fortree_ORAS[] = INCBIN_U32("data/tilesets/secondary/fortree_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Fortree_ORAS[] = INCBIN_U32("data/tilesets/secondary/fortree_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Lavaridge_ORAS[][16] =
 {
@@ -1874,7 +1874,7 @@ const u16 gTilesetPalettes_Lavaridge_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/lavaridge_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Lavaridge_ORAS[] = INCBIN_U32("data/tilesets/secondary/lavaridge_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Lavaridge_ORAS[] = INCBIN_U32("data/tilesets/secondary/lavaridge_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Lilycove_ORAS[][16] =
 {
@@ -1893,7 +1893,7 @@ const u16 gTilesetPalettes_Lilycove_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/lilycove_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Lilycove_ORAS[] = INCBIN_U32("data/tilesets/secondary/lilycove_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Lilycove_ORAS[] = INCBIN_U32("data/tilesets/secondary/lilycove_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Mauville_ORAS[][16] =
 {
@@ -1912,7 +1912,7 @@ const u16 gTilesetPalettes_Mauville_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/mauville_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Mauville_ORAS[] = INCBIN_U32("data/tilesets/secondary/mauville_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Mauville_ORAS[] = INCBIN_U32("data/tilesets/secondary/mauville_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Mossdeep_ORAS[][16] =
 {
@@ -1931,7 +1931,7 @@ const u16 gTilesetPalettes_Mossdeep_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/mossdeep_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Mossdeep_ORAS[] = INCBIN_U32("data/tilesets/secondary/mossdeep_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Mossdeep_ORAS[] = INCBIN_U32("data/tilesets/secondary/mossdeep_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Rustboro_ORAS[][16] =
 {
@@ -1950,7 +1950,7 @@ const u16 gTilesetPalettes_Rustboro_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/rustboro_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Rustboro_ORAS[] = INCBIN_U32("data/tilesets/secondary/rustboro_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Rustboro_ORAS[] = INCBIN_U32("data/tilesets/secondary/rustboro_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_Sootopolis_ORAS[][16] =
 {
@@ -1969,7 +1969,7 @@ const u16 gTilesetPalettes_Sootopolis_ORAS[][16] =
     INCBIN_U16("data/tilesets/secondary/sootopolis_oras/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_Sootopolis_ORAS[] = INCBIN_U32("data/tilesets/secondary/sootopolis_oras/tiles.4bpp.lz");
+const u32 gTilesetTiles_Sootopolis_ORAS[] = INCBIN_U32("data/tilesets/secondary/sootopolis_oras/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_PorytilesPrimaryTest[][16] =
 {
@@ -1988,7 +1988,7 @@ const u16 gTilesetPalettes_PorytilesPrimaryTest[][16] =
     INCBIN_U16("data/tilesets/primary/porytiles_primary_test/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_PorytilesPrimaryTest[] = INCBIN_U32("data/tilesets/primary/porytiles_primary_test/tiles.4bpp.lz");
+const u32 gTilesetTiles_PorytilesPrimaryTest[] = INCBIN_U32("data/tilesets/primary/porytiles_primary_test/tiles.4bpp.smol");
 
 const u16 gTilesetPalettes_PorytilesSecondaryTest[][16] =
 {
@@ -2007,7 +2007,7 @@ const u16 gTilesetPalettes_PorytilesSecondaryTest[][16] =
     INCBIN_U16("data/tilesets/secondary/porytiles_secondary_test/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_PorytilesSecondaryTest[] = INCBIN_U32("data/tilesets/secondary/porytiles_secondary_test/tiles.4bpp.lz");
+const u32 gTilesetTiles_PorytilesSecondaryTest[] = INCBIN_U32("data/tilesets/secondary/porytiles_secondary_test/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_PorytilePrimaryTutorial[][16] =
 {
@@ -2026,7 +2026,7 @@ const u16 gTilesetPalettes_PorytilePrimaryTutorial[][16] =
     INCBIN_U16("data/tilesets/primary/porytile_primary_tutorial/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_PorytilePrimaryTutorial[] = INCBIN_U32("data/tilesets/primary/porytile_primary_tutorial/tiles.4bpp.lz");
+const u32 gTilesetTiles_PorytilePrimaryTutorial[] = INCBIN_U32("data/tilesets/primary/porytile_primary_tutorial/tiles.4bpp.smol");
 
 const u16 gTilesetPalettes_General_Primary_Custom[][16] =
 {
@@ -2045,7 +2045,7 @@ const u16 gTilesetPalettes_General_Primary_Custom[][16] =
     INCBIN_U16("data/tilesets/primary/general_primary_custom/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_General_Primary_Custom[] = INCBIN_U32("data/tilesets/primary/general_primary_custom/tiles.4bpp.lz");
+const u32 gTilesetTiles_General_Primary_Custom[] = INCBIN_U32("data/tilesets/primary/general_primary_custom/tiles.4bpp.smol");
 
 const u16 gTilesetPalettes_General_Secondary_Custom[][16] =
 {
@@ -2064,7 +2064,7 @@ const u16 gTilesetPalettes_General_Secondary_Custom[][16] =
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_General_Secondary_Custom[] = INCBIN_U32("data/tilesets/secondary/general_secondary_custom/tiles.4bpp.lz");
+const u32 gTilesetTiles_General_Secondary_Custom[] = INCBIN_U32("data/tilesets/secondary/general_secondary_custom/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_General_Secondary_Museum[][16] =
 {
@@ -2083,7 +2083,7 @@ const u16 gTilesetPalettes_General_Secondary_Museum[][16] =
     INCBIN_U16("data/tilesets/secondary/general_secondary_museum/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_General_Secondary_Museum[] = INCBIN_U32("data/tilesets/secondary/general_secondary_museum/tiles.4bpp.lz");
+const u32 gTilesetTiles_General_Secondary_Museum[] = INCBIN_U32("data/tilesets/secondary/general_secondary_museum/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_General_Secondary_Academy[][16] =
 {
@@ -2102,7 +2102,7 @@ const u16 gTilesetPalettes_General_Secondary_Academy[][16] =
     INCBIN_U16("data/tilesets/secondary/general_secondary_academy/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_General_Secondary_Academy[] = INCBIN_U32("data/tilesets/secondary/general_secondary_academy/tiles.4bpp.lz");
+const u32 gTilesetTiles_General_Secondary_Academy[] = INCBIN_U32("data/tilesets/secondary/general_secondary_academy/tiles.4bpp.fastSmol");
 
 const u16 gTilesetPalettes_General_Primary_Academy[][16] =
 {
@@ -2121,4 +2121,4 @@ const u16 gTilesetPalettes_General_Primary_Academy[][16] =
     INCBIN_U16("data/tilesets/primary/general_primary_academy/palettes/12.gbapal"),
 };
 
-const u32 gTilesetTiles_General_Primary_Academy[] = INCBIN_U32("data/tilesets/primary/general_primary_academy/tiles.4bpp.lz");
+const u32 gTilesetTiles_General_Primary_Academy[] = INCBIN_U32("data/tilesets/primary/general_primary_academy/tiles.4bpp.smol");

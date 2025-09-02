@@ -7,6 +7,5 @@ void NewGameBirchSpeech_SetDefaultPlayerName(u8);
 void CB2_ReinitMainMenu(void);
 void CB2_NewGameBirchSpeech_FromNewMainMenu(void);
 void CB2_NewGameUrielSpeech_FromNewMainMenu(void);
-void CB2_NewGameKabaSpeech_FromNewMainMenu(void);
 
 #endif // GUARD_MAIN_MENU_H

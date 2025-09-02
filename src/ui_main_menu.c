@@ -44,7 +44,6 @@
 #include "mystery_gift_menu.h"
 #include "link.h"
 #include "uriel_speech.h"
-#include "kaba_speech.h"
 
 /*
  * 
@@ -125,7 +124,6 @@ static u32 GetHPEggCyclePercent(u32 partyIndex);
 static void CreatePartyMonIcons();
 static void DestroyMonIcons();
 
-
 //==========Background and Window Data==========//
 static const struct BgTemplate sMainMenuBgTemplates[] =
 {
@@ -201,28 +199,28 @@ static const struct HWWindowPosition HWinCoords[6] =
 //
 //  Graphic and Tilemap Pointers for Bgs and Mughsots
 //
-static const u32 sMainBgTiles[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.4bpp.lz");
-static const u32 sMainBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.bin.lz");
+static const u32 sMainBgTiles[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.4bpp.smol");
+static const u32 sMainBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.bin.smolTM");
 static const u16 sMainBgPalette[] = INCBIN_U16("graphics/ui_main_menu/main_tiles.gbapal");
 
-static const u32 sMainBgTilesFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.4bpp.lz");
-static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.lz");
+static const u32 sMainBgTilesFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.4bpp.smol");
+static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.smolTM");
 static const u16 sMainBgPaletteFem[] = INCBIN_U16("graphics/ui_main_menu/main_tiles_fem.gbapal");
 
-static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.4bpp.lz");
-static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.bin.lz");
+static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.4bpp.smol");
+static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.bin.smolTM");
 static const u16 sScrollBgPalette[] = INCBIN_U16("graphics/ui_main_menu/scroll_tiles.gbapal");
 
 static const u16 sIconBox_Pal[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow.gbapal");
-static const u32 sIconBox_Gfx[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow.4bpp.lz");
+static const u32 sIconBox_Gfx[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow.4bpp.smol");
 
 static const u16 sIconBox_PalFem[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_fem.gbapal");
-static const u32 sIconBox_GfxFem[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_fem.4bpp.lz");
+static const u32 sIconBox_GfxFem[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_fem.4bpp.smol");
 
 static const u16 sBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
-static const u32 sBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.lz");
+static const u32 sBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.smol");
 static const u16 sMayMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/may_mugshot.gbapal");
-static const u32 sMayMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/may_mugshot.4bpp.lz");
+static const u32 sMayMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/may_mugshot.4bpp.smol");
 
 
 //
@@ -344,30 +342,24 @@ static const struct SpriteTemplate sSpriteTemplate_IconBox =
 void Task_OpenMainMenu(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    
     if (!gPaletteFade.active)
     {   
         switch (data[0]) // This data[0] comes from the main_menu.c Task_DisplayMainMenu, 
         {                //  where the UI is initialized by swapping a task func with this one 
             case HAS_NO_SAVED_GAME:
             default:
-                // gPlttBufferUnfaded[0] = RGB_BLACK;
-                // gPlttBufferFaded[0] = RGB_BLACK;
-                // CleanupOverworldWindowsAndTilemaps();
-                // DestroyTask(taskId);
-                SetMainCallback2(CB2_NewGameKabaSpeech_FromNewMainMenu);
+                DestroyTask(taskId);
+                SetMainCallback2(CB2_NewGameUrielSpeech_FromNewMainMenu);
                 return;
-            
             case HAS_SAVED_GAME:       
             case HAS_MYSTERY_GIFT:
             case HAS_MYSTERY_EVENTS:
                 menuType = data[0];
-                CleanupOverworldWindowsAndTilemaps();
-                MainMenu_Init(CB2_InitTitleScreen);  // if need to bail go to title screen
-                DestroyTask(taskId);
-                return;        
+                break;
         }
-
+        CleanupOverworldWindowsAndTilemaps();
+        MainMenu_Init(CB2_InitTitleScreen); // if need to bail go to title screen
+        DestroyTask(taskId);
     }
 }
 
@@ -631,11 +623,11 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
         {
             if (gSaveBlock2Ptr->playerGender == MALE)
             {
-                LZDecompressWram(sMainBgTilemap, sBg1TilemapBuffer);
+                DecompressDataWithHeaderWram(sMainBgTilemap, sBg1TilemapBuffer);
             }
             else
             {
-                LZDecompressWram(sMainBgTilemapFem, sBg1TilemapBuffer);
+                DecompressDataWithHeaderWram(sMainBgTilemapFem, sBg1TilemapBuffer);
             }
             sMainMenuDataPtr->gfxLoadState++;
         }
@@ -648,7 +640,7 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
     case 3:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            LZDecompressWram(sScrollBgTilemap, sBg2TilemapBuffer);
+            DecompressDataWithHeaderWram(sScrollBgTilemap, sBg2TilemapBuffer);
             sMainMenuDataPtr->gfxLoadState++;
         }
         break;

@@ -1392,11 +1392,26 @@ static void NamingScreen_NoIcon(void)
 
 static void NamingScreen_CreatePlayerIcon(void)
 {
-    u16 rivalGfxId;
+    u16 gfxId;
     u8 spriteId;
 
-    rivalGfxId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, sNamingScreen->monSpecies);
-    spriteId = CreateObjectGraphicsSprite(rivalGfxId, SpriteCallbackDummy, 56, 37, 0);
+    switch (gSaveBlock2Ptr->playerGender)
+    {
+        case MALE:
+            gfxId = OBJ_EVENT_GFX_BRENDAN_NORMAL;  // or whatever constant maps to his OW
+            break;
+        case FEMALE:
+            gfxId = OBJ_EVENT_GFX_MAY_NORMAL;
+            break;
+        case NONBINARY:
+            gfxId = OBJ_EVENT_GFX_WALLY; // <- you'll need to define this
+            break;
+        default:
+            gfxId = OBJ_EVENT_GFX_BRENDAN_NORMAL;
+            break;
+    }
+
+    spriteId = CreateObjectGraphicsSprite(gfxId, SpriteCallbackDummy, 56, 37, 0);
     gSprites[spriteId].oam.priority = 3;
     StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_SOUTH);
 }

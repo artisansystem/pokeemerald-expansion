@@ -2792,8 +2792,8 @@ void UNUSED ItemMenu_Register(u8 taskId)
     BagDestroyPocketScrollArrowPair();
     BagMenu_PrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
     tListPosition = listPosition;
-    tQuantity = BagGetQuantityByPocketPosition(gBagPosition.pocket + 1, listPosition);
-    gSpecialVar_ItemId = BagGetItemIdByPocketPosition(gBagPosition.pocket + 1, listPosition);
+    tQuantity = GetBagItemQuantity(gBagPosition.pocket + 1, listPosition);
+    gSpecialVar_ItemId = GetBagItemId(gBagPosition.pocket + 1, listPosition);
     sContextMenuFuncs[gBagPosition.location](taskId);
 }
 
@@ -2809,7 +2809,7 @@ static void UNUSED ItemMenu_Deselect(u8 taskId)
 {
     s16* data = gTasks[taskId].data;
     int listPosition = ListMenu_ProcessInput(tListTaskId);
-    u16 itemId = BagGetItemIdByPocketPosition(gBagPosition.pocket + 1, listPosition);
+    u16 itemId = GetBagItemId(gBagPosition.pocket + 1, listPosition);
 
     ResetRegisteredItem(itemId);
 

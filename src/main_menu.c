@@ -41,7 +41,6 @@
 #include "ui_main_menu.h"
 #include "main_menu.h"
 #include "uriel_speech.h"
-#include "kaba_speech.h"
 #include <stdbool.h>
 
 /*
@@ -249,7 +248,6 @@ static void MainMenu_FormatSavegamePokedex(void);
 static void MainMenu_FormatSavegameTime(void);
 static void MainMenu_FormatSavegameBadges(void);
 static void NewGameBirchSpeech_CreateDialogueWindowBorder(u8, u8, u8, u8, u8, u8);
-static bool8 sKabaSpeechStarted = FALSE;
 
 // .rodata
 
@@ -1095,7 +1093,7 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
             default:
                 gPlttBufferUnfaded[0] = RGB_BLACK;
                 gPlttBufferFaded[0] = RGB_BLACK;
-                DoKabaSpeech();
+                DoUrielSpeech();
                 DestroyTask(taskId);
                 break;
             case ACTION_CONTINUE:
@@ -1358,8 +1356,8 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void) // Combination of the Above fu
     DmaFill32(3, 0, OAM, OAM_SIZE);
     DmaFill16(3, 0, PLTT, PLTT_SIZE);
     ResetPaletteFade();
-    LZ77UnCompVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
-    LZ77UnCompVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
+    DecompressDataWithHeaderVram(sBirchSpeechShadowGfx, (u8 *)VRAM);
+    DecompressDataWithHeaderVram(sBirchSpeechBgMap, (u8 *)(BG_SCREEN_ADDR(7)));
     LoadPalette(sBirchSpeechBgPals, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
     LoadPalette(sBirchSpeechBgGradientPal, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(8));
     ResetTasks();
@@ -1396,18 +1394,6 @@ void CB2_NewGameBirchSpeech_FromNewMainMenu(void) // Combination of the Above fu
 void CB2_NewGameUrielSpeech_FromNewMainMenu(void)
 {
     DoUrielSpeech();
-}
-
-// Callback to start Kaba speech safely
-void CB2_NewGameKabaSpeech_FromNewMainMenu(void)
-{
-    static bool initialized = FALSE;
-    
-    if (!initialized)
-    {
-    DoKabaSpeech();
-    initialized = TRUE;
-    }
 }
 
 static void Task_NewGameBirchSpeech_WaitToShowBirch(u8 taskId)

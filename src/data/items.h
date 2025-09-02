@@ -14595,7 +14595,7 @@ const struct Item gItemsInfo[] =
     //Start Pokevial Branch
     [ITEM_POKEVIAL] =
     {
-        .name = _("Pokévial"),
+        .name = ITEM_NAME("Pokévial"),
         .price = 0,
         .description = COMPOUND_STRING(
             "Restores all\n"
