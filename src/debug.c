@@ -1524,6 +1524,8 @@ static void DebugAction_Player_Gender(u8 taskId)
 {
     if (gSaveBlock2Ptr->playerGender == MALE)
         gSaveBlock2Ptr->playerGender = FEMALE;
+    else if (gSaveBlock2Ptr->playerGender == FEMALE)
+        gSaveBlock2Ptr->playerGender = NONBINARY;
     else
         gSaveBlock2Ptr->playerGender = MALE;
     Debug_DestroyMenu_Full(taskId);

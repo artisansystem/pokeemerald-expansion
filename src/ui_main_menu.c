@@ -207,6 +207,10 @@ static const u32 sMainBgTilesFem[] = INCBIN_U32("graphics/ui_main_menu/main_tile
 static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.smolTM");
 static const u16 sMainBgPaletteFem[] = INCBIN_U16("graphics/ui_main_menu/main_tiles_fem.gbapal");
 
+static const u32 sMainBgTilesEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.4bpp.smol");
+static const u32 sMainBgTilemapEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.bin.smolTM");
+static const u32 sMainBgPaletteEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.gbapal");
+
 static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.4bpp.smol");
 static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.bin.smolTM");
 static const u16 sScrollBgPalette[] = INCBIN_U16("graphics/ui_main_menu/scroll_tiles.gbapal");
@@ -216,6 +220,9 @@ static const u32 sIconBox_Gfx[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow.
 
 static const u16 sIconBox_PalFem[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_fem.gbapal");
 static const u32 sIconBox_GfxFem[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_fem.4bpp.smol");
+
+static const u16 sIconBox_PalEnby[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_enby.gbapal");
+static const u32 sIconBox_GfxEnby[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_enby.4bpp.smol");
 
 static const u16 sBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
 static const u32 sBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.smol");
@@ -304,6 +311,13 @@ static const struct CompressedSpriteSheet sSpriteSheet_IconBoxFem =
     .tag = TAG_ICON_BOX,
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_IconBoxEnby =
+{
+    .data = sIconBox_GfxEnby,
+    .size = 32*32*1/2,
+    .tag = TAG_ICON_BOX,
+};
+
 static const struct SpritePalette sSpritePal_IconBox =
 {
     .data = sIconBox_Pal,
@@ -313,6 +327,12 @@ static const struct SpritePalette sSpritePal_IconBox =
 static const struct SpritePalette sSpritePal_IconBoxFem =
 {
     .data = sIconBox_PalFem,
+    .tag = TAG_ICON_BOX
+};
+
+static const struct SpritePalette sSpritePal_IconBoxEnby =
+{
+    .data = sIconBox_PalEnby,
     .tag = TAG_ICON_BOX
 };
 
@@ -612,9 +632,13 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
         {
             DecompressAndCopyTileDataToVram(1, sMainBgTiles, 0, 0, 0);
         }
-        else
+        else if (gSaveBlock2Ptr->playerGender == FEMALE)
         {
             DecompressAndCopyTileDataToVram(1, sMainBgTilesFem, 0, 0, 0);
+        }
+        else
+        {
+            DecompressAndCopyTileDataToVram(1, sMainBgTilesEnby, 0, 0, 0);
         }
         sMainMenuDataPtr->gfxLoadState++;
         break;
@@ -625,9 +649,13 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
             {
                 DecompressDataWithHeaderWram(sMainBgTilemap, sBg1TilemapBuffer);
             }
-            else
+            else if (gSaveBlock2Ptr->playerGender == FEMALE)
             {
                 DecompressDataWithHeaderWram(sMainBgTilemapFem, sBg1TilemapBuffer);
+            }
+            else
+            {
+                DecompressDataWithHeaderWram(sMainBgTilemapEnby, sBg1TilemapBuffer);
             }
             sMainMenuDataPtr->gfxLoadState++;
         }
@@ -654,13 +682,21 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
             LoadSpritePalette(&sSpritePal_BrendanMugshot);
             LoadPalette(sMainBgPalette, 0, 32);
         }
-        else
+        else if (gSaveBlock2Ptr->playerGender == FEMALE)
         {
             LoadCompressedSpriteSheet(&sSpriteSheet_IconBoxFem);
             LoadSpritePalette(&sSpritePal_IconBoxFem);
             LoadCompressedSpriteSheet(&sSpriteSheet_MayMugshot);
             LoadSpritePalette(&sSpritePal_MayMugshot);
             LoadPalette(sMainBgPaletteFem, 0, 32);
+        }
+        else 
+        {
+            LoadCompressedSpriteSheet(&sSpriteSheet_IconBoxEnby);
+            LoadSpritePalette(&sSpritePal_IconBoxEnby);
+            LoadCompressedSpriteSheet(&sSpriteSheet_BrendanMugshot);
+            LoadSpritePalette(&sSpritePal_BrendanMugshot);
+            LoadPalette(sMainBgPaletteEnby, 0, 32);
         }
         LoadPalette(sScrollBgPalette, 16, 32);
     }

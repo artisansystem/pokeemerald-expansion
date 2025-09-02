@@ -193,6 +193,10 @@ static const u32 sStartMenuTilemap[] = INCBIN_U32("graphics/ui_startmenu_full/me
 static const u32 sStartMenuTilesAlt[] = INCBIN_U32("graphics/ui_startmenu_full/menu_tiles_alt.4bpp.smol");
 static const u16 sStartMenuPaletteAlt[] = INCBIN_U16("graphics/ui_startmenu_full/menu_alt.gbapal");
 
+// Alternate Main Background for Enby Player
+static const u32 sStartMenuTilesEnby[] = INCBIN_U32("graphics/ui_startmenu_full/menu_tiles_enby.4bpp.smol");
+static const u16 sStartMenuPaletteEnby[] = INCBIN_U16("graphics/ui_startmenu_full/menu_tiles_enby.gbapal");
+
 // Scrolling Background
 static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_startmenu_full/scroll_tiles.4bpp.smol");
 static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_startmenu_full/scroll_tilemap.bin.smolTM");
@@ -1125,6 +1129,10 @@ static bool8 StartMenuFull_LoadGraphics(void) // Load the Tilesets, Tilemaps, Sp
         {
             DecompressAndCopyTileDataToVram(1, sStartMenuTilesAlt, 0, 0, 0);
         }
+        else if (gSaveBlock2Ptr->playerGender == NONBINARY)
+        {
+            DecompressAndCopyTileDataToVram(1, sStartMenuTilesEnby, 0, 0, 0);
+        }
         else
         {
             DecompressAndCopyTileDataToVram(1, sStartMenuTiles, 0, 0, 0);
@@ -1148,6 +1156,11 @@ static bool8 StartMenuFull_LoadGraphics(void) // Load the Tilesets, Tilemaps, Sp
             LoadPalette(sStartMenuPaletteAlt, 0, 16);
             LoadPalette(sHP_PalAlt, 32, 16);
             cursorPal.data = sCursor_PalAlt;
+        }
+        else if (gSaveBlock2Ptr->playerGender == NONBINARY)
+        {
+            LoadPalette(sStartMenuPaletteEnby, 0, 16);
+            LoadPalette(sHP_Pal, 32, 16);
         }
         else
         {
