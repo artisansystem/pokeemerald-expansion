@@ -6,7 +6,7 @@
 // still has them in the ROM. This is because the developers forgot
 // to define NDEBUG before release, however this has been changed as
 // Ruby's actual debug build does not use the AGBPrint features.
-#define NDEBUG
+// #define NDEBUG
 
 // To enable printf debugging, comment out "#define NDEBUG". This allows
 // the various AGBPrint functions to be used. (See include/gba/isagbprint.h).
@@ -87,5 +87,7 @@
 
 // Config to toggle using the new shop menu.
 #define MUDSKIP_SHOP_UI
+#define MUDSKIP_OUTFIT_SYSTEM
 
 #endif // GUARD_CONFIG_GENERAL_H
+

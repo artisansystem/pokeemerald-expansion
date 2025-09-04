@@ -960,7 +960,6 @@
 #define ITEM_LINKING_CORD 796
 #define ITEM_PEAT_BLOCK 797
 #define ITEM_BERSERK_GENE 798
-
 #define ITEM_FAIRY_FEATHER 799
 #define ITEM_SYRUPY_APPLE 800
 #define ITEM_UNREMARKABLE_TEACUP 801
@@ -998,8 +997,9 @@
 // LEGEND PLATE
 
 #define ITEM_POKEVIAL 829 // Pokevial Branch
+#define ITEM_OUTFIT_BOX 830
 
-#define ITEMS_COUNT 830
+#define ITEMS_COUNT 831
 #define ITEM_FIELD_ARROW ITEMS_COUNT
 
 // A special item id associated with "Cancel"/"Exit" etc. in a list of items or decorations

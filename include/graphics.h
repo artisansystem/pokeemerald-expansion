@@ -1756,6 +1756,9 @@ extern const u32 gItemIcon_Pokevial[];
 extern const u16 gItemIconPalette_Pokevial[];
 // End Pokevial Branch
 
+extern const u32 gItemIcon_OutfitBox[];
+extern const u16 gItemIconPalette_OutfitBox[];
+
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u16 gItemIconPalette_ReturnToFieldArrow[];
 

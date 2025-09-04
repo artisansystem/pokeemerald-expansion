@@ -2115,3 +2115,6 @@ const u32 gItemIcon_Pokevial[] = INCBIN_U32("graphics/items/icons/pokevial.4bpp.
 
 const u16 gItemIconPalette_Pokevial[] = INCBIN_U16("graphics/items/icon_palettes/pokevial.gbapal");
 //End Pokevial Branch
+
+const u32 gItemIcon_OutfitBox[] = INCBIN_U32("graphics/items/icons/outfit_box.4bpp.lz");
+const u16 gItemIconPalette_OutfitBox[] = INCBIN_U16("graphics/items/icon_palettes/outfit_box.gbapal");
