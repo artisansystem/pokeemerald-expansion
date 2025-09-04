@@ -658,9 +658,9 @@
 
 #define FLAG_UNUSED_0x264  0x264 // Exp. Share
 #define FLAG_RECIEVED_SITRUS_BERRIES  0x265 // Kingsisle Gatehouse Student
-#define FLAG_UNUSED_0x266  0x266 // Unused Flag
-#define FLAG_UNUSED_0x267  0x267 // Unused Flag
-#define FLAG_UNUSED_0x268  0x268 // Unused Flag
+#define FLAG_HIDE_KINGSISLE_TRUCK  0x266 // Hides the truck after the intro sequence.
+#define FLAG_HIDE_MERCURY_OUTSIDE  0x267 // Hides Mercury after the intro sequence.
+#define FLAG_HIDE_MERCURY_INSIDE  0x268 // Hides Mercury after the dorm sequence.
 #define FLAG_UNUSED_0x269  0x269 // Unused Flag
 #define FLAG_UNUSED_0x26A  0x26A // Unused Flag
 #define FLAG_UNUSED_0x26B  0x26B // Unused Flag

@@ -714,11 +714,12 @@ static const u8 sTextColors[][3] =
     {0, 11, 12},
     {0, 13, 14},
     {0, 7, 8},
-    {13, 15, 14},
+    {13, 1, 14},
     {0, 1, 2},
     {0, 3, 4},
     {0, 5, 6},
-    {0, 7, 8}
+    {0, 7, 8},
+    {0, 15, 8}
 };
 
 static const u8 sButtons_Gfx[][4 * TILE_SIZE_4BPP] = {
@@ -3443,13 +3444,35 @@ static void PrintMonOTName(void)
     int x, windowId;
     if (InBattleFactory() != TRUE && InSlateportBattleTent() != TRUE)
     {
+        const struct WindowTemplate *template = &sPageInfoTemplate[PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER];
         windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER);
+        
         PrintTextOnWindow(windowId, gText_OTSlash, 0, 1, 0, 1);
         x = GetStringWidth(FONT_NORMAL, gText_OTSlash, 0);
-        if (sMonSummaryScreen->summary.OTGender == 0)
+
+        u16 purple = RGB(26, 15, 28);
+        u16 purpleShadow = RGB(10, 5, 15);
+        u8 palNum = template->paletteNum;
+        gPlttBufferUnfaded[palNum * 16 + 15] = purple;
+        gPlttBufferFaded[palNum * 16 + 15] = purple;
+        gPlttBufferUnfaded[palNum * 16 + 8] = purpleShadow;
+        gPlttBufferFaded[palNum * 16 + 8] = purpleShadow;
+
+        switch (sMonSummaryScreen->summary.OTGender)
+        {
+        case 0: // Male
             PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 5);
-        else
+            break;
+        case 1: // Female
             PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 6);
+            break;
+        case 2: // Nonbinary
+            PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 13);
+            break;
+        default: // fallback
+            PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 5);
+        break;
+        }
     }
 }
 

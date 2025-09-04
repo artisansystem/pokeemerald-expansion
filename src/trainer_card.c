@@ -295,7 +295,8 @@ static const u8 sTrainerPicOffset[2][GENDER_COUNT][2] =
     // Hoenn
     {
         [MALE]   = {1, 0},
-        [FEMALE] = {1, 0}
+        [FEMALE] = {1, 0},
+        [NONBINARY] = {1, 0}
     },
 };
 
@@ -314,7 +315,8 @@ static const u8 sTrainerPicFacilityClass[][GENDER_COUNT] =
     [CARD_TYPE_EMERALD] =
     {
         [MALE]   = FACILITY_CLASS_BRENDAN,
-        [FEMALE] = FACILITY_CLASS_MAY
+        [FEMALE] = FACILITY_CLASS_MAY,
+        [NONBINARY] = FACILITY_CLASS_WALLY
     }
 };
 

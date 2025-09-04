@@ -14,6 +14,7 @@
 #include "task.h"
 #include "menu.h"
 #include "main_menu.h"
+#include "random.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "strings.h"
@@ -49,6 +50,7 @@
 #define tPlayerGender data[6]
 
 #define WINDOWID_YES_NO 1
+#define NUM_PRESET_NAMES 8
 
 // tSpriteType, for fade in/out
 enum SpriteTypes
@@ -188,9 +190,9 @@ static void UrielSpeech_CreatePlayerSprites(void);
 static void Task_UrielSpeech_FadeOut(u8);
 static void Task_UrielSpeech_FadeIn(u8);
 static void UrielSpeech_BeginFade(u8, u8, u8);
-static void UrielSpeech_SetDefaultName(void);
+static void UrielSpeech_SetDefaultName(u8);
 static void CB2_UrielSpeech_ReturnFromNamingScreen(void);
-static void UrielSpeech_SetDefaultLastName(void);
+static void UrielSpeech_SetDefaultLastName(u8);
 static void CB2_UrielSpeech_ReturnFromNamingScreen2(void);
 static void WindowFunc_DrawStandardFrame(u8 bg, u8 tilemapLeft, u8 tilemapTop, u8 width, u8 height, u8 paletteNum);
 
@@ -208,9 +210,49 @@ static void WindowFunc_DrawStandardFrame(u8 bg, u8 tilemapLeft, u8 tilemapTop, u
 extern const struct SpriteTemplate sSpriteTemplate_NewGamePlatformLeft;
 extern const struct SpriteTemplate sSpriteTemplate_NewGamePlatformRight;
 
-static const u8 sUrielSpeech_Jacob[] = _("Jacob");
-static const u8 sUrielSpeech_Emily[]  = _("Emily");
-static const u8 sUrielSpeech_Briar[] = _("Briar");
+static const u8 *const sMalePresetNames[] = {
+    COMPOUND_STRING("Jacob"),
+    COMPOUND_STRING("Joshua"),
+    COMPOUND_STRING("Daniel"),
+    COMPOUND_STRING("Andrew"),
+    COMPOUND_STRING("Ethan"),
+    COMPOUND_STRING("Dylan"),
+    COMPOUND_STRING("Elijah"),
+    COMPOUND_STRING("Caleb")
+};
+
+static const u8 *const sFemalePresetNames[] = {
+    COMPOUND_STRING("Rachel"),
+    COMPOUND_STRING("Sydney"),
+    COMPOUND_STRING("Emily"),
+    COMPOUND_STRING("Eliza"),
+    COMPOUND_STRING("Grace"),
+    COMPOUND_STRING("Ava"),
+    COMPOUND_STRING("Allison"),
+    COMPOUND_STRING("Zoey")
+};
+
+static const u8 *const sNonbinaryPresetNames[] = {
+    COMPOUND_STRING("Alex"),
+    COMPOUND_STRING("Rowan"),
+    COMPOUND_STRING("River"),
+    COMPOUND_STRING("Avery"),
+    COMPOUND_STRING("Skylar"),
+    COMPOUND_STRING("Parker"),
+    COMPOUND_STRING("Briar"),
+    COMPOUND_STRING("Taylor")
+};
+
+static const u8 *const sPresetLastNames[] = {
+    COMPOUND_STRING("Jones"),
+    COMPOUND_STRING("Brown"),
+    COMPOUND_STRING("Johnson"),
+    COMPOUND_STRING("Miller"),
+    COMPOUND_STRING("Davis"),
+    COMPOUND_STRING("Wilson"),
+    COMPOUND_STRING("Moore"),
+    COMPOUND_STRING("Jackson")
+};
 
 static const u8 sUrielSpeech_Boy[] = _("BOY");
 static const u8 sUrielSpeech_Girl[] = _("GIRL");
@@ -907,7 +949,7 @@ static void Task_UrielSpeech_StartNamingScreen(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        UrielSpeech_SetDefaultName();
+        UrielSpeech_SetDefaultName(Random() % NUM_PRESET_NAMES);
         DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, sUrielSpeech->chosenSprite, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
@@ -987,7 +1029,7 @@ static void Task_UrielSpeech_StartNamingScreen2(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        UrielSpeech_SetDefaultLastName();
+        UrielSpeech_SetDefaultLastName(Random() % NUM_PRESET_NAMES);
         DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerLastName, sUrielSpeech->chosenSprite, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen2);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
@@ -1353,9 +1395,32 @@ static void UrielSpeech_BeginFade(u8 fadeOut, u8 delay, u8 spriteType)
     gTasks[taskId].tSpriteType = spriteType;
 }
 
-static void UrielSpeech_SetDefaultName(void)
+static void UrielSpeech_SetDefaultName(u8 nameId)
 {
-    // sets default name if player doesn't pick one, defaults are Jacob/Emily/Briar
+    const u8 *name;
+    u8 i;
+
+    if (gSaveBlock2Ptr->playerGender == MALE)
+        name = sMalePresetNames[nameId];
+    else if (gSaveBlock2Ptr->playerGender == FEMALE)
+        name = sFemalePresetNames[nameId];
+    else 
+        name = sNonbinaryPresetNames[nameId];
+    for (i = 0; i < PLAYER_NAME_LENGTH; i++)
+        gSaveBlock2Ptr->playerName[i] = name[i];
+    gSaveBlock2Ptr->playerName[PLAYER_NAME_LENGTH] = EOS;
+}
+
+static void UrielSpeech_SetDefaultLastName(u8 nameId)
+{
+    const u8 *name;
+    u8 i;
+
+    name = sPresetLastNames[nameId];
+
+    for (i = 0; i < PLAYER_NAME_LENGTH; i++)
+        gSaveBlock2Ptr->playerLastName[i] = name[i];
+    gSaveBlock2Ptr->playerLastName[PLAYER_NAME_LENGTH] = EOS;
 }
 
 static void CB2_UrielSpeech_ReturnFromNamingScreen(void)
@@ -1445,11 +1510,6 @@ static void CB2_UrielSpeech_ReturnFromNamingScreen(void)
 
     DebugPrintf("state: %d", gMain.state);
     gMain.state++;
-}
-
-static void UrielSpeech_SetDefaultLastName(void)
-{
-    // sets default last name if the player doesn't pick one
 }
 
 static void CB2_UrielSpeech_ReturnFromNamingScreen2(void)

@@ -1,0 +1,68 @@
+mapscripts KingsisleDorm_1F_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_KINGSISLE_INTRO_STATE, 2: KingsisleDorm_EventScript_DormExplanation
+    ]
+}
+
+script KingsisleDorm_EventScript_DormExplanation {
+    delay(15)
+    setvar(VAR_KINGSISLE_INTRO_STATE, 3)
+    applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_up *2, face_down))
+    waitmovement(0)
+    lockall
+    speakername(UniqueName_Text_Mercury)
+    msgbox(KingsisleDorm_Text_ThisIsIt, MSGBOX_DEFAULT)
+    dynmultichoice(0, 0, TRUE, 3, 0, DYN_MULTICHOICE_CB_NONE, "Are you also a student?","When do classes start?","I'm good.")
+    
+    if(var(VAR_RESULT)== 0) 
+    {
+        speakername(UniqueName_Text_Mercury)
+        msgbox(KingsisleDorm_Text_VeryFunny, MSGBOX_DEFAULT)
+        goto(FinalReminder)
+
+    }
+    elif(var(VAR_RESULT)== 1)
+    {
+        speakername(UniqueName_Text_Mercury)
+        msgbox(KingsisleDorm_Text_ClassesStart, MSGBOX_DEFAULT)
+        goto(FinalReminder)
+    }
+    else 
+    {
+        speakername(UniqueName_Text_Mercury)
+        msgbox(KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT)
+        applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
+        waitmovement(0)
+        setflag(FLAG_HIDE_MERCURY_INSIDE)
+        releaseall
+        end
+    }
+    
+    FinalReminder: 
+        msgbox(KingsisleDorm_Text_Reminder_Alt, MSGBOX_DEFAULT)
+        applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
+        waitmovement(0)
+        setflag(FLAG_HIDE_MERCURY_INSIDE)
+        releaseall
+        end
+}
+
+text KingsisleDorm_Text_ThisIsIt {
+    format("Huh, not bad. They must've renovated recently.\p Well, this is it. Your home away from home for the next year or two. Your room's on the second floor, last door on the right. So, any questions for me before I send you on your merry way?")
+}
+
+text KingsisleDorm_Text_VeryFunny {
+    format("Ha. If I had a nickel for every time someone asked me that question, I could afford to quit this job.\p No, I'm the Dawnsinger family's head of security. Feel free to stop by my office, if you ever need anything.")
+}
+
+text KingsisleDorm_Text_ClassesStart {
+    format("Should be about a week or so of orientation-related activities until classes are fully underway.")
+}
+
+text KingsisleDorm_Text_Reminder {
+    format("Alright. In that case, I'll head out and let you get settled. I bought you a clock, should be up in your room. Don't forget to set it. And remember to go see Headmaster Dawnsinger at some point. Special request from the man himself.")
+}
+
+text KingsisleDorm_Text_Reminder_Alt {
+    format("Alright, well, I'll head out and let you get settled. I bought you a clock, should be up in your room. Don't forget to set it. And remember to go see Headmaster Dawnsinger at some point. Special request from the man himself.")
+}

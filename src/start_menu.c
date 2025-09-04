@@ -1475,6 +1475,11 @@ static void ShowSaveInfoWindow(void)
         color = TEXT_COLOR_BLUE;
     }
 
+    if (gender == NONBINARY)
+    {
+        color = TEXT_COLOR_DARK_GRAY;
+    }
+
     // Print region name
     yOffset = 1;
     BufferSaveMenuText(SAVE_MENU_LOCATION, gStringVar4, TEXT_COLOR_GREEN);

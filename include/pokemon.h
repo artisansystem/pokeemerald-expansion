@@ -181,10 +181,10 @@ struct PokemonSubstruct3
 {
     u8 pokerus;
     u8 metLocation;
-    u16 metLevel:7;
+    u16 metLevel:6;
     u16 metGame:4;
     u16 dynamaxLevel:4;
-    u16 otGender:1;
+    u16 otGender:2;
     u32 hpIV:5;
     u32 attackIV:5;
     u32 defenseIV:5;

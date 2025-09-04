@@ -528,16 +528,6 @@ static const u8 *const sFemalePresetNames[] = {
     COMPOUND_STRING("HALIE")
 };
 
-static const u8 *const sNonbinaryPresetNames[] = {
-    COMPOUND_STRING("ALEX"),
-    COMPOUND_STRING("ROWAN"),
-    COMPOUND_STRING("RIVER"),
-    COMPOUND_STRING("AVERY"),
-    COMPOUND_STRING("SKYLAR"),
-    COMPOUND_STRING("PARKER"),
-    COMPOUND_STRING("BRIAR"),
-};
-
 // The number of male vs. female names is assumed to be the same.
 // If they aren't, the smaller of the two sizes will be used and any extra names will be ignored.
 #define NUM_PRESET_NAMES min(ARRAY_COUNT(sMalePresetNames), ARRAY_COUNT(sFemalePresetNames))

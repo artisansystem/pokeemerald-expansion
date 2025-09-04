@@ -1180,3 +1180,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/KingsisleInstitute_Academy_2/scripts.inc"
 
 	.include "data/maps/Academy_Gatehouse/scripts.inc"
+
+	.include "data/maps/InsideOfKingsisleTruck/scripts.inc"
