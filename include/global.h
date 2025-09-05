@@ -616,6 +616,7 @@ struct SaveBlock2
     u8 questData[QUEST_FLAGS_COUNT * QUEST_STATES];
     u8 subQuests[SUB_FLAGS_COUNT];
     u8 playerLastName[PLAYER_NAME_LENGTH + 1];
+    u8 playerAppearance;
 }; 
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
