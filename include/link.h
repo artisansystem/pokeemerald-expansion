@@ -180,6 +180,7 @@ struct LinkPlayer
     /* 0x14 */ u32 linkType;
     /* 0x18 */ u16 id; // battler id in battles
     /* 0x1A */ u16 language;
+               u8 appearance;
 };
 
 struct LinkPlayerBlock
@@ -240,7 +241,7 @@ struct BlockRequest
 
 extern struct Link gLink;
 extern u16 ALIGNED(4) gRecvCmds[MAX_RFU_PLAYERS][CMD_LENGTH];
-extern u8 gBlockSendBuffer[BLOCK_BUFFER_SIZE];
+extern u16 gBlockSendBuffer[BLOCK_BUFFER_SIZE];
 extern u16 gLinkType;
 extern u32 gLinkStatus;
 extern u16 gBlockRecvBuffer[MAX_RFU_PLAYERS][BLOCK_BUFFER_SIZE / 2];

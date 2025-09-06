@@ -2333,7 +2333,7 @@ static bool8 HasDecorationsInUse(u8 taskId)
 
 static void SetUpPuttingAwayDecorationPlayerAvatar(void)
 {
-    u16 gfxId = GetPlayerAnimGraphicsIdByOutfitStateIdAndGender(gSaveBlock2Ptr->currOutfitId, PLAYER_AVATAR_GFX_DECORATING, gSaveBlock2Ptr->playerGender);
+    u16 gfxId = GetPlayerAnimGraphicsIdByOutfitStateIdAndGender(gSaveBlock2Ptr->currOutfitId, PLAYER_AVATAR_GFX_DECORATING, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance);
     GetPlayerFacingDirection();
     sDecor_CameraSpriteObjectIdx1 = gSprites[gFieldCamera.spriteId].data[0];
     LoadPlayerSpritePalette();

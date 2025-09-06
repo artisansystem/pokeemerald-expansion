@@ -127,7 +127,6 @@ struct UrielSpeech
     bool32 fadeFinished:1;
     bool32 playerHasName:1;
     bool32 playerHasLastName:1;
-    u8 chosenSprite;
 };
 
 // EWRAM data
@@ -348,18 +347,6 @@ static const u32 sUrielSpeech_BgMap[] = INCBIN_U32("graphics/uriel_speech/bg.bin
 static const u16 sUrielSpeech_UrielPicGfx[] = INCBIN_U16("graphics/uriel_speech/pics/uriel.4bpp");
 static const u16 sUrielSpeech_UrielPicPal[] = INCBIN_U16("graphics/uriel_speech/pics/uriel.gbapal");
 static const u32 sUrielSpeech_UrielPicMap[] = INCBIN_U32("graphics/uriel_speech/pics/uriel.bin.smolTM");
-
-//! NOTE: both aka and ao has the same palette as of writing
-static const u16 sUrielSpeech_PlayerPicPal[] = INCBIN_U16("graphics/uriel_speech/pics/ao.gbapal");
-
-static const u16 sUrielSpeech_AkaPicGfx[] = INCBIN_U16("graphics/uriel_speech/pics/aka.4bpp");
-static const u8 sUrielSpeech_AkaPicMap[] = INCBIN_U8("graphics/uriel_speech/pics/aka.bin");
-
-static const u16 sUrielSpeech_AoPicGfx[] = INCBIN_U16("graphics/uriel_speech/pics/ao.4bpp");
-static const u8 sUrielSpeech_AoPicMap[] = INCBIN_U8("graphics/uriel_speech/pics/ao.bin");
-
-static const u16 sUrielSpeech_PlatformGfx[] = INCBIN_U16("graphics/uriel_speech/platform.4bpp");
-static const u16 sUrielSpeech_PlatformPal[] = INCBIN_U16("graphics/uriel_speech/platform.gbapal");
 
 static const struct BgTemplate sUrielSpeech_BgTemplates[BG_COUNT] =
 {
@@ -950,7 +937,7 @@ static void Task_UrielSpeech_StartNamingScreen(u8 taskId)
     if (!gPaletteFade.active)
     {
         UrielSpeech_SetDefaultName(Random() % NUM_PRESET_NAMES);
-        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, sUrielSpeech->chosenSprite, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen);
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, 0, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
     }
@@ -1030,7 +1017,7 @@ static void Task_UrielSpeech_StartNamingScreen2(u8 taskId)
     if (!gPaletteFade.active)
     {
         UrielSpeech_SetDefaultLastName(Random() % NUM_PRESET_NAMES);
-        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerLastName, sUrielSpeech->chosenSprite, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen2);
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerLastName, 0, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen2);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
     }
@@ -1178,38 +1165,38 @@ static void Task_UrielSpeech_Cleanup(u8 taskId)
 
 // misc. helper functions
 
-static void UrielSpeech_DrawCharacterMugshot(u8 id)
-{
-    switch(id)
-    {
-        case MUGSHOT_MALE_STUDENT: // male
-            LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
-            LoadBgTiles(BG_MUGSHOT_2, sUrielSpeech_AkaPicGfx, sizeof(sUrielSpeech_AkaPicGfx), 0);
-            CopyToBgTilemapBufferRect(BG_MUGSHOT_2, sUrielSpeech_AkaPicMap, 14, 0, 9, 13);
-            CopyBgTilemapBufferToVram(BG_MUGSHOT_2);
-            return;
-        case MUGSHOT_FEMALE_STUDENT: // female
-            LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
-            LoadBgTiles(BG_MUGSHOT_1, sUrielSpeech_AoPicGfx, sizeof(sUrielSpeech_AoPicGfx), 0x50);
-            CopyToBgTilemapBufferRect(BG_MUGSHOT_1, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
-            CopyBgTilemapBufferToVram(BG_MUGSHOT_1);
-            return;
-    //    case MUGSHOT_ENBY_STUDENT: // enby
-    //        LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
-    //        LoadBgTiles(BG_MUGSHOT_3, sUrielSpeech_AoPicGfx, sizeof(sUrielSpeech_AoPicGfx), 0x50);
-    //        CopyToBgTilemapBufferRect(BG_MUGSHOT_3, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
-    //        CopyBgTilemapBufferToVram(BG_MUGSHOT_3);
-    //        return;
-        case MUGSHOT_URIEL:
-            LoadPalette(sUrielSpeech_UrielPicPal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
-            LoadBgTiles(BG_MUGSHOT_1, sUrielSpeech_UrielPicGfx, sizeof(sUrielSpeech_UrielPicGfx), 0);
-            CopyToBgTilemapBuffer(BG_MUGSHOT_1, sUrielSpeech_UrielPicMap, 0, 0);
-            CopyBgTilemapBufferToVram(BG_MUGSHOT_1);
-            return;
-        default:
-            return;
-    }
-}
+// static void UrielSpeech_DrawCharacterMugshot(u8 id)
+// {
+//     switch(id)
+//     {
+//         case MUGSHOT_MALE_STUDENT: // male
+//             LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+//             LoadBgTiles(BG_MUGSHOT_2, sUrielSpeech_AkaPicGfx, sizeof(sUrielSpeech_AkaPicGfx), 0);
+//             CopyToBgTilemapBufferRect(BG_MUGSHOT_2, sUrielSpeech_AkaPicMap, 14, 0, 9, 13);
+//             CopyBgTilemapBufferToVram(BG_MUGSHOT_2);
+//             return;
+//         case MUGSHOT_FEMALE_STUDENT: // female
+//             LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+//             LoadBgTiles(BG_MUGSHOT_1, sUrielSpeech_AoPicGfx, sizeof(sUrielSpeech_AoPicGfx), 0x50);
+//             CopyToBgTilemapBufferRect(BG_MUGSHOT_1, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
+//             CopyBgTilemapBufferToVram(BG_MUGSHOT_1);
+//             return;
+//     //    case MUGSHOT_ENBY_STUDENT: // enby
+//     //        LoadPalette(sUrielSpeech_PlayerPicPal, BG_PLTT_ID(3), PLTT_SIZE_4BPP);
+//     //        LoadBgTiles(BG_MUGSHOT_3, sUrielSpeech_AoPicGfx, sizeof(sUrielSpeech_AoPicGfx), 0x50);
+//     //        CopyToBgTilemapBufferRect(BG_MUGSHOT_3, sUrielSpeech_AoPicMap, 7, 0, 9, 13);
+//     //        CopyBgTilemapBufferToVram(BG_MUGSHOT_3);
+//     //        return;
+//         case MUGSHOT_URIEL:
+//             LoadPalette(sUrielSpeech_UrielPicPal, BG_PLTT_ID(1), PLTT_SIZE_4BPP);
+//             LoadBgTiles(BG_MUGSHOT_1, sUrielSpeech_UrielPicGfx, sizeof(sUrielSpeech_UrielPicGfx), 0);
+//             CopyToBgTilemapBuffer(BG_MUGSHOT_1, sUrielSpeech_UrielPicMap, 0, 0);
+//             CopyBgTilemapBufferToVram(BG_MUGSHOT_1);
+//             return;
+//         default:
+//             return;
+//     }
+// }
 
 static inline void UrielSpeech_PrintMessageBox(const u8 *str)
 {
@@ -1273,6 +1260,11 @@ static void UrielSpeech_CreatePlayerSprites(void)
     gSprites[sUrielSpeech->enbyStudentSpriteId].callback = SpriteCallbackDummy;
     gSprites[sUrielSpeech->enbyStudentSpriteId].oam.priority = 0;
     gSprites[sUrielSpeech->enbyStudentSpriteId].invisible = TRUE;
+
+}
+
+static void UrielSpeech_CreatePlayerAppearanceSprites(void)
+{
 
 }
 

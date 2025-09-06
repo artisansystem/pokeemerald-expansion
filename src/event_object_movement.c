@@ -525,7 +525,9 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_RubySapphireBrendan,   OBJ_EVENT_PAL_TAG_RS_BRENDAN},
     {gObjectEventPal_RubySapphireMay,       OBJ_EVENT_PAL_TAG_RS_MAY},
     {gObjectEventPal_Wally,                 OBJ_EVENT_PAL_TAG_WALLY},
-#if OW_FOLLOWERS_POKEBALLS
+    {gObjectEventPal_Mercury,               OBJ_EVENT_PAL_TAG_MERCURY},
+
+    #if OW_FOLLOWERS_POKEBALLS
     {gObjectEventPal_MasterBall,            OBJ_EVENT_PAL_TAG_BALL_MASTER},
     {gObjectEventPal_UltraBall,             OBJ_EVENT_PAL_TAG_BALL_ULTRA},
     {gObjectEventPal_GreatBall,             OBJ_EVENT_PAL_TAG_BALL_GREAT},
@@ -9820,7 +9822,7 @@ bool8 IsElevationMismatchAt(u8 elevation, s16 x, s16 y)
 
     mapElevation = MapGridGetElevationAt(x, y);
 
-    if (mapElevation == 0 || mapElevation == 15)
+    if (mapElevation == 0 || mapElevation == MAX_ELEVATION_LEVEL)
         return FALSE;
 
     if (mapElevation != elevation)
@@ -9879,7 +9881,7 @@ void ObjectEventUpdateElevation(struct ObjectEvent *objEvent, struct Sprite *spr
     u8 curElevation = MapGridGetElevationAt(objEvent->currentCoords.x, objEvent->currentCoords.y);
     u8 prevElevation = MapGridGetElevationAt(objEvent->previousCoords.x, objEvent->previousCoords.y);
 
-    if (curElevation == 15 || prevElevation == 15)
+    if (curElevation == MAX_ELEVATION_LEVEL || prevElevation == MAX_ELEVATION_LEVEL)
     {
         // Ignore subsprite priorities under bridges
         // so all subsprites will display below it
@@ -9890,7 +9892,7 @@ void ObjectEventUpdateElevation(struct ObjectEvent *objEvent, struct Sprite *spr
 
     objEvent->currentElevation = curElevation;
 
-    if (curElevation != 0 && curElevation != 15)
+    if (curElevation != 0 && curElevation != MAX_ELEVATION_LEVEL)
         objEvent->previousElevation = curElevation;
 }
 

@@ -577,9 +577,9 @@ void SpawnLinkPartnerObjectEvent(void)
             case VERSION_EMERALD:
             default:
             {
-                u8 outfit = gLinkPlayers[i].currOutfitId, gender = gLinkPlayers[i].gender;
+                u8 outfit = gLinkPlayers[i].currOutfitId, gender = gLinkPlayers[i].gender, appearance = gLinkPlayers[i].appearance;
                 if (outfit < OUTFIT_COUNT)
-                    linkSpriteId = GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(PLAYER_AVATAR_STATE_NORMAL, i, gender);
+                    linkSpriteId = GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(PLAYER_AVATAR_STATE_NORMAL, i, gender, appearance);
                 else
                     linkSpriteId = (gender == 0) ? OBJ_EVENT_GFX_RIVAL_BRENDAN_NORMAL : OBJ_EVENT_GFX_RIVAL_MAY_NORMAL;
             }
@@ -599,6 +599,7 @@ static void LoadLinkPartnerObjectEventSpritePalette(u16 graphicsId, u8 localEven
     u32 i = 0;
     u8 outfit = 0;
     u8 gender = 0;
+    u8 appearance = 0;
     u8 adjustedPaletteNum = paletteNum + 6;
     u8 obj = GetObjectEventIdByLocalIdAndMap(localEventId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup);
     u16 gfx = 0;
@@ -608,8 +609,9 @@ static void LoadLinkPartnerObjectEventSpritePalette(u16 graphicsId, u8 localEven
     while (i < MAX_LINK_PLAYERS)
     {
         gender = gLinkPlayers[i].gender;
+        appearance = gLinkPlayers[i].appearance;
         outfit = gLinkPlayers[i].currOutfitId;
-        gfx = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(outfit, PLAYER_AVATAR_STATE_NORMAL, gender);
+        gfx = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(outfit, PLAYER_AVATAR_STATE_NORMAL, gender, appearance);
         if (graphicsId == gfx && obj != OBJECT_EVENTS_COUNT)
         {
             sprite->oam.paletteNum = adjustedPaletteNum;

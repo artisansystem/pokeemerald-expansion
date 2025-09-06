@@ -5,10 +5,6 @@
 static const u8 sText_OutfitName_UsualGreen[] = _("USUAL GREEN");
 static const u8 sText_OutfitDesc_UsualGreen[] = _(
     "The usual, but basic OUTFIT.");
-
-static const u8 sText_OutfitName_UnusualRed[] = _("UNUSUAL RED");
-static const u8 sText_OutfitDesc_UnusualRed[] = _(
-    "Rather unusual, but still basic\nOUTFIT.");
 #endif
 
 static const u16 sRegionMapPlayerIcon_BrendanGfx[] = INCBIN_U16("graphics/pokenav/region_map/brendan_icon.4bpp");
@@ -79,113 +75,230 @@ const struct Outfit gOutfits[OUTFIT_COUNT] =
         //! DESC: trainer front & back pic index
         //! (see include/constants/trainers.h)
         .trainerPics = {
-            [MALE] =   { TRAINER_PIC_BRENDAN, TRAINER_BACK_PIC_BRENDAN, },
-            [FEMALE] = { TRAINER_PIC_MAY, TRAINER_BACK_PIC_MAY, },
-            [NONBINARY] = {TRAINER_PIC_WALLY, TRAINER_BACK_PIC_WALLY, }
+            [MALE] = {
+                [APPEARANCE_LIGHT] =   { TRAINER_PIC_BRENDAN, TRAINER_BACK_PIC_BRENDAN, },
+                [APPEARANCE_OLIVE] =   { TRAINER_PIC_BRENDAN, TRAINER_BACK_PIC_BRENDAN, },
+                [APPEARANCE_BROWN] =   { TRAINER_PIC_BRENDAN, TRAINER_BACK_PIC_BRENDAN, },
+                [APPEARANCE_DARK] =   { TRAINER_PIC_BRENDAN, TRAINER_BACK_PIC_BRENDAN, },
+            },
+            [FEMALE] = {
+                [APPEARANCE_LIGHT] = { TRAINER_PIC_MAY, TRAINER_BACK_PIC_MAY, },
+                [APPEARANCE_OLIVE] = { TRAINER_PIC_MAY, TRAINER_BACK_PIC_MAY, },
+                [APPEARANCE_BROWN] = { TRAINER_PIC_MAY, TRAINER_BACK_PIC_MAY, },
+                [APPEARANCE_DARK] = { TRAINER_PIC_MAY, TRAINER_BACK_PIC_MAY, },
+            }, 
+            [NONBINARY] = {
+                [APPEARANCE_LIGHT] = {TRAINER_PIC_WALLY, TRAINER_BACK_PIC_WALLY, },
+                [APPEARANCE_OLIVE] = {TRAINER_PIC_WALLY, TRAINER_BACK_PIC_WALLY, },
+                [APPEARANCE_BROWN] = {TRAINER_PIC_WALLY, TRAINER_BACK_PIC_WALLY, },
+                [APPEARANCE_DARK] = {TRAINER_PIC_WALLY, TRAINER_BACK_PIC_WALLY, },
+            }        
         },
 
         //! DESC: overworld avatars, consisting of: walking, cycling,
         //! surfing, and underwater. (see include/constants/event_object.h)
         .avatarGfxIds = {
            [MALE] = {
-               [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_BRENDAN_NORMAL,
-               [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE,
-               [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_BRENDAN_SURFING,
-               [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_BRENDAN_UNDERWATER
+                [APPEARANCE_LIGHT] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_BRENDAN_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_BRENDAN_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_BRENDAN_UNDERWATER
+                },
+                [APPEARANCE_OLIVE] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_BRENDAN_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_BRENDAN_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_BRENDAN_UNDERWATER
+                },
+                [APPEARANCE_BROWN] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_BRENDAN_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_BRENDAN_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_BRENDAN_UNDERWATER
+                },
+                [APPEARANCE_DARK] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_BRENDAN_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_BRENDAN_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_BRENDAN_UNDERWATER
+                }             
            },
            [FEMALE] = {
-               [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_MAY_NORMAL,
-               [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_MAY_ACRO_BIKE,
-               [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_MAY_SURFING,
-               [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_MAY_UNDERWATER
+                [APPEARANCE_LIGHT] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_MAY_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_MAY_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_MAY_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_MAY_UNDERWATER
+                },
+                [APPEARANCE_OLIVE] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_MAY_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_MAY_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_MAY_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_MAY_UNDERWATER
+                },
+                [APPEARANCE_BROWN] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_MAY_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_MAY_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_MAY_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_MAY_UNDERWATER
+                },
+                [APPEARANCE_DARK] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_MAY_NORMAL,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_MAY_ACRO_BIKE,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_MAY_SURFING,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_MAY_UNDERWATER
+                }
            },
            [NONBINARY] = {
-               [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_WALLY,
-               [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_WALLY,
-               [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_WALLY,
-               [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_WALLY
-           }
+                [APPEARANCE_LIGHT] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_WALLY
+                },
+                [APPEARANCE_OLIVE] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_WALLY
+                },
+                [APPEARANCE_BROWN] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_WALLY
+                },
+                [APPEARANCE_DARK] = {
+                    [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_WALLY
+                }
+            },
         },
 
         //! DESC: overworld anims, consisting of: field move, fishing,
         //! water, and decorating. (see include/constants/event_object.h)
         .animGfxIds = {
             [MALE] = {
-                [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE,
-                [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_BRENDAN_FISHING,
-                [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_BRENDAN_WATERING,
-                [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_BRENDAN_DECORATING,
-                [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE
+                [APPEARANCE_LIGHT] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_BRENDAN_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_BRENDAN_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_BRENDAN_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE
+                },
+                [APPEARANCE_OLIVE] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_BRENDAN_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_BRENDAN_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_BRENDAN_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE
+                },
+                [APPEARANCE_BROWN] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_BRENDAN_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_BRENDAN_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_BRENDAN_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE
+                },
+                [APPEARANCE_DARK] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_BRENDAN_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_BRENDAN_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_BRENDAN_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_BRENDAN_FIELD_MOVE
+                },
             },
             [FEMALE] = {
-                [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_MAY_FIELD_MOVE,
-                [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_MAY_FISHING,
-                [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_MAY_WATERING,
-                [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_MAY_DECORATING,
-                [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_MAY_FIELD_MOVE
+                [APPEARANCE_LIGHT] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_MAY_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_MAY_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_MAY_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_MAY_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_MAY_FIELD_MOVE
+                },
+                [APPEARANCE_OLIVE] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_MAY_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_MAY_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_MAY_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_MAY_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_MAY_FIELD_MOVE
+                },
+                [APPEARANCE_BROWN] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_MAY_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_MAY_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_MAY_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_MAY_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_MAY_FIELD_MOVE
+                },
+                [APPEARANCE_DARK] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_MAY_FIELD_MOVE,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_MAY_FISHING,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_MAY_WATERING,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_MAY_DECORATING,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_MAY_FIELD_MOVE
+                },
             },
             [NONBINARY] = {
-                [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_WALLY,
-                [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_WALLY,
-                [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_WALLY,
-                [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_WALLY,
-                [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_WALLY
-            }
+                [APPEARANCE_LIGHT] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_WALLY
+                },
+                [APPEARANCE_OLIVE] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_WALLY
+                },
+                [APPEARANCE_BROWN] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_WALLY
+                },
+                [APPEARANCE_DARK] = {
+                    [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_WALLY,
+                    [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_WALLY
+                },
+            },
+      
         },
 
         //! DESC: head icons gfx&pal for region map
-        .iconsRM = { sRegionMapPlayerIcon_BrendanGfx, sRegionMapPlayerIcon_MayGfx },
+        .iconsRM = {
+            [MALE] = {
+                [APPEARANCE_LIGHT] = sRegionMapPlayerIcon_BrendanGfx,
+                [APPEARANCE_OLIVE] = sRegionMapPlayerIcon_BrendanGfx,
+                [APPEARANCE_BROWN] = sRegionMapPlayerIcon_BrendanGfx,
+                [APPEARANCE_DARK] = sRegionMapPlayerIcon_BrendanGfx,
+            },
+            [FEMALE] = {
+                [APPEARANCE_LIGHT] = sRegionMapPlayerIcon_MayGfx,
+                [APPEARANCE_OLIVE] = sRegionMapPlayerIcon_MayGfx,
+                [APPEARANCE_BROWN] = sRegionMapPlayerIcon_MayGfx,
+                [APPEARANCE_DARK] = sRegionMapPlayerIcon_MayGfx,
+            },
+            [NONBINARY] = {
+                [APPEARANCE_LIGHT] = sRegionMapPlayerIcon_BrendanGfx,
+                [APPEARANCE_OLIVE] = sRegionMapPlayerIcon_BrendanGfx,
+                [APPEARANCE_BROWN] = sRegionMapPlayerIcon_BrendanGfx,
+                [APPEARANCE_DARK] = sRegionMapPlayerIcon_BrendanGfx,
+            },
+        },
 
         //! DESC: head icons gfx&pal for frontier pass
         //! note that frontier pass needs to be in one sprite instead of two,
         //! unlike region map. (probably should split them tbh)
         .iconsFP = sFrontierPassPlayerIcons_BrendanMay_Gfx,
-    },
-    [OUTFIT_UNUSUAL_RED] = {
-        .isHidden = FALSE,
-        .prices = { 200, 500 },
-        #if MODERN == 1
-        .name = COMPOUND_STRING("UNUSUAL RED"),
-        .desc = COMPOUND_STRING("Rather unusual, but still basic\nOUTFIT."),
-        #else
-        .name = sText_OutfitName_UnusualRed,
-        .desc = sText_OutfitDesc_UnusualRed,
-        #endif
-        .trainerPics = {
-            [MALE]   = {TRAINER_PIC_RS_BRENDAN, TRAINER_BACK_PIC_RUBY_SAPPHIRE_BRENDAN},
-            [FEMALE] = {TRAINER_PIC_RS_MAY, TRAINER_BACK_PIC_RUBY_SAPPHIRE_MAY}
-        },
-        .avatarGfxIds = {
-           [MALE] = {
-               [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_NORMAL,
-               [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_ACRO_BIKE,
-               [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_SURFING,
-               [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_UNDERWATER
-           },
-           [FEMALE] = {
-               [PLAYER_AVATAR_STATE_NORMAL] =     OBJ_EVENT_GFX_OUTFIT_RS_MAY_NORMAL,
-               [PLAYER_AVATAR_STATE_BIKE] =       OBJ_EVENT_GFX_OUTFIT_RS_MAY_ACRO_BIKE,
-               [PLAYER_AVATAR_STATE_SURFING] =    OBJ_EVENT_GFX_OUTFIT_RS_MAY_SURFING,
-               [PLAYER_AVATAR_STATE_UNDERWATER] = OBJ_EVENT_GFX_OUTFIT_RS_MAY_UNDERWATER
-           },
-        },
-        .animGfxIds = {
-            [MALE] = {
-                [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_FIELD_MOVE,
-                [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_FISHING,
-                [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_WATERING,
-                [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_DECORATING,
-                [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_OUTFIT_RS_BRENDAN_FIELD_MOVE
-            },
-            [FEMALE] = {
-                [PLAYER_AVATAR_GFX_FIELD_MOVE] = OBJ_EVENT_GFX_OUTFIT_RS_MAY_FIELD_MOVE,
-                [PLAYER_AVATAR_GFX_FISHING] =    OBJ_EVENT_GFX_OUTFIT_RS_MAY_FISHING,
-                [PLAYER_AVATAR_GFX_WATERING] =   OBJ_EVENT_GFX_OUTFIT_RS_MAY_WATERING,
-                [PLAYER_AVATAR_GFX_DECORATING] = OBJ_EVENT_GFX_OUTFIT_RS_MAY_DECORATING,
-                [PLAYER_AVATAR_GFX_VSSEEKER] =   OBJ_EVENT_GFX_OUTFIT_RS_MAY_FIELD_MOVE
-            },
-        },
-        .iconsRM = { sRegionMapPlayerIcon_RSBrendanGfx, sRegionMapPlayerIcon_RSMayGfx },
-        .iconsFP = sFrontierPassPlayerIcons_RSBrendanMay_Gfx,
-    },
+    }
 };

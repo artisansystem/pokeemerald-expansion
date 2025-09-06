@@ -319,11 +319,11 @@ struct Outfit
     u32 prices[GENDER_COUNT]; //! heh
     const u8 *name;
     const u8 *desc;
-    u16 trainerPics[GENDER_COUNT][2];
-    u16 avatarGfxIds[GENDER_COUNT][PLAYER_AVATAR_STATE_COUNT];
-    u16 animGfxIds[GENDER_COUNT][PLAYER_AVATAR_GFX_COUNT];
+    u16 trainerPics[GENDER_COUNT][APPEARANCE_COUNT][2];
+    u16 avatarGfxIds[GENDER_COUNT][APPEARANCE_COUNT][PLAYER_AVATAR_STATE_COUNT];
+    u16 animGfxIds[GENDER_COUNT][APPEARANCE_COUNT][PLAYER_AVATAR_GFX_COUNT];
     //! region map & frontier pass
-    const void *iconsRM[GENDER_COUNT]; //! region map
+    const void *iconsRM[GENDER_COUNT][APPEARANCE_COUNT]; //! region map
     const void *iconsFP; //! frontier pass
 };
 

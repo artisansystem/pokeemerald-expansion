@@ -993,7 +993,7 @@ static void ForEachCB_PopulateItemIcons(u32 idx, u32 col, u32 row)
         case NEW_SHOP_TYPE_OUTFIT:
         {
             //! TODO: Fix coord of this
-            u16 gfxId = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(sMartInfo.itemList[i], PLAYER_AVATAR_STATE_NORMAL, gSaveBlock2Ptr->playerGender);
+            u16 gfxId = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(sMartInfo.itemList[i], PLAYER_AVATAR_STATE_NORMAL, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance);
 
             if (sMartInfo.itemList[i] == OUTFIT_NONE) // is 0 as DECOR/ITEM_NONE
             {

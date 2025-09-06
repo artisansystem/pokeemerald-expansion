@@ -60,6 +60,7 @@ struct TrainerCard
              // which they use for a Wonder Card flag id instead (see CreateTrainerCardInBuffer)
     /*0x60*/ bool16 hasAllFrontierSymbols;
     /*0x62*/ u16 frontierBP;
+             u8 appearance;
 };
 
 extern struct TrainerCard gTrainerCards[4];

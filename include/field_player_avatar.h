@@ -39,9 +39,9 @@ void StopPlayerAvatar(void);
 void SetSpinStartFacingDir(u8 direction);
 void GetXYCoordsOneStepInFrontOfPlayer(s16 *xPtr, s16 *yPtr);
 u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
-u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 gender);
-u16 GetPlayerAnimGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 gender);
-u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender);
+u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 gender, u8 appearance);
+u16 GetPlayerAnimGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 gender, u8 appearance);
+u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender, u8 appearance);
 void SetPlayerAvatarFieldMove(void);
 u16 GetPlayerAvatarGraphicsIdByCurrentState(void);
 void SetPlayerAvatarStateMask(u8 flags);
@@ -76,6 +76,6 @@ void ResetSpinTimer(void);
 bool32 CanTriggerSpinEvolution();
 
 void SetPlayerAvatarVsSeeker(void);
-u8 GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(u8 state, u8 linkId, u8 gender);
+u8 GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(u8 state, u8 linkId, u8 gender, u8 appearance);
 
 #endif // GUARD_FIELD_PLAYER_AVATAR_H

@@ -1837,6 +1837,7 @@ u32 LinkPlayerGetTrainerPicId(u32 multiplayerId)
     u8 gender = gLinkPlayers[multiplayerId].gender;
     u8 version = gLinkPlayers[multiplayerId].version & 0xFF;
     u8 outfitId = gLinkPlayers[multiplayerId].currOutfitId;
+    u8 appearance = gLinkPlayers[multiplayerId].appearance;
 
     if (version == VERSION_FIRE_RED || version == VERSION_LEAF_GREEN)
         trainerPicId = gender + TRAINER_BACK_PIC_RED;
@@ -1845,7 +1846,7 @@ u32 LinkPlayerGetTrainerPicId(u32 multiplayerId)
     else
     {
         if (outfitId < OUTFIT_COUNT)
-            trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(outfitId, gender, 1);
+            trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(outfitId, gender, appearance, 1);
         else
             trainerPicId = gender + TRAINER_BACK_PIC_BRENDAN;
     }
@@ -1860,7 +1861,7 @@ static u32 PlayerGetTrainerBackPicId(void)
     if (gBattleTypeFlags & BATTLE_TYPE_LINK)
         trainerPicId = LinkPlayerGetTrainerPicId(GetMultiplayerId());
     else
-        trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(gSaveBlock2Ptr->currOutfitId, gSaveBlock2Ptr->playerGender, 1);
+        trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(gSaveBlock2Ptr->currOutfitId, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance, 1);
 
     return trainerPicId;
 }
@@ -1902,7 +1903,7 @@ static void PlayerHandleDrawTrainerPic(u32 battler)
     // Use front pic table for any tag battles unless your partner is Steven or a custom partner.
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && gPartnerTrainerId < TRAINER_PARTNER(PARTNER_NONE))
     {
-        trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(gSaveBlock2Ptr->currOutfitId, gSaveBlock2Ptr->playerGender, 0);
+        trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(gSaveBlock2Ptr->currOutfitId, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance, 0);
         isFrontPic = TRUE;
     }
     else // Use back pic in all the other usual circumstances.
