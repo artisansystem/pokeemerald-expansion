@@ -12,41 +12,53 @@ script KingsisleDorm_EventScript_DormExplanation {
     lockall
     speakername(UniqueName_Text_Mercury)
     msgbox(KingsisleDorm_Text_ThisIsIt, MSGBOX_DEFAULT)
-    dynmultichoice(0, 0, TRUE, 3, 0, DYN_MULTICHOICE_CB_NONE, "Are you also a student?","When do classes start?","I'm good.")
-    
-    if(var(VAR_RESULT)== 0) 
-    {
-        speakername(UniqueName_Text_Mercury)
-        msgbox(KingsisleDorm_Text_VeryFunny, MSGBOX_DEFAULT)
-        goto(FinalReminder)
-
-    }
-    elif(var(VAR_RESULT)== 1)
-    {
-        speakername(UniqueName_Text_Mercury)
-        msgbox(KingsisleDorm_Text_ClassesStart, MSGBOX_DEFAULT)
-        goto(FinalReminder)
-    }
-    else 
-    {
-        speakername(UniqueName_Text_Mercury)
-        msgbox(KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT)
-        applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
-        waitmovement(0)
-        setflag(FLAG_HIDE_MERCURY_INSIDE)
-        releaseall
-        end
-    }
-    
-    FinalReminder: 
-        msgbox(KingsisleDorm_Text_Reminder_Alt, MSGBOX_DEFAULT)
-        applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
-        waitmovement(0)
-        setflag(FLAG_HIDE_MERCURY_INSIDE)
-        releaseall
-        end
+    goto(KingsisleDorm_EventScript_AnyQuestions)
 }
 
+
+script KingsisleDorm_EventScript_AnyQuestions {
+    
+    if(var(VAR_TEMP_1) == 0) {
+       dynmultipush("Are you also a student?", 0) 
+    }
+    if(var(VAR_TEMP_0) == 0) {
+        dynmultipush("When do classes start?", 1)
+    }
+    dynmultipush("I'm good.", 2)
+    dynmultistack(0, 0, TRUE, 6, FALSE, 0, DYN_MULTICHOICE_CB_NONE)
+    
+    switch(var(VAR_RESULT)) {
+        case 0: goto(KingsisleDorm_EventScript_VeryFunny)
+        case 1: goto(KingsisleDorm_EventScript_ClassesStart)
+        case 2: goto(KingsisleDorm_EventScript_Reminder)
+    }
+}
+
+script KingsisleDorm_EventScript_VeryFunny {
+    speakername(UniqueName_Text_Mercury)
+    msgbox(KingsisleDorm_Text_VeryFunny, MSGBOX_DEFAULT)
+    setvar(VAR_TEMP_1, 1)
+    goto(KingsisleDorm_EventScript_AnyQuestions)
+}
+
+script KingsisleDorm_EventScript_ClassesStart {
+    speakername(UniqueName_Text_Mercury)
+    msgbox(KingsisleDorm_Text_ClassesStart, MSGBOX_DEFAULT)
+    setvar(VAR_TEMP_0, 1)
+    goto(KingsisleDorm_EventScript_AnyQuestions)
+}
+
+
+script KingsisleDorm_EventScript_Reminder {
+    speakername(UniqueName_Text_Mercury)
+    msgbox(KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT)
+    applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
+    waitmovement(0)
+    setflag(FLAG_HIDE_MERCURY_INSIDE)
+    releaseall
+    end
+}
+    
 text KingsisleDorm_Text_ThisIsIt {
     format("Huh, not bad. They must've renovated recently.\p Well, this is it. Your home away from home for the next year or two. Your room's on the second floor, last door on the right. So, any questions for me before I send you on your merry way?")
 }
@@ -61,8 +73,4 @@ text KingsisleDorm_Text_ClassesStart {
 
 text KingsisleDorm_Text_Reminder {
     format("Alright. In that case, I'll head out and let you get settled. I bought you a clock, should be up in your room. Don't forget to set it. And remember to go see Headmaster Dawnsinger at some point. Special request from the man himself.")
-}
-
-text KingsisleDorm_Text_Reminder_Alt {
-    format("Alright, well, I'll head out and let you get settled. I bought you a clock, should be up in your room. Don't forget to set it. And remember to go see Headmaster Dawnsinger at some point. Special request from the man himself.")
 }
