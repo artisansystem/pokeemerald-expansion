@@ -634,7 +634,8 @@
   "gMapGroup_IndoorKingsisle": [
     "KingsisleDorm_1F",
     "KingsisleDorm_2F",
-    "HeadmastersHouse_1F"
+    "HeadmastersHouse_1F",
+    "Player_DormRoom"
   ],
   "gMapGroup_Gatehouses": [
     "KINGSISLE_GATEHOUSE",

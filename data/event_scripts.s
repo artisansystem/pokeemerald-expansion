@@ -1183,3 +1183,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Academy_Gatehouse/scripts.inc"
 
 	.include "data/maps/InsideOfKingsisleTruck/scripts.inc"
+
+	.include "data/maps/Player_DormRoom/scripts.inc"

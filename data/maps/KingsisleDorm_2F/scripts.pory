@@ -1,0 +1,14 @@
+mapscripts KingsisleDorm_2F_MapScripts {}
+
+script KingsisleDorm_2F_NeedSetClock {
+    lockall
+    msgbox(KingsisleDorm_2F_Text_NeedSetClock, MSGBOX_DEFAULT)
+    closemessage
+    applymovement(LOCALID_PLAYER, moves(face_down, walk_down))
+    waitmovement(0)
+    releaseall
+}
+
+text KingsisleDorm_2F_Text_NeedSetClock {
+    format("I should probably set my clock first.")
+}

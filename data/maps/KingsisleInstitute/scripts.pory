@@ -24,6 +24,10 @@ script SecurityOffice{
     msgbox("KINGSISLE SECURITY OFFICE", MSGBOX_SIGN)
 }
 
+script AcademySign{
+    msgbox("ACADEMY THIS WAY", MSGBOX_SIGN)
+}
+
 script Kingsisle_MagicGuy{
     speakername(CommonName_Text_Student)
     msgbox(MagicIsAmazing, MSGBOX_NPC)

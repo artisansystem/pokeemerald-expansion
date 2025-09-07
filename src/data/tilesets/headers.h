@@ -1352,3 +1352,36 @@ const struct Tileset gTileset_General_Primary_Academy =
     .metatileAttributes = gMetatileAttributes_General_Primary_Academy,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Building_Custom =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Building_Custom,
+    .palettes = gTilesetPalettes_Building_Custom,
+    .metatiles = gMetatiles_Building_Custom,
+    .metatileAttributes = gMetatileAttributes_Building_Custom,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Building_DormRoom =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Building_DormRoom,
+    .palettes = gTilesetPalettes_Building_DormRoom,
+    .metatiles = gMetatiles_Building_DormRoom,
+    .metatileAttributes = gMetatileAttributes_Building_DormRoom,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Building_CommonRoom =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Building_CommonRoom,
+    .palettes = gTilesetPalettes_Building_CommonRoom,
+    .metatiles = gMetatiles_Building_CommonRoom,
+    .metatileAttributes = gMetatileAttributes_Building_CommonRoom,
+    .callback = NULL,
+};

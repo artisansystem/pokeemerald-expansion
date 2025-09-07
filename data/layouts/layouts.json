@@ -4426,8 +4426,8 @@
       "name": "KingsisleDorm_1F_Layout",
       "width": 20,
       "height": 10,
-      "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "primary_tileset": "gTileset_Building_Custom",
+      "secondary_tileset": "gTileset_Building_CommonRoom",
       "border_filepath": "data/layouts/KingsisleDorm_1F/border.bin",
       "blockdata_filepath": "data/layouts/KingsisleDorm_1F/map.bin"
     },
@@ -4444,10 +4444,10 @@
     {
       "id": "LAYOUT_KINGSISLE_DORM_2F",
       "name": "KingsisleDorm_2F_Layout",
-      "width": 20,
-      "height": 10,
-      "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "width": 15,
+      "height": 6,
+      "primary_tileset": "gTileset_Building_Custom",
+      "secondary_tileset": "gTileset_Building_CommonRoom",
       "border_filepath": "data/layouts/KingsisleDorm_2F/border.bin",
       "blockdata_filepath": "data/layouts/KingsisleDorm_2F/map.bin"
     },
@@ -4510,6 +4510,16 @@
       "secondary_tileset": "gTileset_InsideOfTruck",
       "border_filepath": "data/layouts/InsideOfKingsisleTruck/border.bin",
       "blockdata_filepath": "data/layouts/InsideOfKingsisleTruck/map.bin"
+    },
+    {
+      "id": "LAYOUT_PLAYER_DORM_ROOM",
+      "name": "Player_DormRoom_Layout",
+      "width": 8,
+      "height": 8,
+      "primary_tileset": "gTileset_Building_Custom",
+      "secondary_tileset": "gTileset_Building_DormRoom",
+      "border_filepath": "data/layouts/Player_DormRoom/border.bin",
+      "blockdata_filepath": "data/layouts/Player_DormRoom/map.bin"
     }
   ]
 }

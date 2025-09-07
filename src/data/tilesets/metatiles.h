@@ -276,3 +276,12 @@ const u16 gMetatileAttributes_General_Secondary_Academy[] = INCBIN_U16("data/til
 
 const u16 gMetatiles_General_Primary_Academy[] = INCBIN_U16("data/tilesets/primary/general_primary_academy/metatiles.bin");
 const u16 gMetatileAttributes_General_Primary_Academy[] = INCBIN_U16("data/tilesets/primary/general_primary_academy/metatile_attributes.bin");
+
+const u16 gMetatiles_Building_Custom[] = INCBIN_U16("data/tilesets/primary/building_custom/metatiles.bin");
+const u16 gMetatileAttributes_Building_Custom[] = INCBIN_U16("data/tilesets/primary/building_custom/metatile_attributes.bin");
+
+const u16 gMetatiles_Building_DormRoom[] = INCBIN_U16("data/tilesets/secondary/building_dorm_room/metatiles.bin");
+const u16 gMetatileAttributes_Building_DormRoom[] = INCBIN_U16("data/tilesets/secondary/building_dorm_room/metatile_attributes.bin");
+
+const u16 gMetatiles_Building_CommonRoom[] = INCBIN_U16("data/tilesets/secondary/building_common_room/metatiles.bin");
+const u16 gMetatileAttributes_Building_CommonRoom[] = INCBIN_U16("data/tilesets/secondary/building_common_room/metatile_attributes.bin");

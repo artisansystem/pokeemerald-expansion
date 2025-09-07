@@ -108,15 +108,64 @@ KingsisleDorm_EventScript_Reminder::
 # 54 "data/maps/KingsisleDorm_1F/scripts.pory"
 	msgbox KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT
 # 55 "data/maps/KingsisleDorm_1F/scripts.pory"
-	applymovement LOCALID_KINGSISLE_MERCURY_DORM, KingsisleDorm_EventScript_Reminder_Movement_0
+	closemessage
 # 56 "data/maps/KingsisleDorm_1F/scripts.pory"
-	waitmovement 0
+	applymovement LOCALID_KINGSISLE_MERCURY_DORM, KingsisleDorm_EventScript_Reminder_Movement_0
 # 57 "data/maps/KingsisleDorm_1F/scripts.pory"
-	setflag FLAG_HIDE_MERCURY_INSIDE
+	waitmovement 0
 # 58 "data/maps/KingsisleDorm_1F/scripts.pory"
-	releaseall
+	setflag FLAG_HIDE_MERCURY_INSIDE
+# 59 "data/maps/KingsisleDorm_1F/scripts.pory"
+	goto KingsisleDorm_EventScript_PlayerSetClock
 	end
 
+
+KingsisleDorm_EventScript_PlayerSetClock::
+# 64 "data/maps/KingsisleDorm_1F/scripts.pory"
+	applymovement LOCALID_PLAYER, KingsisleDorm_MovePlayerSecondFloor
+# 65 "data/maps/KingsisleDorm_1F/scripts.pory"
+	waitmovement 0
+# 66 "data/maps/KingsisleDorm_1F/scripts.pory"
+	warpsilent MAP_KINGSISLE_DORM_2F, 2, 1
+	return
+
+
+# 70 "data/maps/KingsisleDorm_1F/scripts.pory"
+KingsisleDorm_MovePlayerSecondFloor:
+# 71 "data/maps/KingsisleDorm_1F/scripts.pory"
+	delay_8
+# 72 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 72 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 72 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 72 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 73 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 73 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 73 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 74 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 74 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 75 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 75 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 75 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 75 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_left
+# 76 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 76 "data/maps/KingsisleDorm_1F/scripts.pory"
+	walk_up
+# 77 "data/maps/KingsisleDorm_1F/scripts.pory"
+	step_end
 
 # 10 "data/maps/KingsisleDorm_1F/scripts.pory"
 KingsisleDorm_EventScript_DormExplanation_Movement_0:
@@ -128,13 +177,13 @@ KingsisleDorm_EventScript_DormExplanation_Movement_0:
 	face_down
 	step_end
 
-# 55 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 56 "data/maps/KingsisleDorm_1F/scripts.pory"
 KingsisleDorm_EventScript_Reminder_Movement_0:
-# 55 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 56 "data/maps/KingsisleDorm_1F/scripts.pory"
 	walk_down
-# 55 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 56 "data/maps/KingsisleDorm_1F/scripts.pory"
 	walk_down
-# 55 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 56 "data/maps/KingsisleDorm_1F/scripts.pory"
 	set_invisible
 	step_end
 
@@ -151,7 +200,7 @@ KingsisleDorm_EventScript_AnyQuestions_Text_2:
 	.string "I'm good.$"
 
 KingsisleDorm_Text_ThisIsIt::
-# 62 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 80 "data/maps/KingsisleDorm_1F/scripts.pory"
 	.string "Huh, not bad. They must've renovated\n"
 	.string "recently.\p"
 	.string "Well, this is it. Your home away from\n"
@@ -161,7 +210,7 @@ KingsisleDorm_Text_ThisIsIt::
 	.string "before I send you on your merry way?$"
 
 KingsisleDorm_Text_VeryFunny::
-# 66 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 84 "data/maps/KingsisleDorm_1F/scripts.pory"
 	.string "Ha. If I had a nickel for every time\n"
 	.string "someone asked me that question, I\l"
 	.string "could afford to quit this job.\p"
@@ -170,25 +219,16 @@ KingsisleDorm_Text_VeryFunny::
 	.string "office, if you ever need anything.$"
 
 KingsisleDorm_Text_ClassesStart::
-# 70 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 88 "data/maps/KingsisleDorm_1F/scripts.pory"
 	.string "Should be about a week or so of\n"
 	.string "orientation-related activities until\l"
 	.string "classes are fully underway.$"
 
 KingsisleDorm_Text_Reminder::
-# 74 "data/maps/KingsisleDorm_1F/scripts.pory"
+# 92 "data/maps/KingsisleDorm_1F/scripts.pory"
 	.string "Alright. In that case, I'll head out and\n"
 	.string "let you get settled. I bought you a\l"
 	.string "clock, should be up in your room. Don't\l"
 	.string "forget to set it. And remember to go see\l"
-	.string "Headmaster Dawnsinger at some point.\l"
-	.string "Special request from the man himself.$"
-
-KingsisleDorm_Text_Reminder_Alt::
-# 78 "data/maps/KingsisleDorm_1F/scripts.pory"
-	.string "Alright, well, I'll head out and let you\n"
-	.string "get settled. I bought you a clock,\l"
-	.string "should be up in your room. Don't forget\l"
-	.string "to set it. And remember to go see\l"
 	.string "Headmaster Dawnsinger at some point.\l"
 	.string "Special request from the man himself.$"

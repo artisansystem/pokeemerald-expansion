@@ -52,11 +52,29 @@ script KingsisleDorm_EventScript_ClassesStart {
 script KingsisleDorm_EventScript_Reminder {
     speakername(UniqueName_Text_Mercury)
     msgbox(KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT)
+    closemessage
     applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
     waitmovement(0)
     setflag(FLAG_HIDE_MERCURY_INSIDE)
-    releaseall
+    goto(KingsisleDorm_EventScript_PlayerSetClock)
     end
+}
+
+script KingsisleDorm_EventScript_PlayerSetClock {
+    applymovement(LOCALID_PLAYER, KingsisleDorm_MovePlayerSecondFloor)
+    waitmovement(0)
+    warpsilent(MAP_KINGSISLE_DORM_2F, 2, 1)
+    return
+}
+
+movement KingsisleDorm_MovePlayerSecondFloor {
+    delay_8
+    walk_up * 4
+    walk_left * 3
+    walk_up * 2
+    walk_left *4
+    walk_up * 2
+    step_end
 }
     
 text KingsisleDorm_Text_ThisIsIt {
