@@ -635,7 +635,9 @@
     "KingsisleDorm_1F",
     "KingsisleDorm_2F",
     "HeadmastersHouse_1F",
-    "Player_DormRoom"
+    "Player_DormRoom",
+    "Kingsisle_PokemonCenter",
+    "Kingsisle_Nadia_Lab"
   ],
   "gMapGroup_Gatehouses": [
     "KINGSISLE_GATEHOUSE",

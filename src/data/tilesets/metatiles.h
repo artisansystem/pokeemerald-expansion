@@ -285,3 +285,21 @@ const u16 gMetatileAttributes_Building_DormRoom[] = INCBIN_U16("data/tilesets/se
 
 const u16 gMetatiles_Building_CommonRoom[] = INCBIN_U16("data/tilesets/secondary/building_common_room/metatiles.bin");
 const u16 gMetatileAttributes_Building_CommonRoom[] = INCBIN_U16("data/tilesets/secondary/building_common_room/metatile_attributes.bin");
+
+const u16 gMetatiles_Building_Headmaster_Primary[] = INCBIN_U16("data/tilesets/primary/building_headmaster_primary/metatiles.bin");
+const u16 gMetatileAttributes_Building_Headmaster_Primary[] = INCBIN_U16("data/tilesets/primary/building_headmaster_primary/metatile_attributes.bin");
+
+const u16 gMetatiles_Building_Headmaster_Secondary[] = INCBIN_U16("data/tilesets/secondary/building_headmaster_secondary/metatiles.bin");
+const u16 gMetatileAttributes_Building_Headmaster_Secondary[] = INCBIN_U16("data/tilesets/secondary/building_headmaster_secondary/metatile_attributes.bin");
+
+const u16 gMetatiles_PokemonCenter_Alt[] = INCBIN_U16("data/tilesets/secondary/pokemon_center_alt/metatiles.bin");
+const u16 gMetatileAttributes_PokemonCenter_Alt[] = INCBIN_U16("data/tilesets/secondary/pokemon_center_alt/metatile_attributes.bin");
+
+const u16 gMetatiles_Building_Custom_Alt[] = INCBIN_U16("data/tilesets/primary/building_custom_alt/metatiles.bin");
+const u16 gMetatileAttributes_Building_Custom_Alt[] = INCBIN_U16("data/tilesets/primary/building_custom_alt/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Primary_Nadia[] = INCBIN_U16("data/tilesets/primary/general_primary_nadia/metatiles.bin");
+const u16 gMetatileAttributes_General_Primary_Nadia[] = INCBIN_U16("data/tilesets/primary/general_primary_nadia/metatile_attributes.bin");
+
+const u16 gMetatiles_Secondary_Custom_Lab[] = INCBIN_U16("data/tilesets/secondary/secondary_custom_lab/metatiles.bin");
+const u16 gMetatileAttributes_Secondary_Custom_Lab[] = INCBIN_U16("data/tilesets/secondary/secondary_custom_lab/metatile_attributes.bin");

@@ -191,7 +191,9 @@
       "id": "HEAL_LOCATION_KINGSISLE_INSTITUTE",
       "map": "MAP_KINGSISLE_INSTITUTE",
       "x": 14,
-      "y": 30
+      "y": 30,
+      "respawn_map": "MAP_KINGSISLE_POKEMON_CENTER",
+      "respawn_npc": "LOCALID_KINGSISLE_NURSE"
     }
   ]
 }

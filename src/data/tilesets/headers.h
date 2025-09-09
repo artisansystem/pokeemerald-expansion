@@ -1385,3 +1385,69 @@ const struct Tileset gTileset_Building_CommonRoom =
     .metatileAttributes = gMetatileAttributes_Building_CommonRoom,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Building_Headmaster_Primary =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Building_Headmaster_Primary,
+    .palettes = gTilesetPalettes_Building_Headmaster_Primary,
+    .metatiles = gMetatiles_Building_Headmaster_Primary,
+    .metatileAttributes = gMetatileAttributes_Building_Headmaster_Primary,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Building_Headmaster_Secondary =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Building_Headmaster_Secondary,
+    .palettes = gTilesetPalettes_Building_Headmaster_Secondary,
+    .metatiles = gMetatiles_Building_Headmaster_Secondary,
+    .metatileAttributes = gMetatileAttributes_Building_Headmaster_Secondary,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_PokemonCenter_Alt =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_PokemonCenter_Alt,
+    .palettes = gTilesetPalettes_PokemonCenter_Alt,
+    .metatiles = gMetatiles_PokemonCenter_Alt,
+    .metatileAttributes = gMetatileAttributes_PokemonCenter_Alt,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Building_Custom_Alt =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Building_Custom_Alt,
+    .palettes = gTilesetPalettes_Building_Custom_Alt,
+    .metatiles = gMetatiles_Building_Custom_Alt,
+    .metatileAttributes = gMetatileAttributes_Building_Custom_Alt,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Primary_Nadia =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Primary_Nadia,
+    .palettes = gTilesetPalettes_General_Primary_Nadia,
+    .metatiles = gMetatiles_General_Primary_Nadia,
+    .metatileAttributes = gMetatileAttributes_General_Primary_Nadia,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Secondary_Custom_Lab =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Secondary_Custom_Lab,
+    .palettes = gTilesetPalettes_Secondary_Custom_Lab,
+    .metatiles = gMetatiles_Secondary_Custom_Lab,
+    .metatileAttributes = gMetatileAttributes_Secondary_Custom_Lab,
+    .callback = NULL,
+};

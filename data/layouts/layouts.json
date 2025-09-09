@@ -4435,7 +4435,7 @@
       "id": "LAYOUT_PORYTILES_TEST_MAP",
       "name": "PorytilesTestMap_Layout",
       "width": 20,
-      "height": 20,
+      "height": 22,
       "primary_tileset": "gTileset_General_Primary_Custom",
       "secondary_tileset": "gTileset_General_Secondary_Museum",
       "border_filepath": "data/layouts/PorytilesTestMap/border.bin",
@@ -4456,8 +4456,8 @@
       "name": "HeadmastersHouse_1F_Layout",
       "width": 20,
       "height": 10,
-      "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_LilycoveMuseum",
+      "primary_tileset": "gTileset_Building_Headmaster_Primary",
+      "secondary_tileset": "gTileset_Building_Headmaster_Secondary",
       "border_filepath": "data/layouts/HeadmastersHouse_1F/border.bin",
       "blockdata_filepath": "data/layouts/HeadmastersHouse_1F/map.bin"
     },
@@ -4484,8 +4484,8 @@
     {
       "id": "LAYOUT_KINGSISLE_INSTITUTE_ACADEMY_2",
       "name": "KingsisleInstitute_Academy_2_Layout",
-      "width": 20,
-      "height": 25,
+      "width": 22,
+      "height": 26,
       "primary_tileset": "gTileset_General_Primary_Custom",
       "secondary_tileset": "gTileset_General_Secondary_Academy",
       "border_filepath": "data/layouts/KingsisleInstitute_Academy_2/border.bin",
@@ -4520,6 +4520,26 @@
       "secondary_tileset": "gTileset_Building_DormRoom",
       "border_filepath": "data/layouts/Player_DormRoom/border.bin",
       "blockdata_filepath": "data/layouts/Player_DormRoom/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_POKEMON_CENTER",
+      "name": "Kingsisle_PokemonCenter_Layout",
+      "width": 15,
+      "height": 14,
+      "primary_tileset": "gTileset_Building_Custom_Alt",
+      "secondary_tileset": "gTileset_PokemonCenter_Alt",
+      "border_filepath": "data/layouts/Kingsisle_PokemonCenter/border.bin",
+      "blockdata_filepath": "data/layouts/Kingsisle_PokemonCenter/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_NADIA_LAB",
+      "name": "Kingsisle_Nadia_Lab_Layout",
+      "width": 10,
+      "height": 10,
+      "primary_tileset": "gTileset_General_Primary_Nadia",
+      "secondary_tileset": "gTileset_Secondary_Custom_Lab",
+      "border_filepath": "data/layouts/Kingsisle_Nadia_Lab/border.bin",
+      "blockdata_filepath": "data/layouts/Kingsisle_Nadia_Lab/map.bin"
     }
   ]
 }

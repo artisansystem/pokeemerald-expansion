@@ -344,10 +344,6 @@ static const u16 sUrielSpeech_BgGfx[] = INCBIN_U16("graphics/uriel_speech/bg.4bp
 static const u16 sUrielSpeech_BgPal[] = INCBIN_U16("graphics/uriel_speech/bg.gbapal");
 static const u32 sUrielSpeech_BgMap[] = INCBIN_U32("graphics/uriel_speech/bg.bin.smolTM");
 
-static const u16 sUrielSpeech_UrielPicGfx[] = INCBIN_U16("graphics/uriel_speech/pics/uriel.4bpp");
-static const u16 sUrielSpeech_UrielPicPal[] = INCBIN_U16("graphics/uriel_speech/pics/uriel.gbapal");
-static const u32 sUrielSpeech_UrielPicMap[] = INCBIN_U32("graphics/uriel_speech/pics/uriel.bin.smolTM");
-
 static const struct BgTemplate sUrielSpeech_BgTemplates[BG_COUNT] =
 {
     [BG_TEXT] = {
