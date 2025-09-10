@@ -1,1 +1,132 @@
 mapscripts Kingsisle_Nadia_Lab_MapScripts {}
+
+raw `
+UniqueName_Text_Nadia:
+    .string "Nadia$"
+`
+
+script Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft {
+    setflag(FLAG_TEMP_HIDE_FOLLOWER == FALSE)
+    applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_SayHelloToFollower_TopLeft)
+    delay(30)
+    applymovement(LOCALID_FOLLOWING_POKEMON, Kingsisle_NadiaLab_FollowerReactToBulbasaur_TopLeft)
+    waitmovement(0)
+    applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_SayHelloToPlayer_TopLeft)
+    waitmovement(0)
+    applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_GoToNadia_TopLeft)
+    applymovement(LOCALID_NADIA_LAB, moves(face_right))
+    waitmovement(0)
+    speakername(UniqueName_Text_Nadia)
+    msgbox("...")
+    closemessage
+    applymovement(LOCALID_NADIA_LAB, moves(walk_down, walk_right * 3, face_down))
+    applymovement(LOCALID_NADIA_BULBASAUR, moves(delay_8, walk_right * 3, walk_down))
+    waitmovement(0)
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_HaveAPokemon, MSGBOX_DEFAULT)
+    applymovement(LOCALID_NADIA_LAB, moves(face_left))
+    waitmovement(0)
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_InThatCase, MSGBOX_DEFAULT)
+    applymovement(LOCALID_NADIA_LAB, moves(walk_left * 3, walk_down, face_left, delay_8))
+    waitmovement(0)
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_Pokedex, MSGBOX_DEFAULT)
+    goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
+}
+
+script Kingsisle_NadiaLab_EventScript_PokedexReactions {
+    if(var(VAR_TEMP_1) == 0) {
+        dynmultipush("What's in it for me?", 0)
+    }
+    if(var(VAR_TEMP_2) == 0) {
+        dynmultipush("Why me?", 1)
+    }
+    if(var(VAR_TEMP_1) == 1) {
+        dynmultipush("Sure, I guess?", 2)
+    }
+    dynmultistack(0, 0, TRUE, 3, FALSE, 0, DYN_MULTICHOICE_CB_NONE)
+
+    switch(var(VAR_RESULT)) {
+        case 0: goto(Kingsisle_NadiaLab_EventScript_RewardPromise)
+        case 1: goto(Kingsisle_NadiaLab_EventScript_UrielJudgement)
+        case 2: goto(Kingsisle_NadiaLab_EventScript_AcceptedPokedex)
+    }
+}
+
+script Kingsisle_NadiaLab_EventScript_RewardPromise {
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_RewardPromise)
+    setvar(VAR_TEMP_1, 1)
+    goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
+}
+
+script Kingsisle_NadiaLab_EventScript_UrielJudgement {
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_UrielJudgement)
+    setvar(VAR_TEMP_2, 1)
+    goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
+}
+
+script Kingsisle_NadiaLab_EventScript_AcceptedPokedex {
+    applymovement(LOCALID_NADIA_LAB, moves(walk_right * 3, face_down))
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_GoodLuck)
+    closemessage
+    applymovement(LOCALID_NADIA_LAB, moves(walk_up * 2, walk_left * 3))
+    setvar(VAR_KINGSISLE_INTRO_STATE, 7)
+    end
+}
+
+movement Kingsisle_NadiaLab_SayHelloToFollower_TopLeft {
+    emote_exclamation_mark
+    walk_fast_down * 3
+    walk_fast_left * 2
+    jump_in_place_up_down
+    emote_heart
+    step_end
+}
+
+movement Kingsisle_NadiaLab_SayHelloToPlayer_TopLeft {
+    walk_fast_up 
+    face_player
+    emote_question_mark
+    step_end
+}
+
+movement Kingsisle_NadiaLab_GoToNadia_TopLeft {
+    walk_fast_up * 4
+    walk_fast_left * 3
+    step_end
+}
+
+movement Kingsisle_NadiaLab_FollowerReactToBulbasaur_TopLeft {
+    face_right
+    emote_exclamation_mark
+    jump_in_place_up_down
+    step_end
+}
+
+text Kingsisle_NadiaLab_Text_HaveAPokemon {
+    format("So, Mr. Uriel Dawnsinger gave you a Pokémon?\p ... Hm. He doesn't usually have such an... interest in students. You must show some real promise.")
+}
+
+text Kingsisle_NadiaLab_Text_InThatCase {
+    format("Well... If that's the case, how 'bout you help me with a little project?")
+}
+
+text Kingsisle_NadiaLab_Text_Pokedex {
+    format("This device is called a Pokédex. It's got a fascinating history, but the electronic version of it you see here was developed in-house for the purpose of aiding students in their research. That's where you come in. I'd like you to record data on as many types of Pokémon as you can find. Understood?")
+}
+
+text Kingsisle_NadiaLab_Text_RewardPromise {
+    format("Look, I'll level with you, {PLAYER_LAST_NAME}. I'm not a fieldwork sort of gal. And I've got classes to teach. So if you do this for me, I'll make sure to reward you. Let's start small... catch ten species and we'll talk, okay?")
+}
+
+text Kingsisle_NadiaLab_Text_UrielJudgement {
+    format("I don't always trust Uriel's judgement. But only time will tell if he's right about you. So consider this me throwing you a bone.")
+}
+
+text Kingsisle_NadiaLab_Text_GoodLuck {
+    format("Alright, then, glad we could come to an agreement. Good luck out there, {PLAYER_LAST_NAME}.")
+}
