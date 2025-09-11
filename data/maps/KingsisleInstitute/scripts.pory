@@ -102,4 +102,3 @@ movement KingsisleInstitute_Movement_PlayerWalkInside {
     walk_up * 2
     step_end
 }
-

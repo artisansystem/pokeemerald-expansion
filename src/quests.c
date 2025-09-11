@@ -252,7 +252,7 @@ static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
 	      gText_SideQuestMap1,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sText_Found
+	      sText_Caught
 	),
 
 	sub_quest(
@@ -262,7 +262,7 @@ static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
 	      gText_SideQuestMap2,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sText_Found
+	      sText_Caught
 	),
 
 	sub_quest(
@@ -272,7 +272,7 @@ static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
 	      gText_SideQuestMap3,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sText_Found
+	      sText_Caught
 	),
 
 	sub_quest(
@@ -282,7 +282,7 @@ static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
 	      gText_SideQuestMap4,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sText_Found
+	      sText_Caught
 	),
 
 	sub_quest(
@@ -292,7 +292,7 @@ static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
 	      gText_SideQuestMap5,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sText_Found
+	      sText_Caught
 	),
 
 	sub_quest(
@@ -302,48 +302,9 @@ static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
 	      gText_SideQuestMap6,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sText_Found
+	      sText_Caught
 	),
 
-	sub_quest(
-	      6,
-	      gText_SubQuest1_Name7,
-	      gText_SubQuest1_Desc7,
-	      gText_SideQuestMap7,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      7,
-	      gText_SubQuest1_Name8,
-	      gText_SubQuest1_Desc8,
-	      gText_SideQuestMap8,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      8,
-	      gText_SubQuest1_Name9,
-	      gText_SubQuest1_Desc9,
-	      gText_SideQuestMap9,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      9,
-	      gText_SubQuest1_Name10,
-	      gText_SubQuest1_Desc10,
-	      gText_SideQuestMap10,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
 };
 
 static const struct SubQuest sSubQuests2[QUEST_2_SUB_COUNT] =
@@ -548,7 +509,42 @@ static const struct SubQuest sSubQuests2[QUEST_2_SUB_COUNT] =
 	      OBJECT,
 	      sText_Found
 	),
-
+	sub_quest(
+	      30,
+	      gText_SubQuest2_Name21,
+	      gText_SubQuest2_Desc21,
+	      gText_SideQuestMap21,
+	      OBJ_EVENT_GFX_WALLY,
+	      OBJECT,
+	      sText_Found
+	),
+	sub_quest(
+	      31,
+	      gText_SubQuest2_Name22,
+	      gText_SubQuest2_Desc22,
+	      gText_SideQuestMap22,
+	      OBJ_EVENT_GFX_WALLY,
+	      OBJECT,
+	      sText_Found
+	),
+	sub_quest(
+	      32,
+	      gText_SubQuest2_Name23,
+	      gText_SubQuest2_Desc23,
+	      gText_SideQuestMap23,
+	      OBJ_EVENT_GFX_WALLY,
+	      OBJECT,
+	      sText_Found
+	),
+	sub_quest(
+	      33,
+	      gText_SubQuest2_Name24,
+	      gText_SubQuest2_Desc24,
+	      gText_SideQuestMap24,
+	      OBJ_EVENT_GFX_WALLY,
+	      OBJECT,
+	      sText_Found
+	),
 };
 
 ////////////////////////END SUBQUEST CUSTOMIZATION/////////////////////////////
@@ -566,10 +562,10 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      gText_SideQuestDesc_1,
 	      gText_SideQuestDoneDesc_1,
 	      gText_SideQuestMap1,
-	      OBJ_EVENT_GFX_WALLY,
+	      OBJ_EVENT_GFX_PICNICKER,
 	      OBJECT,
-	      NULL,
-	      0
+	      sSubQuests1,
+		  QUEST_1_SUB_COUNT
 	),
 	side_quest(
 	      gText_SideQuestName_2,
@@ -578,8 +574,8 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      gText_SideQuestMap2,
 	      OBJ_EVENT_GFX_WALLY,
 	      OBJECT,
-	      sSubQuests1,
-	      QUEST_1_SUB_COUNT
+	      NULL,
+		  0
 	),
 	side_quest(
 	      gText_SideQuestName_3,

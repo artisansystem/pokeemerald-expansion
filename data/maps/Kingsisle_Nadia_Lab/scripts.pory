@@ -6,22 +6,27 @@ UniqueName_Text_Nadia:
 `
 
 script Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft {
-    setflag(FLAG_TEMP_HIDE_FOLLOWER == FALSE)
+    lockall
+    setflag(FLAG_SAFE_FOLLOWER_MOVEMENT)
     applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_SayHelloToFollower_TopLeft)
-    delay(30)
+    delay(55)
     applymovement(LOCALID_FOLLOWING_POKEMON, Kingsisle_NadiaLab_FollowerReactToBulbasaur_TopLeft)
-    waitmovement(0)
+    waitmovement(LOCALID_NADIA_BULBASAUR)
     applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_SayHelloToPlayer_TopLeft)
-    waitmovement(0)
+    applymovement(LOCALID_PLAYER, moves(face_right))
+    waitmovement(LOCALID_NADIA_BULBASAUR)
+    delay(30)
     applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_GoToNadia_TopLeft)
-    applymovement(LOCALID_NADIA_LAB, moves(face_right))
     waitmovement(0)
+    applymovement(LOCALID_NADIA_LAB, moves(face_right))
     speakername(UniqueName_Text_Nadia)
     msgbox("...")
     closemessage
     applymovement(LOCALID_NADIA_LAB, moves(walk_down, walk_right * 3, face_down))
     applymovement(LOCALID_NADIA_BULBASAUR, moves(delay_8, walk_right * 3, walk_down))
     waitmovement(0)
+    applymovement(LOCALID_PLAYER, moves(face_up))
+    applymovement(LOCALID_FOLLOWING_POKEMON, moves(face_up))
     speakername(UniqueName_Text_Nadia)
     msgbox(Kingsisle_NadiaLab_Text_HaveAPokemon, MSGBOX_DEFAULT)
     applymovement(LOCALID_NADIA_LAB, moves(face_left))
@@ -31,7 +36,10 @@ script Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft {
     applymovement(LOCALID_NADIA_LAB, moves(walk_left * 3, walk_down, face_left, delay_8))
     waitmovement(0)
     speakername(UniqueName_Text_Nadia)
-    msgbox(Kingsisle_NadiaLab_Text_Pokedex, MSGBOX_DEFAULT)
+    msgbox(Kingsisle_NadiaLab_Text_Pokedex1, MSGBOX_DEFAULT)
+    applymovement(LOCALID_NADIA_LAB, moves(face_right))
+    speakername(UniqueName_Text_Nadia)
+    msgbox(Kingsisle_NadiaLab_Text_Pokedex2, MSGBOX_DEFAULT)
     goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
 }
 
@@ -74,49 +82,58 @@ script Kingsisle_NadiaLab_EventScript_AcceptedPokedex {
     msgbox(Kingsisle_NadiaLab_Text_GoodLuck)
     closemessage
     applymovement(LOCALID_NADIA_LAB, moves(walk_up * 2, walk_left * 3))
+    applymovement(LOCALID_NADIA_BULBASAUR, moves(walk_up, walk_right * 2))
+    waitmovement(LOCALID_NADIA_LAB)
     setvar(VAR_KINGSISLE_INTRO_STATE, 7)
+    startquest(QUEST_COMPLETE_REGIONAL_POKEDEX)
+    setflag(FLAG_SYS_POKEDEX_GET)
+    releaseall
     end
 }
 
 movement Kingsisle_NadiaLab_SayHelloToFollower_TopLeft {
     emote_exclamation_mark
     walk_fast_down * 3
-    walk_fast_left * 2
-    jump_in_place_up_down
+    walk_left * 2
+    jump_in_place_left
     emote_heart
     step_end
 }
 
 movement Kingsisle_NadiaLab_SayHelloToPlayer_TopLeft {
-    walk_fast_up 
+    walk_up 
     face_player
     emote_question_mark
     step_end
 }
 
 movement Kingsisle_NadiaLab_GoToNadia_TopLeft {
-    walk_fast_up * 4
-    walk_fast_left * 3
+    walk_up * 3
+    walk_left * 3
     step_end
 }
 
 movement Kingsisle_NadiaLab_FollowerReactToBulbasaur_TopLeft {
     face_right
     emote_exclamation_mark
-    jump_in_place_up_down
+    jump_in_place_right
     step_end
 }
 
 text Kingsisle_NadiaLab_Text_HaveAPokemon {
-    format("So, Mr. Uriel Dawnsinger gave you a Pokémon?\p ... Hm. He doesn't usually have such an... interest in students. You must show some real promise.")
+    format("So, his Holiness, Uriel Dawnsinger, actually gave you a Pokémon?\p ... Hm. He doesn't usually have such an... interest in students. You must show some real promise.")
 }
 
 text Kingsisle_NadiaLab_Text_InThatCase {
     format("Well... If that's the case, how 'bout you help me with a little project?")
 }
 
-text Kingsisle_NadiaLab_Text_Pokedex {
-    format("This device is called a Pokédex. It's got a fascinating history, but the electronic version of it you see here was developed in-house for the purpose of aiding students in their research. That's where you come in. I'd like you to record data on as many types of Pokémon as you can find. Understood?")
+text Kingsisle_NadiaLab_Text_Pokedex1 {
+    format("This device is called a Pokédex. It's got a fascinating history, but the electronic version of it you see here was developed in-house for the purpose of aiding students in their research. That's where you come in.")
+}
+
+text Kingsisle_NadiaLab_Text_Pokedex2 {
+    format("I'd like you to record data on as many types of Pokémon as you can find. Understood?")
 }
 
 text Kingsisle_NadiaLab_Text_RewardPromise {

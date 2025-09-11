@@ -71,6 +71,15 @@
     },
     {
       "type": "trigger",
+      "x": 6,
+      "y": 9,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "6",
+      "script": "NULL"
+    },
+    {
+      "type": "trigger",
       "x": 5,
       "y": 8,
       "elevation": 0,
@@ -81,15 +90,6 @@
     {
       "type": "trigger",
       "x": 3,
-      "y": 9,
-      "elevation": 0,
-      "var": "VAR_KINGSISLE_INTRO_STATE",
-      "var_value": "6",
-      "script": "NULL"
-    },
-    {
-      "type": "trigger",
-      "x": 6,
       "y": 9,
       "elevation": 0,
       "var": "VAR_KINGSISLE_INTRO_STATE",

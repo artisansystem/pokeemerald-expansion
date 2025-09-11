@@ -68,6 +68,8 @@ const u8 gText_ListByBodyColor[] = _("List by body color.\nSpotted POKéMON only
 const u8 gText_ListByType[] = _("List by type.\nOwned POKéMON only.");
 const u8 gText_ExecuteSearchSwitch[] = _("Execute search/switch.");
 const u8 gText_DexHoennTitle[] = _("HOENN DEX");
+const u8 gText_DexDawnsingerTitle[] = _("Kingsisle Dex");
+
 const u8 gText_DexNatTitle[] = _("NATIONAL DEX");
 const u8 gText_DexSortNumericalTitle[] = _("NUMERICAL MODE");
 const u8 gText_DexSortAtoZTitle[] = _("A TO Z MODE");
@@ -95,6 +97,8 @@ const u8 gText_DexSearchColorGray[] = _("GRAY");
 const u8 gText_DexSearchColorWhite[] = _("WHITE");
 const u8 gText_DexSearchColorPink[] = _("PINK");
 const u8 gText_DexHoennDescription[] = _("HOENN region's POKéDEX");
+const u8 gText_DexDawnsingerDescription[] = _("Kingsisle Sector's Pokédex");
+const u8 gText_DexWisemoreDescription[] = _("");
 const u8 gText_DexNatDescription[] = _("National edition POKéDEX");
 const u8 gText_DexSortNumericalDescription[] = _("POKéMON are listed according to their\nnumber.");
 const u8 gText_DexSortAtoZDescription[] = _("Spotted and owned POKéMON are listed\nalphabetically.");
@@ -1316,7 +1320,7 @@ const u8 gText_QuestComplete[] =_("complete");
 const u8 gText_QuestActive[] =_("active");
 
 //names
-const u8 gText_SideQuestName_1[] = _("Side Quest 1");
+const u8 gText_SideQuestName_1[] = _("Field Research");
 const u8 gText_SideQuestName_2[] = _("Side Quest 2");
 const u8 gText_SideQuestName_3[] = _("Side Quest 3");
 const u8 gText_SideQuestName_4[] = _("Side Quest 4");
@@ -1348,7 +1352,7 @@ const u8 gText_SideQuestName_29[] = _("Side Quest 29");
 const u8 gText_SideQuestName_30[] = _("Side Quest 30");
 
 //descriptions
-const u8 gText_SideQuestDesc_1[] = _("Description 1");
+const u8 gText_SideQuestDesc_1[] = _("Professor Nadia wants you to help her\n with her research by filling out the\n Pokédex.");
 const u8 gText_SideQuestDesc_2[] = _("Description 2");
 const u8 gText_SideQuestDesc_3[] = _("Description 3");
 const u8 gText_SideQuestDesc_4[] = _("Description 4");
@@ -1380,7 +1384,7 @@ const u8 gText_SideQuestDesc_29[] = _("Description 29");
 const u8 gText_SideQuestDesc_30[] = _("Description 30");
 
 //completed quest description
-const u8 gText_SideQuestDoneDesc_1[] = _("Completed Quest 1");
+const u8 gText_SideQuestDoneDesc_1[] = _("You went above and beyond in\n contributing to Nadia's research.");
 const u8 gText_SideQuestDoneDesc_2[] = _("Completed Quest 2");
 const u8 gText_SideQuestDoneDesc_3[] = _("Completed Quest 3");
 const u8 gText_SideQuestDoneDesc_4[] = _("Completed Quest 4");
@@ -1412,12 +1416,12 @@ const u8 gText_SideQuestDoneDesc_29[] = _("Completed Quest 29");
 const u8 gText_SideQuestDoneDesc_30[] = _("Completed Quest 30");
 
 //map
-const u8 gText_SideQuestMap1[] = _("Map 1");
-const u8 gText_SideQuestMap2[] = _("Map 2");
-const u8 gText_SideQuestMap3[] = _("Map 3");
-const u8 gText_SideQuestMap4[] = _("Map 4");
-const u8 gText_SideQuestMap5[] = _("Map 5");
-const u8 gText_SideQuestMap6[] = _("Map 6");
+const u8 gText_SideQuestMap1[] = _("Nadia's Lab");
+const u8 gText_SideQuestMap2[] = _("Nadia's Lab");
+const u8 gText_SideQuestMap3[] = _("Nadia's Lab");
+const u8 gText_SideQuestMap4[] = _("Nadia's Lab");
+const u8 gText_SideQuestMap5[] = _("Nadia's Lab");
+const u8 gText_SideQuestMap6[] = _("Nadia's Lab");
 const u8 gText_SideQuestMap7[] = _("Map 7");
 const u8 gText_SideQuestMap8[] = _("Map 8");
 const u8 gText_SideQuestMap9[] = _("Map 9");
@@ -1444,16 +1448,12 @@ const u8 gText_SideQuestMap29[] = _("Map 29");
 const u8 gText_SideQuestMap30[] = _("Map 30");
 
 //subquests
-const u8 gText_SubQuest1_Name1[] = _("Part 1");
-const u8 gText_SubQuest1_Name2[] = _("Part 2");
-const u8 gText_SubQuest1_Name3[] = _("Part 3");
-const u8 gText_SubQuest1_Name4[] = _("Part 4");
-const u8 gText_SubQuest1_Name5[] = _("Part 5");
-const u8 gText_SubQuest1_Name6[] = _("Part 6");
-const u8 gText_SubQuest1_Name7[] = _("Part 7");
-const u8 gText_SubQuest1_Name8[] = _("Part 8");
-const u8 gText_SubQuest1_Name9[] = _("Part 9");
-const u8 gText_SubQuest1_Name10[] = _("Part 10");
+const u8 gText_SubQuest1_Name1[] = _("Catch 10 Pokémon");
+const u8 gText_SubQuest1_Name2[] = _("Catch 20 Pokémon");
+const u8 gText_SubQuest1_Name3[] = _("Catch 40 Pokémon");
+const u8 gText_SubQuest1_Name4[] = _("Catch 50 Pokémon");
+const u8 gText_SubQuest1_Name5[] = _("Catch 75 Pokémon");
+const u8 gText_SubQuest1_Name6[] = _("Catch 100 Pokémon");
 
 const u8 gText_SubQuest2_Name1[] = _("Part 1");
 const u8 gText_SubQuest2_Name2[] = _("Part 2");
@@ -1475,17 +1475,17 @@ const u8 gText_SubQuest2_Name17[] = _("Part 17");
 const u8 gText_SubQuest2_Name18[] = _("Part 18");
 const u8 gText_SubQuest2_Name19[] = _("Part 19");
 const u8 gText_SubQuest2_Name20[] = _("Part 20");
+const u8 gText_SubQuest2_Name21[] = _("Part 21");
+const u8 gText_SubQuest2_Name22[] = _("Part 22");
+const u8 gText_SubQuest2_Name23[] = _("Part 23");
+const u8 gText_SubQuest2_Name24[] = _("Part 24");
 
-const u8 gText_SubQuest1_Desc1[] = _("Description Sub 1");
-const u8 gText_SubQuest1_Desc2[] = _("Description Sub 2");
-const u8 gText_SubQuest1_Desc3[] = _("Description Sub 3");
-const u8 gText_SubQuest1_Desc4[] = _("Description Sub 4");
-const u8 gText_SubQuest1_Desc5[] = _("Description Sub 5");
-const u8 gText_SubQuest1_Desc6[] = _("Description Sub 6");
-const u8 gText_SubQuest1_Desc7[] = _("Description Sub 7");
-const u8 gText_SubQuest1_Desc8[] = _("Description Sub 8");
-const u8 gText_SubQuest1_Desc9[] = _("Description Sub 9");
-const u8 gText_SubQuest1_Desc10[] = _("Description Sub 10");
+const u8 gText_SubQuest1_Desc1[] = _("You registered ten species to your Pokédex: you're a fledgling researcher.");
+const u8 gText_SubQuest1_Desc2[] = _("You registered a total of twenty species to your Pokédex: you're moving up in the research ranks.");
+const u8 gText_SubQuest1_Desc3[] = _("You registered a total of forty species to your Pokédex: your research is really shaping up!");
+const u8 gText_SubQuest1_Desc4[] = _("You're halfway done with the Kingisle Sector's regional Pokédex!");
+const u8 gText_SubQuest1_Desc5[] = _("You're three-quarters of the way done with the Kingsisle Sector's regional Pokédex!");
+const u8 gText_SubQuest1_Desc6[] = _("You completed the Kingsisle Sector's regional Pokedex!");
 
 const u8 gText_SubQuest2_Desc1[] = _("Description Sub 1");
 const u8 gText_SubQuest2_Desc2[] = _("Description Sub 2");
@@ -1507,3 +1507,8 @@ const u8 gText_SubQuest2_Desc17[] = _("Description Sub 17");
 const u8 gText_SubQuest2_Desc18[] = _("Description Sub 18");
 const u8 gText_SubQuest2_Desc19[] = _("Description Sub 19");
 const u8 gText_SubQuest2_Desc20[] = _("Description Sub 20");
+const u8 gText_SubQuest2_Desc21[] = _("Description Sub 21");
+const u8 gText_SubQuest2_Desc22[] = _("Description Sub 22");
+const u8 gText_SubQuest2_Desc23[] = _("Description Sub 23");
+const u8 gText_SubQuest2_Desc24[] = _("Description Sub 24");
+
