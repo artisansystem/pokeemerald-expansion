@@ -290,6 +290,8 @@ static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;
 static EWRAM_DATA u8 sPokeBallRotation = 0;
 static EWRAM_DATA struct PokedexListItem *sPokedexListItem = NULL;
+static EWRAM_DATA u8 currentMapRegion = 0;
+
 //Pokedex Plus HGSS_Ui
 #define MOVES_COUNT_TOTAL (EGG_MOVES_ARRAY_COUNT + MAX_LEVEL_UP_MOVES + NUM_ALL_MACHINES)
 EWRAM_DATA static u16 sStatsMoves[MOVES_COUNT_TOTAL] = {0};
@@ -1832,8 +1834,17 @@ static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] =
 
 static const struct SearchOptionText sDexModeOptions[] =
 {
-    [DEX_MODE_HOENN]    = {gText_DexHoennDescription, gText_DexHoennTitle},
-    [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
+    // [DEX_MODE_HOENN]    = {gText_DexHoennDescription, gText_DexHoennTitle},
+    // [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
+    [DEX_MODE_DAWNSINGER] = {gText_DexDawnsingerDescription, gText_DexDawnsingerTitle},
+    [DEX_MODE_WISEMORE] = {gText_DexWisemoreDescription, gText_DexWisemoreTitle},
+    [DEX_MODE_SUMMERSPELL] = {gText_DexSummerspellDescription, gText_DexSummerspellTitle}, 
+    [DEX_MODE_TITANBLAZE] = {gText_DexTitanblazeDescription, gText_DexTitanblazeTitle},
+    [DEX_MODE_AUBERON] = {gText_DexAuberonDescription, gText_DexAuberonTitle},
+    [DEX_MODE_WILLOWBLOOM] = {gText_DexWillowbloomDescription, gText_DexWillowbloomTitle},
+    [DEX_MODE_ROSESONG] = {gText_DexRosesongDescription, gText_DexRosesongTitle},
+    [DEX_MODE_LOCKWOOD] = {gText_DexLockwoodDescription, gText_DexLockwoodTitle},
+    [DEX_MODE_UNDERGROUND] = {gText_DexUndergroundDescription, gText_DexUndergroundTitle},
     {},
 };
 
@@ -1903,7 +1914,7 @@ static const struct SearchOptionText sDexSearchTypeOptions[] =
     {},
 };
 
-static const u8 sPokedexModes[] = {DEX_MODE_HOENN, DEX_MODE_NATIONAL};
+static const u8 sPokedexModes[] = {DEX_MODE_DAWNSINGER, DEX_MODE_WISEMORE, DEX_MODE_SUMMERSPELL, DEX_MODE_TITANBLAZE, DEX_MODE_WILLOWBLOOM, DEX_MODE_AUBERON, DEX_MODE_ROSESONG, DEX_MODE_LOCKWOOD, DEX_MODE_UNDERGROUND};
 static const u8 sOrderOptions[] =
 {
     ORDER_NUMERICAL,
@@ -2035,25 +2046,88 @@ void CB2_OpenPokedexPlusHGSS(void)
         gMain.state++;
         break;
     case 2:
+        currentMapRegion = gMapHeader.region;
         sPokedexView = AllocZeroed(sizeof(struct PokedexView));
         ResetPokedexView(sPokedexView);
         CreateTask(Task_OpenPokedexMainPage, 0);
         sPokedexView->dexMode = gSaveBlock2Ptr->pokedex.mode;
-        if (!IsNationalPokedexEnabled())
-            sPokedexView->dexMode = DEX_MODE_HOENN;
+        if (!IsUndergroundPokedexEnabled())
+        {
+            switch(currentMapRegion)
+            {
+                case 0:
+                    sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
+                    break;
+                case 1:
+                    sPokedexView->dexMode = DEX_MODE_WISEMORE;
+                    break;
+                case 2:
+                    sPokedexView->dexMode = DEX_MODE_SUMMERSPELL;
+                    break;
+                case 3:
+                    sPokedexView->dexMode = DEX_MODE_TITANBLAZE;
+                    break;
+                case 4:
+                    sPokedexView->dexMode = DEX_MODE_WILLOWBLOOM;
+                    break;
+                case 5:
+                    sPokedexView->dexMode = DEX_MODE_AUBERON;
+                    break;
+                case 6:
+                    sPokedexView->dexMode = DEX_MODE_ROSESONG;
+                    break;
+                case 7:
+                    sPokedexView->dexMode = DEX_MODE_LOCKWOOD;
+                    break;
+            }
+        }
         sPokedexView->dexOrder = gSaveBlock2Ptr->pokedex.order;
         sPokedexView->selectedPokemon = sLastSelectedPokemon;
         sPokedexView->pokeBallRotation = sPokeBallRotation;
         sPokedexView->selectedScreen = AREA_SCREEN;
-        if (!IsNationalPokedexEnabled())
+        if (!IsUndergroundPokedexEnabled())
         {
-            sPokedexView->seenCount = GetHoennPokedexCount(FLAG_GET_SEEN);
-            sPokedexView->ownCount = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+            switch(currentMapRegion) 
+            {
+                case 0:
+                    sPokedexView->seenCount = GetDawnsingerPokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetDawnsingerPokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 1:
+                    sPokedexView->seenCount = GetWisemorePokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetWisemorePokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 2:
+                    sPokedexView->seenCount = GetSummerspellPokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetSummerspellPokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 3:
+                    sPokedexView->seenCount = GetTitanblazePokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetTitanblazePokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 4:
+                    sPokedexView->seenCount = GetWillowbloomPokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetWillowbloomPokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 5:
+                    sPokedexView->seenCount = GetAuberonPokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetAuberonPokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 6:
+                    sPokedexView->seenCount = GetRosesongPokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetRosesongPokedexCount(FLAG_GET_CAUGHT);
+                    break;
+                case 7:
+                    sPokedexView->seenCount = GetLockwoodPokedexCount(FLAG_GET_SEEN);
+                    sPokedexView->ownCount = GetLockwoodPokedexCount(FLAG_GET_CAUGHT);
+                    break;
+            }
+          
         }
         else
         {
-            sPokedexView->seenCount = GetNationalPokedexCount(FLAG_GET_SEEN);
-            sPokedexView->ownCount = GetNationalPokedexCount(FLAG_GET_CAUGHT);
+            sPokedexView->seenCount = GetUndergroundPokedexCount(FLAG_GET_SEEN);
+            sPokedexView->ownCount = GetUndergroundPokedexCount(FLAG_GET_CAUGHT);
         }
         sPokedexView->initialVOffset = 8;
         gMain.state++;
@@ -2072,20 +2146,20 @@ static void ResetPokedexView(struct PokedexView *pokedexView)
 {
     u16 i;
 
-    for (i = 0; i < NATIONAL_DEX_COUNT; i++)
+    for (i = 0; i < UNDERGROUND_DEX_COUNT; i++)
     {
         pokedexView->pokedexList[i].dexNum = 0xFFFF;
         pokedexView->pokedexList[i].seen = FALSE;
         pokedexView->pokedexList[i].owned = FALSE;
     }
-    pokedexView->pokedexList[NATIONAL_DEX_COUNT].dexNum = 0;
-    pokedexView->pokedexList[NATIONAL_DEX_COUNT].seen = FALSE;
-    pokedexView->pokedexList[NATIONAL_DEX_COUNT].owned = FALSE;
+    pokedexView->pokedexList[UNDERGROUND_DEX_COUNT].dexNum = 0;
+    pokedexView->pokedexList[UNDERGROUND_DEX_COUNT].seen = FALSE;
+    pokedexView->pokedexList[UNDERGROUND_DEX_COUNT].owned = FALSE;
     pokedexView->pokemonListCount = 0;
     pokedexView->selectedPokemon = 0;
     pokedexView->selectedPokemonBackup = 0;
-    pokedexView->dexMode = DEX_MODE_HOENN;
-    pokedexView->dexModeBackup = DEX_MODE_HOENN;
+    pokedexView->dexMode = DEX_MODE_DAWNSINGER;
+    pokedexView->dexModeBackup = DEX_MODE_DAWNSINGER;
     pokedexView->dexOrder = ORDER_NUMERICAL;
     pokedexView->dexOrderBackup = ORDER_NUMERICAL;
     pokedexView->seenCount = 0;
@@ -2317,7 +2391,7 @@ static void Task_ClosePokedex(u8 taskId)
     {
         gSaveBlock2Ptr->pokedex.mode = sPokedexView->dexMode;
         if (!IsNationalPokedexEnabled())
-            gSaveBlock2Ptr->pokedex.mode = DEX_MODE_HOENN;
+            gSaveBlock2Ptr->pokedex.mode = DEX_MODE_DAWNSINGER;
         gSaveBlock2Ptr->pokedex.order = sPokedexView->dexOrder;
         ClearMonSprites();
         FreeWindowAndBgBuffers();
@@ -2474,7 +2548,7 @@ static void CreatePokedexList(u8 dexMode, u8 order)
 {
     u16 vars[3]; //I have no idea why three regular variables are stored in an array, but whatever.
 #define temp_dexCount   vars[0]
-#define temp_isHoennDex vars[1]
+#define temp_isRegionalDex vars[1]
 #define temp_dexNum     vars[2]
     s16 i;
 
@@ -2483,15 +2557,15 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     switch (dexMode)
     {
     default:
-    case DEX_MODE_HOENN:
-        temp_dexCount = HOENN_DEX_COUNT;
-        temp_isHoennDex = TRUE;
+    case DEX_MODE_DAWNSINGER:
+        temp_dexCount = KINGSISLE_DEX_COUNT;
+        temp_isRegionalDex = TRUE;
         break;
-    case DEX_MODE_NATIONAL:
-        if (IsNationalPokedexEnabled())
+    case DEX_MODE_UNDERGROUND:
+        if (IsUndergroundPokedexEnabled())
         {
             temp_dexCount = NATIONAL_DEX_COUNT;
-            temp_isHoennDex = FALSE;
+            temp_isDawnsingerDex = FALSE;
         }
         else
         {

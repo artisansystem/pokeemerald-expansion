@@ -1345,8 +1345,8 @@ static const u8 sSearchMovementMap_ShiftHoennDex[SEARCH_COUNT][4] =
 static const struct SearchOptionText sDexModeOptions[] =
 {
     [DEX_MODE_DAWNSINGER] = {gText_DexDawnsingerDescription, gText_DexDawnsingerTitle},
-    [DEX_MODE_WISEMORE] = {}
-    [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
+    [DEX_MODE_WISEMORE] = {gText_DexWisemoreDescription, gText_DexWisemoreTitle},
+    [DEX_MODE_UNDERGROUND] = {gText_DexUndergroundDescription,   gText_DexUndergroundTitle},
     {},
 };
 
@@ -1416,7 +1416,7 @@ static const struct SearchOptionText sDexSearchTypeOptions[] =
     {},
 };
 
-static const u8 sPokedexModes[] = {DEX_MODE_DAWNSINGER, DEX_MODE_NATIONAL};
+static const u8 sPokedexModes[] = {DEX_MODE_DAWNSINGER, DEX_MODE_UNDERGROUND};
 static const u8 sOrderOptions[] =
 {
     ORDER_NUMERICAL,
@@ -4560,6 +4560,28 @@ u16 GetNationalPokedexCount(u8 caseID)
     return count;
 }
 
+u16 GetUndergroundPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i;
+
+    for (i = 0; i < UNDERGROUND_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+}
+
 u16 GetHoennPokedexCount(u8 caseID)
 {
     u16 count = 0;
@@ -4602,6 +4624,190 @@ u16 GetKantoPokedexCount(u8 caseID)
         }
     }
     return count;
+}
+
+u16 GetDawnsingerPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < DAWNSINGER_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetWisemorePokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < WISEMORE_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetSummerspellPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < SUMMERSPELL_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetTitanblazePokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < TITANBLAZE_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetWillowbloomPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < WILLOWBLOOM_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetAuberonPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < AUBERON_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetRosesongPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < ROSESONG_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
+}
+
+u16 GetLockwoodPokedexCount(u8 caseID)
+{
+    u16 count = 0;
+    u16 i; 
+
+    for (i = 0; i < LOCKWOOD_DEX_COUNT; i++)
+    {
+        switch (caseID)
+        {
+        case FLAG_GET_SEEN:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+                count++;
+            break;
+        case FLAG_GET_CAUGHT:
+            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+                count++;
+            break;
+        }
+    }
+    return count;
+
 }
 
 bool16 HasAllHoennMons(void)

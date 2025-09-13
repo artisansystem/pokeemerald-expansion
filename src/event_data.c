@@ -98,6 +98,34 @@ bool32 IsNationalPokedexEnabled(void)
         return FALSE;
 }
 
+void DisableUndergroundPokedex(void)
+{
+    u16 *undergroundDexVar = GetVarPointer(VAR_UNDERGROUND_DEX);
+    gSaveBlock2Ptr->pokedex.undergroundDex = 0;
+    *undergroundDexVar = 0;
+    FlagClear(FLAG_SYS_UNDERGROUND_DEX);
+}
+
+void EnableUndergroundPokedex(void)
+{
+    u16 *undergroundDexVar = GetVarPointer(VAR_UNDERGROUND_DEX);
+    gSaveBlock2Ptr->pokedex.undergroundDex = 0xDA;
+    *undergroundDexVar = 0x302;
+    FlagSet(FLAG_SYS_UNDERGROUND_DEX);
+    gSaveBlock2Ptr->pokedex.mode = DEX_MODE_UNDERGROUND;
+    gSaveBlock2Ptr->pokedex.order = 0;
+    ResetPokedexScrollPositions();
+}
+
+bool32 IsUndergroundPokedexEnabled(void)
+{
+    if (gSaveBlock2Ptr->pokedex.undergroundDex == 0xDA && VarGet(VAR_UNDERGROUND_DEX) == 0x302 && FlagGet(FLAG_SYS_UNDERGROUND_DEX))
+        return TRUE;
+    else
+        return FALSE;
+}
+
+
 void DisableMysteryEvent(void)
 {
     FlagClear(FLAG_SYS_MYSTERY_EVENT_ENABLE);

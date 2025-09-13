@@ -5035,6 +5035,7 @@ enum NationalDexOrder HoennToNationalOrder(enum HoennDexOrder hoennNum)
     return sHoennToNationalOrder[hoennNum - 1];
 }
 
+
 // Spots can be drawn on Spinda's color indexes 1, 2, or 3
 #define FIRST_SPOT_COLOR 1
 #define LAST_SPOT_COLOR  3

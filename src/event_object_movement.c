@@ -11559,3 +11559,11 @@ bool8 MovementAction_SurfStillRight_Step1(struct ObjectEvent *objectEvent, struc
     }
     return FALSE;
 }
+
+bool8 MovementAction_EmoteCryingFace_Step0(struct ObjectEvent *objectEvent, struct Sprite *sprite)
+{
+    ObjectEventGetLocalIdAndMap(objectEvent, &gFieldEffectArguments[0], &gFieldEffectArguments[1], &gFieldEffectArguments[2]);
+    FieldEffectStart(FLDEFF_CRYING_FACE_EMOTE);
+    sprite->sActionFuncId = 1;
+    return TRUE;
+}

@@ -6,7 +6,16 @@ extern void (*gPokedexVBlankCB)(void);
 
 void ResetPokedex(void);
 u16 GetNationalPokedexCount(u8 caseID);
+u16 GetUndergroundPokedexCount(u8 caseID);
 u16 GetHoennPokedexCount(u8 caseID);
+u16 GetDawnsingerPokedexCount(u8 caseID);
+u16 GetWisemorePokedexCount(u8 caseID);
+u16 GetSummerspellPokedexCount(u8 caseID);
+u16 GetTitanblazePokedexCount(u8 caseID);
+u16 GetWillowbloomPokedexCount(u8 caseID);
+u16 GetAuberonPokedexCount(u8 caseID);
+u16 GetRosesongPokedexCount(u8 caseID);
+u16 GetLockwoodPokedexCount(u8 caseID);
 u8 DisplayCaughtMonDexPage(u16 species, bool32 isShiny, u32 personality);
 s8 GetSetPokedexFlag(enum NationalDexOrder nationalDexNo, u8 caseID);
 void DrawFootprint(u8 windowId, u16 species);

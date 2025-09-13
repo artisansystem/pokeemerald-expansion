@@ -184,4 +184,17 @@ enum ItemObtainFlags
 bool8 GetSetItemObtained(u16 item, enum ItemObtainFlags caseId);
 void CB2_ReturnToFullScreenStartMenu(void);
 
+enum {
+    REGION_DAWNSINGER,
+    REGION_WISEMORE,
+    REGION_SUMMERSPELL,
+    REGION_TITANBLAZE,
+    REGION_WILLOWBLOOM,
+    REGION_AUBERON,
+    REGION_ROSESONG,
+    REGION_LOCKWOOD,
+    REGION_BG_HOENN,
+    REGION_BG_KANTO
+};
+
 #endif // GUARD_OVERWORLD_H
