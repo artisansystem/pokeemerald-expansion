@@ -183,12 +183,3 @@ KingsisleDorm_Text_Reminder::
 	.string "forget to set it. And remember to go see\l"
 	.string "Headmaster Dawnsinger at some point.\l"
 	.string "Special request from the man himself.$"
-
-KingsisleDorm_Text_Reminder_Alt::
-# 78 "data/maps/KingsisleDorm_1F/scripts.pory"
-	.string "Alright, well, I'll head out and let you\n"
-	.string "get settled. I bought you a clock,\l"
-	.string "should be up in your room. Don't forget\l"
-	.string "to set it. And remember to go see\l"
-	.string "Headmaster Dawnsinger at some point.\l"
-	.string "Special request from the man himself.$"
