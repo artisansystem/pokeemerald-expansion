@@ -656,7 +656,7 @@
 #define FLAG_HIDDEN_ITEM_ROUTE_123_RARE_CANDY                (FLAG_HIDDEN_ITEMS_START + 0x6E)
 #define FLAG_HIDDEN_ITEM_ROUTE_105_BIG_PEARL                 (FLAG_HIDDEN_ITEMS_START + 0x6F)
 
-#define FLAG_UNUSED_0x264  0x264 // Exp. Share
+#define FLAG_UNUSED_0x264  0x264 // Exp. Share Toggle
 #define FLAG_RECIEVED_SITRUS_BERRIES  0x265 // Kingsisle Gatehouse Student
 #define FLAG_HIDE_KINGSISLE_TRUCK  0x266 // Hides the truck after the intro sequence.
 #define FLAG_HIDE_MERCURY_OUTSIDE  0x267 // Hides Mercury after the intro sequence.
@@ -736,14 +736,14 @@
 #define FLAG_UNUSED_0x2B1  0x2B1 // Unused Flag
 #define FLAG_UNUSED_0x2B2  0x2B2 // Unused Flag
 #define FLAG_UNUSED_0x2B3  0x2B3 // Unused Flag
-#define FLAG_UNUSED_0x2B4  0x2B4 // Unused Flag
-#define FLAG_UNUSED_0x2B5  0x2B5 // Unused Flag
-#define FLAG_UNUSED_0x2B6  0x2B6 // Unused Flag
-#define FLAG_UNUSED_0x2B7  0x2B7 // Unused Flag
-#define FLAG_UNUSED_0x2B8  0x2B8 // Unused Flag
-#define FLAG_UNUSED_0x2B9  0x2B9 // Unused Flag
-#define FLAG_UNUSED_0x2BA  0x2BA // Unused Flag
-#define FLAG_UNUSED_0x2BB  0x2BB // Unused Flag
+#define FLAG_RULEKEEPER_BLESSING  0x2B4 
+#define FLAG_CLOCKCHANGER_BLESSING  0x2B5 
+#define FLAG_WINDSEEKER_BLESSING  0x2B6
+#define FLAG_FLAMESTEALER_BLESSING  0x2B7
+#define FLAG_VOIDWALKER_BLESSING  0x2B8
+#define FLAG_CLAYMAKER_BLESSING  0x2B9
+#define FLAG_WAVEBRINGER_BLESSING  0x2BA
+#define FLAG_OATHBREAKER_BLESSING  0x2BB
 
 // Event Flags
 #define FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG                      0x2BC

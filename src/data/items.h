@@ -14620,9 +14620,24 @@ const struct Item gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_OutfitBox,
-	.iconPic = gItemIcon_OutfitBox,
-	.iconPalette = gItemIconPalette_OutfitBox,
+	    .iconPic = gItemIcon_OutfitBox,
+	    .iconPalette = gItemIconPalette_OutfitBox,
     },
+    [ITEM_RULEKEEPER_BLESSING] =
+    {
+        .name = ITEM_NAME("Rulekeeper's Blessing"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "Given to you by Cyrus.\n"
+            "It has an effect on\n"
+            "the surrounding area."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_RulekeeperBlessing,
+        .iconPic = gItemIcon_RulekeeperBlessing,
+        .iconPalette = gItemIconPalette_RulekeeperBlessing,
+    },
+
 };
 
 #undef ITEM_NAME

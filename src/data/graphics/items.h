@@ -2118,3 +2118,6 @@ const u16 gItemIconPalette_Pokevial[] = INCBIN_U16("graphics/items/icon_palettes
 
 const u32 gItemIcon_OutfitBox[] = INCBIN_U32("graphics/items/icons/outfit_box.4bpp.lz");
 const u16 gItemIconPalette_OutfitBox[] = INCBIN_U16("graphics/items/icon_palettes/outfit_box.gbapal");
+
+const u32 gItemIcon_RulekeeperBlessing[] = INCBIN_U32("graphics/items/icons/rulekeeper_blessing.4bpp.smol");
+const u16 gItemIconPalette_RulekeeperBlessing[] = INCBIN_U16("graphics/items/icon_palettes/rulekeeper_blessing.gbapal");

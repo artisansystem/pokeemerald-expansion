@@ -1781,4 +1781,26 @@ void ItemUseOutOfBattle_Pokevial(u8 taskId)
 }
 //End Pokevial Branch
 
+void ItemUseOutOfBattle_RulekeeperBlessing(u8 taskId)
+{
+    if(!FLAG_RULEKEEPER_BLESSING)
+    {
+        PlaySE(SE_CLICK);
+        if (!gTasks[taskId].data[2])
+            CopyItemName(ITEM_RULEKEEPER_BLESSING, gStringVar1);
+            DisplayItemMessageOnField(taskId, gText_BlessingActivated, Task_CloseCantUseKeyItemMessage);
+        else 
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_BlessingActivated, CloseItemMessage);
+    }
+    else
+    {
+        PlaySE(SE_CLICK);
+        if(!gTasks[taskId].data[2])
+            DisplayItemMessageOnField(taskId, gText_BlessingDeactivated, Task_CloseCantUseKeyItemMessage);
+        else 
+            DisplayItemMessage(taskId, FONT_NORMAL, gText_BlessingDeactivated, CloseItemMessage);
+
+    }
+}
+
 #undef tUsingRegisteredKeyItem
