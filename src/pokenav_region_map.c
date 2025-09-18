@@ -230,7 +230,7 @@ static u32 HandleRegionMapInput(struct Pokenav_RegionMapMenu *state)
 
     return POKENAV_MAP_FUNC_NONE;
 }
-
+ 
 static u32 HandleRegionMapInputZoomDisabled(struct Pokenav_RegionMapMenu *state)
 {
     if (JOY_NEW(B_BUTTON))

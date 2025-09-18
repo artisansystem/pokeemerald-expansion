@@ -4604,27 +4604,27 @@ u16 GetHoennPokedexCount(u8 caseID)
     return count;
 }
 
-u16 GetKantoPokedexCount(u8 caseID)
-{
-    u16 count = 0;
-    u16 i;
+// u16 GetKantoPokedexCount(u8 caseID)
+// {
+//     u16 count = 0;
+//     u16 i;
 
-    for (i = 0; i < KANTO_DEX_COUNT; i++)
-    {
-        switch (caseID)
-        {
-        case FLAG_GET_SEEN:
-            if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
-                count++;
-            break;
-        case FLAG_GET_CAUGHT:
-            if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
-                count++;
-            break;
-        }
-    }
-    return count;
-}
+//     for (i = 0; i < KANTO_DEX_COUNT; i++)
+//     {
+//         switch (caseID)
+//         {
+//         case FLAG_GET_SEEN:
+//             if (GetSetPokedexFlag(i + 1, FLAG_GET_SEEN))
+//                 count++;
+//             break;
+//         case FLAG_GET_CAUGHT:
+//             if (GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+//                 count++;
+//             break;
+//         }
+//     }
+//     return count;
+// }
 
 u16 GetDawnsingerPokedexCount(u8 caseID)
 {
@@ -4823,18 +4823,18 @@ bool16 HasAllHoennMons(void)
     return TRUE;
 }
 
-bool8 HasAllKantoMons(void)
-{
-    u32 i;
+// bool8 HasAllKantoMons(void)
+// {
+//     u32 i;
 
-    // -1 excludes Mew
-    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
-    {
-        if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
-            return FALSE;
-    }
-    return TRUE;
-}
+//     // -1 excludes Mew
+//     for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
+//     {
+//         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
+//             return FALSE;
+//     }
+//     return TRUE;
+// }
 
 bool16 HasAllMons(void)
 {

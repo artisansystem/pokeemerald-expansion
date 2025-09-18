@@ -1233,11 +1233,19 @@
     },
     {
       "id": "MAPSEC_KINGSISLE",
-      "name": "KINGSISLE INSTITUTE"
+      "name": "KINGSISLE INSTITUTE",
+      "x": 21,
+      "y": 9,
+      "width": 2,
+      "height": 2
     },
     {
       "id": "MAPSEC_HEADMASTERS_HOUSE",
-      "name": "HEADMASTERS HOUSE"
+      "name": "HEADMASTERS HOUSE",
+      "x": 21,
+      "y": 9,
+      "width": 1,
+      "height": 1
     }
   ]
 }

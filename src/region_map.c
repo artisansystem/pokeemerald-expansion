@@ -30,6 +30,7 @@
 #include "constants/heal_locations.h"
 #include "constants/rgb.h"
 #include "constants/weather.h"
+#include "fieldmap.h"
 
 /*
  *  This file handles region maps generally, and the map used when selecting a fly destination.
@@ -967,13 +968,34 @@ void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y)
 
 static u16 GetMapSecIdAt(u16 x, u16 y)
 {
+    u8 currentMapRegion;
+
+    currentMapRegion = gMapHeader.region;
+
     if (y < MAPCURSOR_Y_MIN || y > MAPCURSOR_Y_MAX || x < MAPCURSOR_X_MIN || x > MAPCURSOR_X_MAX)
     {
         return MAPSEC_NONE;
     }
     y -= MAPCURSOR_Y_MIN;
     x -= MAPCURSOR_X_MIN;
-    return sRegionMap_MapSectionLayout[y][x];
+
+    switch (currentMapRegion)
+    {
+        case 0:
+        default:
+            return sDawnsingerRegionMap_MapSectionLayout[y][x];
+            break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5: 
+        case 6:
+        case 7:
+            return sRegionMap_MapSectionLayout[y][x];
+            break;
+        
+    }
 }
 
 static void InitMapBasedOnPlayerLocation(void)
