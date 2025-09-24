@@ -43,6 +43,20 @@
       "elevation": 0,
       "dest_map": "MAP_KINGSISLE_INSTITUTE",
       "dest_warp_id": "1"
+    },
+    {
+      "x": 5,
+      "y": 19,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_GATEHOUSE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 4,
+      "y": 19,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_GATEHOUSE",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],
