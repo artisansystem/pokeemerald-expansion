@@ -2047,7 +2047,6 @@ void CB2_OpenPokedexPlusHGSS(void)
         gMain.state++;
         break;
     case 2:
-        currentMapRegion = gMapHeader.region;
         sPokedexView = AllocZeroed(sizeof(struct PokedexView));
         ResetPokedexView(sPokedexView);
         CreateTask(Task_OpenPokedexMainPage, 0);
@@ -2055,33 +2054,7 @@ void CB2_OpenPokedexPlusHGSS(void)
         if (!IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
             sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
         else if (IsUndergroundPokedexEnabled && !IsNationalPokedexEnabled())
-            switch(currentMapRegion)
-            {
-                case 0:
-                    sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
-                    break;
-                case 1:
-                    sPokedexView->dexMode = DEX_MODE_WISEMORE;
-                    break;
-                case 2:
-                    sPokedexView->dexMode = DEX_MODE_SUMMERSPELL;
-                    break;
-                case 3:
-                    sPokedexView->dexMode = DEX_MODE_TITANBLAZE;
-                    break;
-                case 4:
-                    sPokedexView->dexMode = DEX_MODE_WILLOWBLOOM;
-                    break;
-                case 5:
-                    sPokedexView->dexMode = DEX_MODE_AUBERON;
-                    break;
-                case 6:
-                    sPokedexView->dexMode = DEX_MODE_ROSESONG;
-                    break;
-                case 7:
-                    sPokedexView->dexMode = DEX_MODE_LOCKWOOD;
-                    break;
-            }
+            sPokedexView->dexMode = DEX_MODE_UNDERGROUND;
         else 
             sPokedexView->dexMode = DEX_MODE_NATIONAL;
 
@@ -2097,41 +2070,8 @@ void CB2_OpenPokedexPlusHGSS(void)
         }
         else if (IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled)
         {
-            switch(currentMapRegion) 
-            {
-                case 0:
-                    sPokedexView->seenCount = GetDawnsingerPokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetDawnsingerPokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 1:
-                    sPokedexView->seenCount = GetWisemorePokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetWisemorePokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 2:
-                    sPokedexView->seenCount = GetSummerspellPokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetSummerspellPokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 3:
-                    sPokedexView->seenCount = GetTitanblazePokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetTitanblazePokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 4:
-                    sPokedexView->seenCount = GetWillowbloomPokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetWillowbloomPokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 5:
-                    sPokedexView->seenCount = GetAuberonPokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetAuberonPokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 6:
-                    sPokedexView->seenCount = GetRosesongPokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetRosesongPokedexCount(FLAG_GET_CAUGHT);
-                    break;
-                case 7:
-                    sPokedexView->seenCount = GetLockwoodPokedexCount(FLAG_GET_SEEN);
-                    sPokedexView->ownCount = GetLockwoodPokedexCount(FLAG_GET_CAUGHT);
-                    break;
-            }
+            sPokedexView->seenCount = GetUndergroundPokedexCount(FLAG_GET_SEEN);
+            sPokedexView->ownCount = GetUndergroundPokedexCount(FLAG_GET_CAUGHT);
         }
         else
         {
@@ -2399,8 +2339,12 @@ static void Task_ClosePokedex(u8 taskId)
     if (!gPaletteFade.active)
     {
         gSaveBlock2Ptr->pokedex.mode = sPokedexView->dexMode;
-        if (!IsNationalPokedexEnabled())
+        if (!IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
             gSaveBlock2Ptr->pokedex.mode = DEX_MODE_DAWNSINGER;
+        else if (IsUndergroundPokedexEnabled && !IsNationalPokedexEnabled())
+            gSaveBlock2Ptr->pokedex.mode = DEX_MODE_UNDERGROUND;
+        else 
+            gSaveBlock2Ptr->pokedex.mode = DEX_MODE_NATIONAL;
         gSaveBlock2Ptr->pokedex.order = sPokedexView->dexOrder;
         ClearMonSprites();
         FreeWindowAndBgBuffers();
