@@ -2501,8 +2501,9 @@ static void CreatePokedexList(u8 dexMode, u8 order)
 {
     u16 vars[3]; //I have no idea why three regular variables are stored in an array, but whatever.
 #define temp_dexCount   vars[0]
-#define temp_isRegionalDex vars[1]
-#define temp_dexNum     vars[2]
+#define temp_isDawnsingerDex vars[1]
+#define temp_isUndergroundDex vars[2]
+#define temp_dexNum     vars[3]
     s16 i;
 
     sPokedexView->pokemonListCount = 0;
@@ -2511,19 +2512,21 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     {
     default:
     case DEX_MODE_DAWNSINGER:
-        temp_dexCount = KINGSISLE_DEX_COUNT;
-        temp_isRegionalDex = TRUE;
+        temp_dexCount = DAWNSINGER_DEX_COUNT;
+        temp_isDawnsingerDex = TRUE;
         break;
     case DEX_MODE_UNDERGROUND:
         if (IsUndergroundPokedexEnabled())
         {
-            temp_dexCount = NATIONAL_DEX_COUNT;
+            temp_dexCount = UNDERGROUND_DEX_COUNT;
             temp_isDawnsingerDex = FALSE;
+            temp_isUndergroundDex = TRUE;
         }
         else
         {
-            temp_dexCount = HOENN_DEX_COUNT;
-            temp_isHoennDex = TRUE;
+            temp_dexCount = DAWNSINGER_DEX_COUNT;
+            temp_isDawnsingerDex = TRUE;
+            temp_isUndergroundDex = FALSE;
         }
         break;
     }
@@ -2531,7 +2534,7 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     switch (order)
     {
     case ORDER_NUMERICAL:
-        if (temp_isHoennDex)
+        if (temp_isDawnsingerDex)
         {
             for (i = 0; i < temp_dexCount; i++)
             {
