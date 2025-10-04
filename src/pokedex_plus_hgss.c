@@ -2529,6 +2529,15 @@ static void CreatePokedexList(u8 dexMode, u8 order)
             temp_isUndergroundDex = FALSE;
         }
         break;
+    case DEX_MODE_NATIONAL:
+        if (IsNationalPokedexEnabled())
+        {
+
+        }
+        else
+        
+
+
     }
 
     switch (order)
