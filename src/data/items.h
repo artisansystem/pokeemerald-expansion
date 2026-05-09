@@ -14625,7 +14625,7 @@ const struct Item gItemsInfo[] =
     },
     [ITEM_RULEKEEPER_BLESSING] =
     {
-        .name = ITEM_NAME("Rulekeeper's Blessing"),
+        .name = ITEM_NAME("Rulekeeper Blessing"),
         .price = 0,
         .description = COMPOUND_STRING(
             "Given to you by Cyrus.\n"

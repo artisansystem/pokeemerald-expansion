@@ -112,6 +112,9 @@ void ItemUseOutOfBattle_Pokevial(u8);
 static void PokevialPrintPartyHealed(bool32 isPlayerUsingRegisteredKeyItem, u8 taskId);
 //End Pokevial Branch
 
+//Blessings
+void ItemUseOutOfBattle_RulekeeperBlessing(u8 taskId);
+
 // EWRAM variables
 EWRAM_DATA static void(*sItemUseOnFieldCB)(u8 taskId) = NULL;
 
@@ -1786,10 +1789,11 @@ void ItemUseOutOfBattle_RulekeeperBlessing(u8 taskId)
     if(!FLAG_RULEKEEPER_BLESSING)
     {
         PlaySE(SE_CLICK);
-        if (!gTasks[taskId].data[2])
+        if (!gTasks[taskId].data[2]) {
             CopyItemName(ITEM_RULEKEEPER_BLESSING, gStringVar1);
             DisplayItemMessageOnField(taskId, gText_BlessingActivated, Task_CloseCantUseKeyItemMessage);
-        else 
+        }
+        else
             DisplayItemMessage(taskId, FONT_NORMAL, gText_BlessingActivated, CloseItemMessage);
     }
     else

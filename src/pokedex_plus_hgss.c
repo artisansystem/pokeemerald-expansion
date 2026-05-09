@@ -1837,13 +1837,6 @@ static const struct SearchOptionText sDexModeOptions[] =
     // [DEX_MODE_HOENN]    = {gText_DexHoennDescription, gText_DexHoennTitle},
     // [DEX_MODE_NATIONAL] = {gText_DexNatDescription,   gText_DexNatTitle},
     [DEX_MODE_DAWNSINGER] = {gText_DexDawnsingerDescription, gText_DexDawnsingerTitle},
-    [DEX_MODE_WISEMORE] = {gText_DexWisemoreDescription, gText_DexWisemoreTitle},
-    [DEX_MODE_SUMMERSPELL] = {gText_DexSummerspellDescription, gText_DexSummerspellTitle}, 
-    [DEX_MODE_TITANBLAZE] = {gText_DexTitanblazeDescription, gText_DexTitanblazeTitle},
-    [DEX_MODE_AUBERON] = {gText_DexAuberonDescription, gText_DexAuberonTitle},
-    [DEX_MODE_WILLOWBLOOM] = {gText_DexWillowbloomDescription, gText_DexWillowbloomTitle},
-    [DEX_MODE_ROSESONG] = {gText_DexRosesongDescription, gText_DexRosesongTitle},
-    [DEX_MODE_LOCKWOOD] = {gText_DexLockwoodDescription, gText_DexLockwoodTitle},
     [DEX_MODE_UNDERGROUND] = {gText_DexUndergroundDescription, gText_DexUndergroundTitle},
     [DEX_MODE_NATIONAL] = {gText_DexNatDescription, gText_DexNatTitle},
     {},
@@ -2480,7 +2473,7 @@ static bool8 LoadPokedexListPage(u8 page)
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON | DISPCNT_OBJWIN_ON);
-        ShowBg(0);
+        ShowBg(0);static const u16 sPokedexPlusHGSS_Underground_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_default.gbapal");
         ShowBg(1);
         ShowBg(2);
         ShowBg(3);
@@ -2499,7 +2492,7 @@ static bool8 LoadPokedexListPage(u8 page)
 
 static void CreatePokedexList(u8 dexMode, u8 order)
 {
-    u16 vars[3]; //I have no idea why three regular variables are stored in an array, but whatever.
+    u16 vars[4]; //I have no idea why three regular variables are stored in an array, but whatever.
 #define temp_dexCount   vars[0]
 #define temp_isDawnsingerDex vars[1]
 #define temp_isUndergroundDex vars[2]
@@ -2514,9 +2507,10 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     case DEX_MODE_DAWNSINGER:
         temp_dexCount = DAWNSINGER_DEX_COUNT;
         temp_isDawnsingerDex = TRUE;
+        temp_isUndergroundDex = FALSE;
         break;
     case DEX_MODE_UNDERGROUND:
-        if (IsUndergroundPokedexEnabled())
+        if (IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
         {
             temp_dexCount = UNDERGROUND_DEX_COUNT;
             temp_isDawnsingerDex = FALSE;
@@ -2532,12 +2526,16 @@ static void CreatePokedexList(u8 dexMode, u8 order)
     case DEX_MODE_NATIONAL:
         if (IsNationalPokedexEnabled())
         {
-
+            temp_dexCount = NATIONAL_DEX_COUNT;
+            temp_isDawnsingerDex = FALSE;
+            temp_isUndergroundDex = FALSE;
         }
         else
-        
-
-
+        {
+            temp_dexCount = DAWNSINGER_DEX_COUNT;
+            temp_isDawnsingerDex = TRUE;
+        }
+        break;
     }
 
     switch (order)
@@ -2547,7 +2545,19 @@ static void CreatePokedexList(u8 dexMode, u8 order)
         {
             for (i = 0; i < temp_dexCount; i++)
             {
-                temp_dexNum = HoennToNationalOrder(i + 1);
+                temp_dexNum = DawnsingerToNationalOrder(i + 1);
+                sPokedexView->pokedexList[i].dexNum = temp_dexNum;
+                sPokedexView->pokedexList[i].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
+                sPokedexView->pokedexList[i].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
+                if (sPokedexView->pokedexList[i].seen)
+                    sPokedexView->pokemonListCount = i + 1;
+            }
+        }
+        else if (temp_isUndergroundDex)
+        {
+            for (i = 0; i < temp_dexCount; i++)
+            {
+                temp_dexNum = UndergroundToNationalOrder(i + 1);
                 sPokedexView->pokedexList[i].dexNum = temp_dexNum;
                 sPokedexView->pokedexList[i].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
                 sPokedexView->pokedexList[i].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);

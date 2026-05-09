@@ -1759,6 +1759,9 @@ extern const u16 gItemIconPalette_Pokevial[];
 extern const u32 gItemIcon_OutfitBox[];
 extern const u16 gItemIconPalette_OutfitBox[];
 
+extern const u32 gItemIcon_RulekeeperBlessing[];
+extern const u16 gItemIconPalette_RulekeeperBlessing[];
+
 extern const u32 gItemIcon_ReturnToFieldArrow[];
 extern const u16 gItemIconPalette_ReturnToFieldArrow[];
 
