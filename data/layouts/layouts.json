@@ -4540,6 +4540,26 @@
       "secondary_tileset": "gTileset_Secondary_Custom_Lab",
       "border_filepath": "data/layouts/Kingsisle_Nadia_Lab/border.bin",
       "blockdata_filepath": "data/layouts/Kingsisle_Nadia_Lab/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "name": "KingsisleInstituteMainCampus_Layout",
+      "width": 40,
+      "height": 39,
+      "primary_tileset": "gTileset_General_Primary_Custom",
+      "secondary_tileset": "gTileset_General_Secondary_Custom",
+      "border_filepath": "data/layouts/KingsisleInstituteMainCampus/border.bin",
+      "blockdata_filepath": "data/layouts/KingsisleInstituteMainCampus/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_INSTITUTE_LOREHOLD_CAMPUS",
+      "name": "KingsisleInstitute_LoreholdCampus_Layout",
+      "width": 30,
+      "height": 50,
+      "primary_tileset": "gTileset_General_Primary_Custom_v2",
+      "secondary_tileset": "gTileset_General_Secondary_Custom",
+      "border_filepath": "data/layouts/KingsisleInstitute_LoreholdCampus/border.bin",
+      "blockdata_filepath": "data/layouts/KingsisleInstitute_LoreholdCampus/map.bin"
     }
   ]
 }

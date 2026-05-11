@@ -1451,3 +1451,25 @@ const struct Tileset gTileset_Secondary_Custom_Lab =
     .metatileAttributes = gMetatileAttributes_Secondary_Custom_Lab,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Primary_Custom_v2 =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Primary_Custom_v2,
+    .palettes = gTilesetPalettes_General_Primary_Custom_v2,
+    .metatiles = gMetatiles_General_Primary_Custom_v2,
+    .metatileAttributes = gMetatileAttributes_General_Primary_Custom_v2,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Secondary_Custom_V2 =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Custom_V2,
+    .palettes = gTilesetPalettes_General_Secondary_Custom_V2,
+    .metatiles = gMetatiles_General_Secondary_Custom_V2,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_V2,
+    .callback = NULL,
+};

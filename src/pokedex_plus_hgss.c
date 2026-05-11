@@ -233,6 +233,7 @@ static const u8 sText_PlusSymbol[] = _("+");
 // static .rodata graphics
 
 static const u16 sPokedexPlusHGSS_Default_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_default.gbapal");
+static const u16 sPokedexPlusHGSS_Underground_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_underground.gbapal");
 static const u16 sPokedexPlusHGSS_National_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_national.gbapal");
 static const u16 sPokedexPlusHGSS_MenuSearch_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_search_menu.gbapal");
 static const u16 sPokedexPlusHGSS_SearchResults_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_search_results.gbapal");
@@ -2354,9 +2355,11 @@ static void LoadPokedexBgPalette(bool8 isSearchResults)
     {
         if (isSearchResults == TRUE)
             LoadPalette(sPokedexPlusHGSS_SearchResults_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
-        else if (!IsNationalPokedexEnabled())
+        else if (!IsNationalPokedexEnabled() && !IsUndergroundPokedexEnabled())
             LoadPalette(sPokedexPlusHGSS_Default_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
-        else
+        else if (!IsNationalPokedexEnabled() && IsUndergroundPokedexEnabled())
+            LoadPalette(sPokedexPlusHGSS_Underground_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
+        else 
             LoadPalette(sPokedexPlusHGSS_National_Pal + 1, BG_PLTT_ID(0) + 1, PLTT_SIZEOF(6 * 16 - 1));
         LoadPalette(GetOverworldTextboxPalettePtr(), 0xF0, 32);
     }
@@ -2473,7 +2476,7 @@ static bool8 LoadPokedexListPage(u8 page)
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_0 | DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON | DISPCNT_OBJWIN_ON);
-        ShowBg(0);static const u16 sPokedexPlusHGSS_Underground_Pal[] = INCBIN_U16("graphics/pokedex/hgss/palette_default.gbapal");
+        ShowBg(0);
         ShowBg(1);
         ShowBg(2);
         ShowBg(3);
@@ -3154,7 +3157,7 @@ static void CreateInterfaceSprites(u8 page)
 
     CreateSprite(&sScrollBarSpriteTemplate, 6, 20, 0);
 
-    if (!IsNationalPokedexEnabled() && page == PAGE_MAIN)
+    if (!IsNationalPokedexEnabled() && !IsUndergroundPokedexEnabled() && page == PAGE_MAIN)
     {
         // Hoenn text
         CreateSprite(&sHoennNationalTextSpriteTemplate, LIST_RIGHT_SIDE_TEXT_X, 40 - LIST_RIGHT_SIDE_TEXT_Y_OFFSET - 6, 1);

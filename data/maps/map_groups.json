@@ -36,7 +36,8 @@
     "gMapGroup_IndoorRoute124",
     "gMapGroup_Custom_TownsAndRoutes",
     "gMapGroup_IndoorKingsisle",
-    "gMapGroup_Gatehouses"
+    "gMapGroup_Gatehouses",
+    "gMapGroup_Custom_Dawnsinger_TownsAndRoutes"
   ],
   "gMapGroup_TownsAndRoutes": [
     "PetalburgCity",
@@ -642,5 +643,9 @@
   "gMapGroup_Gatehouses": [
     "KINGSISLE_GATEHOUSE",
     "Academy_Gatehouse"
+  ],
+  "gMapGroup_Custom_Dawnsinger_TownsAndRoutes": [
+    "KingsisleInstituteMainCampus",
+    "KingsisleInstitute_LoreholdCampus"
   ]
 }

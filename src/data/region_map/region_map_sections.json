@@ -1246,6 +1246,10 @@
       "y": 9,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_KINGSISLE_LOREHOLD",
+      "name": "LOREHOLD CAMPUS"
     }
   ]
 }

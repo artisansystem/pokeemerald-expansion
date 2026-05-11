@@ -303,3 +303,9 @@ const u16 gMetatileAttributes_General_Primary_Nadia[] = INCBIN_U16("data/tileset
 
 const u16 gMetatiles_Secondary_Custom_Lab[] = INCBIN_U16("data/tilesets/secondary/secondary_custom_lab/metatiles.bin");
 const u16 gMetatileAttributes_Secondary_Custom_Lab[] = INCBIN_U16("data/tilesets/secondary/secondary_custom_lab/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Primary_Custom_v2[] = INCBIN_U16("data/tilesets/primary/general_primary_custom_v_2/metatiles.bin");
+const u16 gMetatileAttributes_General_Primary_Custom_v2[] = INCBIN_U16("data/tilesets/primary/general_primary_custom_v_2/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Custom_V2[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_v2/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Custom_V2[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_v2/metatile_attributes.bin");

@@ -1189,3 +1189,7 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/Kingsisle_PokemonCenter/scripts.inc"
 
 	.include "data/maps/Kingsisle_Nadia_Lab/scripts.inc"
+
+	.include "data/maps/KingsisleInstituteMainCampus/scripts.inc"
+
+	.include "data/maps/KingsisleInstitute_LoreholdCampus/scripts.inc"
