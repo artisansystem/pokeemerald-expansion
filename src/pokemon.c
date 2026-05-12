@@ -5046,6 +5046,23 @@ enum DawnsingerDexOrder NationalToDawnsingerOrder(enum NationalDexOrder national
 
 }
 
+enum UndergroundDexOrder NationalToUndergroundOrder(enum NationalDexOrder nationalNum)
+{
+    u16 undergroundNum;
+
+    if (!nationalNum)
+        return 0;
+
+    while (undergroundNum < (UNDERGROUND_DEX_COUNT - 1) && sUndergroundToNationalOrder[undergroundNum] != nationalNum)
+        undergroundNum ++;
+
+    if (undergroundNum >= UNDERGROUND_DEX_COUNT - 1)
+        return 0;
+
+    return undergroundNum + 1;
+    
+}
+
 enum NationalDexOrder SpeciesToNationalPokedexNum(u16 species)
 {
     species = SanitizeSpeciesId(species);
