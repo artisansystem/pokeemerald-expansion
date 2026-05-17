@@ -309,3 +309,6 @@ const u16 gMetatileAttributes_General_Primary_Custom_v2[] = INCBIN_U16("data/til
 
 const u16 gMetatiles_General_Secondary_Custom_V2[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_v2/metatiles.bin");
 const u16 gMetatileAttributes_General_Secondary_Custom_V2[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_v2/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Custom_HeadmastersHouse[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_headmasters_house/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Custom_HeadmastersHouse[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_headmasters_house/metatile_attributes.bin");

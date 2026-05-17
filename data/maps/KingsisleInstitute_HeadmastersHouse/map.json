@@ -1,9 +1,9 @@
 {
-  "id": "MAP_KINGSISLE_INSTITUTE_LOREHOLD_CAMPUS",
-  "name": "KingsisleInstitute_LoreholdCampus",
-  "layout": "LAYOUT_KINGSISLE_INSTITUTE_LOREHOLD_CAMPUS",
+  "id": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
+  "name": "KingsisleInstitute_HeadmastersHouse",
+  "layout": "LAYOUT_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
   "music": "MUS_RUSTBORO",
-  "region_map_section": "MAPSEC_KINGSISLE_LOREHOLD",
+  "region_map_section": "MAPSEC_HEADMASTERS_HOUSE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_CITY",
@@ -14,8 +14,13 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
-      "offset": 5,
+      "map": "MAP_KINGSISLE_INSTITUTE_LOREHOLD_CAMPUS",
+      "offset": -5,
+      "direction": "up"
+    },
+    {
+      "map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "offset": -7,
       "direction": "down"
     }
   ],

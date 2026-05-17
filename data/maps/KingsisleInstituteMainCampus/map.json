@@ -14,8 +14,8 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_KINGSISLE_INSTITUTE_LOREHOLD_CAMPUS",
-      "offset": 5,
+      "map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
+      "offset": 7,
       "direction": "up"
     }
   ],

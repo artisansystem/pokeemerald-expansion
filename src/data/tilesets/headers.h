@@ -1473,3 +1473,14 @@ const struct Tileset gTileset_General_Secondary_Custom_V2 =
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_V2,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Secondary_Custom_HeadmastersHouse =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Custom_HeadmastersHouse,
+    .palettes = gTilesetPalettes_General_Secondary_Custom_HeadmastersHouse,
+    .metatiles = gMetatiles_General_Secondary_Custom_HeadmastersHouse,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_HeadmastersHouse,
+    .callback = NULL,
+};

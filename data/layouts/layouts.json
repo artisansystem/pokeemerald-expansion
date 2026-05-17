@@ -4560,6 +4560,16 @@
       "secondary_tileset": "gTileset_General_Secondary_Custom",
       "border_filepath": "data/layouts/KingsisleInstitute_LoreholdCampus/border.bin",
       "blockdata_filepath": "data/layouts/KingsisleInstitute_LoreholdCampus/map.bin"
+    },
+    {
+      "id": "LAYOUT_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
+      "name": "KingsisleInstitute_HeadmastersHouse_Layout",
+      "width": 26,
+      "height": 20,
+      "primary_tileset": "gTileset_General_Primary_Custom_v2",
+      "secondary_tileset": "gTileset_General_Secondary_Custom_HeadmastersHouse",
+      "border_filepath": "data/layouts/KingsisleInstitute_HeadmastersHouse/border.bin",
+      "blockdata_filepath": "data/layouts/KingsisleInstitute_HeadmastersHouse/map.bin"
     }
   ]
 }
