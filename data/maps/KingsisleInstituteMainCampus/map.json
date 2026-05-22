@@ -23,7 +23,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_TRUCK",
       "x": 24,
-      "y": 14,
+      "y": 16,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,

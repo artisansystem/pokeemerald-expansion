@@ -1484,3 +1484,47 @@ const struct Tileset gTileset_General_Secondary_Custom_HeadmastersHouse =
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_HeadmastersHouse,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Primary_Custom_Lorehold =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Primary_Custom_Lorehold,
+    .palettes = gTilesetPalettes_General_Primary_Custom_Lorehold,
+    .metatiles = gMetatiles_General_Primary_Custom_Lorehold,
+    .metatileAttributes = gMetatileAttributes_General_Primary_Custom_Lorehold,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Secondary_Custom_Lorehold =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Custom_Lorehold,
+    .palettes = gTilesetPalettes_General_Secondary_Custom_Lorehold,
+    .metatiles = gMetatiles_General_Secondary_Custom_Lorehold,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_Lorehold,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Primary_Custom_College =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_General_Primary_Custom_College,
+    .palettes = gTilesetPalettes_General_Primary_Custom_College,
+    .metatiles = gMetatiles_General_Primary_Custom_College,
+    .metatileAttributes = gMetatileAttributes_General_Primary_Custom_College,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_General_Secondary_Custom_College =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Custom_College,
+    .palettes = gTilesetPalettes_General_Secondary_Custom_College,
+    .metatiles = gMetatiles_General_Secondary_Custom_College,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_College,
+    .callback = NULL,
+};

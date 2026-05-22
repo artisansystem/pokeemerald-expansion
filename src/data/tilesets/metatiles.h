@@ -312,3 +312,15 @@ const u16 gMetatileAttributes_General_Secondary_Custom_V2[] = INCBIN_U16("data/t
 
 const u16 gMetatiles_General_Secondary_Custom_HeadmastersHouse[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_headmasters_house/metatiles.bin");
 const u16 gMetatileAttributes_General_Secondary_Custom_HeadmastersHouse[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_headmasters_house/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Primary_Custom_Lorehold[] = INCBIN_U16("data/tilesets/primary/general_primary_custom_lorehold/metatiles.bin");
+const u16 gMetatileAttributes_General_Primary_Custom_Lorehold[] = INCBIN_U16("data/tilesets/primary/general_primary_custom_lorehold/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Custom_Lorehold[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_lorehold/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Custom_Lorehold[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_lorehold/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Primary_Custom_College[] = INCBIN_U16("data/tilesets/primary/general_primary_custom_college/metatiles.bin");
+const u16 gMetatileAttributes_General_Primary_Custom_College[] = INCBIN_U16("data/tilesets/primary/general_primary_custom_college/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Custom_College[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Custom_College[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/metatile_attributes.bin");
