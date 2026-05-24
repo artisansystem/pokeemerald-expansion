@@ -17,6 +17,11 @@
       "map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
       "offset": 7,
       "direction": "up"
+    },
+    {
+      "map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
+      "offset": 5,
+      "direction": "down"
     }
   ],
   "object_events": [

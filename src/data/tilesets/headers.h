@@ -1528,3 +1528,14 @@ const struct Tileset gTileset_General_Secondary_Custom_College =
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_College,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_General_Secondary_Custom_NaturePreserve =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_General_Secondary_Custom_NaturePreserve,
+    .palettes = gTilesetPalettes_General_Secondary_Custom_NaturePreserve,
+    .metatiles = gMetatiles_General_Secondary_Custom_NaturePreserve,
+    .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_NaturePreserve,
+    .callback = NULL,
+};

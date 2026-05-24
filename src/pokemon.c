@@ -5024,7 +5024,7 @@ u16 NationalPokedexNumToSpecies(enum NationalDexOrder nationalNum)
 //     if (hoennNum >= HOENN_DEX_COUNT - 1)
 //         return 0;
 
-//     return hoennNum + 1;
+//     return hoennNum + 1;GROWL- TOUGH/CUTE + INTIMIDATE, TARGET ALL FOES, SOUND MOVE, REDUCE STR BY 1
 // }
 
 enum DawnsingerDexOrder NationalToDawnsingerOrder(enum NationalDexOrder nationalNum)

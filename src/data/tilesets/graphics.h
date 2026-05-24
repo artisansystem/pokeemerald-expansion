@@ -2426,3 +2426,22 @@ const u16 gTilesetPalettes_General_Secondary_Custom_College[][16] =
 };
 
 const u32 gTilesetTiles_General_Secondary_Custom_College[] = INCBIN_U32("data/tilesets/secondary/general_secondary_custom_college/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_General_Secondary_Custom_NaturePreserve[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_General_Secondary_Custom_NaturePreserve[] = INCBIN_U32("data/tilesets/secondary/general_secondary_custom_nature_preserve/tiles.4bpp.lz");

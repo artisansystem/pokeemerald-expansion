@@ -324,3 +324,6 @@ const u16 gMetatileAttributes_General_Primary_Custom_College[] = INCBIN_U16("dat
 
 const u16 gMetatiles_General_Secondary_Custom_College[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/metatiles.bin");
 const u16 gMetatileAttributes_General_Secondary_Custom_College[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/metatile_attributes.bin");
+
+const u16 gMetatiles_General_Secondary_Custom_NaturePreserve[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/metatiles.bin");
+const u16 gMetatileAttributes_General_Secondary_Custom_NaturePreserve[] = INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/metatile_attributes.bin");

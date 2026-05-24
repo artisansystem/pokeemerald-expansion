@@ -1250,6 +1250,10 @@
     {
       "id": "MAPSEC_KINGSISLE_LOREHOLD",
       "name": "LOREHOLD CAMPUS"
+    },
+    {
+      "id": "MAPSEC_NATURE_PRESERVE",
+      "name": "NATURE PRESERVE"
     }
   ]
 }
