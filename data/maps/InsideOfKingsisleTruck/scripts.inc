@@ -10,7 +10,7 @@ InsideOfKingsisleTruck_EventScripts_SetIntroFlags::
 # 6 "data/maps/InsideOfKingsisleTruck/scripts.pory"
 	setvar VAR_KINGSISLE_INTRO_STATE, 1
 # 7 "data/maps/InsideOfKingsisleTruck/scripts.pory"
-	setdynamicwarp MAP_KINGSISLE_INSTITUTE, 24, 16
+	setdynamicwarp MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS, 25, 16
 # 8 "data/maps/InsideOfKingsisleTruck/scripts.pory"
 	releaseall
 	end
