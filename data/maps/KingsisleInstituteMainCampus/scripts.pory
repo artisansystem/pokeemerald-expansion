@@ -14,7 +14,6 @@ UniqueName_Text_Mercury:
 
 script KingsisleInstitute_EventScript_StepOffTruck {
     lockall
-    applymovement(LOCALID_PLAYER, moves(set_invisible))
     call(KingsisleInstitute_EventScript_GoInsideWithMercury)
     setflag(FLAG_HIDE_KINGSISLE_TRUCK)
     warpsilent(MAP_KINGSISLE_DORM_1F, 9, 9)
@@ -43,7 +42,6 @@ script KingsisleInstitute_EventScript_GoInsideWithMercury {
 }
 
 movement KingsisleInstitute_Movement_PlayerStepOffTruck {
-    set_visible
     jump_right
 	delay_16
 	delay_16

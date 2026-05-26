@@ -29,7 +29,7 @@
       "graphics_id": "OBJ_EVENT_GFX_TRUCK",
       "x": 24,
       "y": 16,
-      "elevation": 0,
+      "elevation": 4,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
       "movement_range_y": 0,
@@ -79,7 +79,7 @@
       "x": 3,
       "y": 15,
       "elevation": 0,
-      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "dest_map": "MAP_KINGSISLE_POKEMON_CENTER",
       "dest_warp_id": "0"
     },
     {
@@ -107,8 +107,8 @@
       "x": 18,
       "y": 33,
       "elevation": 0,
-      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
+      "dest_warp_id": "2"
     }
   ],
   "coord_events": [],

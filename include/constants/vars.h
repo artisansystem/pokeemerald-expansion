@@ -250,7 +250,7 @@
 #define VAR_DAILY_SLOTS                                  0x40E6
 #define VAR_DAILY_WILDS                                  0x40E7
 #define VAR_DAILY_BLENDER                                0x40E8
-#define VAR_DAILY_PLANTED_BERRIES                        0x40E9
+#define VAR_DAILY_PLANTED_BERRIES          releaseall              0x40E9
 #define VAR_DAILY_PICKED_BERRIES                         0x40EA
 #define VAR_DAILY_ROULETTE                               0x40EB
 #define VAR_SECRET_BASE_STEP_COUNTER                     0x40EC // Used by Secret Base TV programs
@@ -264,7 +264,7 @@
 #define VAR_ROXANNE_CALL_STEP_COUNTER                    0x40F4
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER                   0x40F5
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40F6
-#define VAR_KINGSISLE_INTRO_STATE                        0x40F7
+#define VAR_KINGSISLE_INTRO_STATE                        0x40F7 // 0-4 are for the intro sequence and take you through the setting of the clock. 6 is for when you've recieved a Pokemon and are sent to speak to Nadia. 7 is intro complete! 
 #define VAR_UNDERGROUND_DEX                              0x40F8
 #define VAR_DAWNSINGER_SECTOR_RANK                       0x40F9
 #define VAR_WISEMORE_SECTOR_RANK                         0x40FA

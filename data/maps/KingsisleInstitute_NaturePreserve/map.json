@@ -39,8 +39,8 @@
       "x": 15,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "dest_warp_id": "7"
     }
   ],
   "coord_events": [],

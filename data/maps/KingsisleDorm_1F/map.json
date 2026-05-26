@@ -34,15 +34,15 @@
       "x": 9,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_KINGSISLE_INSTITUTE",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "dest_warp_id": "6"
     },
     {
       "x": 10,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_KINGSISLE_INSTITUTE",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "dest_warp_id": "6"
     },
     {
       "x": 2,
