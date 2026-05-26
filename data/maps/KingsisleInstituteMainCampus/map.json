@@ -39,7 +39,15 @@
       "flag": "FLAG_HIDE_KINGSISLE_TRUCK"
     }
   ],
-  "warp_events": [],
+  "warp_events": [
+    {
+      "x": 12,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
+      "dest_warp_id": "1"
+    }
+  ],
   "coord_events": [],
   "bg_events": []
 }

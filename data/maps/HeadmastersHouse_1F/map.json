@@ -19,14 +19,14 @@
       "x": 9,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_PORYTILES_TEST_MAP",
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
       "dest_warp_id": "0"
     },
     {
       "x": 10,
       "y": 9,
       "elevation": 0,
-      "dest_map": "MAP_PORYTILES_TEST_MAP",
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
       "dest_warp_id": "0"
     }
   ],
