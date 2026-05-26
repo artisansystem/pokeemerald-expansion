@@ -2408,6 +2408,57 @@ const u16 gTilesetPalettes_General_Primary_Custom_College[][16] =
 
 const u32 gTilesetTiles_General_Primary_Custom_College[] = INCBIN_U32("data/tilesets/primary/general_primary_custom_college/tiles.4bpp.lz");
 
+const u16 gTilesetPalettes_General_Primary_Custom_College_Summer[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/12.gbapal"),
+};
+
+const u16 gTilesetPalettes_General_Primary_Custom_College_Autumn[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/autumn/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/autumn/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/autumn/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/autumn/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/12.gbapal"),
+};
+
+const u16 gTilesetPalettes_General_Primary_Custom_College_Winter[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/12.gbapal"),
+};
+
 const u16 gTilesetPalettes_General_Secondary_Custom_College[][16] =
 {
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/00.gbapal"),
@@ -2427,6 +2478,58 @@ const u16 gTilesetPalettes_General_Secondary_Custom_College[][16] =
 
 const u32 gTilesetTiles_General_Secondary_Custom_College[] = INCBIN_U32("data/tilesets/secondary/general_secondary_custom_college/tiles.4bpp.lz");
 
+const u16 gTilesetPalettes_General_Secondary_Custom_College_Summer[][16] = 
+{
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/12.gbapal"),
+};
+
+const u16 gTilesetPalettes_General_Secondary_Custom_College_Autumn[][16] = 
+{
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/autumn/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/autumn/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/autumn/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/autumn/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/12.gbapal"),
+};
+
+const u16 gTilesetPalettes_General_Secondary_Custom_College_Winter[][16] = 
+{
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/12.gbapal"),
+};
+
+
 const u16 gTilesetPalettes_General_Secondary_Custom_NaturePreserve[][16] =
 {
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_nature_preserve/palettes/00.gbapal"),
@@ -2445,3 +2548,41 @@ const u16 gTilesetPalettes_General_Secondary_Custom_NaturePreserve[][16] =
 };
 
 const u32 gTilesetTiles_General_Secondary_Custom_NaturePreserve[] = INCBIN_U32("data/tilesets/secondary/general_secondary_custom_nature_preserve/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Primary_Seasonal[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/primary_seasonal/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Primary_Seasonal[] = INCBIN_U32("data/tilesets/primary/primary_seasonal/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Secondary_Seasonal[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/secondary_seasonal/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Secondary_Seasonal[] = INCBIN_U32("data/tilesets/secondary/secondary_seasonal/tiles.4bpp.lz");

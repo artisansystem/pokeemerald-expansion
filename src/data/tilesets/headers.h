@@ -1516,6 +1516,9 @@ const struct Tileset gTileset_General_Primary_Custom_College =
     .metatiles = gMetatiles_General_Primary_Custom_College,
     .metatileAttributes = gMetatileAttributes_General_Primary_Custom_College,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = gTilesetPalettes_General_Primary_Custom_College_Autumn,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_General_Secondary_Custom_College =
@@ -1527,6 +1530,9 @@ const struct Tileset gTileset_General_Secondary_Custom_College =
     .metatiles = gMetatiles_General_Secondary_Custom_College,
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_College,
     .callback = NULL,
+    .palettes_summer = NULL,
+    .palettes_autumn = gTilesetPalettes_General_Secondary_Custom_College_Autumn,
+    .palettes_winter = NULL,
 };
 
 const struct Tileset gTileset_General_Secondary_Custom_NaturePreserve =
@@ -1537,5 +1543,27 @@ const struct Tileset gTileset_General_Secondary_Custom_NaturePreserve =
     .palettes = gTilesetPalettes_General_Secondary_Custom_NaturePreserve,
     .metatiles = gMetatiles_General_Secondary_Custom_NaturePreserve,
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_NaturePreserve,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Primary_Seasonal =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Primary_Seasonal,
+    .palettes = gTilesetPalettes_Primary_Seasonal,
+    .metatiles = gMetatiles_Primary_Seasonal,
+    .metatileAttributes = gMetatileAttributes_Primary_Seasonal,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Secondary_Seasonal =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Secondary_Seasonal,
+    .palettes = gTilesetPalettes_Secondary_Seasonal,
+    .metatiles = gMetatiles_Secondary_Seasonal,
+    .metatileAttributes = gMetatileAttributes_Secondary_Seasonal,
     .callback = NULL,
 };
