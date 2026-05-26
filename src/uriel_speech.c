@@ -277,8 +277,8 @@ static const u8 sUrielSpeech_Acceptance[] = _(
 );
 
 static const u8 sUrielSpeech_ThisIs[] = _(
-    "The world of the Institute, now known as\n"
-    "the Garden, is inhabited by\l"
+    "The world of the Institute, now known\n"
+    "as the Garden, is inhabited by\l"
 	"creatures known as Pokémon.\p"
     "Let me show you what we call a\n" 
     "Pokémon.\p"
@@ -290,9 +290,9 @@ static const u8 sUrielSpeech_AlakazamAPokemon[] = _(
 );
 
 static const u8 sUrielSpeech_MainSpeech[] = _(
-    "When the Gods brought us to this world,\n"
-	"they also trusted us with caring for\p"
-	"its creatures. The Garden is a\n"
+    "When the Guardians brought us to this\n"
+	"world, they also trusted us with caring\p"
+	"for its creatures. The Garden is a\n"
 	"place of various cultures and species,\p"
 	"but caring for Pokémon is something we\n"
 	"all have in common.\p"

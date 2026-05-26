@@ -15,6 +15,7 @@
 #include "dewford_trend.h"
 #include "berry.h"
 #include "rtc.h"
+#include "fake_rtc.h"
 #include "easy_chat.h"
 #include "event_data.h"
 #include "money.h"
@@ -51,6 +52,7 @@
 #include "difficulty.h"
 #include "follower_npc.h"
 #include "tx_registered_items_menu.h"
+#include "seasons.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 
@@ -223,6 +225,8 @@ void NewGameInitData(void)
     ResetTrainerHillResults();
     ResetContestLinkResults();
     SetCurrentDifficultyLevel(DIFFICULTY_NORMAL);
+    CurrentSeasonSet(SEASON_AUTUMN);
+    FakeRtc_ForwardTimeTo(10, 0, 0);
     ResetItemFlags();
     ResetOutfitData();
     ResetDexNav();
