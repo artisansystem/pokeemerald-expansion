@@ -1320,8 +1320,8 @@ const u8 gText_PokevialIsEmpty[] =_("The {STR_VAR_1} is empty!\nRefill it by hea
 const u8 gText_YourPkmnWereRestored[] =_("Your POKéMON were restored\nto full health.{PAUSE_UNTIL_PRESS}");
 //End Pokevial Branch
 
-const u8 gText_BlessingActivated[] = _("You feel the power of {STR_VAR_1} flow through you.")
-const u8 gText_BlessingDeactivated[] = _("You sense the power of the blessing return from whence it came.")
+const u8 gText_BlessingActivated[] = _("You feel the power of {STR_VAR_1} flow through you.");
+const u8 gText_BlessingDeactivated[] = _("You sense the power of the blessing return from whence it came.");
 
 //// side quest data
 //generic strings

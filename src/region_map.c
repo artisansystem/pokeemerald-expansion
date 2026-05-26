@@ -129,7 +129,7 @@ static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_
 
 static const u16 sDawnsingerRegionMapBg_Pal[] = INCBIN_U16("graphics/pokenav/region_map/sector_maps/dawnsinger_map.gbapal");
 static const u32 sDawnsingerRegionMapBg_GfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.8bpp.smol");
-static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.bin.smolTM");
+static const u32 sDawnsingerRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.bin.smolTM");
 
 static const u16 sRegionMapPlayerIcon_BrendanPal[] = INCBIN_U16("graphics/pokenav/region_map/brendan_icon.gbapal");
 static const u8 sRegionMapPlayerIcon_BrendanGfx[] = INCBIN_U8("graphics/pokenav/region_map/brendan_icon.4bpp");
@@ -582,6 +582,7 @@ bool8 LoadRegionMapGfx(void)
                     if (!FreeTempTileDataBuffersIfPossible())
                         LoadPalette(sRegionMapBg_Pal, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
                     break;
+            }
     case 3:
         DecompressDataWithHeaderWram(sRegionMapCursorSmallGfxLZ, sRegionMap->cursorSmallImage);
         break;

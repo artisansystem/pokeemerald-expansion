@@ -799,7 +799,7 @@ enum DawnsingerDexOrder NationalToDawnsingerOrder (enum NationalDexOrder nationa
 enum UndergroundDexOrder NationalToUndergroundOrder (enum NationalDexOrder nationalNum);
 enum NationalDexOrder SpeciesToNationalPokedexNum(u16 species);
 enum HoennDexOrder SpeciesToHoennPokedexNum(u16 species);
-// enum NationalDexOrder HoennToNationalOrder(enum HoennDexOrder hoennNum);
+enum NationalDexOrder HoennToNationalOrder(enum HoennDexOrder hoennNum);
 enum NationalDexOrder DawnsingerToNationalOrder(enum DawnsingerDexOrder dawnsingerNum);
 enum NationalDexOrder UndergroundToNationalOrder(enum UndergroundDexOrder undergroundNum);
 void DrawSpindaSpots(u32 personality, u8 *dest, bool32 isSecondFrame);

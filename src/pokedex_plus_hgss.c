@@ -291,7 +291,7 @@ static EWRAM_DATA struct PokedexView *sPokedexView = NULL;
 static EWRAM_DATA u16 sLastSelectedPokemon = 0;
 static EWRAM_DATA u8 sPokeBallRotation = 0;
 static EWRAM_DATA struct PokedexListItem *sPokedexListItem = NULL;
-static EWRAM_DATA u8 currentMapRegion = 0;
+// static EWRAM_DATA u8 currentMapRegion = 0;
 
 //Pokedex Plus HGSS_Ui
 #define MOVES_COUNT_TOTAL (EGG_MOVES_ARRAY_COUNT + MAX_LEVEL_UP_MOVES + NUM_ALL_MACHINES)
@@ -2047,7 +2047,7 @@ void CB2_OpenPokedexPlusHGSS(void)
         sPokedexView->dexMode = gSaveBlock2Ptr->pokedex.mode;
         if (!IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
             sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
-        else if (IsUndergroundPokedexEnabled && !IsNationalPokedexEnabled())
+        else if (IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
             sPokedexView->dexMode = DEX_MODE_UNDERGROUND;
         else 
             sPokedexView->dexMode = DEX_MODE_NATIONAL;
@@ -2057,12 +2057,12 @@ void CB2_OpenPokedexPlusHGSS(void)
         sPokedexView->pokeBallRotation = sPokeBallRotation;
         sPokedexView->selectedScreen = AREA_SCREEN;
         
-        if (!IsUndergroundPokedexEnabled && !IsNationalPokedexEnabled)
+        if (!IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
         {
             sPokedexView->seenCount = GetDawnsingerPokedexCount(FLAG_GET_SEEN);
             sPokedexView->ownCount = GetDawnsingerPokedexCount(FLAG_GET_CAUGHT);
         }
-        else if (IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled)
+        else if (IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
         {
             sPokedexView->seenCount = GetUndergroundPokedexCount(FLAG_GET_SEEN);
             sPokedexView->ownCount = GetUndergroundPokedexCount(FLAG_GET_CAUGHT);
@@ -2335,7 +2335,7 @@ static void Task_ClosePokedex(u8 taskId)
         gSaveBlock2Ptr->pokedex.mode = sPokedexView->dexMode;
         if (!IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
             gSaveBlock2Ptr->pokedex.mode = DEX_MODE_DAWNSINGER;
-        else if (IsUndergroundPokedexEnabled && !IsNationalPokedexEnabled())
+        else if (IsUndergroundPokedexEnabled() && !IsNationalPokedexEnabled())
             gSaveBlock2Ptr->pokedex.mode = DEX_MODE_UNDERGROUND;
         else 
             gSaveBlock2Ptr->pokedex.mode = DEX_MODE_NATIONAL;
@@ -4327,7 +4327,7 @@ static void PrintInfoScreenText(const u8 *str, u8 left, u8 top)
     u8 color[3];
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = GROWL- TOUGH/CUTE + INTIMIDATE, TARGET ALL FOES, SOUND MOVE, REDUCE STR BY 1TEXT_COLOR_LIGHT_GRAY;
+    color[2] = TEXT_COLOR_LIGHT_GRAY;
 
     AddTextPrinterParameterized4(0, 1, left, top, 0, 0, color, -1, str);
 }
@@ -4939,7 +4939,7 @@ static void Task_LoadStatsScreen(u8 taskId)
         break;
     case 6:
         gTasks[taskId].data[5] = 0;
-        PrintStatsScreen_NameGender(taskId, sPokedexListItem->dexNum, sPokedexView->dexMode == DEX_MODE_HOENN ? FALSE : TRUE);
+        PrintStatsScreen_NameGender(taskId, sPokedexListItem->dexNum, sPokedexView->dexMode == DEX_MODE_DAWNSINGER ? FALSE : TRUE);
         PrintStatsScreen_Left(taskId);
         PrintStatsScreen_Abilities(taskId);
         PrintStatsScreen_Moves_Top(taskId);
@@ -7597,7 +7597,7 @@ static void Task_WaitForExitSearch(u8 taskId)
             sPokedexView->selectedPokemon = sPokedexView->selectedPokemonBackup;
             sPokedexView->dexMode = sPokedexView->dexModeBackup;
             if (!IsNationalPokedexEnabled())
-                sPokedexView->dexMode = DEX_MODE_HOENN;
+                sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
             sPokedexView->dexOrder = sPokedexView->dexOrderBackup;
             gTasks[taskId].func = Task_OpenPokedexMainPage;
         }
@@ -7785,7 +7785,7 @@ static void Task_ReturnToPokedexFromSearchResults(u8 taskId)
         sPokedexView->selectedPokemon = sPokedexView->selectedPokemonBackup;
         sPokedexView->dexMode = sPokedexView->dexModeBackup;
         if (!IsNationalPokedexEnabled())
-            sPokedexView->dexMode = DEX_MODE_HOENN;
+            sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
         sPokedexView->dexOrder = sPokedexView->dexOrderBackup;
         gTasks[taskId].func = Task_OpenPokedexMainPage;
         ClearMonSprites();
@@ -7801,7 +7801,7 @@ static void Task_ClosePokedexFromSearchResultsStartMenu(u8 taskId)
         sPokedexView->selectedPokemon = sPokedexView->selectedPokemonBackup;
         sPokedexView->dexMode = sPokedexView->dexModeBackup;
         if (!IsNationalPokedexEnabled())
-            sPokedexView->dexMode = DEX_MODE_HOENN;
+            sPokedexView->dexMode = DEX_MODE_DAWNSINGER;
         sPokedexView->dexOrder = sPokedexView->dexOrderBackup;
         gTasks[taskId].func = Task_ClosePokedex;
     }
@@ -8169,7 +8169,7 @@ static void Task_HandleSearchMenuInput(u8 taskId)
                 sPokedexView->selectedPokemonBackup = 0;
                 gSaveBlock2Ptr->pokedex.mode = GetSearchModeSelection(taskId, SEARCH_MODE);
                 if (!IsNationalPokedexEnabled())
-                    gSaveBlock2Ptr->pokedex.mode = DEX_MODE_HOENN;
+                    gSaveBlock2Ptr->pokedex.mode = DEX_MODE_DAWNSINGER;
                 sPokedexView->dexModeBackup = gSaveBlock2Ptr->pokedex.mode;
                 gSaveBlock2Ptr->pokedex.order = GetSearchModeSelection(taskId, SEARCH_ORDER);
                 sPokedexView->dexOrderBackup = gSaveBlock2Ptr->pokedex.order;
