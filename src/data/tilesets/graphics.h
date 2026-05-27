@@ -2410,10 +2410,10 @@ const u32 gTilesetTiles_General_Primary_Custom_College[] = INCBIN_U32("data/tile
 
 const u16 gTilesetPalettes_General_Primary_Custom_College_Summer[][16] =
 {
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/summer/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/summer/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/summer/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/summer/03.gbapal"),
     INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/04.gbapal"),
     INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/05.gbapal"),
     INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/06.gbapal"),
@@ -2444,10 +2444,10 @@ const u16 gTilesetPalettes_General_Primary_Custom_College_Autumn[][16] =
 
 const u16 gTilesetPalettes_General_Primary_Custom_College_Winter[][16] =
 {
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/winter/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/winter/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/winter/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/winter/03.gbapal"),
     INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/04.gbapal"),
     INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/05.gbapal"),
     INCBIN_U16("data/tilesets/primary/general_primary_custom_college/palettes/06.gbapal"),
@@ -2480,10 +2480,10 @@ const u32 gTilesetTiles_General_Secondary_Custom_College[] = INCBIN_U32("data/ti
 
 const u16 gTilesetPalettes_General_Secondary_Custom_College_Summer[][16] = 
 {
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/summer/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/summer/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/summer/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/summer/03.gbapal"),
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/04.gbapal"),
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/05.gbapal"),
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/06.gbapal"),
@@ -2514,10 +2514,10 @@ const u16 gTilesetPalettes_General_Secondary_Custom_College_Autumn[][16] =
 
 const u16 gTilesetPalettes_General_Secondary_Custom_College_Winter[][16] = 
 {
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/00.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/01.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/02.gbapal"),
-    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/winter/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/winter/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/winter/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/winter/03.gbapal"),
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/04.gbapal"),
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/05.gbapal"),
     INCBIN_U16("data/tilesets/secondary/general_secondary_custom_college/palettes/06.gbapal"),

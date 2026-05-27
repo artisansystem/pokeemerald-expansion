@@ -1516,9 +1516,9 @@ const struct Tileset gTileset_General_Primary_Custom_College =
     .metatiles = gMetatiles_General_Primary_Custom_College,
     .metatileAttributes = gMetatileAttributes_General_Primary_Custom_College,
     .callback = NULL,
-    .palettes_summer = NULL,
+    .palettes_summer = gTilesetPalettes_General_Primary_Custom_College_Summer,
     .palettes_autumn = gTilesetPalettes_General_Primary_Custom_College_Autumn,
-    .palettes_winter = NULL,
+    .palettes_winter = gTilesetPalettes_General_Primary_Custom_College_Winter,
 };
 
 const struct Tileset gTileset_General_Secondary_Custom_College =
@@ -1530,9 +1530,9 @@ const struct Tileset gTileset_General_Secondary_Custom_College =
     .metatiles = gMetatiles_General_Secondary_Custom_College,
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_College,
     .callback = NULL,
-    .palettes_summer = NULL,
+    .palettes_summer = gTilesetPalettes_General_Secondary_Custom_College_Summer,
     .palettes_autumn = gTilesetPalettes_General_Secondary_Custom_College_Autumn,
-    .palettes_winter = NULL,
+    .palettes_winter = gTilesetPalettes_General_Secondary_Custom_College_Winter,
 };
 
 const struct Tileset gTileset_General_Secondary_Custom_NaturePreserve =
