@@ -250,7 +250,7 @@
 #define VAR_DAILY_SLOTS                                  0x40E6
 #define VAR_DAILY_WILDS                                  0x40E7
 #define VAR_DAILY_BLENDER                                0x40E8
-#define VAR_DAILY_PLANTED_BERRIES          releaseall              0x40E9
+#define VAR_DAILY_PLANTED_BERRIES                        0x40E9
 #define VAR_DAILY_PICKED_BERRIES                         0x40EA
 #define VAR_DAILY_ROULETTE                               0x40EB
 #define VAR_SECRET_BASE_STEP_COUNTER                     0x40EC // Used by Secret Base TV programs
