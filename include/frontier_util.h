@@ -25,9 +25,6 @@ u8 GetFrontierBrainMonNature(u8 monId);
 u8 GetFrontierBrainMonEvs(u8 monId, u8 evStatId);
 s32 GetFronterBrainSymbol(void);
 void ClearEnemyPartyAfterChallenge(void);
-u16 GetBattlePoints(void);
-bool8 IsEnoughBattlePoints(u16 cost);
-void SetBattlePoints(u16 pointAmount);
-bool8 RemoveBattlePoints(u16 toSub);
+void ShowBattleFrontierCaughtBannedSpecies(void);
 
 #endif // GUARD_FRONTIER_UTIL_H

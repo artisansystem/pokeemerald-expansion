@@ -369,24 +369,32 @@ BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLv50::
 # 185 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLv50, MSGBOX_DEFAULT
 # 186 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	goto BattleFrontier_BattleArenaLobby_EventScript_EndCancelChallenge
+	call BattleFrontier_ShowCaughtBannedSpecies
 # 187 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-
+	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsEnd, MSGBOX_DEFAULT
 # 188 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLvOpen::
-# 189 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
-# 190 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 	goto BattleFrontier_BattleArenaLobby_EventScript_EndCancelChallenge
-# 191 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+# 189 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 
+# 190 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+BattleFrontier_BattleArenaLobby_EventScript_NotEnoughValidMonsLvOpen::
+# 191 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
 # 192 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-BattleFrontier_BattleArenaLobby_EventScript_CancelChallengeSaveFailed::
+	call BattleFrontier_ShowCaughtBannedSpecies
 # 193 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	msgbox BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsEnd, MSGBOX_DEFAULT
 # 194 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	goto BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
+	goto BattleFrontier_BattleArenaLobby_EventScript_EndCancelChallenge
 # 195 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+
+# 196 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+BattleFrontier_BattleArenaLobby_EventScript_CancelChallengeSaveFailed::
+# 197 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+# 198 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+	goto BattleFrontier_BattleArenaLobby_EventScript_CancelChallenge
+# 199 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 
 # 196 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 BattleFrontier_BattleArenaLobby_EventScript_LoadPartyAndCancelChallenge::
@@ -822,9 +830,9 @@ BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLvOpen:
 	.string "They also must not hold the same\n"
 # 412 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 	.string "kinds of items.\p"
-# 413 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
-# 414 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+	.string "EGGS{STR_VAR_1}.$"
+
+BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsEnd:
 	.string "When you have made your preparations,\n"
 # 415 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 	.string "please do return.$"
@@ -850,13 +858,7 @@ BattleFrontier_BattleArenaLobby_Text_NotEnoughValidMonsLv50:
 	.string "They also must not hold the same\n"
 # 426 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 	.string "kinds of items.\p"
-# 427 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
-# 428 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	.string "When you have made your preparations,\n"
-# 429 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
-	.string "please do return.$"
-# 430 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
+	.string "EGGS{STR_VAR_1}.$"
 
 # 431 "data/maps/BattleFrontier_BattleArenaLobby/scripts.pory"
 BattleFrontier_BattleArenaLobby_Text_GuideYouToArena:

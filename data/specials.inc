@@ -570,3 +570,6 @@ gSpecials::
     //End Pokevial Branch
 	def_special SetHiddenNature
 	def_special EnableUndergroundPokedex
+	def_special SetAbility
+	def_special ObjectEventInteractionGetApricornTreeData
+	def_special ObjectEventInteractionPickApricornTree

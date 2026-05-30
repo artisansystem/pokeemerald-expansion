@@ -515,4 +515,6 @@ bool8 MovementAction_EmoteCryingFace_Step0(struct ObjectEvent *, struct Sprite *
 
 const struct SpritePalette *GetObjectEventPaletteFromTag(u16 tag);
 
+u8 GetObjectEventApricornTreeId(u8 objectEventId);
+
 #endif //GUARD_EVENT_OBJECT_MOVEMENT_H

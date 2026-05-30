@@ -1,6 +1,5 @@
 import json
 import re
-import os
 
 IS_TIME_ENABLED       = False
 IS_SEASONS_ENABLED    = False
@@ -577,24 +576,84 @@ def PrintEncounterRateMacros():
                 method_indices = groups[method]
                 if not method_indices:
                     continue
+                self.WriteLine(f"[{time}] =", 3)
+                self.WriteLine("{", 3)
+                for mon_type in self.config.mon_types:
+                    member_name = mon_type.title().replace("_", "")
+                    member_name = member_name[0].lower() + member_name[1:] + "Info"
+                    value = "NULL"
+                    if time in encounter_data and mon_type in encounter_data[time]:
+                        value = encounter_data[time][mon_type]
+                    if value != "NULL":
+                        value = "&" + value
+                    self.WriteLine(f".{member_name} = {value},", 4)
 
-                for i, methodPercentIndex in enumerate(method_indices):
-                    if methodPercentIndex < 0 or methodPercentIndex >= len(rates):
-                        print(f"#error Invalid fishing encounter rate index {methodPercentIndex} for {method.upper()}")
+                self.WriteLine("},", 3)
+
+            self.WriteLine("},", 2)
+            self.WriteLine("},", 1)
+            self.WriteLine(f"#endif")
+        self.WriteTerminator()
+        self.WriteLine("};")
+
+
+    def WriteEncounters(self):
+        wild_encounter_groups = self.json_data["wild_encounter_groups"]
+        for wild_encounter_group in wild_encounter_groups:
+            headers = {}
+            headers["label"] = wild_encounter_group["label"]
+            headers["data"] = {}
+            for_maps = False
+            map_num_counter = 1
+            if "for_maps" in wild_encounter_group:
+                for_maps = wild_encounter_group["for_maps"]
+            encounters = wild_encounter_group["encounters"]
+
+            for map_encounters in encounters:
+                map_group = "0"
+                map_num = str(map_num_counter)
+                if for_maps:
+                    map_name = map_encounters["map"]
+                    map_group = f"MAP_GROUP({map_name})"
+                    map_num = f"MAP_NUM({map_name})"
+                map_num_counter += 1
+                base_label = map_encounters["base_label"]
+                shared_label = base_label
+                time = self.config.time_fallback
+
+                for time_ident in self.config.times_of_day:
+                    if self.config.times_of_day[time_ident] in base_label:
+                        time = time_ident
+                        shared_label = shared_label.replace('_' + self.config.times_of_day[time_ident], '')
+
+                if shared_label not in headers["data"]:
+                    headers["data"][shared_label] = {}
+                if time not in headers["data"][shared_label]:
+                    headers["data"][shared_label][time] = {}
+                headers["data"][shared_label]["mapGroup"] = map_group
+                headers["data"][shared_label]["mapNum"] = map_num
+
+                version = "EMERALD"
+                if "FireRed" in shared_label:
+                    version = "FIRERED"
+                elif "LeafGreen" in shared_label:
+                    version = "LEAFGREEN"
+                self.WriteLine(f"#ifdef {version}")
+                for mon_type in self.config.mon_types:
+                    if mon_type not in map_encounters:
+                        headers["data"][shared_label][mon_type] = "NULL"
                         continue
 
-                    rate_value = rates[methodPercentIndex]
-                    if i == 0:
-                        print(f"{define} {ENCOUNTER_CHANCE}_{tempName}_{method.upper()}_{SLOT}_{methodPercentIndex} {rate_value}")
-                    else:
-                        previous_method_index = method_indices[i - 1]
-                        print(f"{define} {ENCOUNTER_CHANCE}_{tempName}_{method.upper()}_{SLOT}_{methodPercentIndex} {ENCOUNTER_CHANCE}_{tempName}_{method.upper()}_{SLOT}_{previous_method_index} + {rate_value}")
+                    mons_entry = map_encounters[mon_type]
+                    encounter_rate = mons_entry["encounter_rate"]
+                    mons = mons_entry["mons"]
 
-                    if i == len(method_indices) - 1:
-                        print(f"{define} {ENCOUNTER_CHANCE}_{tempName}_{method.upper()}_{TOTAL} ({ENCOUNTER_CHANCE}_{tempName}_{method.upper()}_{SLOT}_{methodPercentIndex})")
+                    mon_array_name = base_label + "_" + mon_type.title().replace("_", "")
+                    self.WriteMonInfos(mon_array_name, mons, encounter_rate)
+                    headers["data"][shared_label][time][mon_type] = mon_array_name + "Info"
+                self.WriteLine(f"#endif")
 
-        fieldCounter += 1
-    print()
+            self.WritePokemonHeaders(headers)
 
 def GetSeasonLabelFromString(string):
     season = "SEASON"
@@ -790,94 +849,10 @@ def AddFieldData(index, fieldType, fieldRates):
 
 
 def main():
-    pass
+    with open('src/data/wild_encounters.json', 'r') as json_file:
+        json_data = json.load(json_file)
+        ConvertToHeaderFile(json_data)
 
 
-if __name__ == "__main__":
-    ImportWildEncounterFile()
-
-
-"""
-!!!! EXAMPLE OUTPUT !!!!
-- when OW_TIME_OF DAY_ENCOUNTERS is FALSE in configoverworld.h
-
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_0 20
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_1 ENCOUNTER_CHANCE_LAND_MONS_SLOT_0 + 20
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_2 ENCOUNTER_CHANCE_LAND_MONS_SLOT_1 + 10
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_3 ENCOUNTER_CHANCE_LAND_MONS_SLOT_2 + 10
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_4 ENCOUNTER_CHANCE_LAND_MONS_SLOT_3 + 10
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_5 ENCOUNTER_CHANCE_LAND_MONS_SLOT_4 + 10
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_6 ENCOUNTER_CHANCE_LAND_MONS_SLOT_5 + 5
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_7 ENCOUNTER_CHANCE_LAND_MONS_SLOT_6 + 5
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_8 ENCOUNTER_CHANCE_LAND_MONS_SLOT_7 + 4
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_9 ENCOUNTER_CHANCE_LAND_MONS_SLOT_8 + 4
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_10 ENCOUNTER_CHANCE_LAND_MONS_SLOT_9 + 1
-#define ENCOUNTER_CHANCE_LAND_MONS_SLOT_11 ENCOUNTER_CHANCE_LAND_MONS_SLOT_10 + 1
-#define ENCOUNTER_CHANCE_LAND_MONS_TOTAL (ENCOUNTER_CHANCE_LAND_MONS_SLOT_11)
-#define ENCOUNTER_CHANCE_WATER_MONS_SLOT_0 60
-#define ENCOUNTER_CHANCE_WATER_MONS_SLOT_1 ENCOUNTER_CHANCE_WATER_MONS_SLOT_0 + 30
-#define ENCOUNTER_CHANCE_WATER_MONS_SLOT_2 ENCOUNTER_CHANCE_WATER_MONS_SLOT_1 + 5
-#define ENCOUNTER_CHANCE_WATER_MONS_SLOT_3 ENCOUNTER_CHANCE_WATER_MONS_SLOT_2 + 4
-#define ENCOUNTER_CHANCE_WATER_MONS_SLOT_4 ENCOUNTER_CHANCE_WATER_MONS_SLOT_3 + 1
-#define ENCOUNTER_CHANCE_WATER_MONS_TOTAL (ENCOUNTER_CHANCE_WATER_MONS_SLOT_4)
-#define ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_0 60
-#define ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_1 ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_0 + 30
-#define ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_2 ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_1 + 5
-#define ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_3 ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_2 + 4
-#define ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_4 ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_3 + 1
-#define ENCOUNTER_CHANCE_ROCK_SMASH_MONS_TOTAL (ENCOUNTER_CHANCE_ROCK_SMASH_MONS_SLOT_4)
-#define ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_2 60
-#define ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_3 ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_2 + 20
-#define ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_4 ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_3 + 20
-#define ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_TOTAL (ENCOUNTER_CHANCE_FISHING_MONS_GOOD_ROD_SLOT_4)
-#define ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_0 70
-#define ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_1 ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_0 + 30
-#define ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_TOTAL (ENCOUNTER_CHANCE_FISHING_MONS_OLD_ROD_SLOT_1)
-#define ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_5 40
-#define ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_6 ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_5 + 40
-#define ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_7 ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_6 + 15
-#define ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_8 ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_7 + 4
-#define ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_9 ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_8 + 1
-#define ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_TOTAL (ENCOUNTER_CHANCE_FISHING_MONS_SUPER_ROD_SLOT_9)
-
-- if DEXNAV_ENABLED is TRUE
-- these macros are 1 and 0, respectively if hidden_mons isn't in the encounter 
-  rate list at the top of wild_encounters.json
-#define ENCOUNTER_CHANCE_HIDDEN_MONS_SLOT_0 1
-#define ENCOUNTER_CHANCE_HIDDEN_MONS_SLOT_1 ENCOUNTER_CHANCE_HIDDEN_MONS_SLOT_0 + 0
-#define ENCOUNTER_CHANCE_HIDDEN_MONS_TOTAL (ENCOUNTER_CHANCE_HIDDEN_MONS_SLOT_1)
-
-const struct WildPokemon gRoute101_LandMons_Day[] =
-{
-    { 2, 2, SPECIES_WURMPLE },
-    { 2, 2, SPECIES_POOCHYENA },
-    { 2, 2, SPECIES_WURMPLE },
-    { 3, 3, SPECIES_WURMPLE },
-    { 3, 3, SPECIES_POOCHYENA },
-    { 3, 3, SPECIES_POOCHYENA },
-    { 3, 3, SPECIES_WURMPLE },
-    { 3, 3, SPECIES_POOCHYENA },
-    { 2, 2, SPECIES_ZIGZAGOON },
-    { 2, 2, SPECIES_ZIGZAGOON },
-    { 3, 3, SPECIES_ZIGZAGOON },
-    { 3, 3, SPECIES_ZIGZAGOON },
-};
-
-const struct WildPokemonInfo gRoute101_Day_LandMonsInfo= { 20, gRoute101_Day_LandMons };
-const struct WildPokemonHeader gWildMonHeaders[] =
-{
-    {
-        .mapGroup = MAP(ROUTE101),
-        .mapNum = MAP_NUM(ROUTE101),
-        .encounterTypes =
-            [OW_TIME_OF_DAY_DEFAULT] =
-            {
-                .landMonsInfo = &gRoute101_LandMonsInfo,
-                .waterMonsInfo = NULL,
-                .rockSmashMonsInfo = NULL,
-                .fishingMonsInfo = NULL,
-                .hiddenMonsInfo = NULL,
-            }
-    },
-}
-"""
+if __name__ == '__main__':
+    main()

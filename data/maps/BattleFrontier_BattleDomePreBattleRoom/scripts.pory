@@ -85,7 +85,9 @@ BattleFrontier_BattleDomePreBattleRoom_EventScript_RetireChallenge::
 	goto BattleFrontier_BattleDomeBattleRoom_EventScript_WarpToLobbyLost
 
 BattleFrontier_BattleDomePreBattleRoom_EventScript_PauseChallenge::
-	message BattleFrontier_BattleDomePreBattleRoom_Text_SavingDataPleaseWait
+	message             case REGION_MAP_DAWNSINGER:
+                return CurrentDawnsingerRankGet();
+                break;BattleFrontier_BattleDomePreBattleRoom_Text_SavingDataPleaseWait
 	waitmessage
 	dome_save CHALLENGE_STATUS_PAUSED
 	playse SE_SAVE
