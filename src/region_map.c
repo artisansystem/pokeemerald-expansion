@@ -30,7 +30,9 @@
 #include "constants/heal_locations.h"
 #include "constants/rgb.h"
 #include "constants/weather.h"
+#include "constants/regions.h"
 #include "fieldmap.h"
+#include "regions.h"
 
 /*
  *  This file handles region maps generally, and the map used when selecting a fly destination.
@@ -295,6 +297,24 @@ static const u32 sRegionMapFrameTilemapLZ[] = INCBIN_U32("graphics/pokenav/regio
 static const u16 sFlyTargetIcons_Pal[] = INCBIN_U16("graphics/pokenav/region_map/fly_target_icons.gbapal");
 static const u32 sFlyTargetIcons_Gfx[] = INCBIN_U32("graphics/pokenav/region_map/fly_target_icons.4bpp.smol");
 
+static const u16 ALIGNED(4) sPokedexAreaMap_Pal[] = INCBIN_U16("graphics/pokedex/region_map.gbapal");
+static const u32 sPokedexAreaMap_Gfx[] = INCBIN_U32("graphics/pokedex/region_map.8bpp.smol");
+static const u32 sPokedexAreaMap_Tilemap[] = INCBIN_U32("graphics/pokedex/region_map.bin.smolTM");
+
+const struct RegionMapInfo gRegionMapInfos[] =
+{
+    [REGION_MAP_HOENN] = 
+    {
+        .dexMapPalette = sPokedexAreaMap_Pal,
+        .dexMapGfx = sPokedexAreaMap_Gfx,
+        .dexMapTilemap = sPokedexAreaMap_Tilemap,
+        .dexMapPaletteSize = sizeof(sPokedexAreaMap_Pal),
+        .regionMapPalette = sRegionMapBg_Pal,
+        .regionMapGfx = sRegionMapBg_GfxLZ,
+        .regionMapTilemap = sRegionMapBg_TilemapLZ,
+    },
+};
+
 static const u8 sMapHealLocations[][3] =
 {
     [MAPSEC_LITTLEROOT_TOWN] = {MAP_GROUP(MAP_LITTLEROOT_TOWN), MAP_NUM(MAP_LITTLEROOT_TOWN), HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F},
@@ -552,37 +572,33 @@ void ShowRegionMapForPokedexAreaScreen(struct RegionMap *regionMap)
 
 bool8 LoadRegionMapGfx(void)
 {
-    u8 currentMapRegion;
-
-    currentMapRegion = gMapHeader.region;
-
-    switch(currentMapRegion)
+    enum RegionMapType regionMapType;
+    switch (sRegionMap->initStep)
     {
-        case 0:
-            switch (sRegionMap->initStep)
-            {
-                case 0:
-                    if (sRegionMap->bgManaged)
-                        DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sDawnsingerRegionMapBg_GfxLZ, 0, 0, 0);
-                    else
-                        DecompressDataWithHeaderVram(sDawnsingerRegionMapBg_GfxLZ, (u16 *)BG_CHAR_ADDR(2));
-                    break;
-                case 1:
-                    if (sRegionMap->bgManaged)
-                    {
-                        if (!FreeTempTileDataBuffersIfPossible())
-                            DecompressAndCopyTileDataToVram(sRegionMap->bgNum, sRegionMapBg_TilemapLZ, 0, 0, 1);
-                    }
-                    else
-                    {
-                        DecompressDataWithHeaderVram(sRegionMapBg_TilemapLZ, (u16 *)BG_SCREEN_ADDR(28));
-                    }
-                    break;
-                case 2:
-                    if (!FreeTempTileDataBuffersIfPossible())
-                        LoadPalette(sRegionMapBg_Pal, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
-                    break;
-            }
+    case 0:
+        regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+        if (sRegionMap->bgManaged)
+            DecompressAndCopyTileDataToVram(sRegionMap->bgNum, gRegionMapInfos[regionMapType].regionMapGfx, 0, 0, 0);
+        else
+            DecompressDataWithHeaderVram(gRegionMapInfos[regionMapType].regionMapGfx, (u16 *)BG_CHAR_ADDR(2));
+        break;
+    case 1:
+        regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+        if (sRegionMap->bgManaged)
+        {
+            if (!FreeTempTileDataBuffersIfPossible())
+                DecompressAndCopyTileDataToVram(sRegionMap->bgNum, gRegionMapInfos[regionMapType].regionMapTilemap, 0, 0, 1);
+        }
+        else
+        {
+            DecompressDataWithHeaderVram(gRegionMapInfos[regionMapType].regionMapTilemap, (u16 *)BG_SCREEN_ADDR(28));
+        }
+        break;
+    case 2:
+        regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+        if (!FreeTempTileDataBuffersIfPossible())
+            LoadPalette(gRegionMapInfos[regionMapType].regionMapPalette, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
+        break;
     case 3:
         DecompressDataWithHeaderWram(sRegionMapCursorSmallGfxLZ, sRegionMap->cursorSmallImage);
         break;
@@ -945,6 +961,8 @@ static void CalcZoomScrollParams(s16 scrollX, s16 scrollY, s16 c, s16 d, u16 e, 
     sRegionMap->needUpdateVideoRegs = TRUE;
 }
 
+
+
 static void RegionMap_SetBG2XAndBG2Y(s16 x, s16 y)
 {
     sRegionMap->bg2x = (x << 8) + 0x1c00;
@@ -979,12 +997,55 @@ void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y)
     }
 }
 
+enum RegionMapType GetRegionMapType(u32 mapSecId)
+{
+    switch (GetRegionForSectionId(mapSecId))
+    {
+    case REGION_KANTO:
+        switch (GetKantoSubregion(mapSecId))
+        {
+        case KANTO_SUBREGION_SEVII123:
+            return REGION_MAP_SEVII123;
+        case KANTO_SUBREGION_SEVII45:
+            return REGION_MAP_SEVII45;
+        case KANTO_SUBREGION_SEVII67:
+            return REGION_MAP_SEVII67;
+        case KANTO_SUBREGION_KANTO:
+        default:
+            return REGION_MAP_KANTO;
+        }
+    case REGION_HOENN:
+        return REGION_MAP_HOENN;
+    case REGION_GARDEN:
+    default:
+        switch (GetGardenSubregion(mapSecId))
+        {
+            case GARDEN_SUBREGION_DAWNSINGER:
+            default:
+                return REGION_MAP_DAWNSINGER;
+            case GARDEN_SUBREGION_LOCKWOOD:
+                return REGION_MAP_LOCKWOOD;
+            case GARDEN_SUBREGION_SUMMERSPELL:
+                return REGION_MAP_SUMMERSPELL;
+            case GARDEN_SUBREGION_WILLOWBLOOM:
+                return REGION_MAP_WILLOWBLOOM;
+            case GARDEN_SUBREGION_TITANBLAZE:
+                return REGION_MAP_TITANBLAZE;
+            case GARDEN_SUBREGION_ROSESONG:
+                return REGION_MAP_ROSESONG;
+            case GARDEN_SUBREGION_WISEMORE:
+                return REGION_MAP_WISEMORE;
+            case GARDEN_SUBREGION_AUBERON:
+                return REGION_MAP_AUBERON;
+            case GARDEN_SUBREGION_GARDEN:
+                return REGION_MAP_GARDEN;
+        }
+
+    }
+}
+
 static u16 GetMapSecIdAt(u16 x, u16 y)
 {
-    u8 currentMapRegion;
-
-    currentMapRegion = gMapHeader.region;
-
     if (y < MAPCURSOR_Y_MIN || y > MAPCURSOR_Y_MAX || x < MAPCURSOR_X_MIN || x > MAPCURSOR_X_MAX)
     {
         return MAPSEC_NONE;
@@ -992,22 +1053,11 @@ static u16 GetMapSecIdAt(u16 x, u16 y)
     y -= MAPCURSOR_Y_MIN;
     x -= MAPCURSOR_X_MIN;
 
-    switch (currentMapRegion)
+    switch (GetCurrentRegion())
     {
-        case 0:
-        default:
-            return sDawnsingerRegionMap_MapSectionLayout[y][x];
-            break;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5: 
-        case 6:
-        case 7:
-            return sRegionMap_MapSectionLayout[y][x];
-            break;
-        
+    case REGION_HOENN:
+    default:
+        return sRegionMap_MapSectionLayout[y][x];
     }
 }
 

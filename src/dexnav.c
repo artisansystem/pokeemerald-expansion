@@ -42,6 +42,7 @@
 #include "script.h"
 #include "script_pokemon_util.h"
 #include "seasons.h"
+#include "area_ranks.h"
 #include "sound.h"
 #include "sprite.h"
 #include "start_menu.h"
@@ -1518,7 +1519,7 @@ static u8 DexNavGeneratePotential(u8 searchLevel)
 static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environment)
 {
     u32 headerId = GetCurrentMapWildMonHeaderId();
-    struct SeasonTime seasonTime;
+    struct SeasonTimeRank seasonTimeRank;
     u8 min = 100;
     u8 max = 0;
     u8 i;
@@ -1526,8 +1527,8 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
     switch (environment)
     {
     case ENCOUNTER_TYPE_LAND:    // grass
-        seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_LAND);
-        const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo;
+        seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_LAND);
+        const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].landMonsInfo;
 
         if (landMonsInfo == NULL)
             return MON_LEVEL_NONEXISTENT; //Hidden pokemon should only appear on walkable tiles or surf tiles
@@ -1542,8 +1543,8 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
         }
         break;
     case ENCOUNTER_TYPE_WATER:    //water
-        seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_WATER);
-        const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo;
+        seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_WATER);
+        const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].waterMonsInfo;
 
         if (waterMonsInfo == NULL)
             return MON_LEVEL_NONEXISTENT; //Hidden pokemon should only appear on walkable tiles or surf tiles
@@ -1558,8 +1559,8 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
         }
         break;
     case ENCOUNTER_TYPE_HIDDEN:
-        seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_HIDDEN);
-        const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].hiddenMonsInfo;
+        seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_HIDDEN);
+        const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].hiddenMonsInfo;
 
         if (hiddenMonsInfo == NULL)
             return MON_LEVEL_NONEXISTENT;
@@ -1737,9 +1738,9 @@ static bool8 CapturedAllLandMons(u32 headerId)
 {
     u16 i, species;
     int count = 0;
-    struct SeasonTime seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_LAND);
+    struct SeasonTimeRank seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_LAND);
 
-    const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo;
+    const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].landMonsInfo;
 
     if (landMonsInfo != NULL)
     {
@@ -1772,9 +1773,9 @@ static bool8 CapturedAllWaterMons(u32 headerId)
     u32 i;
     u16 species;
     u8 count = 0;
-    struct SeasonTime seasonTime  = GetSeasonTimeForEncounters(headerId, WILD_AREA_WATER);
+    struct SeasonTimeRank seasonTimeRank  = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_WATER);
 
-    const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo;
+    const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].waterMonsInfo;
 
     if (waterMonsInfo != NULL)
     {
@@ -1805,9 +1806,9 @@ static bool8 CapturedAllHiddenMons(u32 headerId)
     u32 i;
     u16 species;
     u8 count = 0;
-    struct SeasonTime seasonTime  = GetSeasonTimeForEncounters(headerId, WILD_AREA_HIDDEN);
+    struct SeasonTimeRank seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_HIDDEN);
 
-        const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].hiddenMonsInfo;
+        const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].hiddenMonsInfo;
 
     if (hiddenMonsInfo != NULL)
     {
@@ -1952,14 +1953,14 @@ static void DexNavLoadEncounterData(void)
     u16 species;
     u32 i;
     u32 headerId = GetCurrentMapWildMonHeaderId();
-    struct SeasonTime seasonTime;
+    struct SeasonTimeRank seasonTimeRank;
 
-    seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_LAND);
-    const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo;
-    seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_WATER);
-    const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo;
-    seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_HIDDEN);
-    const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].hiddenMonsInfo;
+    seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_LAND);
+    const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].landMonsInfo;
+    seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_WATER);
+    const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].waterMonsInfo;
+    seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_HIDDEN);
+    const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].hiddenMonsInfo;
 
     // nop struct data
     memset(sDexNavUiDataPtr->landSpecies, 0, sizeof(sDexNavUiDataPtr->landSpecies));
@@ -2550,9 +2551,9 @@ bool8 TryFindHiddenPokemon(void)
         u16 species;
         enum EncounterType environment;
         u8 taskId;
-        struct SeasonTime seasonTime = GetSeasonTimeForEncounters(headerId, WILD_AREA_HIDDEN);
+        struct SeasonTimeRank seasonTimeRank = GetSeasonTimeRankForEncounters(headerId, WILD_AREA_HIDDEN);
 
-        const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].hiddenMonsInfo;
+        const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].hiddenMonsInfo;
         bool8 isHiddenMon = FALSE;
 
         // while you can still technically find hidden pokemon if there are not hidden-only pokemon on a map,
@@ -2577,7 +2578,7 @@ bool8 TryFindHiddenPokemon(void)
             }
             else
             {
-                species = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
+                species = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].landMonsInfo->wildPokemon[ChooseWildMonIndex_Land()].species;
                 environment = ENCOUNTER_TYPE_LAND;
             }
             break;
@@ -2595,7 +2596,7 @@ bool8 TryFindHiddenPokemon(void)
                 }
                 else
                 {
-                    species = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
+                    species = gWildMonHeaders[headerId].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].waterMonsInfo->wildPokemon[ChooseWildMonIndex_Water()].species;
                     environment = ENCOUNTER_TYPE_WATER;
 
                 }

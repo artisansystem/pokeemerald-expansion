@@ -16,6 +16,7 @@
 #include "roamer.h"
 #include "rtc.h"
 #include "seasons.h"
+#include "area_ranks.h"
 #include "sound.h"
 #include "string_util.h"
 #include "text.h"
@@ -114,6 +115,7 @@ struct
 
 EWRAM_DATA u8 gAreaSeason = 0;
 EWRAM_DATA u8 gAreaTimeOfDay = 0;
+EWRAM_DATA u8 gAreaRank = 0;
 
 static void FindMapsWithMon(u16);
 static void BuildAreaGlowTilemap(void);
@@ -357,7 +359,7 @@ static void FindMapsWithMon(u16 species)
     // Add regular species to the area map
     for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED); i++)
     {
-        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaSeason][gAreaTimeOfDay], species))
+        if (MapHasSpecies(&gWildMonHeaders[i].encounterTypes[gAreaSeason][gAreaTimeOfDay][gAreaRank], species))
         {
             switch (gWildMonHeaders[i].mapGroup)
             {
@@ -752,7 +754,7 @@ bool32 ShouldShowAreaUnknownLabel(void)
 
 #define tState data[0]
 
-void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum Seasons season, enum TimeOfDay timeOfDay, enum PokedexAreaScreenState areaState)
+void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum Seasons season, enum TimeOfDay timeOfDay, enum AreaRank areaRank, enum PokedexAreaScreenState areaState)
 {
     u8 taskId;
 
@@ -762,6 +764,7 @@ void DisplayPokedexAreaScreen(u16 species, u8 *screenSwitchState, enum Seasons s
     sPokedexAreaScreen->areaState = areaState;
     gAreaSeason = season;
     gAreaTimeOfDay = timeOfDay;
+    gAreaRank = areaRank;
     screenSwitchState[0] = 0;
 
     if (sPokedexAreaScreen->areaState == DEX_UPDATE_AREA_SCREEN)

@@ -35,12 +35,19 @@ TIME_DEFAULT_LABEL = "TIME_OF_DAY_DEFAULT"
 TIME_DEFAULT_INDEX = 0
 TIMES_OF_DAY_COUNT = TIME_DEFAULT_INDEX + 1
 
+# area rank encounter data
+AREA_RANK_DEFAULT = ""
+AREA_RANK_DEFAULT_LABEL = "AREA_RANK_DEFAULT"
+AREA_RANK_DEFAULT_INDEX = 0
+AREA_RANK_COUNT = AREA_RANK_DEFAULT_INDEX + 1
+
 # struct building blocks
 baseStruct          = "const struct WildPokemon"
 structLabel         = ""
 structMonType       = ""
 structSeason        = ""
 structTime          = ""
+structAreaRank      = ""
 structMap           = ""
 
 structInfo          = "Info"
@@ -135,6 +142,39 @@ class TimeOfDay():
                 i += 1
         # return -1 here so it returns a consistent type and can be checked against < 0
         return -1
+    
+class AreaRank():
+    def __init__(self):
+        self.vals = []
+        self.lvals = []
+        self.fvals = []
+        self.count = 0
+
+    def __len__(self):
+        return self.count
+    
+    # for debugging purposes
+    def __str__(self):
+        return str([self.vals, self.lvals, self.fvals, self.count])
+
+    def add(self, val):
+        self.vals.append(val)
+        self.lvals.append(val.lower())
+        self.fvals.append(GetAreaRankLabelFromString(val).capitalize())
+        self.count += 1
+    
+    def indexOf(self, val):
+        tempArr = [self.vals, self.lvals, self.fvals]
+
+        for tvals in tempArr:
+            i = 0
+            for areaRank in tvals:
+                if val in areaRank:
+                    return i
+
+                i += 1
+        # return -1 here so it returns a consistent type and can be checked against < 0
+        return -1
 
 
 def ImportWildEncounterFile():
@@ -151,6 +191,9 @@ def ImportWildEncounterFile():
     global TIME_OF_DAY
     TIME_OF_DAY = SetupUserTimeEnum(TimeOfDay())
 
+    global AREA_RANK
+    AREA_RANK = SetupUserAreaRankEnum(AreaRank())
+
     global IS_SEASONS_ENABLED
     global SEASONS_COUNT
     if IsSeasonsEnabled():
@@ -162,6 +205,9 @@ def ImportWildEncounterFile():
     if IsTimeEnabled():
         IS_TIME_ENABLED = True
         TIMES_OF_DAY_COUNT = len(TIME_OF_DAY)
+
+    global AREA_RANK_COUNT
+    AREA_RANK_COUNT = len(AREA_RANK)
     
     global DEXNAV_ENABLED
     DEXNAV_ENABLED = IsDexnavEnabled()
@@ -237,6 +283,7 @@ def ImportWildEncounterFile():
                 PrintGeneratedWarningText()
                 print('#include "rtc.h"')
                 print('#include "seasons.h"')
+                print('#include "area_ranks.h"')
                 print("\n")
 
             PrintEncounterRateMacros()
@@ -276,6 +323,16 @@ def ImportWildEncounterFile():
                         structTime = timeCounter
 
                     timeCounter += 1
+
+            structAreaRank = AREA_RANK_DEFAULT_INDEX
+            areaRankCounter = 0
+            while areaRankCounter < AREA_RANK_COUNT:
+                tempfAreaRank = f"_{AREA_RANK.fvals[areaRankCounter]}"
+                tempAreaRank  = AREA_RANK.vals[areaRankCounter]
+                if tempfAreaRank in structLabel or tempAreaRank in structLabel:
+                    structAreaRank = areaRankCounter
+
+                areaRankCounter += 1              
                     
             fieldCounter = 0
             fieldInfoStrings = []
@@ -289,12 +346,12 @@ def ImportWildEncounterFile():
                 for areaTable in encounter:
                     if fieldData[fieldCounter]["name"] in areaTable:
                         structMonType = fieldData[fieldCounter]["pascalName"]
-                        if f"_{SEASONS.fvals[structTime]}" and f"_{TIME_OF_DAY.fvals[structTime]}" in structLabel:
+                        if f"_{SEASONS.fvals[structSeason]}" and f"_{TIME_OF_DAY.fvals[structTime]}" and f"_{AREA_RANK.fvals[structAreaRank]}" in structLabel:
                             fieldInfoStrings[fieldCounter] = f"{structLabel}_{structMonType}{structInfo}"
                             fieldStrings[fieldCounter] = f"{structLabel}_{structMonType}"
                         else:
-                            fieldInfoStrings[fieldCounter] = f"{structLabel}_{SEASONS.fvals[structSeason]}_{TIME_OF_DAY.fvals[structTime]}_{structMonType}{structInfo}"
-                            fieldStrings[fieldCounter] = f"{structLabel}_{SEASONS.fvals[structSeason]}_{TIME_OF_DAY.fvals[structTime]}_{structMonType}"
+                            fieldInfoStrings[fieldCounter] = f"{structLabel}_{SEASONS.fvals[structSeason]}_{TIME_OF_DAY.fvals[structTime]}_{AREA_RANK.fvals[structAreaRank]}_{structMonType}{structInfo}"
+                            fieldStrings[fieldCounter] = f"{structLabel}_{SEASONS.fvals[structSeason]}_{TIME_OF_DAY.fvals[structTime]}_{AREA_RANK.fvals[structAreaRank]}_{structMonType}"
                     else:
                         structMonType = ""
                         continue
@@ -391,12 +448,37 @@ def GetStructTimeWithoutLabel(label):
         timeCounter += 1
     return TIME_DEFAULT_INDEX
 
+def GetStructLabelWithoutAreaRank(label):
+    labelLength = len(label)
+    areaRankLength = 0
+
+    areaRankCounter = 0
+    while areaRankCounter < AREA_RANK_COUNT:
+        tempAreaRank= AREA_RANK.fvals[areaRankCounter]
+        if tempAreaRank in label:
+            areaRankLength = len(tempAreaRank)
+            return label[:(labelLength - (areaRankLength + 1))]
+
+        seasonCounter += 1
+    return label
+
+def GetStructAreaRankWithoutLabel(label):
+    areaRankCounter = 0
+    while areaRankCounter < AREA_RANK_COUNT:
+        tempAreaRank = f"_{AREA_RANK.fvals[areaRankCounter]}"
+        if tempAreaRank in label:
+            return areaRankCounter
+
+        areaRankCounter += 1
+    return AREA_RANK_DEFAULT_INDEX
+
 def AssembleMonHeaderContent():
     SetupMonInfoVars()
 
     tempHeaderLabel = GetWildMonHeadersLabel()
     tempHeaderSeasonIndex = GetStructSeasonWithoutLabel(structLabel)
     tempHeaderTimeIndex = GetStructTimeWithoutLabel(structLabel)
+    tempHeaderAreaRankIndex = GetStructAreaRankWithoutLabel(structLabel)
     # structLabelNoTime = GetStructLabelWithoutTime(structLabel)
     # structLabelNoSeason = GetStructLabelWithoutSeason(structLabel)
     mapKey = structMap
@@ -420,12 +502,19 @@ def AssembleMonHeaderContent():
             timeCounter = 0
             while timeCounter < TIMES_OF_DAY_COUNT:
                 headerStructTable[tempHeaderLabel][mapKey]["encounter_types"][seasonCounter].append([])
+
+                areaRankCounter = 0
+                while areaRankCounter < AREA_RANK_COUNT:
+                    headerStructTable[tempHeaderLabel][mapKey]["encounter_types"][seasonCounter][timeCounter].append([])
+
+                    areaRankCounter += 1
+
                 timeCounter += 1
             seasonCounter += 1
 
     fieldCounter = 0
     while fieldCounter < len(fieldData):
-        headerStructTable[tempHeaderLabel][mapKey]["encounter_types"][tempHeaderSeasonIndex][tempHeaderTimeIndex].append(fieldInfoStrings[fieldCounter])
+        headerStructTable[tempHeaderLabel][mapKey]["encounter_types"][tempHeaderSeasonIndex][tempHeaderTimeIndex][tempHeaderAreaRankIndex].append(fieldInfoStrings[fieldCounter])
         fieldCounter += 1
 
 
@@ -472,24 +561,29 @@ def PrintWildMonHeadersContent():
                             timeCounter = 0
                             
                             while timeCounter < TIMES_OF_DAY_COUNT:
+
+                                areaRankCounter = 0
+
+                                while areaRankCounter < AREA_RANK_COUNT:
                             
-                                monInfo = headerStructTable[group][label][stat][seasonCounter][timeCounter]
-                                PrintEncounterHeaders(f"{TabStr(3)}[{SEASONS.vals[seasonCounter]}][{TIME_OF_DAY.vals[timeCounter]}] = ")
+                                    monInfo = headerStructTable[group][label][stat][seasonCounter][timeCounter][areaRankCounter]
+                                    PrintEncounterHeaders(f"{TabStr(3)}[{SEASONS.vals[seasonCounter]}][{TIME_OF_DAY.vals[timeCounter]}][{AREA_RANK.vals[areaRankCounter]}] = ")
 
-                                infoIndex = 0
-                                while infoIndex < len(fieldData):
-                                    if infoIndex == 0:
-                                        PrintEncounterHeaders(TabStr(3) + "{")
+                                    infoIndex = 0
+                                    while infoIndex < len(fieldData):
+                                        if infoIndex == 0:
+                                            PrintEncounterHeaders(TabStr(3) + "{")
 
-                                    if len(monInfo) == 0:
-                                        PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = NULL,")
-                                    else:
-                                        PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = {monInfo[infoIndex]},")
+                                            if len(monInfo) == 0:
+                                                PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = NULL,")
+                                            else:
+                                                PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(infoIndex)} = {monInfo[infoIndex]},")
 
-                                    if infoIndex == len(fieldData) - 1:
-                                        PrintEncounterHeaders(TabStr(3) + "},")
+                                        if infoIndex == len(fieldData) - 1:
+                                            PrintEncounterHeaders(TabStr(3) + "},")
 
-                                    infoIndex += 1
+                                        infoIndex += 1
+                                    areaRankCounter += 1
                                 timeCounter += 1
                             seasonCounter += 1
                         
@@ -506,23 +600,28 @@ def PrintWildMonHeadersContent():
 
                         nullCountTime   = 0
                         while nullCountTime < TIMES_OF_DAY_COUNT:
-                            if nullCountSeason == 0 and nullCountTime == 0:
-                                PrintEncounterHeaders(f"{TabStr(2)}.encounterTypes =")
-                                PrintEncounterHeaders(TabStr(2)+ "{")
 
-                            PrintEncounterHeaders(f"{TabStr(3)}[{SEASONS.vals[nullCountSeason]}][{TIME_OF_DAY.vals[nullCountTime]}] = ")
+                            nullCountAreaRank = 0
+                            while nullCountAreaRank < AREA_RANK_COUNT:
 
-                            nullIndex = 0
-                            while nullIndex <= len(fieldData) - 1:
-                                if nullIndex == 0:
-                                    PrintEncounterHeaders(TabStr(3) + "{")
+                                if nullCountSeason == 0 and nullCountTime == 0 and nullCountAreaRank == 0:
+                                    PrintEncounterHeaders(f"{TabStr(2)}.encounterTypes =")
+                                    PrintEncounterHeaders(TabStr(2)+ "{")
 
-                                PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(nullIndex)} = NULL,")
+                                PrintEncounterHeaders(f"{TabStr(3)}[{SEASONS.vals[nullCountSeason]}][{TIME_OF_DAY.vals[nullCountTime]}][{AREA_RANK.vals[nullCountAreaRank]}] = ")
 
-                                if nullIndex == len(fieldData) - 1:
-                                    PrintEncounterHeaders(TabStr(3) + "},")
+                                nullIndex = 0
+                                while nullIndex <= len(fieldData) - 1:
+                                    if nullIndex == 0:
+                                        PrintEncounterHeaders(TabStr(3) + "{")
 
-                                nullIndex += 1
+                                    PrintEncounterHeaders(f"{TabStr(4)}{GetIMonInfoStringFromIndex(nullIndex)} = NULL,")
+
+                                    if nullIndex == len(fieldData) - 1:
+                                        PrintEncounterHeaders(TabStr(3) + "},")
+
+                                    nullIndex += 1
+                                nullCountAreaRank += 1
                             nullCountTime += 1
                         nullCountSeason += 1
 
@@ -624,6 +723,20 @@ def GetTimeLabelFromString(string):
     return string
 
 
+def GetAreaRankLabelFromString(string):
+    areaRank = "AREA_RANK"
+    areaRank_ = "AREA_RANK_"
+
+    if string == "AREA_RANK_COUNT":
+        return string
+
+    if areaRank_ in string.upper():
+        return string[len(areaRank_):len(string)]
+    elif areaRank in string.upper():
+        return string[len(areaRank):len(string)]
+    return string
+
+
 def GetIMonInfoStringFromIndex(index):
     return fieldData[index]["infoStringBase"]
 
@@ -685,6 +798,14 @@ def GetTimeEnum():
         include_rtc = rtc_include_file.read()
         include_enum = DEFAULT_TIME_PAT.search(include_rtc)
         return include_enum.group("rtc_val")
+    
+def GetAreaRankEnum():
+    DEFAULT_AREA_RANK_PAT = re.compile(r"enum\s+AreaRank\s*\{(?P<area_ranks_val>[\s*\w+,\=\d*]+)\s*\}\s*\;")
+
+    with open("./include/area_ranks.h", "r") as area_rank_include_file:
+        include_area_ranks = area_rank_include_file.read()
+        include_enum = DEFAULT_AREA_RANK_PAT.search(include_area_ranks)
+        return include_enum.group("area_ranks_val")
 
 def CheckEmpty(string):
     return string == "" or string.isspace() or string == "\n"
@@ -744,6 +865,34 @@ def SetupUserTimeEnum(timeOfDay):
 
         strCount += 1
     return timeOfDay
+
+def SetupUserAreaRankEnum(areaRank):
+    enum_string = GetAreaRankEnum()
+    enum_string = enum_string.split(",")
+
+    # check for extra element from trailing comma
+    if CheckEmpty(enum_string[-1]):
+        enum_string.pop(-1)
+
+    # we don't need the `TIMES_OF_DAY_COUNT` value, so - 1 from the value of len(enum_string)
+    strCount = 0
+    while strCount < len(enum_string) - 1:
+        tempStr = enum_string[strCount].strip("\n ")
+
+        """
+        we need to ignore any value assignments, as the times will need to correspond
+        with the elements in the array.
+        """
+        if "=" in tempStr:
+            tempStr = tempStr[0:tempStr.index("=")]
+            tempStr = tempStr.strip(" ")
+
+        #double check we didn't catch any empty values
+        if not CheckEmpty(enum_string[strCount]):
+            areaRank.add(tempStr)
+
+        strCount += 1
+    return areaRank
 
 
 def TabStr(amount):

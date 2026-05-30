@@ -22,6 +22,7 @@
 #include "script.h"
 #include "script_movement.h"
 #include "seasons.h"
+#include "area_ranks.h"
 #include "sound.h"
 #include "string_util.h"
 #include "strings.h"
@@ -1753,7 +1754,7 @@ static void PopulateSpeciesFromTrainerLocation(int matchCallId, u8 *destStr)
     int numSpecies;
     u8 slot;
     int i = 0;
-    struct SeasonTime seasonTime;
+    struct SeasonTimeRank seasonTimeRank;
 
     if (gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED)) // ??? This check is nonsense.
     {
@@ -1768,20 +1769,20 @@ static void PopulateSpeciesFromTrainerLocation(int matchCallId, u8 *destStr)
 
         if (gWildMonHeaders[i].mapGroup != MAP_GROUP(MAP_UNDEFINED))
         {
-            seasonTime = GetSeasonTimeForEncounters(i, WILD_AREA_LAND);
+            seasonTimeRank = GetSeasonTimeRankForEncounters(i, WILD_AREA_LAND);
             numSpecies = 0;
-            if (gWildMonHeaders[i].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo)
+            if (gWildMonHeaders[i].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].landMonsInfo)
             {
                 slot = GetLandEncounterSlot();
-                species[numSpecies] = gWildMonHeaders[i].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo->wildPokemon[slot].species;
+                species[numSpecies] = gWildMonHeaders[i].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].landMonsInfo->wildPokemon[slot].species;
                 numSpecies++;
             }
 
-            seasonTime = GetSeasonTimeForEncounters(i, WILD_AREA_WATER);
-            if (gWildMonHeaders[i].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo)
+            seasonTimeRank = GetSeasonTimeRankForEncounters(i, WILD_AREA_WATER);
+            if (gWildMonHeaders[i].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].waterMonsInfo)
             {
                 slot = GetWaterEncounterSlot();
-                species[numSpecies] = gWildMonHeaders[i].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo->wildPokemon[slot].species;
+                species[numSpecies] = gWildMonHeaders[i].encounterTypes[seasonTimeRank.season][seasonTimeRank.timeOfDay][seasonTimeRank.areaRank].waterMonsInfo->wildPokemon[slot].species;
                 numSpecies++;
             }
 

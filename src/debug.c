@@ -77,6 +77,7 @@
 #include "fake_rtc.h"
 #include "save.h"
 #include "seasons.h"
+#include "area_ranks.h"
 
 enum FollowerNPCCreateDebugMenu
 {
@@ -260,6 +261,7 @@ static void DebugAction_Util_WatchCredits(u8 taskId);
 static void DebugAction_Util_CheatStart(u8 taskId);
 
 static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId);
+static void DebugAction_TimeMenu_ChangeSeason(u8 taskId);
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId);
 
 static void DebugAction_CreateFollowerNPC(u8 taskId);
@@ -340,6 +342,38 @@ static void DebugAction_BerryFunctions_NextStage(u8 taskId);
 static void DebugAction_BerryFunctions_Pests(u8 taskId);
 static void DebugAction_BerryFunctions_Weeds(u8 taskId);
 
+static void DebugAction_AreaRanks_DawnsingerSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_DawnsingerSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_DawnsingerSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_LockwoodSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_LockwoodSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_LockwoodSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_SummerspellSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_SummerspellSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_SummerspellSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_WillowbloomSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_WillowbloomSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_WillowbloomSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_TitanblazeSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_TitanblazeSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_TitanblazeSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_RosesongSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_RosesongSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_RosesongSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_WisemoreSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_WisemoreSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_WisemoreSetRankAdvanced(u8 taskId);
+
+static void DebugAction_AreaRanks_AuberonSetRankStarter(u8 taskId);
+static void DebugAction_AreaRanks_AuberonSetRankStandard(u8 taskId);
+static void DebugAction_AreaRanks_AuberonSetRankAdvanced(u8 taskId);
+
 static void DebugAction_Player_Name(u8 taskId);
 static void DebugAction_Player_Gender(u8 taskId);
 static void DebugAction_Player_Id(u8 taskId);
@@ -352,7 +386,7 @@ extern const u8 Debug_EventScript_CheckEVs[];
 extern const u8 Debug_EventScript_CheckIVs[];
 extern const u8 Debug_EventScript_InflictStatus1[];
 extern const u8 Debug_EventScript_SetHiddenNature[];
-extern const u8 Debug_EventScript_Script_AdvanceSeason[];
+extern const u8 Debug_EventScript_Script_1[];
 extern const u8 Debug_EventScript_Script_2[];
 extern const u8 Debug_EventScript_Script_3[];
 extern const u8 Debug_EventScript_Script_4[];
@@ -422,6 +456,13 @@ static const u8 *const gTimeOfDayStringsTable[TIMES_OF_DAY_COUNT] = {
     COMPOUND_STRING("Day"),
     COMPOUND_STRING("Evening"),
     COMPOUND_STRING("Night"),
+};
+
+static const u8 *const gSeasonStringsTable[SEASONS_COUNT] = {
+    COMPOUND_STRING("Spring"),
+    COMPOUND_STRING("Summer"),
+    COMPOUND_STRING("Autumn"),
+    COMPOUND_STRING("Winter"),
 };
 
 // Follower NPC
@@ -496,6 +537,15 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu_Weekdays[] =
     { NULL }
 };
 
+static const struct DebugMenuOption sDebugMenu_Actions_SeasonMenu_Seasons[] =
+{
+    [SEASON_SPRING] = { gSeasonStringsTable[SEASON_SPRING], DebugAction_TimeMenu_ChangeSeason },
+    [SEASON_SUMMER] = { gSeasonStringsTable[SEASON_SUMMER], DebugAction_TimeMenu_ChangeSeason },
+    [SEASON_AUTUMN] = { gSeasonStringsTable[SEASON_AUTUMN], DebugAction_TimeMenu_ChangeSeason },
+    [SEASON_WINTER] = { gSeasonStringsTable[SEASON_WINTER], DebugAction_TimeMenu_ChangeSeason },
+    { NULL }
+};
+
 static const struct DebugMenuOption sDebugMenu_Actions_FollowerNPCMenu_Create[] =
 {
     [DEBUG_FNPC_BRENDAN] = { gFollowerNPCStringsTable[DEBUG_FNPC_BRENDAN], DebugAction_CreateFollowerNPC },
@@ -513,8 +563,86 @@ static const struct DebugMenuOption sDebugMenu_Actions_TimeMenu[] =
     { COMPOUND_STRING("Get time of day…"),  DebugAction_ExecuteScript, Debug_EventScript_PrintTimeOfDay },
     { COMPOUND_STRING("Set time of day…"),  DebugAction_OpenSubMenuFakeRTC, sDebugMenu_Actions_TimeMenu_TimesOfDay },
     { COMPOUND_STRING("Set weekday…"),      DebugAction_OpenSubMenuFakeRTC, sDebugMenu_Actions_TimeMenu_Weekdays },
+    { COMPOUND_STRING("Set season…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_SeasonMenu_Seasons },
     { COMPOUND_STRING("Check wall clock…"), DebugAction_ExecuteScript, PlayersHouse_2F_EventScript_CheckWallClock },
     { COMPOUND_STRING("Set wall clock…"),   DebugAction_ExecuteScript, PlayersHouse_2F_EventScript_SetWallClock },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_DawnsingerAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_DawnsingerSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_DawnsingerSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_DawnsingerSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_LockwoodAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_LockwoodSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_LockwoodSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_LockwoodSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_SummerspellAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_SummerspellSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_SummerspellSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_SummerspellSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_WillowbloomAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_WillowbloomSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_WillowbloomSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_WillowbloomSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_TitanblazeAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_TitanblazeSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_TitanblazeSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_TitanblazeSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_RosesongAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_RosesongSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_RosesongSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_RosesongSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_WisemoreAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_WisemoreSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_WisemoreSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_WisemoreSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_AuberonAreaRankMenu[] =
+{
+    { COMPOUND_STRING("Set Rank: Starter"), DebugAction_AreaRanks_AuberonSetRankStarter },
+    { COMPOUND_STRING("Set Rank: Standard"), DebugAction_AreaRanks_AuberonSetRankStandard },
+    { COMPOUND_STRING("Set Rank: Advanced"), DebugAction_AreaRanks_AuberonSetRankAdvanced },
+    { NULL }
+};
+
+static const struct DebugMenuOption sDebugMenu_Actions_SectorMenu[] =
+{
+    { COMPOUND_STRING("Dawnsinger Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_DawnsingerAreaRankMenu },
+    { COMPOUND_STRING("Lockwood Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_LockwoodAreaRankMenu },
+    { COMPOUND_STRING("Summerspell Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_SummerspellAreaRankMenu },
+    { COMPOUND_STRING("Willowbloom Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_WillowbloomAreaRankMenu },
+    { COMPOUND_STRING("Titanblaze Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_TitanblazeAreaRankMenu },
+    { COMPOUND_STRING("Rosesong Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_RosesongAreaRankMenu },
+    { COMPOUND_STRING("Wisemore Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_WisemoreAreaRankMenu },
+    { COMPOUND_STRING("Auberon Area Rank"), DebugAction_OpenSubMenu, sDebugMenu_Actions_AuberonAreaRankMenu },
     { NULL }
 };
 
@@ -542,6 +670,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Utilities[] =
     { COMPOUND_STRING("Set weather…"),      DebugAction_Util_Weather },
     { COMPOUND_STRING("Font Test…"),        DebugAction_ExecuteScript, Debug_EventScript_FontTest },
     { COMPOUND_STRING("Time Functions…"),   DebugAction_OpenSubMenu, sDebugMenu_Actions_TimeMenu, },
+    { COMPOUND_STRING("Area Ranks…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_SectorMenu, },
     { COMPOUND_STRING("Watch credits…"),    DebugAction_Util_WatchCredits },
     { COMPOUND_STRING("Cheat start"),       DebugAction_Util_CheatStart },
     { COMPOUND_STRING("Berry Functions…"),  DebugAction_OpenSubMenu, sDebugMenu_Actions_BerryFunctions },
@@ -611,7 +740,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Player[] =
 
 static const struct DebugMenuOption sDebugMenu_Actions_Scripts[] =
 {
-    { COMPOUND_STRING("Advance Season"), DebugAction_ExecuteScript, Debug_EventScript_Script_AdvanceSeason },
+    { COMPOUND_STRING("Script 1"), DebugAction_ExecuteScript, Debug_EventScript_Script_1},
     { COMPOUND_STRING("Script 2"), DebugAction_ExecuteScript, Debug_EventScript_Script_2 },
     { COMPOUND_STRING("Script 3"), DebugAction_ExecuteScript, Debug_EventScript_Script_3 },
     { COMPOUND_STRING("Script 4"), DebugAction_ExecuteScript, Debug_EventScript_Script_4 },
@@ -641,7 +770,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_Flags[] =
 {
     [DEBUG_FLAGVAR_MENU_ITEM_FLAGS]                = { COMPOUND_STRING("Set Flag XYZ…"),                     DebugAction_FlagsVars_Flags },
     [DEBUG_FLAGVAR_MENU_ITEM_VARS]                 = { COMPOUND_STRING("Set Var XYZ…"),                      DebugAction_FlagsVars_Vars },
-    [DEBUG_FLAGVAR_MENU_ITEM_OUTFITS]              = {COMPOUND_STRING("Set Outfit XYZ…"),                    DebugAction_FlagsVars_Outfits},
+    [DEBUG_FLAGVAR_MENU_ITEM_OUTFITS]              = { COMPOUND_STRING("Set Outfit XYZ…"),                   DebugAction_FlagsVars_Outfits},
     [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_ALL]         = { COMPOUND_STRING("Pokédex Flags All"),                 DebugAction_FlagsVars_PokedexFlags_All },
     [DEBUG_FLAGVAR_MENU_ITEM_DEXFLAGS_RESET]       = { COMPOUND_STRING("Pokédex Flags Reset"),               DebugAction_FlagsVars_PokedexFlags_Reset },
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_POKEDEX]       = { COMPOUND_STRING("Toggle {STR_VAR_1}Pokédex"),         DebugAction_ToggleFlag, DebugAction_FlagsVars_SwitchDex },
@@ -3110,6 +3239,31 @@ static void DebugAction_TimeMenu_ChangeTimeOfDay(u8 taskId)
     SetMainCallback2(CB2_LoadMap);
 }
 
+static void DebugAction_TimeMenu_ChangeSeason(u8 taskId)
+{
+    u32 input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
+
+    DebugAction_DestroyExtraWindow(taskId);
+    switch(input)
+    {
+        case SEASON_SPRING:
+            CurrentSeasonSet(SEASON_SPRING);
+            break;
+        case SEASON_SUMMER:
+            CurrentSeasonSet(SEASON_SUMMER);
+            break;
+        case SEASON_AUTUMN:
+            CurrentSeasonSet(SEASON_AUTUMN);
+            break;
+        case SEASON_WINTER:
+            CurrentSeasonSet(SEASON_WINTER);
+            break;
+    }
+    Debug_DestroyMenu_Full(taskId);
+    SetMainCallback2(CB2_LoadMap);
+}
+
+
 static void DebugAction_TimeMenu_ChangeWeekdays(u8 taskId)
 {
     u32 input = ListMenu_ProcessInput(gTasks[taskId].tMenuTaskId);
@@ -4065,6 +4219,209 @@ static void DebugAction_BerryFunctions_Weeds(u8 taskId)
 }
 
 // *******************************
+// Actions AreaRankSet
+
+//DAWNSINGER
+static void DebugAction_AreaRanks_DawnsingerSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentDawnsingerRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_DawnsingerSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentDawnsingerRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_DawnsingerSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentDawnsingerRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+// LOCKWOOD
+static void DebugAction_AreaRanks_LockwoodSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentLockwoodRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_LockwoodSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentLockwoodRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_LockwoodSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentLockwoodRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+//SUMMERSPELL
+static void DebugAction_AreaRanks_SummerspellSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentSummerspellRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_SummerspellSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentSummerspellRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_SummerspellSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentSummerspellRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+//WILLOWBLOOM
+static void DebugAction_AreaRanks_WillowbloomSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentWillowbloomRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_WillowbloomSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentWillowbloomRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_WillowbloomSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentWillowbloomRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+//TITANBLAZE
+static void DebugAction_AreaRanks_TitanblazeSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentTitanblazeRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_TitanblazeSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentTitanblazeRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_TitanblazeSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentTitanblazeRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+//ROSESONG
+static void DebugAction_AreaRanks_RosesongSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentRosesongRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_RosesongSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentRosesongRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_RosesongSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentRosesongRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+//WISEMORE
+static void DebugAction_AreaRanks_WisemoreSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentWisemoreRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_WisemoreSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentWisemoreRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_WisemoreSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentWisemoreRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+//AUBERON
+static void DebugAction_AreaRanks_AuberonSetRankStarter(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentAuberonRankSet(AREA_RANK_STARTER);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_AuberonSetRankStandard(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentAuberonRankSet(AREA_RANK_STANDARD);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_AreaRanks_AuberonSetRankAdvanced(u8 taskId)
+{
+    PlaySE(SE_USE_ITEM);
+    CurrentAuberonRankSet(AREA_RANK_ADVANCED);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+// ********************************
 // Actions Party/Boxes
 
 static void DebugAction_Party_HealParty(u8 taskId)

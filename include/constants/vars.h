@@ -266,7 +266,7 @@
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40F6
 #define VAR_KINGSISLE_INTRO_STATE                        0x40F7 // 0-4 are for the intro sequence and take you through the setting of the clock. 6 is for when you've recieved a Pokemon and are sent to speak to Nadia. 7 is intro complete! 
 #define VAR_UNDERGROUND_DEX                              0x40F8
-#define VAR_DAWNSINGER_SECTOR_RANK                       0x40F9
+#define VAR_DAWNSINGER_SECTOR_RANK                       0x40F9 // THIS AND THE ONES BELOW IT NEVER GO OVER 3.
 #define VAR_WISEMORE_SECTOR_RANK                         0x40FA
 #define VAR_SUMMERSPELL_SECTOR_RANK                      0x40FB
 #define VAR_TITANBLAZE_SECTOR_RANK                       0x40FC
