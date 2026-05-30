@@ -34,7 +34,8 @@
     "gMapGroup_IndoorRoute123",
     "gMapGroup_IndoorRoute119",
     "gMapGroup_IndoorRoute124",
-    "gMapGroup_Custom_TownsAndRoutes",
+    "gMapGroup_Custom_Outdated",
+    "gMapGroup_Custom_Placeholders",
     "gMapGroup_Custom_Kingsisle",
     "gMapGroup_Custom_IndoorKingsisle",
     "gMapGroup_Custom_Gatehouses",
@@ -628,10 +629,13 @@
   "gMapGroup_IndoorRoute124": [
     "Route124_DivingTreasureHuntersHouse"
   ],
-  "gMapGroup_Custom_TownsAndRoutes": [
+  "gMapGroup_Custom_Outdated": [
     "KingsisleInstitute",
     "PorytilesTestMap",
     "KingsisleInstitute_Academy_2"
+  ],
+  "gMapGroup_Custom_Placeholders": [
+    "LockwoodPlaceholder"
   ],
   "gMapGroup_Custom_Kingsisle": [
     "KingsisleInstituteMainCampus",

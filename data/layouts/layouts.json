@@ -4580,6 +4580,16 @@
       "secondary_tileset": "gTileset_General_Secondary_Custom_NaturePreserve",
       "border_filepath": "data/layouts/KingsisleInstitute_NaturePreserve/border.bin",
       "blockdata_filepath": "data/layouts/KingsisleInstitute_NaturePreserve/map.bin"
+    },
+    {
+      "id": "LAYOUT_LOCKWOOD_PLACEHOLDER",
+      "name": "LockwoodPlaceholder_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General_ORAS",
+      "secondary_tileset": "gTileset_Petalburg_ORAS",
+      "border_filepath": "data/layouts/LockwoodPlaceholder/border.bin",
+      "blockdata_filepath": "data/layouts/LockwoodPlaceholder/map.bin"
     }
   ]
 }

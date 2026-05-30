@@ -1254,6 +1254,10 @@
     {
       "id": "MAPSEC_NATURE_PRESERVE",
       "name": "NATURE PRESERVE"
+    },
+    {
+      "id": "MAPSEC_LOCKWOOD",
+      "name": "LOCKWOOD"
     }
   ]
 }

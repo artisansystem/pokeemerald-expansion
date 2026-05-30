@@ -5,6 +5,8 @@
 #include "area_ranks.h"
 #include "constants/vars.h"
 #include "region_map.h"
+#include "fieldmap.h"
+#include "regions.h"
 
 void IncreaseDawnsingerAreaRank(void)
 {
@@ -144,34 +146,26 @@ enum AreaRank PreviousRankGet(enum AreaRank current_rank)
 
 enum AreaRank CurrentAreaRankGet(void)
 {
-    enum RegionMapType regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId); 
+    enum GardenSubRegion gardenSubRegion = GetGardenSubregion(gMapHeader.regionMapSectionId); 
 
-    switch(regionMapType)
+    switch(gardenSubRegion)
         {
-            case REGION_MAP_DAWNSINGER:
+            case GARDEN_SUBREGION_LOCKWOOD:
+                return CurrentLockwoodRankGet();
+            case GARDEN_SUBREGION_SUMMERSPELL:
+                return CurrentSummerspellRankGet();
+            case GARDEN_SUBREGION_WILLOWBLOOM:
+                return CurrentWillowbloomRankGet();
+            case GARDEN_SUBREGION_TITANBLAZE:
+                return CurrentTitanblazeRankGet();
+            case GARDEN_SUBREGION_ROSESONG:
+                return CurrentRosesongRankGet();
+            case GARDEN_SUBREGION_WISEMORE:
+                return CurrentWisemoreRankGet();
+            case GARDEN_SUBREGION_AUBERON:
+                return CurrentAuberonRankGet();
+            case GARDEN_SUBREGION_DAWNSINGER:
             default:
                 return CurrentDawnsingerRankGet();
-                break;
-            case REGION_MAP_LOCKWOOD:
-                return CurrentLockwoodRankGet();
-                break;
-            case REGION_MAP_SUMMERSPELL:
-                return CurrentSummerspellRankGet();
-                break;
-            case REGION_MAP_WILLOWBLOOM:
-                return CurrentWillowbloomRankGet();
-                break;
-            case REGION_MAP_TITANBLAZE:
-                return CurrentTitanblazeRankGet();
-                break;
-            case REGION_MAP_ROSESONG:
-                return CurrentRosesongRankGet();
-                break;
-            case REGION_MAP_WISEMORE:
-                return CurrentWisemoreRankGet();
-                break;
-            case REGION_MAP_AUBERON:
-                return CurrentAuberonRankGet();
-                break;
         }
 }

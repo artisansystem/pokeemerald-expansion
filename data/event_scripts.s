@@ -1197,3 +1197,5 @@ EventScript_VsSeekerChargingDone::
 	.include "data/maps/KingsisleInstitute_HeadmastersHouse/scripts.inc"
 
 	.include "data/maps/KingsisleInstitute_NaturePreserve/scripts.inc"
+
+	.include "data/maps/LockwoodPlaceholder/scripts.inc"
