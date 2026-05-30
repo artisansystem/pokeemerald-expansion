@@ -106,6 +106,11 @@ struct Tileset
     /*0x0C*/ const u16 *metatiles;
     /*0x10*/ const u16 *metatileAttributes;
     /*0x14*/ TilesetCB callback;
+    /*0x08*/ const u16 (*palettes_summer)[16];
+    /*0x08*/ const u16 (*palettes_autumn)[16];
+    /*0x08*/ const u16 (*palettes_winter)[16];
+
+
 };
 
 struct MapLayout
@@ -344,15 +349,6 @@ enum {
     PLAYER_AVATAR_STATE_COUNT,
 };
 
-enum {
-    PLAYER_AVATAR_GFX_FIELD_MOVE,
-    PLAYER_AVATAR_GFX_FISHING,
-    PLAYER_AVATAR_GFX_WATERING,
-    PLAYER_AVATAR_GFX_DECORATING,
-    PLAYER_AVATAR_GFX_VSSEEKER,
-    PLAYER_AVATAR_GFX_COUNT,
-};
-
 #define PLAYER_AVATAR_FLAG_ON_FOOT      (1 << 0)
 #define PLAYER_AVATAR_FLAG_MACH_BIKE    (1 << 1)
 #define PLAYER_AVATAR_FLAG_ACRO_BIKE    (1 << 2)
@@ -437,6 +433,7 @@ struct PlayerAvatar
     /*0x14*/ u8 dirTimerHistory[8];
     /*0x1C*/ u8 abStartSelectTimerHistory[8];
     u16 lastSpinTile;
+    u8 appearance;
 };
 
 struct Camera

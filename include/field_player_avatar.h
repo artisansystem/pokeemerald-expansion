@@ -34,7 +34,7 @@ u8 CheckForObjectEventCollision(struct ObjectEvent *objectEvent, s16 x, s16 y, u
 u8 PlayerGetElevation(void);
 void SetPlayerAvatarTransitionFlags(u16 transitionFlags);
 void CancelPlayerForcedMovement(void);
-void InitPlayerAvatar(s16 x, s16 y, u8 direction, u8 gender);
+void InitPlayerAvatar(s16 x, s16 y, u8 direction, u8 gender, u8 appearance);
 void PlayerFreeze(void);
 void StopPlayerAvatar(void);
 void SetSpinStartFacingDir(u8 direction);
@@ -45,6 +45,7 @@ u16 GetPlayerAvatarGraphicsIdByCurrentState(void);
 void SetPlayerAvatarStateMask(u8 flags);
 u16 GetPlayerAvatarGraphicsIdByStateId(u8 state);
 u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender, u8 appearance);
+u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 gender, u8 appearance);
 u8 GetJumpSpecialMovementAction(u32);
 bool8 PartyHasMonWithSurf(void);
 bool8 IsPlayerFacingSurfableFishableWater(void);
