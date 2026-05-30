@@ -1356,8 +1356,6 @@ static void BuyMenuDrawGraphics(void)
 {
     if (IsMartTypeCoin(sMartInfo.martType))
         PrintMoneyLocal(WIN_MONEY, RIGHT_ALIGNED_X, 0, GetCoins(), COLORID_NORMAL, STR_CONV_MODE_RIGHT_ALIGN, TRUE);
-    else if (IsMartTypePoints(sMartInfo.martType))
-        PrintMoneyLocal(WIN_MONEY, RIGHT_ALIGNED_X, 0, GetBattlePoints(), COLORID_NORMAL, STR_CONV_MODE_RIGHT_ALIGN, TRUE);
     else // if (IsMartTypeMoney(sMartInfo.martType))
         PrintMoneyLocal(WIN_MONEY, RIGHT_ALIGNED_X, 0, GetMoney(&gSaveBlock1Ptr->money), COLORID_NORMAL, STR_CONV_MODE_RIGHT_ALIGN, TRUE);
 
@@ -1511,12 +1509,6 @@ static void Task_BuyMenuTryBuyingItem(u8 taskId)
         str = Shop_GetSellerMessage(SELLER_MSG_BUY_FAIL_NO_COINS);
         BuyMenuDisplayMessage(taskId, str, Task_ReturnToItemListWaitMsg);
     }
-    else if (!IsEnoughBattlePoints(sShopData->totalCost) && IsMartTypePoints(sMartInfo.martType))
-    {
-        PlaySE(SE_BOO);
-        str = Shop_GetSellerMessage(SELLER_MSG_BUY_FAIL_NO_POINTS);
-        BuyMenuDisplayMessage(taskId, str, Task_ReturnToItemListWaitMsg);
-    }
     else
     {
         if (IsMartTypeCoin(sMartInfo.martType))
@@ -1621,8 +1613,6 @@ static void Task_BuyHowManyDialogueInit(u8 taskId)
         maxQuantity = MAX_BAG_ITEM_CAPACITY;
     else if (IsMartTypeCoin(sMartInfo.martType))
         maxQuantity = GetCoins() / sShopData->totalCost;
-    else if (IsMartTypePoints(sMartInfo.martType))
-        maxQuantity = GetBattlePoints() / sShopData->totalCost;
     else // if (IsMartTypeMoney(sMartInfo.martType))
         maxQuantity = GetMoney(&gSaveBlock1Ptr->money) / sShopData->totalCost;
 
@@ -1746,13 +1736,6 @@ static void BuyMenuSubtractMoney(u8 taskId)
         PlaySE(SE_SHOP);
         FillWindowPixelBuffer(WIN_MONEY, PIXEL_FILL(0));
         PrintMoneyLocal(WIN_MONEY, RIGHT_ALIGNED_X, 0, GetCoins(), COLORID_NORMAL, STR_CONV_MODE_RIGHT_ALIGN, TRUE);
-    }
-    else if (IsMartTypePoints(sMartInfo.martType))
-    {
-        RemoveBattlePoints(sShopData->totalCost);
-        PlaySE(SE_SHOP);
-        FillWindowPixelBuffer(WIN_MONEY, PIXEL_FILL(0));
-        PrintMoneyLocal(WIN_MONEY, RIGHT_ALIGNED_X, 0, GetBattlePoints(), COLORID_NORMAL, STR_CONV_MODE_RIGHT_ALIGN, TRUE);
     }
     else //if (IsMartTypeMoney(sMartInfo.martType))
     {

@@ -1,5 +1,6 @@
 #include "constants/global.h"
 #include "constants/event_objects.h"
+#include "data.h"
 
 #if MODERN == 0
 static const u8 sText_OutfitName_UsualGreen[] = _("USUAL GREEN");

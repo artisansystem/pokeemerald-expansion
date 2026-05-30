@@ -6,6 +6,7 @@
 #include "constants/battle.h"
 #include "difficulty.h"
 #include "debug.h"
+#include "constants/outfits.h"
 
 #define MAX_TRAINER_ITEMS 4
 
