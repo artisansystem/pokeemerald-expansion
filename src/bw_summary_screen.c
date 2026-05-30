@@ -915,6 +915,7 @@ static const union AnimCmd sSpriteAnim_StatGradeEMinus[] = {
     ANIMCMD_FRAME(STAT_GRADE_EMINUS * 2, 0, FALSE, FALSE),
     ANIMCMD_END
 };
+
 static const union AnimCmd sSpriteAnim_StatGradeE[] = {
     ANIMCMD_FRAME(STAT_GRADE_E * 2, 0, FALSE, FALSE),
     ANIMCMD_END
@@ -2248,7 +2249,7 @@ static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *mon)
         sum->ribbonCount = GetMonData(mon, MON_DATA_RIBBON_COUNT);        
         sum->teraType = GetMonData(mon, MON_DATA_TERA_TYPE);
         sum->isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
-        sMonSummaryScreen->relearnableMovesNum = P_SUMMARY_SCREEN_MOVE_RELEARNER ? GetNumberOfRelearnableMoves(mon) : 0;
+        sMonSummaryScreen->relearnableMovesNum = P_SUMMARY_SCREEN_MOVE_RELEARNER ? GetNumberOfLevelUpMoves(mon) : 0;
         return TRUE;
     }
     sMonSummaryScreen->switchCounter++;
@@ -2491,7 +2492,20 @@ static void Task_HandleInput(u8 taskId)
         {
             sMonSummaryScreen->callback = CB2_InitLearnMove;
             gSpecialVar_0x8004 = sMonSummaryScreen->curMonIndex;
-            gOriginSummaryScreenPage = sMonSummaryScreen->currPageIndex;
+
+            switch(sMonSummaryScreen->currPageIndex)
+            {
+            case PSS_PAGE_BATTLE_MOVES:
+                gRelearnMode = RELEARN_MODE_PSS_PAGE_BATTLE_MOVES;
+                break;
+            case PSS_PAGE_CONTEST_MOVES:
+                gRelearnMode = RELEARN_MODE_PSS_PAGE_CONTEST_MOVES;
+                break;
+            default:
+                gRelearnMode = RELEARN_MODE_NONE; // should never happen in practice
+                break;
+            }
+            
             StopPokemonAnimations();
             PlaySE(SE_SELECT);
             BeginCloseSummaryScreen(taskId);
@@ -4668,7 +4682,7 @@ static void PrintContestMoveDescription(u8 moveSlot)
     if (move != MOVE_NONE)
     {
         windowId = AddWindowFromTemplateList(sPageMovesTemplate, PSS_DATA_WINDOW_MOVE_DESCRIPTION);
-        FormatTextByWidth(desc, 119, FONT_BW_SUMMARY_SCREEN, gContestEffectDescriptionPointers[gMovesInfo[move].contestEffect], GetFontAttribute(FONT_BW_SUMMARY_SCREEN, FONTATTR_LETTER_SPACING));
+        FormatTextByWidth(desc, 119, FONT_BW_SUMMARY_SCREEN, gContestEffects[gMovesInfo[move].contestEffect].description, GetFontAttribute(FONT_BW_SUMMARY_SCREEN, FONTATTR_LETTER_SPACING));
         PrintTextOnWindow_BW_Font(windowId, desc, 2, 0, 0, 0);
     }
 }
@@ -4710,12 +4724,12 @@ static void PrintMoveDetails(u16 move)
             HandleAppealJamTilemap(move);
             if (BW_SUMMARY_AUTO_FORMAT_MOVE_DESCRIPTIONS)
             {
-                FormatTextByWidth(desc, 119, FONT_BW_SUMMARY_SCREEN, gContestEffectDescriptionPointers[gMovesInfo[move].contestEffect], GetFontAttribute(FONT_BW_SUMMARY_SCREEN, FONTATTR_LETTER_SPACING));
+                FormatTextByWidth(desc, 119, FONT_BW_SUMMARY_SCREEN, gContestEffects[gMovesInfo[move].contestEffect].description, GetFontAttribute(FONT_BW_SUMMARY_SCREEN, FONTATTR_LETTER_SPACING));
                 PrintTextOnWindow_BW_Font(windowId, desc, 2, 0, 0, 0);
             }
             else
             {
-                PrintTextOnWindow_BW_Font(windowId, gContestEffectDescriptionPointers[gMovesInfo[move].contestEffect], 2, 0, 0, 0);
+                PrintTextOnWindow_BW_Font(windowId, gContestEffects[gMovesInfo[move].contestEffect].description, 2, 0, 0, 0);
             }
         }
         PutWindowTilemap(windowId);
