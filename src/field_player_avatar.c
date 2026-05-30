@@ -1545,6 +1545,11 @@ u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 ap
     return sPlayerAvatarGfxIds[state][appearance][gender];
 }
 
+u8 GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(u8 state, u8 linkId, u8 gender, u8 appearance);
+{
+    
+}
+
 u16 GetFRLGAvatarGraphicsIdByGender(u8 gender)
 {
     return sFRLGAvatarGfxIds[gender];
