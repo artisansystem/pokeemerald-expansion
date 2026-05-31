@@ -5964,6 +5964,7 @@ u32 GetDynamicMoveType(struct Pokemon *mon, u32 move, u32 battler, enum MonState
             switch (gWeatherPtr->currWeather)
             {
             case WEATHER_DROUGHT:
+            case WEATHER_HARSH_SUN:
                 if (holdEffect != HOLD_EFFECT_UTILITY_UMBRELLA)
                     return TYPE_FIRE;
                 break;

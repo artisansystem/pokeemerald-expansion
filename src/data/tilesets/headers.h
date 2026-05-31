@@ -1461,6 +1461,9 @@ const struct Tileset gTileset_General_Primary_Custom_v2 =
     .metatiles = gMetatiles_General_Primary_Custom_v2,
     .metatileAttributes = gMetatileAttributes_General_Primary_Custom_v2,
     .callback = NULL,
+    .palettes_summer = gTilesetPalettes_General_Primary_Custom_v2_Summer,
+    .palettes_autumn = gTilesetPalettes_General_Primary_Custom_v2_Autumn,
+    .palettes_winter = gTilesetPalettes_General_Primary_Custom_v2_Winter,
 };
 
 const struct Tileset gTileset_General_Secondary_Custom_V2 =
@@ -1544,6 +1547,9 @@ const struct Tileset gTileset_General_Secondary_Custom_NaturePreserve =
     .metatiles = gMetatiles_General_Secondary_Custom_NaturePreserve,
     .metatileAttributes = gMetatileAttributes_General_Secondary_Custom_NaturePreserve,
     .callback = NULL,
+    .palettes_summer = gTilesetPalettes_General_Secondary_Custom_NaturePreserve_Summer,
+    .palettes_autumn = gTilesetPalettes_General_Secondary_Custom_NaturePreserve_Autumn,
+    .palettes_winter = gTilesetPalettes_General_Secondary_Custom_NaturePreserve_Winter,
 };
 
 const struct Tileset gTileset_Primary_Seasonal =

@@ -2455,6 +2455,34 @@ static void UpdateBubbleSprite(struct Sprite *sprite)
 #undef tScrollXDir
 #undef tCounter
 
+
+// HARSH SUN ------------------------------------------------------------
+
+void HarshSun_InitVars(void)
+{
+    gWeatherPtr->targetColorMapIndex = 0;
+    gWeatherPtr->colorMapStepDelay = 20;
+    Weather_SetBlendCoeffs(8, BASE_SHADOW_INTENSITY); // preserve shadow darkness
+    gWeatherPtr->noShadows = FALSE;
+}
+
+void HarshSun_InitAll(void)
+{
+    HarshSun_InitVars();
+}
+
+void HarshSun_Main(void)
+{
+    
+}
+
+bool8 HarshSun_Finish(void)
+{
+    return FALSE;
+}
+
+
+
 //------------------------------------------------------------------------------
 
 #define tState         data[0]
@@ -2632,6 +2660,7 @@ static u8 TranslateWeatherNum(u8 weather)
     case WEATHER_ABNORMAL:           return WEATHER_ABNORMAL;
     case WEATHER_ROUTE119_CYCLE:     return sWeatherCycleRoute119[gSaveBlock1Ptr->weatherCycleStage];
     case WEATHER_ROUTE123_CYCLE:     return sWeatherCycleRoute123[gSaveBlock1Ptr->weatherCycleStage];
+    case WEATHER_HARSH_SUN:          return WEATHER_HARSH_SUN;
     default:                         return WEATHER_NONE;
     }
 }

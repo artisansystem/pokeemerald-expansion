@@ -224,6 +224,10 @@ void Bubbles_InitVars(void);
 void Bubbles_Main(void);
 void Bubbles_InitAll(void);
 bool8 Bubbles_Finish(void);
+void HarshSun_InitVars(void);
+void HarshSun_InitAll(void);
+void HarshSun_Main(void);
+bool8 HarshSun_Finish(void);
 
 u8 GetSavedWeather(void);
 void SetSavedWeather(u32 weather);
