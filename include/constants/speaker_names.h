@@ -5,6 +5,10 @@ enum SpeakerNames {
     SP_NAME_NONE = 0,
     SP_NAME_MOM,
     SP_NAME_PLAYER,
+    SP_NAME_STUDENT,
+    SP_NAME_MERCURY,
+    SP_NAME_URIEL,
+    SP_NAME_NADIA,
     SP_NAME_COUNT
 };
 

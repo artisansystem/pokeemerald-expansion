@@ -1,6 +1,7 @@
 #include "global.h"
 #include "main.h"
 #include "bike.h"
+#include "data.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_camera.h"
@@ -8,6 +9,7 @@
 #include "field_effect_helpers.h"
 #include "field_screen_effect.h"
 #include "field_player_avatar.h"
+#include "field_control_avatar.h"
 #include "fieldmap.h"
 #include "follower_npc.h"
 #include "menu.h"
@@ -26,7 +28,6 @@
 #include "tv.h"
 #include "wild_encounter.h"
 #include "link.h"
-#include "data/outfit_tables.h"
 #include "constants/abilities.h"
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
@@ -36,7 +37,6 @@
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/trainer_types.h"
-
 
 #define NUM_FORCED_MOVEMENTS 18
 #define NUM_ACRO_BIKE_COLLISIONS 5
@@ -1545,7 +1545,7 @@ u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, u8 gender, u8 appearan
 
 u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, u8 appearance, u8 gender)
 {
-    return gOutfits[outfit].avatarGfxIds[state][appearance][gender];
+    return gOutfits[outfit].avatarGfxIds[gender][appearance][state];
 }
 
 u8 GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(u8 state, u8 linkId, u8 gender, u8 appearance)

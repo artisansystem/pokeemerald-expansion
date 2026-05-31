@@ -48,7 +48,7 @@ AcademySign::
 
 Kingsisle_MagicGuy::
 # 32 "data/maps/KingsisleInstitute/scripts.pory"
-	speakername CommonName_Text_Student
+	setspeaker SP_NAME_STUDENT
 # 33 "data/maps/KingsisleInstitute/scripts.pory"
 	msgbox MagicIsAmazing, MSGBOX_NPC
 	return
@@ -86,7 +86,7 @@ KingsisleInstitute_EventScript_GoInsideWithMercury::
 # 57 "data/maps/KingsisleInstitute/scripts.pory"
 	waitmovement 0
 # 58 "data/maps/KingsisleInstitute/scripts.pory"
-	speakername UniqueName_Text_Mercury
+	setspeaker SP_NAME_MERCURY
 # 59 "data/maps/KingsisleInstitute/scripts.pory"
 	msgbox KingsisleInstitute_Text_YourNewHome, MSGBOX_DEFAULT
 # 60 "data/maps/KingsisleInstitute/scripts.pory"
