@@ -317,22 +317,12 @@ void ItemUseOutOfBattle_Bike(u8 taskId)
 
 static void ItemUseOnFieldCB_Bike(u8 taskId)
 {
-    gUnusedBikeCameraAheadPanback = FALSE;
-
-    gSaveBlock2Ptr->playerBike = MACH_BIKE;
-    if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_BIKE)
-    {
-        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_ON_FOOT);
-        Overworld_ClearSavedMusic();
-        Overworld_PlaySpecialMapMusic();
-    }
-    else
-    {
-        gSaveBlock2Ptr->playerBike = GetItemSecondaryId(gSpecialVar_ItemId);
-        SetPlayerAvatarTransitionFlags(PLAYER_AVATAR_FLAG_BIKE);
-        Overworld_SetSavedMusic(MUS_CYCLING);
-        Overworld_ChangeMusicTo(MUS_CYCLING);
-    }
+    if (GetItemSecondaryId(gSpecialVar_ItemId) == STANDARD_BIKE)
+        GetOnOffBike(PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE);
+    else if (GetItemSecondaryId(gSpecialVar_ItemId) == MACH_BIKE)
+        GetOnOffBike(PLAYER_AVATAR_FLAG_MACH_BIKE);
+    else // ACRO_BIKE
+        GetOnOffBike(PLAYER_AVATAR_FLAG_ACRO_BIKE);
 
     FollowerNPC_HandleBike();
     ScriptUnfreezeObjectEvents();

@@ -1629,8 +1629,8 @@ void CB2_OpenPokedex(void)
         sPokedexView->selectedScreen = AREA_SCREEN;
         if (!IsNationalPokedexEnabled())
         {
-            sPokedexView->seenCount = GetHoennPokedexCount(FLAG_GET_SEEN);
-            sPokedexView->ownCount = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+            sPokedexView->seenCount = GetRegionalPokedexCount(FLAG_GET_SEEN);
+            sPokedexView->ownCount = GetRegionalPokedexCount(FLAG_GET_CAUGHT);
         }
         else
         {
@@ -2204,7 +2204,7 @@ static void CreatePokedexList(u8 dexMode, u8 order)
         }
         else
         {
-            temp_dexCount = NATIONAL_DEX_COUNT;
+            temp_dexCount = DAWNSINGER_DEX_COUNT;
             temp_isDawnsingerDex = TRUE;
         }
         break;
@@ -2217,7 +2217,7 @@ static void CreatePokedexList(u8 dexMode, u8 order)
         {
             for (i = 0; i < temp_dexCount; i++)
             {
-                temp_dexNum = HoennToNationalOrder(i + 1);
+                temp_dexNum = RegionalToNationalOrder(i + 1);
                 sPokedexView->pokedexList[i].dexNum = temp_dexNum;
                 sPokedexView->pokedexList[i].seen = GetSetPokedexFlag(temp_dexNum, FLAG_GET_SEEN);
                 sPokedexView->pokedexList[i].owned = GetSetPokedexFlag(temp_dexNum, FLAG_GET_CAUGHT);
@@ -2435,7 +2435,7 @@ static void CreateMonDexNum(u16 entryNum, u8 left, u8 top, u16 unused)
 
     dexNum = sPokedexView->pokedexList[entryNum].dexNum;
     if (sPokedexView->dexMode == DEX_MODE_DAWNSINGER)
-        dexNum = NationalToHoennOrder(dexNum);
+        dexNum = NationalToDawnsingerOrder(dexNum);
     memcpy(text, sText_No0000, ARRAY_COUNT(sText_No0000));
     if (NATIONAL_DEX_COUNT > 999 && sPokedexView->dexMode != DEX_MODE_DAWNSINGER)
     {
@@ -2915,7 +2915,7 @@ static void CreateInterfaceSprites(u8 page)
             StartSpriteAnim(&gSprites[spriteId], 1);
 
             // Hoenn seen value - 100s
-            seenOwnedCount = GetHoennPokedexCount(FLAG_GET_SEEN);
+            seenOwnedCount = GetRegionalPokedexCount(FLAG_GET_SEEN);
             drawNextDigit = FALSE;
             spriteId = CreateSprite(&sNationalDexSeenOwnNumberSpriteTemplate, counterX100s, 45, 1);
             digitNum = seenOwnedCount / 100;
@@ -2972,7 +2972,7 @@ static void CreateInterfaceSprites(u8 page)
             digitNum = ((sPokedexView->seenCount % 1000) % 100) % 10;
             StartSpriteAnim(&gSprites[spriteId], digitNum);
 
-            seenOwnedCount = GetHoennPokedexCount(FLAG_GET_CAUGHT);
+            seenOwnedCount = GetRegionalPokedexCount(FLAG_GET_CAUGHT);
 
             // Hoenn owned value - 100s
             drawNextDigit = FALSE;
@@ -4190,7 +4190,7 @@ static void PrintMonInfo(u32 num, u32 value, u32 owned, u32 newEntry)
     if (newEntry)
         PrintInfoScreenText(gText_PokedexRegistration, GetStringCenterAlignXOffset(FONT_NORMAL, gText_PokedexRegistration, DISPLAY_WIDTH), 0);
     if (value == 0)
-        value = NationalToHoennOrder(num);
+        value = NationalToRegionalOrder(num);
     else
         value = num;
 
@@ -4579,6 +4579,13 @@ u16 GetUndergroundPokedexCount(u8 caseID)
     return count;
 }
 
+u32 GetRegionalPokedexCount(u8 caseID)
+{
+    if (IS_FRLG)
+        return GetKantoPokedexCount(caseID);
+    return GetHoennPokedexCount(caseID);
+}
+
 u16 GetHoennPokedexCount(u8 caseID)
 {
     u16 count = 0;
@@ -4646,6 +4653,13 @@ u16 GetDawnsingerPokedexCount(u8 caseID)
 
 }
 
+bool16 HasAllRegionalMons(void)
+{
+    if (IS_FRLG)
+        return HasAllKantoMons();
+    return HasAllHoennMons();
+}
+
 bool16 HasAllHoennMons(void)
 {
     u32 i, j;
@@ -4659,18 +4673,19 @@ bool16 HasAllHoennMons(void)
     return TRUE;
 }
 
-// bool8 HasAllKantoMons(void)
-// {
-//     u32 i;
+bool16 HasAllKantoMons(void)
+{
+    u32 i, j;
 
-//     // -1 excludes Mew
-//     for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
-//     {
-//         if (!GetSetPokedexFlag(i + 1, FLAG_GET_CAUGHT))
-//             return FALSE;
-//     }
-//     return TRUE;
-// }
+    // -1 excludes Mew
+    for (i = 0; i < KANTO_DEX_COUNT - 1; i++)
+    {
+        j = KantoToNationalOrder(i + 1);
+        if (!(gSpeciesInfo[j].isMythical && !gSpeciesInfo[j].dexForceRequired) && !GetSetPokedexFlag(j, FLAG_GET_CAUGHT))
+            return FALSE;
+    }
+    return TRUE;
+}
 
 bool16 HasAllMons(void)
 {
