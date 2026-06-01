@@ -50,9 +50,7 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon::
 	msgbox FallarborTown_MoveRelearnersHouse_Text_TutorWhichMon, MSGBOX_DEFAULT
 # 26 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
 	setmoverelearnerstate MOVE_RELEARNER_LEVEL_UP_MOVES @ Specifically supposed to teach level up moves
-# 27 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
-	special ChooseMonForMoveRelearner
-# 28 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
+	chooseboxmon SELECT_PC_MON_MOVE_RELEARNER
 	waitstate
 # 29 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
 	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, FallarborTown_MoveRelearnersHouse_EventScript_ComeBackWithHeartScale
@@ -60,9 +58,8 @@ FallarborTown_MoveRelearnersHouse_EventScript_ChooseMon::
 	special IsSelectedMonEgg
 # 31 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
 	goto_if_eq VAR_RESULT, TRUE, FallarborTown_MoveRelearnersHouse_EventScript_CantTeachEgg
-# 32 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
-	goto_if_eq VAR_0x8005, 0, FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon
-# 33 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
+	special HasMovesToRelearn
+	goto_if_eq VAR_RESULT, FALSE, FallarborTown_MoveRelearnersHouse_EventScript_NoMoveToTeachMon
 	goto FallarborTown_MoveRelearnersHouse_EventScript_ChooseMove
 # 34 "data/maps/FallarborTown_MoveRelearnersHouse/scripts.pory"
 	end

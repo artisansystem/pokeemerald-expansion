@@ -14,49 +14,7 @@ PacifidlogTown_House3_EventScript_Trader::
 	faceplayer
 # 8 "data/maps/PacifidlogTown_House3/scripts.pory"
 	goto_if_set FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED, PacifidlogTown_House3_EventScript_TradeCompleted
-# 9 "data/maps/PacifidlogTown_House3/scripts.pory"
-	setvar VAR_0x8008, INGAME_TRADE_HORSEA
-# 10 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x8004, VAR_0x8008
-# 11 "data/maps/PacifidlogTown_House3/scripts.pory"
-	specialvar VAR_RESULT, GetInGameTradeSpeciesInfo
-# 12 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x8009, VAR_RESULT
-# 13 "data/maps/PacifidlogTown_House3/scripts.pory"
-	msgbox PacifidlogTown_House3_Text_WillingToTradeIt, MSGBOX_YESNO
-# 14 "data/maps/PacifidlogTown_House3/scripts.pory"
-	goto_if_eq VAR_RESULT, NO, PacifidlogTown_House3_EventScript_DeclineTrade
-# 15 "data/maps/PacifidlogTown_House3/scripts.pory"
-	special ChoosePartyMon
-# 16 "data/maps/PacifidlogTown_House3/scripts.pory"
-	waitstate
-# 17 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x800A, VAR_0x8004
-# 18 "data/maps/PacifidlogTown_House3/scripts.pory"
-	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, PacifidlogTown_House3_EventScript_DeclineTrade
-# 19 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x8005, VAR_0x800A
-# 20 "data/maps/PacifidlogTown_House3/scripts.pory"
-	specialvar VAR_RESULT, GetTradeSpecies
-# 21 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x800B, VAR_RESULT
-# 22 "data/maps/PacifidlogTown_House3/scripts.pory"
-	goto_if_ne VAR_RESULT, VAR_0x8009, PacifidlogTown_House3_EventScript_NotRequestedMon
-# 23 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x8004, VAR_0x8008
-# 24 "data/maps/PacifidlogTown_House3/scripts.pory"
-	copyvar VAR_0x8005, VAR_0x800A
-# 25 "data/maps/PacifidlogTown_House3/scripts.pory"
-	special CreateInGameTradePokemon
-# 26 "data/maps/PacifidlogTown_House3/scripts.pory"
-	special DoInGameTradeScene
-# 27 "data/maps/PacifidlogTown_House3/scripts.pory"
-	waitstate
-# 28 "data/maps/PacifidlogTown_House3/scripts.pory"
-	bufferspeciesname STR_VAR_1, VAR_0x8009
-# 29 "data/maps/PacifidlogTown_House3/scripts.pory"
-	msgbox PacifidlogTown_House3_Text_ItsSubtlyDifferentThankYou, MSGBOX_DEFAULT
-# 30 "data/maps/PacifidlogTown_House3/scripts.pory"
+	ingame_trade INGAME_TRADE_HORSEA, PacifidlogTown_House3_Text_WillingToTradeIt, PacifidlogTown_House3_EventScript_DeclineTrade, PacifidlogTown_House3_EventScript_NotRequestedMon, PacifidlogTown_House3_Text_ItsSubtlyDifferentThankYou
 	setflag FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED
 # 31 "data/maps/PacifidlogTown_House3/scripts.pory"
 	release

@@ -6,7 +6,11 @@ BattleFrontier_ExchangeServiceCorner_MapScripts::
 	.byte 0
 # 4 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
-# 5 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+.macro setitemandprice item:req, price:req
+	setvar VAR_0x8009, \item
+	setvar VAR_0x8008, \price
+.endm
+
 BattleFrontier_ExchangeServiceCorner_EventScript_ClerkWelcome::
 # 6 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_WelcomePleaseChoosePrize, MSGBOX_DEFAULT
@@ -194,6 +198,7 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChooseDecor1::
 	end
 # 98 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 99 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_KissPoster::
 # 100 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -205,11 +210,18 @@ BattleFrontier_ExchangeServiceCorner_EventScript_KissPoster::
 # 103 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	setvar VAR_0x8009, DECOR_KISS_POSTER
 # 104 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1::
+	bufferdecorationname STR_VAR_1, VAR_0x8009
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmPurchase, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
 # 105 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 106 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 107 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_KissCushion::
 # 108 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -225,9 +237,19 @@ BattleFrontier_ExchangeServiceCorner_EventScript_KissCushion::
 # 113 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 114 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_KissPoster::
+	setitemandprice DECOR_KISS_POSTER, 16
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+
+BattleFrontier_ExchangeServiceCorner_EventScript_KissCushion::
+	setitemandprice DECOR_KISS_CUSHION, 32
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 115 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_SmoochumDoll::
+<<<<<<< HEAD
 # 116 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmSmoochumDoll, MSGBOX_YESNO
 # 117 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -241,9 +263,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_SmoochumDoll::
 # 121 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 122 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_SMOOCHUM_DOLL, 32
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 123 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_TogepiDoll::
+<<<<<<< HEAD
 # 124 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmTogepiDoll, MSGBOX_YESNO
 # 125 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -257,9 +284,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_TogepiDoll::
 # 129 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 130 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_TOGEPI_DOLL, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 131 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_MeowthDoll::
+<<<<<<< HEAD
 # 132 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmMeowthDoll, MSGBOX_YESNO
 # 133 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -273,9 +305,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_MeowthDoll::
 # 137 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 138 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_MEOWTH_DOLL, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 139 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_ClefairyDoll::
+<<<<<<< HEAD
 # 140 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmClefairyDoll, MSGBOX_YESNO
 # 141 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -289,9 +326,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ClefairyDoll::
 # 145 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 146 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_CLEFAIRY_DOLL, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 147 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_DittoDoll::
+<<<<<<< HEAD
 # 148 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmDittoDoll, MSGBOX_YESNO
 # 149 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -305,9 +347,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_DittoDoll::
 # 153 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 154 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_DITTO_DOLL, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 155 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_CyndaquilDoll::
+<<<<<<< HEAD
 # 156 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmCyndaquilDoll, MSGBOX_YESNO
 # 157 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -321,9 +368,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_CyndaquilDoll::
 # 161 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 162 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_CYNDAQUIL_DOLL, 80
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 163 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_ChikoritaDoll::
+<<<<<<< HEAD
 # 164 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmChikoritaDoll, MSGBOX_YESNO
 # 165 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -337,9 +389,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChikoritaDoll::
 # 169 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 170 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_CHIKORITA_DOLL, 80
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 171 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_TotodileDoll::
+<<<<<<< HEAD
 # 172 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmTotodileDoll, MSGBOX_YESNO
 # 173 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -353,6 +410,10 @@ BattleFrontier_ExchangeServiceCorner_EventScript_TotodileDoll::
 # 177 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 178 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_TOTODILE_DOLL, 80
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor1
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 179 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_DecorClerk2::
@@ -402,6 +463,7 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChooseDecor2::
 	end
 # 202 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 203 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_LaprasDoll::
 # 204 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -413,11 +475,18 @@ BattleFrontier_ExchangeServiceCorner_EventScript_LaprasDoll::
 # 207 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	setvar VAR_0x8009, DECOR_LAPRAS_DOLL
 # 208 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor2::
+	bufferdecorationname STR_VAR_1, VAR_0x8009
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmPurchase, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseDecor2
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
 # 209 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 210 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 211 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_SnorlaxDoll::
 # 212 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -433,9 +502,19 @@ BattleFrontier_ExchangeServiceCorner_EventScript_SnorlaxDoll::
 # 217 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 218 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_LaprasDoll::
+	setitemandprice DECOR_LAPRAS_DOLL, 128
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor2
+
+BattleFrontier_ExchangeServiceCorner_EventScript_SnorlaxDoll::
+	setitemandprice DECOR_SNORLAX_DOLL, 128
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor2
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 219 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_VenusaurDoll::
+<<<<<<< HEAD
 # 220 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmVenusaurDoll, MSGBOX_YESNO
 # 221 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -449,9 +528,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_VenusaurDoll::
 # 225 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 226 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_VENUSAUR_DOLL, 256
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor2
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 227 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_CharizardDoll::
+<<<<<<< HEAD
 # 228 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmCharizardDoll, MSGBOX_YESNO
 # 229 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -465,9 +549,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_CharizardDoll::
 # 233 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 234 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_CHARIZARD_DOLL, 256
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor2
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 235 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_BlastoiseDoll::
+<<<<<<< HEAD
 # 236 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmBlastoiseDoll, MSGBOX_YESNO
 # 237 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -481,6 +570,10 @@ BattleFrontier_ExchangeServiceCorner_EventScript_BlastoiseDoll::
 # 241 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 242 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice DECOR_BLASTOISE_DOLL, 256
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseDecor2
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 243 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_VitaminClerk::
@@ -532,6 +625,7 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChooseVitamin::
 	end
 # 267 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 268 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Protein::
 # 269 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -543,11 +637,18 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Protein::
 # 272 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	setvar VAR_0x8009, ITEM_PROTEIN
 # 273 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin::
+	bufferitemname STR_VAR_1, VAR_0x8009
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmPurchase, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseVitamin
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
 # 274 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 275 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 276 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Calcium::
 # 277 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -563,9 +664,19 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Calcium::
 # 282 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 283 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_Protein::
+	setitemandprice ITEM_PROTEIN, 1
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin
+
+BattleFrontier_ExchangeServiceCorner_EventScript_Calcium::
+	setitemandprice ITEM_CALCIUM, 1
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 284 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Iron::
+<<<<<<< HEAD
 # 285 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmIron, MSGBOX_YESNO
 # 286 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -579,9 +690,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Iron::
 # 290 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 291 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_IRON, 1
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 292 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Zinc::
+<<<<<<< HEAD
 # 293 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmZinc, MSGBOX_YESNO
 # 294 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -595,9 +711,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Zinc::
 # 298 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 299 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_ZINC, 1
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 300 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Carbos::
+<<<<<<< HEAD
 # 301 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmCarbos, MSGBOX_YESNO
 # 302 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -611,9 +732,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Carbos::
 # 306 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 307 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_CARBOS, 1
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 308 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_HPUp::
+<<<<<<< HEAD
 # 309 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmHPUp, MSGBOX_YESNO
 # 310 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -627,6 +753,11 @@ BattleFrontier_ExchangeServiceCorner_EventScript_HPUp::
 # 314 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 315 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_HP_UP, 1
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseVitamin
+
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 316 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_HoldItemClerk::
@@ -684,6 +815,7 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem::
 	end
 # 343 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 344 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Leftovers::
 # 345 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -695,11 +827,18 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Leftovers::
 # 348 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	setvar VAR_0x8009, ITEM_LEFTOVERS
 # 349 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem::
+	bufferitemname STR_VAR_1, VAR_0x8009
+	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmPurchase, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
 # 350 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 351 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 352 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_WhiteHerb::
 # 353 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -715,9 +854,19 @@ BattleFrontier_ExchangeServiceCorner_EventScript_WhiteHerb::
 # 358 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 359 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_EventScript_Leftovers::
+	setitemandprice ITEM_LEFTOVERS, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+
+BattleFrontier_ExchangeServiceCorner_EventScript_WhiteHerb::
+	setitemandprice ITEM_WHITE_HERB, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 360 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_QuickClaw::
+<<<<<<< HEAD
 # 361 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmQuickClaw, MSGBOX_YESNO
 # 362 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -731,9 +880,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_QuickClaw::
 # 366 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 367 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_QUICK_CLAW, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 368 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_MentalHerb::
+<<<<<<< HEAD
 # 369 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmMentalHerb, MSGBOX_YESNO
 # 370 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -747,9 +901,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_MentalHerb::
 # 374 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 375 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_MENTAL_HERB, 48
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 376 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Brightpowder::
+<<<<<<< HEAD
 # 377 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmBrightpowder, MSGBOX_YESNO
 # 378 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -763,9 +922,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_Brightpowder::
 # 382 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 383 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_BRIGHT_POWDER, 64
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 384 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_ChoiceBand::
+<<<<<<< HEAD
 # 385 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmChoiceBand, MSGBOX_YESNO
 # 386 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -779,9 +943,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChoiceBand::
 # 390 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 391 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_CHOICE_BAND, 64
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 392 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_KingsRock::
+<<<<<<< HEAD
 # 393 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmKingsRock, MSGBOX_YESNO
 # 394 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -795,9 +964,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_KingsRock::
 # 398 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 399 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_KINGS_ROCK, 64
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 400 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_FocusBand::
+<<<<<<< HEAD
 # 401 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmFocusBand, MSGBOX_YESNO
 # 402 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -811,9 +985,14 @@ BattleFrontier_ExchangeServiceCorner_EventScript_FocusBand::
 # 406 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 407 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_FOCUS_BAND, 64
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 408 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_ScopeLens::
+<<<<<<< HEAD
 # 409 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmScopeLens, MSGBOX_YESNO
 # 410 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -827,6 +1006,10 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ScopeLens::
 # 414 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	end
 # 415 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+	setitemandprice ITEM_SCOPE_LENS, 64
+	goto BattleFrontier_ExchangeServiceCorner_EventScript_PurchaseHoldItem
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 
 # 416 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_EventScript_Man::
@@ -894,6 +1077,7 @@ BattleFrontier_ExchangeServiceCorner_Text_PleaseChoosePrize:
 	.string "Please choose a prize from this list.$"
 # 448 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 
+<<<<<<< HEAD
 # 449 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 BattleFrontier_ExchangeServiceCorner_Text_ConfirmKissPoster:
 # 450 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
@@ -1131,6 +1315,10 @@ BattleFrontier_ExchangeServiceCorner_Text_ConfirmLeftovers:
 # 566 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 	.string "You've chosen the LEFTOVERS.\n"
 # 567 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
+=======
+BattleFrontier_ExchangeServiceCorner_Text_ConfirmPurchase:
+	.string "You've chosen the {STR_VAR_1}.\n"
+>>>>>>> e80ae569039786564381723fca22aac07afc3503
 	.string "Is that correct?$"
 # 568 "data/maps/BattleFrontier_ExchangeServiceCorner/scripts.pory"
 

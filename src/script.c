@@ -8,10 +8,13 @@
 #include "constants/event_objects.h"
 #include "constants/flags.h"
 #include "constants/map_scripts.h"
+#include "constants/script_commands.h"
 #include "field_message_box.h"
 #include "ui_birch_case.h"
 #include "task.h"
 #include "field_weather.h"
+
+#include "dexnav.h"
 
 #define RAM_SCRIPT_MAGIC 51
 
@@ -165,7 +168,11 @@ void ScriptJump(struct ScriptContext *ctx, const u8 *ptr)
 
 void ScriptCall(struct ScriptContext *ctx, const u8 *ptr)
 {
-    ScriptPush(ctx, ctx->scriptPtr);
+    bool32 failed = ScriptPush(ctx, ctx->scriptPtr);
+    assertf(!failed, "could not push %p", ptr)
+    {
+        return;
+    }
     ctx->scriptPtr = ptr;
 }
 
@@ -178,6 +185,13 @@ u16 ScriptReadHalfword(struct ScriptContext *ctx)
 {
     u16 value = *(ctx->scriptPtr++);
     value |= *(ctx->scriptPtr++) << 8;
+    return value;
+}
+
+u16 ScriptPeekHalfword(struct ScriptContext *ctx)
+{
+    u16 value = *(ctx->scriptPtr);
+    value |= *(ctx->scriptPtr + 1) << 8;
     return value;
 }
 
@@ -202,6 +216,7 @@ u32 ScriptPeekWord(struct ScriptContext *ctx)
 void LockPlayerFieldControls(void)
 {
     sLockFieldControls = TRUE;
+    EndDexNavSearch();
 }
 
 void UnlockPlayerFieldControls(void)
@@ -645,4 +660,29 @@ void StartNewPokeballCaseUI(void)
 {
     FadeScreen(FADE_TO_BLACK, 0);
     CreateTask(Task_OpenBirchCase, 0);
+}
+
+bool32 Script_MatchesCallNative(const u8 *script, void *funcPtr, bool32 requestEffects)
+{
+    if (script[0] != SCR_OP_CALLNATIVE)
+        return FALSE;
+    u32 callnativeFunc = (((((script[4] << 8) + script[3]) << 8) + script[2]) << 8) + script[1];
+    u32 targetFunc = (u32)funcPtr;
+    if (requestEffects)
+        targetFunc |= 0xA000000;
+    if (callnativeFunc == targetFunc)
+        return TRUE;
+    return FALSE;
+}
+
+bool32 Script_MatchesSpecial(const u8 *script, void *funcPtr)
+{
+    if (script[0] != SCR_OP_SPECIAL)
+        return FALSE;
+    typedef u16 (*SpecialFunc)(void);
+    extern const SpecialFunc gSpecials[];
+    SpecialFunc specialFunc = gSpecials[(script[2] << 8) + script[1]];
+    if ((u32)specialFunc == ((u32)funcPtr))
+        return TRUE;
+    return FALSE;
 }

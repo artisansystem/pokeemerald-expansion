@@ -894,15 +894,8 @@ BattleFrontier_BattleDomeBattleRoom_EventScript_DoDomeBattle::
 	frontier_set FRONTIER_DATA_RECORD_DISABLED, FALSE
 # 448 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
 	special HealPlayerParty
-# 449 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_DOME
-# 450 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
-	setvar VAR_0x8005, 0
-# 451 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
 	setvar VAR_TEMP_9, 1
-# 452 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
-	special DoSpecialTrainerBattle
-# 453 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_DOME
 	waitstate
 # 454 "data/maps/BattleFrontier_BattleDomeBattleRoom/scripts.pory"
 	setvar VAR_TEMP_9, 0

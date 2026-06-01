@@ -732,13 +732,7 @@ BattleFrontier_BattleArenaBattleRoom_EventScript_DoArenaBattle::
 	frontier_set FRONTIER_DATA_RECORD_DISABLED, FALSE
 # 367 "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.pory"
 	special HealPlayerParty
-# 368 "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_ARENA
-# 369 "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.pory"
-	setvar VAR_0x8005, 0
-# 370 "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.pory"
-	special DoSpecialTrainerBattle
-# 371 "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_ARENA
 	waitstate
 # 372 "data/maps/BattleFrontier_BattleArenaBattleRoom/scripts.pory"
 	frontier_restorehelditems

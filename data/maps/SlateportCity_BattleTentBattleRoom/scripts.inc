@@ -118,13 +118,7 @@ SlateportCity_BattleTentBattleRoom_EventScript_EnterRoom::
 	closemessage
 # 60 "data/maps/SlateportCity_BattleTentBattleRoom/scripts.pory"
 	special HealPlayerParty
-# 61 "data/maps/SlateportCity_BattleTentBattleRoom/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_FACTORY
-# 62 "data/maps/SlateportCity_BattleTentBattleRoom/scripts.pory"
-	setvar VAR_0x8005, 0
-# 63 "data/maps/SlateportCity_BattleTentBattleRoom/scripts.pory"
-	special DoSpecialTrainerBattle
-# 64 "data/maps/SlateportCity_BattleTentBattleRoom/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_FACTORY
 	waitstate
 # 65 "data/maps/SlateportCity_BattleTentBattleRoom/scripts.pory"
 	switch VAR_RESULT

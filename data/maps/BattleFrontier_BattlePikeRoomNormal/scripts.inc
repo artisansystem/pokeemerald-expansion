@@ -66,13 +66,7 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_EnterSingleBattleRoom::
 	closemessage
 # 34 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	releaseall
-# 35 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_PIKE_SINGLE
-# 36 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8005, 0
-# 37 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	special DoSpecialTrainerBattle
-# 38 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_PIKE_SINGLE
 	waitstate
 # 39 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	switch VAR_RESULT
@@ -126,13 +120,7 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_EnterHardBattleRoom::
 	closemessage
 # 64 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	releaseall
-# 65 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_PIKE_SINGLE
-# 66 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8005, 0
-# 67 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	special DoSpecialTrainerBattle
-# 68 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_PIKE_SINGLE
 	waitstate
 # 69 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	switch VAR_RESULT
@@ -508,13 +496,7 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_EnterDoubleBattleRoom::
 	msgbox gStringVar4, MSGBOX_DEFAULT
 # 255 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	closemessage
-# 256 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_PIKE_DOUBLE
-# 257 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8005, 0
-# 258 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	special DoSpecialTrainerBattle
-# 259 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_PIKE_DOUBLE
 	waitstate
 # 260 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	switch VAR_RESULT
@@ -764,13 +746,7 @@ BattleFrontier_BattlePikeRoomNormal_EventScript_DoPikeQueenBattle::
 	applymovement LOCALID_PLAYER, BattleFrontier_BattlePikeRoomNormal_Movement_PlayerWalkUp2
 # 383 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	waitmovement 0
-# 384 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8004, SPECIAL_BATTLE_PIKE_SINGLE
-# 385 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	setvar VAR_0x8005, 0
-# 386 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
-	special DoSpecialTrainerBattle
-# 387 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
+	dofacilitytrainerbattle FACILITY_BATTLE_PIKE_SINGLE
 	waitstate
 # 388 "data/maps/BattleFrontier_BattlePikeRoomNormal/scripts.pory"
 	return

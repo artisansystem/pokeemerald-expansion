@@ -14,47 +14,7 @@ BattleFrontier_Lounge6_EventScript_Trader::
 	faceplayer
 # 8 "data/maps/BattleFrontier_Lounge6/scripts.pory"
 	goto_if_set FLAG_BATTLE_FRONTIER_TRADE_DONE, BattleFrontier_Lounge6_EventScript_TradeCompleted
-# 9 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	setvar VAR_0x8008, INGAME_TRADE_MEOWTH
-# 10 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x8004, VAR_0x8008
-# 11 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	specialvar VAR_RESULT, GetInGameTradeSpeciesInfo
-# 12 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x8009, VAR_RESULT
-# 13 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	msgbox BattleFrontier_Lounge6_Text_WouldYouLikeToTrade, MSGBOX_YESNO
-# 14 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	goto_if_eq VAR_RESULT, NO, BattleFrontier_Lounge6_EventScript_DeclineTrade
-# 15 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	special ChoosePartyMon
-# 16 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	waitstate
-# 17 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x800A, VAR_0x8004
-# 18 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, BattleFrontier_Lounge6_EventScript_DeclineTrade
-# 19 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x8005, VAR_0x800A
-# 20 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	specialvar VAR_RESULT, GetTradeSpecies
-# 21 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x800B, VAR_RESULT
-# 22 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	goto_if_ne VAR_RESULT, VAR_0x8009, BattleFrontier_Lounge6_EventScript_NotRequestedMon
-# 23 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x8004, VAR_0x8008
-# 24 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	copyvar VAR_0x8005, VAR_0x800A
-# 25 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	special CreateInGameTradePokemon
-# 26 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	special DoInGameTradeScene
-# 27 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	waitstate
-# 28 "data/maps/BattleFrontier_Lounge6/scripts.pory"
-	msgbox BattleFrontier_Lounge6_Text_PromiseIllBeGoodToIt, MSGBOX_DEFAULT
-# 29 "data/maps/BattleFrontier_Lounge6/scripts.pory"
+	ingame_trade INGAME_TRADE_MEOWTH, BattleFrontier_Lounge6_Text_WouldYouLikeToTrade, BattleFrontier_Lounge6_EventScript_DeclineTrade, BattleFrontier_Lounge6_EventScript_NotRequestedMon, BattleFrontier_Lounge6_Text_PromiseIllBeGoodToIt
 	setflag FLAG_BATTLE_FRONTIER_TRADE_DONE
 # 30 "data/maps/BattleFrontier_Lounge6/scripts.pory"
 	release
