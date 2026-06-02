@@ -10,5 +10,7 @@ bool32 ShouldPokemonShowActivePokerus(struct Pokemon *mon);
 bool32 ShouldPokemonShowCuredPokerus(struct Pokemon *mon);
 void UpdatePartyPokerusTime(u32 days);
 void PartySpreadPokerus(void);
+u8 CheckPartyPokerus(struct Pokemon *party, u8 selection);
+u8 CheckPartyHasHadPokerus(struct Pokemon *party, u8 selection);
 
 #endif // GUARD_POKERUS_H

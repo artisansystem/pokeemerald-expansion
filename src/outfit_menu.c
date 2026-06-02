@@ -926,7 +926,7 @@ void BufferOutfitStrings(u8 *dest, u8 outfitId, u8 dataType)
     StringCopy(dest, src);
 }
 
-u32 GetPlayerTrainerPicIdByOutfitGenderType(u32 outfitId, u32 gender, u32 appearance, bool32 type)
+u32 GetPlayerTrainerPicIdByOutfitGenderType(u32 outfitId, enum Gender gender, enum Appearance appearance, bool32 type)
 {
     if (outfitId > OUTFIT_NONE && outfitId < OUTFIT_COUNT)
         return gOutfits[outfitId].trainerPics[gender][appearance][type];

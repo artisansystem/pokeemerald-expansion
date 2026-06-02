@@ -214,7 +214,9 @@ BattlePyramid_WarpToTop::
 @ TRAINER_PHILLIP is used as a placeholder
 # 108 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 BattlePyramid_TrainerBattle::
+# 109 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 	facilitytrainerbattle FACILITY_BATTLE_PYRAMID
+# 110 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 	pyramid_showhint
 # 111 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 	waitmessage

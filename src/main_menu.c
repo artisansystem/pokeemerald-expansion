@@ -1092,7 +1092,6 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
                 StartNewGameSceneFrlg();
                 return;
             }
-
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
             DoUrielSpeech();

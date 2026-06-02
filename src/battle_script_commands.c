@@ -10,13 +10,10 @@
 #include "battle_switch_in.h"
 #include "battle_environment.h"
 #include "battle_z_move.h"
-<<<<<<< HEAD
 #include "bw_summary_screen.h"
 #include "constants/moves.h"
 #include "constants/abilities.h"
-=======
 #include "battle_move_resolution.h"
->>>>>>> e80ae569039786564381723fca22aac07afc3503
 #include "item.h"
 #include "util.h"
 #include "pokemon.h"

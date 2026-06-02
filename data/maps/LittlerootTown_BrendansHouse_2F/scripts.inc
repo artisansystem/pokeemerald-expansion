@@ -592,7 +592,9 @@ PlayersHouse_2F_Text_Notebook:
 Common_Text_LookCloserAtMap:
 # 297 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	.string "{PLAYER} took a closer look at the\n"
+# 298 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 	.string "{REGION} region map.$"
+# 299 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 
 # 300 "data/maps/LittlerootTown_BrendansHouse_2F/scripts.pory"
 PlayersHouse_2F_Text_ItsAGameCube:
