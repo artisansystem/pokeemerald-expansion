@@ -29,13 +29,6 @@
 #include "field_mugshot.h"
 #include "constants/songs.h"
 
-
-#define DLG_WINDOW_PALETTE_NUM 15
-#define DLG_WINDOW_BASE_TILE_NUM 0x200
-#define STD_WINDOW_PALETTE_NUM 14
-#define STD_WINDOW_PALETTE_SIZE PLTT_SIZEOF(10)
-#define STD_WINDOW_BASE_TILE_NUM 0x214
-
 struct MenuInfoIcon
 {
     u8 width;
@@ -97,15 +90,6 @@ static const struct WindowTemplate sStandardTextBox_WindowTemplates[] =
         .height = 4,
         .paletteNum = 15,
         .baseBlock = 0x194
-    },
-    {
-        .bg = 0,
-        .tilemapLeft = 2,
-        .tilemapTop = 13,
-        .width = DLW_WIN_PLATE_SIZE,
-        .height = 2,
-        .paletteNum = 15,
-        .baseBlock = (0x194 - (DLW_WIN_PLATE_SIZE*2)),
     },
     DUMMY_WIN_TEMPLATE
 };
@@ -539,25 +523,6 @@ void DrawDialogFrameWithCustomTile(u8 windowId, bool8 copyToVram, u16 tileNum)
     PutWindowTilemap(windowId);
     if (copyToVram == TRUE)
         CopyWindowToVram(windowId, COPYWIN_FULL);
-}
-
-static void WindowFunc_DrawDialogFrameWithCustomTileAndPalette(u8 bg, u8 l, u8 t, u8 w, u8 h, u8 paletteNum)
-{
-    FillBgTilemapBufferRect(bg, sTileNum + 0,                 l - 2,     t - 1, 1,     1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, sTileNum + 1,                 l - 1,     t - 1, 1,     1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, sTileNum + 2,                 l,         t - 1, w - 1, 1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, sTileNum + 3,                 l + w - 1, t - 1, 1,     1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, sTileNum + 4,                 l + w,     t - 1, 1,     1, sPaletteNum);
-
-    FillBgTilemapBufferRect(bg, sTileNum + 7,                 l - 2,     t,     1,     5, sPaletteNum);
-    FillBgTilemapBufferRect(bg, sTileNum + 8,                 l - 1,     t,     w + 1, 5, sPaletteNum);
-    FillBgTilemapBufferRect(bg, sTileNum + 9,                 l + w,     t,     1,     5, sPaletteNum);
-
-    FillBgTilemapBufferRect(bg, BG_TILE_V_FLIP(sTileNum + 0), l - 2,     t + h, 1,     1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, BG_TILE_V_FLIP(sTileNum + 1), l - 1,     t + h, 1,     1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, BG_TILE_V_FLIP(sTileNum + 2), l,         t + h, w - 1, 1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, BG_TILE_V_FLIP(sTileNum + 3), l + w - 1, t + h, 1,     1, sPaletteNum);
-    FillBgTilemapBufferRect(bg, BG_TILE_V_FLIP(sTileNum + 4), l + w,     t + h, 1,     1, sPaletteNum);
 }
 
 void ClearDialogWindowAndFrameToTransparent(u8 windowId, bool8 copyToVram)
