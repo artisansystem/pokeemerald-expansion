@@ -500,7 +500,7 @@ struct SeasonTime GetSeasonTimeForEncounters(u32 headerId, enum WildPokemonArea 
 }
 
 
-static u8 PickWildMonNature(u32 species)
+u8 PickWildMonNature(u32 species)
 {
     u8 i;
     struct Pokeblock *safariPokeblock;

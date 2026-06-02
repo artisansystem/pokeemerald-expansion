@@ -32,6 +32,7 @@
 #include "constants/abilities.h"
 #include "wild_encounter.h"
 #include "pokevial.h" //Pokevial Branch
+#include "pokeball.h"
 
 static void CB2_ReturnFromChooseHalfParty(void);
 static void CB2_ReturnFromChooseBattleFrontierParty(void);
@@ -478,7 +479,7 @@ static u32 ScriptGiveMonParameterized(u8 side, u8 slot, u16 species, u8 level, e
     return MON_GIVEN_TO_PARTY;
 }
 
-u32 BirchCase_GiveMonParameterized(u16 species, u8 level, enum Item item, enum PokeBall ball, u8 nature, u8 abilityNum, u8 gender, u8 *evs, u8 *ivs, enum Moves *moves, bool8 ggMaxFactor, u8 teraType, bool8 isShinyExpansion)
+u32 BirchCase_GiveMonParameterized(u16 species, u8 level, enum Item item, enum PokeBall ball, u8 nature, u8 abilityNum, u8 gender, u8 *evs, u8 *ivs, enum Move *moves, bool8 ggMaxFactor, u8 teraType, bool8 isShinyExpansion)
 {
     //
     //  This function is created by Lunos and Ghoulslash as part of the custom givemon script in Expansion. I had to port it and rename it so that - 
@@ -488,7 +489,6 @@ u32 BirchCase_GiveMonParameterized(u16 species, u8 level, enum Item item, enum P
     struct Pokemon mon;
     u32 i;
     u8 genderRatio = gSpeciesInfo[species].genderRatio;
-    u16 targetSpecies;
 
     // check whether to use a specific nature or a random one
     if (nature >= NUM_NATURES)
@@ -496,12 +496,12 @@ u32 BirchCase_GiveMonParameterized(u16 species, u8 level, enum Item item, enum P
 #ifdef POKEMON_EXPANSION
         if (OW_SYNCHRONIZE_NATURE >= GEN_6
          && (gSpeciesInfo[species].eggGroups[0] == EGG_GROUP_NO_EGGS_DISCOVERED || OW_SYNCHRONIZE_NATURE == GEN_7))
-            nature = PickWildMonNature();
+            nature = PickWildMonNature(species);
         else
             nature = Random() % NUM_NATURES;
 #else
         if ((gSpeciesInfo[species].eggGroups[0] == EGG_GROUP_NO_EGGS_DISCOVERED))
-                nature = PickWildMonNature();
+                nature = PickWildMonNature(species);
             else
                 nature = Random() % NUM_NATURES;
 #endif
@@ -568,7 +568,7 @@ u32 BirchCase_GiveMonParameterized(u16 species, u8 level, enum Item item, enum P
 
     // ball
     if (ball >= POKEBALL_COUNT)
-        ball = ITEM_POKE_BALL;
+        ball = BALL_POKE;
     SetMonData(&mon, MON_DATA_POKEBALL, &ball);
 
     // held item
@@ -576,9 +576,7 @@ u32 BirchCase_GiveMonParameterized(u16 species, u8 level, enum Item item, enum P
 
 #ifdef POKEMON_EXPANSION
     // In case a mon with a form changing item is given. Eg: SPECIES_ARCEUS_NORMAL with ITEM_SPLASH_PLATE will transform into SPECIES_ARCEUS_WATER upon gifted.
-    targetSpecies = GetFormChangeTargetSpecies(&mon, FORM_CHANGE_ITEM_HOLD, 0);
-    if (targetSpecies != SPECIES_NONE)
-        SetMonData(&mon, MON_DATA_SPECIES, &targetSpecies);
+    TryFormChange(&mon, FORM_CHANGE_ITEM_HOLD);
 #endif
 
     // assign OT name and gender

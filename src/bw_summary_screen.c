@@ -1,5 +1,4 @@
 #include "global.h"
-#include "main.h"
 #include "battle.h"
 #include "battle_anim.h"
 #include "frontier_util.h"
@@ -22,6 +21,7 @@
 #include "link.h"
 #include "m4a.h"
 #include "malloc.h"
+#include "main.h"
 #include "menu.h"
 #include "menu_helpers.h"
 #include "mon_markings.h"
@@ -53,6 +53,7 @@
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "constants/pokeball.h"
 
 #if BW_SUMMARY_SCREEN == TRUE
 enum BWPSSEffect

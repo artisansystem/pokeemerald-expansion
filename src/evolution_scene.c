@@ -805,10 +805,10 @@ static void Task_EvolutionScene(u8 taskId)
                 // Update BattlePokemon stats if in battle
                 u8 monId = gTasks[taskId].tPartyId;
                 if (monId == LEFT_PKMN) 
-                    CopyPartyMonToBattleData(0, monId, FALSE);
+                    CopyPartyMonToBattleData(0, monId);
                 else if (monId == RIGHT_PKMN) 
                 {
-                    CopyPartyMonToBattleData(2, monId, FALSE);
+                    CopyPartyMonToBattleData(2, monId);
                 }
             }
         }

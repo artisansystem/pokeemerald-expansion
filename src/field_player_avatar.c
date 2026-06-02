@@ -1633,10 +1633,10 @@ void StopPlayerAvatar(void)
     }
 }
 
-u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
+u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender, enum Appearance appearance)
 {
     if (IS_FRLG)
-        return GetPlayerAvatarGraphicsIdByStateIdAndGender(state, gender);
+        return GetPlayerAvatarGraphicsIdByStateIdAndGender(state, gender, appearance);
     else
         return sRivalAvatarGfxIds[state][gender];
 }
@@ -1646,9 +1646,9 @@ u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender, en
     return sPlayerAvatarGfxIds[state][gender][appearance];
 }
 
-u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, enum Appearance appearance, enum Gender gender)
+u16 GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(u8 outfit, u8 state, enum Gender gender, enum Appearance appearance)
 {
-    return gOutfits[outfit].avatarGfxIds[gender][appearance][state];
+    return gOutfits[outfit].avatarGfxIds[state][gender][appearance];
 }
 
 u8 GetLinkPlayerAvatarGraphicsIdByStateIdLinkIdAndGender(u8 state, u8 linkId, enum Gender gender, enum Appearance appearance)

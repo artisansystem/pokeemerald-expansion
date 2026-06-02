@@ -573,7 +573,7 @@ static void Task_UrielSpeech_Welcome(u8 taskId)
 
 static void Task_UrielSpeech_Acceptance(u8 taskId)
 {
-    if (!IsTextPrinterActive(WIN_TEXT))
+    if (!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         UrielSpeech_PrintMessageBox(sUrielSpeech_Acceptance);
         gTasks[taskId].func = Task_UrielSpeech_ThisIs;
@@ -582,7 +582,7 @@ static void Task_UrielSpeech_Acceptance(u8 taskId)
 
 static void Task_UrielSpeech_ThisIs(u8 taskId)
 {
-    if (!IsTextPrinterActive(WIN_TEXT))
+    if (!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         UrielSpeech_PrintMessageBox(sUrielSpeech_ThisIs);
         sUrielSpeech->timer = 30;
@@ -593,7 +593,7 @@ static void Task_UrielSpeech_ThisIs(u8 taskId)
 static void Task_UrielSpeech_ReleaseAlakazamFromPokeball(u8 taskId)
 {
     u32 spriteId;
-    if (!IsTextPrinterActive(WIN_TEXT))
+    if (!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         if (sUrielSpeech->timer)
         {
@@ -624,7 +624,7 @@ static void Task_UrielSpeech_AlakazamAPokemon(u8 taskId)
 
 static void Task_UrielSpeech_MainSpeech(u8 taskId)
 {
-    if (!IsTextPrinterActive(WIN_TEXT))
+    if (!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         UrielSpeech_PrintMessageBox(sUrielSpeech_MainSpeech);
         gTasks[taskId].func = Task_UrielSpeech_Registration;
@@ -633,7 +633,7 @@ static void Task_UrielSpeech_MainSpeech(u8 taskId)
 
 static void Task_UrielSpeech_Registration(u8 taskId)
 {
-    if (!IsTextPrinterActive(WIN_TEXT))
+    if (!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         UrielSpeech_PrintMessageBox(sUrielSpeech_Registration);
         gTasks[taskId].func = Task_UrielSpeech_PlatformFade;
@@ -643,7 +643,7 @@ static void Task_UrielSpeech_Registration(u8 taskId)
 static void Task_UrielSpeech_PlatformFade(u8 taskId)
 {
 
-    if(!IsTextPrinterActive(WIN_TEXT))
+    if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         // make the sprites fade out somehow
         gSprites[sUrielSpeech->platformSpriteIdLeft].oam.priority  = 1;
@@ -751,7 +751,7 @@ static void Task_UrielSpeech_GenderSelect(u8 taskId)
 
 static void Task_UrielSpeech_WaitToShowGenderMenu(u8 taskId)
 {
-    if(!IsTextPrinterActive(WIN_TEXT))
+    if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         UrielSpeech_ShowGenderMenu(taskId);
     }
@@ -913,7 +913,7 @@ static void Task_UrielSpeech_YourName(u8 taskId)
 
 static void Task_UrielSpeech_WaitForWhatsYourNameToPrint(u8 taskId)
 {
-    if(!IsTextPrinterActive(WIN_TEXT))
+    if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         gTasks[taskId].func = Task_UrielSpeech_WaitPressBeforeNameChoice;
     }
@@ -952,7 +952,7 @@ static void Task_UrielSpeech_ConfirmFirstName(u8 taskId)
 
 static void Task_UrielSpeech_CreateFirstNameYesNo(u8 taskId)
 {
-    if(!IsTextPrinterActive(WIN_TEXT))
+    if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         CreateYesNoMenuParameterized(5, 3, 0xF3, 0xDF, 2, 15);
         CallWindowFunction(WINDOWID_YES_NO, WindowFunc_DrawStandardFrame);
@@ -993,7 +993,7 @@ static void Task_UrielSpeech_YourLastName(u8 taskId)
 
 static void Task_UrielSpeech_WaitForWhatsYourLastNameToPrint(u8 taskId)
 {
-    if(!IsTextPrinterActive(WIN_TEXT))
+    if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         gTasks[taskId].func = Task_UrielSpeech_WaitPressBeforeLastNameChoice;
     }
@@ -1032,7 +1032,7 @@ static void Task_UrielSpeech_ConfirmLastName(u8 taskId)
 
 static void Task_UrielSpeech_CreateLastNameYesNo(u8 taskId)
 {
-    if(!IsTextPrinterActive(WIN_TEXT))
+    if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
         CreateYesNoMenuParameterized(5, 3, 0xF3, 0xDF, 2, 15);
         CallWindowFunction(WINDOWID_YES_NO, WindowFunc_DrawStandardFrame);
@@ -1118,7 +1118,7 @@ static void Task_UrielSpeech_NiceToMeetYou(u8 taskId)
 
 static void Task_UrielSpeech_CloseMsgbox(u8 taskId)
 {
-    if ((!IsTextPrinterActive(WIN_TEXT)) && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
+    if ((!IsTextPrinterActiveOnWindow(WIN_TEXT)) && (JOY_NEW(A_BUTTON) || JOY_NEW(B_BUTTON)))
     {
         ClearDialogWindowAndFrameToTransparent(WIN_TEXT, TRUE);
         gTasks[taskId].func = Task_UrielSpeech_FadeAwayEverything;

@@ -175,6 +175,13 @@ enum ContestCategories
 
 #define MAX_STAMP_CARD_STAMPS 7
 
+enum StarterIds
+{
+    GRASS_STARTER,
+    FIRE_STARTER,
+    WATER_STARTER,
+};
+
 enum Gender
 {
     MALE,

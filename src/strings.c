@@ -177,6 +177,7 @@ const u8 gText_TheBattle[] = _("the battle");
 const u8 gText_ThePokemonList[] = _("the POKéMON LIST");
 const u8 gText_TheShop[] = _("the shop");
 const u8 gText_ThePC[] = _("the PC");
+const u8 gText_Rename[] = _("RENAME");
 
 const u8 *const gBagMenu_ReturnToStrings[] =
 {
@@ -1141,6 +1142,7 @@ ALIGNED(4) const u8 gText_WonderNewsThrownAway[] = _("The WONDER NEWS was thrown
 ALIGNED(4) const u8 gText_MysteryGift[] = _("MYSTERY GIFT");
 ALIGNED(4) const u8 gText_PickOKExit[] = _("{DPAD_UPDOWN}PICK {A_BUTTON}OK {B_BUTTON}EXIT");
 ALIGNED(4) const u8 gText_PickOKCancel[] = _("{DPAD_UPDOWN}PICK {A_BUTTON}OK {B_BUTTON}CANCEL");
+
 const u8 gText_PlayersBattleResults[] = _("{PLAYER}'s BATTLE RESULTS");
 const u8 gText_TotalRecordWLD[] = _("TOTAL RECORD W:{STR_VAR_1} L:{STR_VAR_2} D:{STR_VAR_3}");
 const u8 gText_WinLoseDraw[] = _("{CLEAR_TO 0x53}WIN{CLEAR_TO 0x80}LOSE{CLEAR_TO 0xB0}DRAW");
@@ -1218,7 +1220,6 @@ const u8 gText_Relearn_LevelUp[] = _("{START_BUTTON} RELEARN LEVEL");
 const u8 gText_Relearn_Egg[] = _("{START_BUTTON} RELEARN EGG");
 const u8 gText_Relearn_TM[] = _("{START_BUTTON} RELEARN TM");
 const u8 gText_Relearn_Tutor[] = _("{START_BUTTON} RELEARN TUTOR");
-const u8 gText_Rename[] = _("RENAME");
 const u8 gText_CannotSendMonToBoxHM[] = _("Cannot send that mon to the box,\nbecause it knows a HM move.{PAUSE_UNTIL_PRESS}");
 
 // Start Pokevial Branch
