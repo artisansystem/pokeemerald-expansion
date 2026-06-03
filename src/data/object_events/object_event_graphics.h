@@ -37,7 +37,10 @@ const u16 gObjectEventPal_MayReflection[] = INCGFX_U16("graphics/object_events/p
 const u32 gObjectEventPic_RubySapphireMayNormal[] = INCGFX_U32("graphics/object_events/pics/people/ruby_sapphire_may/walking.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u32 gObjectEventPic_RubySapphireMayRunning[] = INCGFX_U32("graphics/object_events/pics/people/ruby_sapphire_may/running.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_RubySapphireMay[] = INCGFX_U16("graphics/object_events/palettes/ruby_sapphire_may.pal", ".gbapal");
+<<<<<<< HEAD
 const u16 gObjectEventPal_Wally[] = INCGFX_U16("graphics/object_events/palettes/wally.pal", ".gbapal");
+=======
+>>>>>>> 6798f72e037d4af6d1a797835f3f3f11591f8c1c
 const u16 gUnusedObjectEventPalette[] = INCGFX_U16("graphics/object_events/palettes/unused_palette.pal", ".gbapal");
 const u16 gObjectEventPal_Null16[16] = {};
 const u16 gObjectEventPal_Null17[16] = {};

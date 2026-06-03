@@ -554,7 +554,7 @@
 #define OBJ_EVENT_PAL_TAG_RS_BRENDAN              0x1122
 #define OBJ_EVENT_PAL_TAG_RS_MAY                  0x1123
 #define OBJ_EVENT_PAL_TAG_DYNAMIC                 0x1124
-<<<<<<< HEAD
+
 #define OBJ_EVENT_PAL_TAG_MERCURY                 0x1125
 #define OBJ_EVENT_PAL_TAG_PLAYER_RED              0x1126
 #define OBJ_EVENT_PAL_TAG_PLAYER_RED_REFLECTION   0x1127
@@ -571,7 +571,7 @@
 #define OBJ_EVENT_PAL_TAG_METEORITE               0x1138
 #define OBJ_EVENT_PAL_TAG_SEAGALLOP               0x1139
 #define OBJ_EVENT_PAL_TAG_SS_ANNE                 0x1140
-=======
+
 #define OBJ_EVENT_PAL_TAG_PLAYER_RED              0x1125
 #define OBJ_EVENT_PAL_TAG_PLAYER_RED_REFLECTION   0x1126
 #define OBJ_EVENT_PAL_TAG_PLAYER_GREEN            0x1127
@@ -587,7 +587,6 @@
 #define OBJ_EVENT_PAL_TAG_METEORITE               0x1131
 #define OBJ_EVENT_PAL_TAG_SEAGALLOP               0x1132
 #define OBJ_EVENT_PAL_TAG_SS_ANNE                 0x1133
->>>>>>> 6798f72e037d4af6d1a797835f3f3f11591f8c1c
 
 #if OW_FOLLOWERS_POKEBALLS
 // Vanilla
