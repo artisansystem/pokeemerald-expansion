@@ -220,7 +220,7 @@ static EWRAM_DATA struct PokemonSummaryScreenData
     u8 secondMoveIndex;
     bool8 lockMovesFlag; // This is used to prevent the player from changing position of moves in a battle or when trading.
     u8 bgDisplayOrder; // unused
-    u8 relearnableMovesNum;
+    bool8 hasRelearnableMoves;
     u8 windowIds[8];
     u8 spriteIds[SPRITE_ARR_ID_COUNT];
     bool8 handleDeoxys;
@@ -245,6 +245,8 @@ static bool8 ExtractMonDataToSummaryStruct(struct Pokemon *);
 static void SetSelectMoveTilemaps(void);
 static void CloseSummaryScreen(u8);
 static void Task_HandleInput(u8);
+bool32 HasAnyRelearnableMoves_BW(enum MoveRelearnerStates state);
+bool32 NoMovesAvailableToRelearn_BW(void);
 static void ChangeSummaryPokemon(u8, s8);
 static void Task_ChangeSummaryMon(u8);
 static s8 AdvanceMonIndex(s8);
@@ -2148,6 +2150,13 @@ static bool8 DecompressGraphics(void)
     return FALSE;
 }
 
+static struct BoxPokemon *GetCurrentBoxmon(void)
+{
+    if (sMonSummaryScreen->isBoxMon)
+        return &sMonSummaryScreen->monList.boxMons[sMonSummaryScreen->curMonIndex];
+    return &sMonSummaryScreen->monList.mons[sMonSummaryScreen->curMonIndex].box;
+}
+
 static void CopyMonToSummaryStruct(struct Pokemon *mon)
 {
     if (!sMonSummaryScreen->isBoxMon)
@@ -2425,22 +2434,18 @@ static void Task_HandleInput(u8 taskId)
     {
         if (JOY_NEW(DPAD_UP))
         {
-            tSkillsState = defaultSkillsState;
             ChangeSummaryPokemon(taskId, -1);
         }
         else if (JOY_NEW(DPAD_DOWN))
         {
-            tSkillsState = defaultSkillsState;
             ChangeSummaryPokemon(taskId, 1);
         }
         else if ((JOY_NEW(DPAD_LEFT)) || GetLRKeysPressed() == MENU_L_PRESSED)
         {
-            tSkillsState = defaultSkillsState;
             ChangePage(taskId, -1);
         }
         else if ((JOY_NEW(DPAD_RIGHT)) || GetLRKeysPressed() == MENU_R_PRESSED)
         {
-            tSkillsState = defaultSkillsState;
             ChangePage(taskId, 1);
         }
         else if (JOY_NEW(A_BUTTON))
@@ -2521,6 +2526,23 @@ static void Task_HandleInput(u8 taskId)
 }
 
 #undef tSkillsState
+
+bool32 HasAnyRelearnableMoves_BW(enum MoveRelearnerStates state)
+{
+    return CanBoxMonRelearnMoves(GetCurrentBoxmon(), state);
+}
+
+bool32 NoMovesAvailableToRelearn_BW(void)
+{
+    u32 zeroCounter = 0;
+    for (enum MoveRelearnerStates state = MOVE_RELEARNER_LEVEL_UP_MOVES; state < MOVE_RELEARNER_COUNT; state++)
+    {
+        if (!HasAnyRelearnableMoves_BW(state))
+            zeroCounter++;
+    }
+
+    return zeroCounter == MOVE_RELEARNER_COUNT;
+}
 
 #define tSummaryState data[0]
 
@@ -2699,22 +2721,28 @@ static void Task_ChangeSummaryMon(u8 taskId)
 static s8 AdvanceMonIndex(s8 delta)
 {
     struct Pokemon *mon = sMonSummaryScreen->monList.mons;
-    u8 index = sMonSummaryScreen->curMonIndex;
-    u8 numMons = sMonSummaryScreen->maxMonIndex + 1;
-    delta += numMons;
 
-    index = (index + delta) % numMons;
-
-    // skip over any Eggs unless on the Info Page
-    if (sMonSummaryScreen->currPageIndex != PSS_PAGE_INFO)
-        while (GetMonData(&mon[index], MON_DATA_IS_EGG))
-            index = (index + delta) % numMons;
-
-    // to avoid "scrolling" to the same Pokemon
-    if (index == sMonSummaryScreen->curMonIndex)
-        return -1;
+    if (sMonSummaryScreen->currPageIndex == PSS_PAGE_INFO)
+    {
+        if (delta == -1 && sMonSummaryScreen->curMonIndex == 0)
+            return -1;
+        else if (delta == 1 && sMonSummaryScreen->curMonIndex >= sMonSummaryScreen->maxMonIndex)
+            return -1;
+        else
+            return sMonSummaryScreen->curMonIndex + delta;
+    }
     else
+    {
+        s8 index = sMonSummaryScreen->curMonIndex;
+
+        do
+        {
+            index += delta;
+            if (index < 0 || index > sMonSummaryScreen->maxMonIndex)
+                return -1;
+        } while (GetMonData(&mon[index], MON_DATA_IS_EGG));
         return index;
+    }
 }
 
 static s8 AdvanceMultiBattleMonIndex(s8 delta)
@@ -5487,9 +5515,10 @@ static inline bool32 ShouldShowMoveRelearner(void)
          && !sMonSummaryScreen->lockMovesFlag
          && sMonSummaryScreen->mode != SUMMARY_MODE_BOX
          && sMonSummaryScreen->mode != SUMMARY_MODE_BOX_CURSOR
-         && sMonSummaryScreen->relearnableMovesNum > 0
+         && sMonSummaryScreen->hasRelearnableMoves
          && !InBattleFactory() 
-         && !InSlateportBattleTent());
+         && !InSlateportBattleTent()
+         && !NoMovesAvailableToRelearn_BW());
 }
 
 static void ShowMoveRelearner(void)
