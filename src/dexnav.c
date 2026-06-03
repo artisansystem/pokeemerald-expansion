@@ -88,9 +88,9 @@ enum Statuses
 
 struct DexNavSearch
 {
-    u16 species;
-    u16 moves[MAX_MON_MOVES];
-    u16 heldItem;
+    enum Species species;
+    enum Move moves[MAX_MON_MOVES];
+    enum Item heldItem;
     u8 abilityNum;
     u8 potential;
     u8 searchLevel;
@@ -121,9 +121,9 @@ struct DexNavGUI
     MainCallback savedCallback;
     u8 state;
     u8 cursorSpriteId;
-    u16 landSpecies[LAND_WILD_COUNT];
-    u16 waterSpecies[WATER_WILD_COUNT];
-    u16 hiddenSpecies[HIDDEN_WILD_COUNT];
+    enum Species landSpecies[LAND_WILD_COUNT];
+    enum Species waterSpecies[WATER_WILD_COUNT];
+    enum Species hiddenSpecies[HIDDEN_WILD_COUNT];
     u8 cursorRow;
     u8 cursorCol;
     u8 environment;
@@ -137,7 +137,7 @@ struct DexNavGUI
 EWRAM_DATA static struct DexNavSearch *sDexNavSearchDataPtr = NULL;
 EWRAM_DATA static struct DexNavGUI *sDexNavUiDataPtr = NULL;
 EWRAM_DATA static u8 *sBg1TilemapBuffer = NULL;
-EWRAM_DATA u16 gDexNavSpecies = SPECIES_NONE;
+EWRAM_DATA enum Species gDexNavSpecies = SPECIES_NONE;
 
 //// Function Declarations
 //GUI
@@ -146,13 +146,13 @@ static void Task_DexNavMain(u8 taskId);
 static void PrintCurrentSpeciesInfo(void);
 // SEARCH
 static bool8 TryStartHiddenMonFieldEffect(enum EncounterType environment, u8 xSize, u8 ySize, bool8 smallScan);
-static void DexNavGenerateMoveset(u16 species, u8 searchLevel, u8 encounterLevel, u16 *moveDst);
-static u16 DexNavGenerateHeldItem(u16 species, u8 searchLevel);
-static u8 DexNavGetAbilityNum(u16 species, u8 searchLevel);
+static void DexNavGenerateMoveset(enum Species species, u8 searchLevel, u8 encounterLevel, u16 *moveDst);
+static u16 DexNavGenerateHeldItem(enum Species species, u8 searchLevel);
+static u8 DexNavGetAbilityNum(enum Species species, u8 searchLevel);
 static u8 DexNavGeneratePotential(u8 searchLevel);
-static u8 DexNavTryGenerateMonLevel(u16 species, enum EncounterType environment);
-static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environment);
-static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityNum, enum Item item, enum Move *moves);
+static u8 DexNavTryGenerateMonLevel(enum Species species, enum EncounterType environment);
+static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType environment);
+static void CreateDexNavWildMon(enum Species species, u8 potential, u8 level, u8 abilityNum, enum Item item, enum Move *moves);
 static u8 GetPlayerDistance(s16 x, s16 y);
 static u8 DexNavPickTile(enum EncounterType environment, u8 xSize, u8 ySize, bool8 smallScan);
 static void DexNavProximityUpdate(void);
@@ -166,7 +166,7 @@ static void RevealHiddenMon(void);
 //// Const Data
 // gui image data
 static const u32 sDexNavGuiTiles[] = INCGFX_U32("graphics/dexnav/gui_tiles.png", ".4bpp.smol");
-static const u32 sDexNavGuiTilemap[] = INCBIN_U32("graphics/dexnav/gui_tilemap.bin.smolTM");
+static const u32 sDexNavGuiTilemap[] = INCGFX_U32("graphics/dexnav/gui_tilemap.bin", ".smolTM");
 static const u32 sDexNavGuiPal[] = INCGFX_U32("graphics/dexnav/gui.pal", ".gbapal");
 
 static const u32 sSelectionCursorGfx[] = INCGFX_U32("graphics/dexnav/cursor.png", ".4bpp.smol");
@@ -412,7 +412,7 @@ static s16 GetSearchWindowY(void)
 }
 
 #define SPECIES_ICON_X 28
-static void DrawDexNavSearchMonIcon(u16 species, u8 *dst, bool8 owned)
+static void DrawDexNavSearchMonIcon(enum Species species, u8 *dst, bool8 owned)
 {
     u8 spriteId;
 
@@ -451,7 +451,7 @@ static void AddSearchWindow(u8 width)
 #define SEARCH_ARROW_X      (WINDOW_MOVE_NAME_X + 90)
 #define SEARCH_ARROW_Y      0
 
-static void AddSearchWindowText(u16 species, u8 proximity, u8 searchLevel, bool8 hidden)
+static void AddSearchWindowText(enum Species species, u8 proximity, u8 searchLevel, bool8 hidden)
 {
     u8 windowId = sDexNavSearchDataPtr->windowId;
 
@@ -513,7 +513,7 @@ static void AddSearchWindowText(u16 species, u8 proximity, u8 searchLevel, bool8
 
 #define SEARCH_WINDOW_WIDTH     28
 
-static void DrawSearchWindow(u16 species, u8 potential, bool8 hidden)
+static void DrawSearchWindow(enum Species species, u8 potential, bool8 hidden)
 {
     u8 searchLevel = sDexNavSearchDataPtr->searchLevel;
 
@@ -525,8 +525,6 @@ static void DrawSearchWindow(u16 species, u8 potential, bool8 hidden)
 
 static void RemoveDexNavWindowAndGfx(void)
 {
-    u32 i;
-
     // try remove sprites
     if (sDexNavSearchDataPtr->iconSpriteId != MAX_SPRITES)
         DestroySprite(&gSprites[sDexNavSearchDataPtr->iconSpriteId]);
@@ -539,7 +537,7 @@ static void RemoveDexNavWindowAndGfx(void)
     if (sDexNavSearchDataPtr->exclamationSpriteId != MAX_SPRITES)
         DestroySprite(&gSprites[sDexNavSearchDataPtr->exclamationSpriteId]);
 
-    for (i = 0; i < NELEMS(sDexNavSearchDataPtr->starSpriteIds); i++)
+    for (u32 i = 0; i < NELEMS(sDexNavSearchDataPtr->starSpriteIds); i++)
     {
         if (sDexNavSearchDataPtr->starSpriteIds[i] != MAX_SPRITES)
             DestroySprite(&gSprites[sDexNavSearchDataPtr->starSpriteIds[i]]);
@@ -781,7 +779,7 @@ static void LoadSearchIconData(void)
     LoadCompressedSpriteSheetUsingHeap(&sHiddenMonIconSpriteSheet);
 }
 
-static u8 GetSearchLevel(u16 species)
+static u8 GetSearchLevel(enum Species species)
 {
     u8 searchLevel;
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
@@ -794,7 +792,7 @@ static u8 GetSearchLevel(u16 species)
 
 static void SetUpDexNavSearch(void)
 {
-    u16 species = sDexNavSearchDataPtr->species;
+    enum Species species = sDexNavSearchDataPtr->species;
     u8 searchLevel = GetSearchLevel(species);
 
     // init sprites
@@ -839,7 +837,7 @@ static void DexNavSearchBail(const u8 *script)
     ScriptContext_SetupScript(script);
 }
 
-static bool8 InitDexNavSearch(u32 species, u32 environment)
+static bool8 InitDexNavSearch(enum Species species, u32 environment)
 {
     sDexNavSearchDataPtr = AllocZeroed(sizeof(struct DexNavSearch));
     if (sDexNavSearchDataPtr == NULL)
@@ -926,7 +924,7 @@ static void DexNavUpdateDirectionArrow(void)
 
 static void DexNavDrawIcons(void)
 {
-    u16 species = sDexNavSearchDataPtr->species;
+    enum Species species = sDexNavSearchDataPtr->species;
 
     DrawSearchWindow(species, sDexNavSearchDataPtr->potential, FALSE);
     DrawDexNavSearchMonIcon(species, &sDexNavSearchDataPtr->iconSpriteId, GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_CAUGHT));
@@ -970,7 +968,7 @@ bool32 TryStartDexNavSearch(void)
 
 void EndDexNavSearch(void)
 {
-    if (!FlagGet(DN_FLAG_SEARCHING))
+    if (!FlagGet(DN_FLAG_SEARCHING) || sDexNavSearchDataPtr == NULL)
         return;
     RemoveDexNavWindowAndGfx();
     FieldEffectStop(&gSprites[sDexNavSearchDataPtr->fldEffSpriteId], sDexNavSearchDataPtr->fldEffId);
@@ -997,7 +995,7 @@ static u8 GetMovementProximityBySearchLevel(void)
 
 static void RevealHiddenMon(void)
 {
-    u16 species = sDexNavSearchDataPtr->species;
+    enum Species species = sDexNavSearchDataPtr->species;
 
     // remove owned icon if it exists
     if (sDexNavSearchDataPtr->ownedIconSpriteId != MAX_SPRITES)
@@ -1039,7 +1037,7 @@ static void RevealHiddenMon(void)
 
 bool32 OnStep_DexNavSearch(void)
 {
-    if (!FlagGet(DN_FLAG_SEARCHING))
+    if (!FlagGet(DN_FLAG_SEARCHING) || sDexNavSearchDataPtr == NULL)
         return FALSE;
 
     u32 frameCount = gMain.vblankCounter1 - sDexNavSearchDataPtr->startingTime;
@@ -1115,7 +1113,7 @@ bool32 OnStep_DexNavSearch(void)
         return FALSE;
     }
 
-    //Caves and water the pokemon moves around
+    //Caves and water the Pokémon moves around
     if ((sDexNavSearchDataPtr->environment == ENCOUNTER_TYPE_WATER || GetCurrentMapType() == MAP_TYPE_UNDERGROUND)
         && sDexNavSearchDataPtr->proximity < GetMovementProximityBySearchLevel() && sDexNavSearchDataPtr->movementCount < 2
         && !sDexNavSearchDataPtr->hiddenSearch)
@@ -1181,29 +1179,12 @@ static void DexNavUpdateSearchWindow(u8 proximity, u8 searchLevel)
 //////////////////////////////
 //// DEXNAV MON GENERATOR ////
 //////////////////////////////
-static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityNum, enum Item item, enum Move *moves)
+static void CreateDexNavWildMon(enum Species species, u8 potential, u8 level, u8 abilityNum, enum Item item, enum Move *moves)
 {
-    struct Pokemon *mon = &gEnemyParty[0];
-    u8 iv[3] = {NUM_STATS};
-    u8 i;
-    u8 perfectIv = 31;
+    struct Pokemon *mon = &gParties[B_TRAINER_OPPONENT_A][0];
 
     CreateWildMon(species, level);  // shiny rate bonus handled in CreateBoxMon
-
-    // Pick random, unique IVs to set to 31. The number of perfect IVs that are assigned is equal to the potential
-    iv[0] = Random() % NUM_STATS;               // choose 1st perfect stat
-    do {
-        iv[1] = Random() % NUM_STATS;
-        iv[2] = Random() % NUM_STATS;
-    } while ((iv[1] == iv[0])                   // unique 2nd perfect stat
-      || (iv[2] == iv[0] || iv[2] == iv[1]));   // unique 3rd perfect stat
-
-    if (potential > 2 && iv[2] != NUM_STATS)
-        SetMonData(mon, MON_DATA_HP_IV + iv[2], &perfectIv);
-    if (potential > 1 && iv[1] != NUM_STATS)
-        SetMonData(mon, MON_DATA_HP_IV + iv[1], &perfectIv);
-    if (potential > 0 && iv[0] != NUM_STATS)
-        SetMonData(mon, MON_DATA_HP_IV + iv[0], &perfectIv);
+    SetBoxMonPerfectIVs(&mon->box, min(3, potential)); // Will not exceed 3 Perfect IVs
 
     //Set ability
     SetMonData(mon, MON_DATA_ABILITY_NUM, &abilityNum);
@@ -1213,7 +1194,7 @@ static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityN
         SetMonData(mon, MON_DATA_HELD_ITEM, &item);
 
     //Set moves
-    for (i = 0; i < MAX_MON_MOVES; i++)
+    for (u32 i = 0; i < MAX_MON_MOVES; i++)
         SetMonMoveSlot(mon, moves[i], i);
 
     CalculateMonStats(mon);
@@ -1221,7 +1202,7 @@ static void CreateDexNavWildMon(u16 species, u8 potential, u8 level, u8 abilityN
 
 // gets a random level of the species based on map data.
 //if it was a hidden encounter, updates the environment it is to be found from the wildheader encounterRate
-static u8 DexNavTryGenerateMonLevel(u16 species, enum EncounterType environment)
+static u8 DexNavTryGenerateMonLevel(enum Species species, enum EncounterType environment)
 {
     u8 levelBase = GetEncounterLevelFromMapData(species, environment);
     u8 levelBonus = gSaveBlock3Ptr->dexNavChain / 5;
@@ -1238,7 +1219,7 @@ static u8 DexNavTryGenerateMonLevel(u16 species, enum EncounterType environment)
         return levelBase + levelBonus;
 }
 
-static void DexNavGenerateMoveset(u16 species, u8 searchLevel, u8 encounterLevel, u16 *moveDst)
+static void DexNavGenerateMoveset(enum Species species, u8 searchLevel, u8 encounterLevel, u16 *moveDst)
 {
     bool8 genMove = FALSE;
     u16 randVal = Random() % 100;
@@ -1282,18 +1263,18 @@ static void DexNavGenerateMoveset(u16 species, u8 searchLevel, u8 encounterLevel
 
     // Store generated mon moves into Dex Nav Struct
     for (i = 0; i < MAX_MON_MOVES; i++)
-        moveDst[i] = GetMonData(&gEnemyParty[0], MON_DATA_MOVE1 + i);
+        moveDst[i] = GetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_MOVE1 + i);
 
     // set first move slot to a random egg move if search level is good enough
     if (genMove)
     {
-        u8 numEggMoves = GetEggMoves(&gEnemyParty[0], eggMoveBuffer);
+        u8 numEggMoves = GetEggMoves(&gParties[B_TRAINER_OPPONENT_A][0], eggMoveBuffer);
         if (numEggMoves != 0)
             moveDst[0] = eggMoveBuffer[Random() % numEggMoves];
     }
 }
 
-static u16 DexNavGenerateHeldItem(u16 species, u8 searchLevel)
+static u16 DexNavGenerateHeldItem(enum Species species, u8 searchLevel)
 {
     u16 randVal = Random() % 100;
     u8 searchLevelInfluence = searchLevel >> 1;
@@ -1321,7 +1302,7 @@ static u16 DexNavGenerateHeldItem(u16 species, u8 searchLevel)
     return ITEM_NONE;
 }
 
-static u8 DexNavGetAbilityNum(u16 species, u8 searchLevel)
+static u8 DexNavGetAbilityNum(enum Species species, u8 searchLevel)
 {
     bool8 genAbility = FALSE;
     u16 randVal = Random() % 100;
@@ -1482,7 +1463,7 @@ static u8 DexNavGeneratePotential(u8 searchLevel)
     return 0;   // No potential
 }
 
-static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environment)
+static u8 GetEncounterLevelFromMapData(enum Species species, enum EncounterType environment)
 {
     u32 headerId = GetCurrentMapWildMonHeaderId();
     struct SeasonTime seasonTime;
@@ -1500,7 +1481,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
         const struct WildPokemonInfo *landMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].landMonsInfo;
 
         if (landMonsInfo == NULL)
-            return MON_LEVEL_NONEXISTENT; //Hidden pokemon should only appear on walkable tiles or surf tiles
+            return MON_LEVEL_NONEXISTENT; //Hidden Pokémon should only appear on walkable tiles or surf tiles
 
         for (i = 0; i < LAND_WILD_COUNT; i++)
         {
@@ -1516,7 +1497,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
         const struct WildPokemonInfo *waterMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].waterMonsInfo;
 
         if (waterMonsInfo == NULL)
-            return MON_LEVEL_NONEXISTENT; //Hidden pokemon should only appear on walkable tiles or surf tiles
+            return MON_LEVEL_NONEXISTENT; //Hidden Pokémon should only appear on walkable tiles or surf tiles
 
         for (i = 0; i < WATER_WILD_COUNT; i++)
         {
@@ -1543,7 +1524,7 @@ static u8 GetEncounterLevelFromMapData(u16 species, enum EncounterType environme
             }
         }
 
-        // use encounter rate to signify is hidden pokemon are on land or in water
+        // use encounter rate to signify is hidden Pokémon are on land or in water
         if (hiddenMonsInfo->encounterRate == 1)
             sDexNavSearchDataPtr->environment = ENCOUNTER_TYPE_WATER;
         else
@@ -1740,7 +1721,7 @@ static bool8 CapturedAllLandMons(u32 headerId)
 static bool8 CapturedAllWaterMons(u32 headerId)
 {
     u32 i;
-    u16 species;
+    enum Species species;
     u8 count = 0;
     struct SeasonTime seasonTime  = GetSeasonTimeForEncounters(headerId, WILD_AREA_WATER);
 
@@ -1773,7 +1754,7 @@ static bool8 CapturedAllWaterMons(u32 headerId)
 static bool8 CapturedAllHiddenMons(u32 headerId)
 {
     u32 i;
-    u16 species;
+    enum Species species;
     u8 count = 0;
     struct SeasonTime seasonTime  = GetSeasonTimeForEncounters(headerId, WILD_AREA_HIDDEN);
 
@@ -1852,6 +1833,7 @@ static void CB1_DexNavSearchCallback(void)
 
 static void Task_DexNavExitAndSearch(u8 taskId)
 {
+    DespawnAllOverworldWildEncounters(OWE_GENERATED, 0);
     DexNavGuiFreeResources();
     DestroyTask(taskId);
     SetMainCallback1(CB1_DexNavSearchCallback);
@@ -1876,7 +1858,7 @@ static void DexNavFadeAndExit(void)
     SetMainCallback2(DexNav_MainCB);
 }
 
-static bool8 SpeciesInArray(u16 species, u8 section)
+static bool8 SpeciesInArray(enum Species species, u8 section)
 {
     u32 i;
     enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
@@ -1917,7 +1899,7 @@ static void DexNavLoadEncounterData(void)
     u8 grassIndex = 0;
     u8 waterIndex = 0;
     u8 hiddenIndex = 0;
-    u16 species;
+    enum Species species;
     u32 i;
     u32 headerId = GetCurrentMapWildMonHeaderId();
     struct SeasonTime seasonTime;
@@ -1971,7 +1953,7 @@ static void DexNavLoadEncounterData(void)
     }
 }
 
-static void TryDrawIconInSlot(u16 species, s16 x, s16 y)
+static void TryDrawIconInSlot(enum Species species, s16 x, s16 y)
 {
     if (species == SPECIES_NONE || species > NUM_SPECIES)
         CreateNoDataIcon(x, y);   //'X' in slot
@@ -1985,7 +1967,7 @@ static void DrawSpeciesIcons(void)
 {
     s16 x, y;
     u32 i;
-    u16 species;
+    enum Species species;
 
     LoadCompressedSpriteSheetUsingHeap(&sNoDataIconSpriteSheet);
     for (i = 0; i < LAND_WILD_COUNT; i++)
@@ -2018,9 +2000,9 @@ static void DrawSpeciesIcons(void)
     }
 }
 
-static u16 DexNavGetSpecies(void)
+static enum Species DexNavGetSpecies(void)
 {
-    u16 species;
+    enum Species species;
 
     switch (sDexNavUiDataPtr->cursorRow)
     {
@@ -2094,7 +2076,7 @@ static void SetTypeIconPosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
 
 static void PrintCurrentSpeciesInfo(void)
 {
-    u16 species = DexNavGetSpecies();
+    enum Species species = DexNavGetSpecies();
     enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
     enum Type type1, type2;
 
@@ -2172,7 +2154,7 @@ static void PrintMapName(void)
     CopyWindowToVram(WINDOW_REGISTERED, 3);
 }
 
-static void PrintSearchableSpecies(u16 species)
+static void PrintSearchableSpecies(enum Species species)
 {
     FillWindowPixelBuffer(WINDOW_REGISTERED, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
     PutWindowTilemap(WINDOW_REGISTERED);
@@ -2357,7 +2339,7 @@ static void Task_DexNavWaitFadeIn(u8 taskId)
 static void Task_DexNavMain(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
-    u16 species;
+    enum Species species;
 
     if (IsSEPlaying())
         return;
@@ -2506,6 +2488,7 @@ bool32 TryFindHiddenPokemon(void)
     u16 *stepPtr = GetVarPointer(DN_VAR_STEP_COUNTER);
 
     if (DEXNAV_ENABLED == 0
+            || sDexNavSearchDataPtr == NULL
             || !FlagGet(DN_FLAG_DETECTOR_MODE)
             || FlagGet(DN_FLAG_SEARCHING)
             || GetFlashLevel() > 0)
@@ -2519,10 +2502,10 @@ bool32 TryFindHiddenPokemon(void)
     (*stepPtr) %= HIDDEN_MON_STEP_COUNT;
     if ((*stepPtr) == 0 && (Random() % 100 < HIDDEN_MON_SEARCH_RATE))
     {
-        // hidden pokemon
+        // hidden Pokémon
         u32 headerId = GetCurrentMapWildMonHeaderId();
         u8 index;
-        u16 species;
+        enum Species species;
         enum EncounterType environment;
         
         if (headerId == HEADER_NONE)
@@ -2532,8 +2515,8 @@ bool32 TryFindHiddenPokemon(void)
         const struct WildPokemonInfo *hiddenMonsInfo = gWildMonHeaders[headerId].encounterTypes[seasonTime.season][seasonTime.timeOfDay].hiddenMonsInfo;
         bool8 isHiddenMon = FALSE;
 
-        // while you can still technically find hidden pokemon if there are not hidden-only pokemon on a map,
-        // this prevents any potential lagging on maps you dont want hidden pokemon to appear on
+        // while you can still technically find hidden Pokémon if there are not hidden-only Pokémon on a map,
+        // this prevents any potential lagging on maps you dont want hidden Pokémon to appear on
         if (hiddenMonsInfo == NULL)
             return FALSE;
 
@@ -2579,7 +2562,7 @@ bool32 TryFindHiddenPokemon(void)
             }
             else
             {
-                // not surfing -> cant find hidden water mons
+                // not surfing -> can't find hidden water mons
                 return FALSE;
             }
             break;
@@ -2644,7 +2627,7 @@ static void DrawSearchIcon(void)
 
 // the initial hidden icon window ONLY shows search icon, ??? instead of name, and the search level (and pokeball icon if owned)
 // if the player presses R or moves close enough, the full search window will be created
-// this way, if the player is not interested in hidden pokemon it will not be too intrusive
+// this way, if the player is not interested in hidden Pokémon it will not be too intrusive
 static void DrawHiddenSearchWindow(u8 width)
 {
     AddSearchWindow(width);
@@ -2658,7 +2641,7 @@ static void DrawHiddenSearchWindow(u8 width)
 
 static void DexNavDrawHiddenIcons(void)
 {
-    u16 species = sDexNavSearchDataPtr->species;
+    enum Species species = sDexNavSearchDataPtr->species;
 
     DrawHiddenSearchWindow(12);
     DrawSearchIcon();
@@ -2694,7 +2677,7 @@ void TryIncrementSpeciesSearchLevel()
 void ResetDexNavSearch(void)
 {
     gSaveBlock3Ptr->dexNavChain = 0;    //reset dex nav chaining on new map
-    VarSet(DN_VAR_STEP_COUNTER, 0); //reset hidden pokemon step counter
+    VarSet(DN_VAR_STEP_COUNTER, 0); //reset hidden Pokémon step counter
     if (FlagGet(DN_FLAG_SEARCHING))
         EndDexNavSearch();   //moving to new map ends dexnav search
 }

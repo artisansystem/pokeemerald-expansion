@@ -81,6 +81,6 @@ void IncrementDexNavChain(void);
 u32 PokeNavMenuDexNavCallback(void);
 bool32 OnStep_DexNavSearch(void);
 
-extern u16 gDexNavSpecies;
+extern enum Species gDexNavSpecies;
 
 #endif // GUARD_DEXNAV_H
