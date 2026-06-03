@@ -340,8 +340,8 @@ static const u8 sUrielSpeech_NiceToMeetYou[] = _(
 	"once you've settled in.\p"
 );
 
-static const u16 sUrielSpeech_BgGfx[] = INCBIN_U16("graphics/uriel_speech/bg.4bpp");
-static const u16 sUrielSpeech_BgPal[] = INCBIN_U16("graphics/uriel_speech/bg.gbapal");
+static const u16 sUrielSpeech_BgGfx[] = INCGFX_U16("graphics/uriel_speech/bg.png", ".4bpp");
+static const u16 sUrielSpeech_BgPal[] = INCGFX_U16("graphics/uriel_speech/bg.pal", ".gbapal");
 static const u32 sUrielSpeech_BgMap[] = INCBIN_U32("graphics/uriel_speech/bg.bin.smolTM");
 
 static const struct BgTemplate sUrielSpeech_BgTemplates[BG_COUNT] =

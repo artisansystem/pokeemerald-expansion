@@ -26,6 +26,7 @@
 #include "m4a.h"
 #include "main.h"
 #include "main_menu.h"
+#include "match_call.h"
 #include "malloc.h"
 #include "map_name_popup.h"
 #include "menu.h"
@@ -722,6 +723,7 @@ static const u8 *const sDebugMenu_Actions_BagUse_Options[] =
     COMPOUND_STRING("No Bag: {STR_VAR_1}Inactive"),
     COMPOUND_STRING("No Bag: {STR_VAR_1}VS Trainers"),
     COMPOUND_STRING("No Bag: {STR_VAR_1}Active"),
+    COMPOUND_STRING("No Bag: {STR_VAR_1}Invalid value"),
 };
 
 static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
@@ -1088,18 +1090,18 @@ static u8 Debug_GenerateListTrainerMenu(void)
             }
             break;
         case 6:
-            if (I_VS_SEEKER_CHARGING || !isRealFight || rematchTableId == -1)
+            if (FREE_MATCH_CALL || I_VS_SEEKER_CHARGING || !isRealFight || rematchTableId == -1)
             {
                 noDraw = TRUE;
                 break;
             }
-            if (gSaveBlock1Ptr->trainerRematches[rematchTableId])
+            if (GetActiveTrainerRematches(rematchTableId))
                 StringCopy(gStringVar1, COMPOUND_STRING("{COLOR GREEN} TRUE"));
             else
                 StringCopy(gStringVar1, COMPOUND_STRING("{COLOR RED} FALSE"));
             break;
         case 8:
-            if (I_VS_SEEKER_CHARGING == 0)
+            if (FREE_MATCH_CALL || I_VS_SEEKER_CHARGING == 0)
                 noDraw = TRUE;
             break;
         }
@@ -1163,9 +1165,9 @@ static const u16 sLocationFlags[] =
     FLAG_WORLD_MAP_ROUTE10_POKEMON_CENTER_1F,
 };
 
-static u8 Debug_CheckToggleFlags(u8 id)
+static u32 Debug_CheckToggleFlags(u8 id)
 {
-    bool32 result = FALSE;
+    u32 result = FALSE;
 
     switch (id)
     {
@@ -1188,6 +1190,9 @@ static u8 Debug_CheckToggleFlags(u8 id)
         result = TRUE;
         for (u32 i = 0; i < ARRAY_COUNT(sLocationFlags); i++)
         {
+            if (sLocationFlags[i] == 0) // Location flags for Frlg are set to flag 0 in Emerald and vice versa
+                continue;
+
             if (!FlagGet(sLocationFlags[i]))
             {
                 result = FALSE;
@@ -1234,6 +1239,8 @@ static u8 Debug_CheckToggleFlags(u8 id)
     #endif
     case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE:
         result = VarGet(B_VAR_NO_BAG_USE);
+        if (result >= NO_BAG_INVALID_VALUE)
+            result = NO_BAG_INVALID_VALUE;
         break;
     default:
         result = 0xFF;
@@ -1266,6 +1273,9 @@ static u8 Debug_GenerateListMenuNames(void)
             else
                 name = sDebugMenu_Actions_Flags[i].text;
         }
+
+        if (i == DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE && flagResult == NO_BAG_INVALID_VALUE)
+            flagResult = FALSE;
 
         if (flagResult == 0xFF)
         {
@@ -1580,6 +1590,7 @@ static void DebugAction_Util_Warp_SelectWarp(u8 taskId)
         DoWarp();
         ResetInitialPlayerAvatarState();
         DebugAction_DestroyExtraWindow(taskId);
+        ScriptContext_Stop();
     }
     else if (JOY_NEW(B_BUTTON))
     {
@@ -2148,12 +2159,12 @@ static void DebugAction_Trainers_SetRematch(u8 taskId)
 
 static void DebugAction_Trainers_SetRematchReadiness(u8 taskId)
 {
-    if (gSaveBlock1Ptr->trainerRematches[sDebugMenuListData->data[1]] == -1)
+    if (sDebugMenuListData->data[1] == -1)
         return;
-    if (gSaveBlock1Ptr->trainerRematches[sDebugMenuListData->data[1]])
-        gSaveBlock1Ptr->trainerRematches[sDebugMenuListData->data[1]] = FALSE;
+    if (GetActiveTrainerRematches(sDebugMenuListData->data[1]))
+        SetActiveTrainerRematches(sDebugMenuListData->data[1], FALSE);
     else
-        gSaveBlock1Ptr->trainerRematches[sDebugMenuListData->data[1]] = TRUE;
+        SetActiveTrainerRematches(sDebugMenuListData->data[1], TRUE);
 }
 
 static void DebugAction_Trainers_TryBattle(u8 taskId)
@@ -2200,7 +2211,7 @@ static void DebugAction_Trainers_TryBattle(u8 taskId)
 
 static void DebugAction_Trainers_RechargeVsSeeker(u8 taskId)
 {
-    gSaveBlock1Ptr->trainerRematchStepCounter = VSSEEKER_RECHARGE_STEPS;
+    SetTrainerRematchStepCounter(VSSEEKER_RECHARGE_STEPS);
     MapResetTrainerRematches(gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum);
     ScriptContext_SetupScript(EventScript_VsSeekerChargingDone);
     Debug_DestroyMenu_Full(taskId);
@@ -2577,7 +2588,8 @@ static void DebugAction_FlagsVars_RunningShoes(u8 taskId)
 
 static void DebugAction_FlagsVars_ToggleFlyFlags(u8 taskId)
 {
-    if (FlagGet(sLocationFlags[ARRAY_COUNT(sLocationFlags) - 1]))
+    u32 checkedFlag = sLocationFlags[0] == 0 ? sLocationFlags[ARRAY_COUNT(sLocationFlags) - 1] : sLocationFlags[0];
+    if (FlagGet(checkedFlag))
     {
         PlaySE(SE_PC_OFF);
         for (u32 i = 0; i < ARRAY_COUNT(sLocationFlags); i++)
@@ -4973,6 +4985,8 @@ static void DebugAction_Party_BattleSingle(u8 taskId)
     CreateNPCTrainerPartyFromTrainer(gEnemyParty, GetDebugAiTrainer(), FALSE, BATTLE_TYPE_TRAINER);
 
     gBattleTypeFlags = BATTLE_TYPE_TRAINER;
+    if (sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_AI].battleType == TRAINER_BATTLE_TYPE_DOUBLES)
+        gBattleTypeFlags |= BATTLE_TYPE_DOUBLE;
     gDebugAIFlags = sDebugTrainers[DIFFICULTY_NORMAL][DEBUG_TRAINER_AI].aiFlags;
     gIsDebugBattle = TRUE;
     gBattleEnvironment = BattleSetup_GetEnvironmentId();
