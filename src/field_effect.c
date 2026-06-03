@@ -273,8 +273,8 @@ static const u32 sUnusedBirchBeauty[] = INCGFX_U32("graphics/birch_speech/unused
 static const u16 sNewGameBirch_Pal[16] = INCGFX_U16("graphics/birch_speech/birch.png", ".gbapal");
 static const u32 sNewGamePlatformLeft_Gfx[] = INCGFX_U32("graphics/uriel_speech/shadow-left.png", ".4bpp");
 static const u32 sNewGamePlatformRight_Gfx[] = INCGFX_U32("graphics/uriel_speech/shadow-right.png", ".4bpp");
-static const u16 sNewGamePlatformLeft_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-left.pal", ".gbapal");
-static const u16 sNewGamePlatformRight_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-right.pal", ".gbapal");
+static const u16 sNewGamePlatformLeft_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-left.png", ".gbapal");
+static const u16 sNewGamePlatformRight_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-right.png", ".gbapal");
 
 static const u32 sPokeballGlow_Gfx[] = INCGFX_U32("graphics/field_effects/pics/pokeball_glow.png", ".4bpp");
 static const u16 sPokeballGlow_Pal[16] = INCGFX_U16("graphics/field_effects/palettes/pokeball_glow.pal", ".gbapal");

@@ -129,8 +129,8 @@ static const u32 sRegionMapBg_GfxLZ[] = INCGFX_U32("graphics/pokenav/region_map/
 static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/map.bin.smolTM");
 
 static const u16 sDawnsingerRegionMapBg_Pal[] = INCGFX_U16("graphics/pokenav/region_map/sector_maps/dawnsinger_map.pal", ".gbapal");
-static const u32 sDawnsingerRegionMapBg_GfxLZ[] = INCBIN_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.png", ".8bpp.smol");
-static const u32 sDawnsingerRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.bin");
+static const u32 sDawnsingerRegionMapBg_GfxLZ[] = INCGFX_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.png", ".8bpp.smol");
+static const u32 sDawnsingerRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/sector_maps/dawnsinger_map.bin.smolTM");
 
 static const u16 sRegionMapPlayerIcon_BrendanPal[] = INCGFX_U16("graphics/pokenav/region_map/brendan_icon.png", ".gbapal");
 static const u8 sRegionMapPlayerIcon_BrendanGfx[] = INCGFX_U8("graphics/pokenav/region_map/brendan_icon.png", ".4bpp");

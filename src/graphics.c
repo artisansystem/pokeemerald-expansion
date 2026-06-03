@@ -1745,19 +1745,13 @@ const u16 gBattlePyramidBagInterface_Pal[] = INCGFX_U16("graphics/bag/menu_pyram
 const u32 gSwapLineGfx[] = INCGFX_U32("graphics/interface/swap_line.png", ".4bpp.smol");
 const u16 gSwapLinePal[] = INCGFX_U16("graphics/interface/swap_line.png", ".gbapal");
 
-<<<<<<< HEAD
 //tx_registered_items_menu
 const u32 gSwapLineGfx_RegisteredItemsMenu[] = INCGFX_U32("graphics/interface/swap_line_tx.png", ".4bpp.smol");
 
 const u32 gShopMenu_Gfx[] = INCGFX_U32("graphics/shop/menu.png", ".4bpp.smol");
 const u16 gShopMenu_Pal[] = INCGFX_U16("graphics/shop/menu.png", ".gbapal");
 
-const u32 gShopMenu_Tilemap[] = INCGFX_U32("graphics/shop/menu.bin", ".bin.smolTM");
-=======
-const u32 gShopMenu_Gfx[] = INCGFX_U32("graphics/shop/menu.png", ".4bpp.smol");
-const u16 gShopMenu_Pal[] = INCGFX_U16("graphics/shop/menu.png", ".gbapal");
 const u32 gShopMenu_Tilemap[] = INCBIN_U32("graphics/shop/menu.bin.smolTM");
->>>>>>> 6798f72e037d4af6d1a797835f3f3f11591f8c1c
 const u32 gShopMenuMoney_Gfx[] = INCGFX_U32("graphics/shop/money.png", ".4bpp.smol");
 
 // Pokeblock
@@ -2052,7 +2046,6 @@ const u16 ALIGNED(4) gTilesetPalettes_General[][16] =
     INCGFX_U16("data/tilesets/primary/general/palettes/15.pal", ".gbapal"),
 };
 
-<<<<<<< HEAD
 const u16 gTilesetPalettes_General_Summer[][16] =
 {
     INCGFX_U16("data/tilesets/primary/general/palettes/00.pal", ".gbapal"),
@@ -2112,10 +2105,7 @@ const u16 gTilesetPalettes_General_Winter[][16] =
     INCGFX_U16("data/tilesets/primary/general/palettes/14.pal", ".gbapal"),
     INCGFX_U16("data/tilesets/primary/general/palettes/15.pal", ".gbapal"),
 };
-const u32 gSwapLineGfx_RegisteredItemsMenu[] = INCGFX_U32("graphics/interface/swap_line_tx.png", ".4bpp.smol");
 
-=======
->>>>>>> 6798f72e037d4af6d1a797835f3f3f11591f8c1c
 const u32 gTilesetTiles_General[] = INCGFX_U32("data/tilesets/primary/general/tiles.png", ".4bpp.smol");
 
 // trade/egg hatch
