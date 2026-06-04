@@ -5503,7 +5503,7 @@ static inline bool32 ShouldShowRename(void)
          && !sMonSummaryScreen->summary.isEgg
          && sMonSummaryScreen->mode != SUMMARY_MODE_BOX
          && sMonSummaryScreen->mode != SUMMARY_MODE_BOX_CURSOR
-      d   && !InBattleFactory() 
+         && !InBattleFactory() 
          && !InSlateportBattleTent()
          && GetPlayerIDAsU32() == sMonSummaryScreen->summary.OTID);
 }

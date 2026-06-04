@@ -1887,19 +1887,7 @@ enum TrainerPicID LinkPlayerGetTrainerPicId(u32 multiplayerId)
     u8 outfitId = gLinkPlayers[multiplayerId].currOutfitId;
     enum GameVersion version = gLinkPlayers[multiplayerId].version & 0xFF;
 
-    if (version == VERSION_FIRE_RED || version == VERSION_LEAF_GREEN)
-        trainerPicId = gender + TRAINER_PIC_BACK_RED;
-    else if (version == VERSION_RUBY || version == VERSION_SAPPHIRE)
-        trainerPicId = gender + TRAINER_PIC_BACK_RUBY_SAPPHIRE_BRENDAN;
-    else
-    {
-        if (outfitId < OUTFIT_COUNT)
-            trainerPicId = GetPlayerTrainerPicIdByOutfitGenderType(outfitId, gender, appearance, 1);
-        else
-            trainerPicId = gender + TRAINER_PIC_BACK_BRENDAN;
-    }
-
-    return trainerPicId;
+    return GetPlayerTrainerPic(gender, version);
 }
 
 static enum TrainerPicID PlayerGetTrainerBackPicId(void)

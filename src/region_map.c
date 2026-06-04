@@ -1194,10 +1194,6 @@ enum RegionMapType GetRegionMapType(u32 mapSecId)
 
 static mapsec_u16_t GetMapSecIdAt(u16 x, u16 y)
 {
-    u8 currentMapRegion;
-
-    currentMapRegion = gMapHeader.region;
-
     if (y < MAPCURSOR_Y_MIN || y > MAPCURSOR_Y_MAX || x < MAPCURSOR_X_MIN || x > MAPCURSOR_X_MAX)
     {
         return MAPSEC_NONE;

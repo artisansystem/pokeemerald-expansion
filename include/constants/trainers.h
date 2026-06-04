@@ -22,11 +22,11 @@ enum __attribute__((packed)) TrainerPicID
     TRAINER_PIC_NONE,
     TRAINER_PIC_BRENDAN, // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
     TRAINER_PIC_MAY,
+    TRAINER_PIC_WALLY,
     TRAINER_PIC_RED,
     TRAINER_PIC_LEAF,
     TRAINER_PIC_RS_BRENDAN,
     TRAINER_PIC_RS_MAY,
-    TRAINER_PIC_WALLY,
     TRAINER_PIC_STEVEN,
     TRAINER_PIC_POKEDUDE,
     TRAINER_PIC_OLD_MAN,
@@ -542,6 +542,7 @@ enum TrainerClassID
 
 #define TRAINER_GENDER_MALE   0
 #define TRAINER_GENDER_FEMALE 1
+#define TRAINER_GENDER_NONBINARY 2
 
 // Trainer party defines
 #define TRAINER_MON_MALE          1

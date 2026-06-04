@@ -756,6 +756,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, enum Species species, u8 level, u32
 void CreateBoxMon_Legacy(struct BoxPokemon *boxMon, enum Species species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId);
 void CreateMonWithIVs(struct Pokemon *mon, enum Species species, u8 level, u32 personality, struct OriginalTrainerId trainerId, u8 fixedIV);
 void SetBoxMonIVs(struct BoxPokemon *mon, u8 fixedIV);
+void SetBoxMonPerfectIVs(struct BoxPokemon *mon, u32 numPerfect);
 void CreateMaleMon(struct Pokemon *mon, enum Species species, u8 level);
 void CreateMonWithIVsPersonality(struct Pokemon *mon, enum Species species, u8 level, u32 ivs, u32 personality);
 void CreateMonWithNature(struct Pokemon *mon, enum Species species, u8 level, u8 fixedIV, u8 nature);

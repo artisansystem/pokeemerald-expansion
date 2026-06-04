@@ -1849,14 +1849,14 @@ static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir)
         }
         else if (*slotPtr == PARTY_SIZE)
         {
-            *slotPtr = gPartiesCount[partyTrainer] - 1;
+            *slotPtr = gPartiesCount[B_TRAINER_PLAYER] - 1;
         }
         else if (*slotPtr == PARTY_SIZE + 1)
         {
             if (sPartyMenuInternal->chooseHalf)
                 *slotPtr = PARTY_SIZE;
             else
-                *slotPtr = gPartiesCount[partyTrainer] - 1;
+                *slotPtr = gPartiesCount[B_TRAINER_PLAYER] - 1;
         }
         else
         {
@@ -1870,7 +1870,7 @@ static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir)
         }
         else
         {
-            if (*slotPtr == gPartiesCount[partyTrainer] - 1)
+            if (*slotPtr == gPartiesCount[B_TRAINER_PLAYER] - 1)
             {
                 if (sPartyMenuInternal->chooseHalf)
                     *slotPtr = PARTY_SIZE;
@@ -1884,7 +1884,7 @@ static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir)
         }
         break;
     case MENU_DIR_RIGHT:
-        if (gPartiesCount[partyTrainer] != 1 && *slotPtr == 0)
+        if (gPartiesCount[B_TRAINER_PLAYER] != 1 && *slotPtr == 0)
         {
             if (sPartyMenuInternal->lastSelectedSlot == 0)
                 *slotPtr = 1;

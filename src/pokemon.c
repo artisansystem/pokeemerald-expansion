@@ -1043,7 +1043,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, enum Species species, u8 level, u32
         SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
 }
 
-void CreateBoxMon_Legacy(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
+void CreateBoxMon_Legacy(struct BoxPokemon *boxMon, enum Species species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId)
 {
     u8 speciesName[POKEMON_NAME_LENGTH + 1];
     u32 personality = Random32();
@@ -1299,7 +1299,7 @@ void CreateMonWithIVsPersonality(struct Pokemon *mon, enum Species species, u8 l
     GiveMonInitialMoveset(mon);
 }
 
-void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 nature)
+void CreateMonWithNature(struct Pokemon *mon, enum Species species, u8 level, u8 fixedIV, u8 nature)
 {
     u32 personality;
 
@@ -1312,7 +1312,7 @@ void CreateMonWithNature(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV,
     CreateMon_Legacy(mon, species, level, fixedIV, TRUE, personality, OT_ID_PLAYER_ID, 0);
 }
 
-void CreateMonWithGenderNatureLetter(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 gender, u8 nature, u8 unownLetter)
+void CreateMonWithGenderNatureLetter(struct Pokemon *mon, enum Species species, u8 level, u8 fixedIV, u8 gender, u8 nature, u8 unownLetter)
 {
     u32 personality;
 
@@ -5542,7 +5542,7 @@ u16 SpeciesToPokedexNum(enum Species species)
         if (species <= REGIONAL_DEX_COUNT)
             return species;
         return 0xFFFF;
-    }
+    }ma
 }
 
 bool32 IsSpeciesInRegionalDex(enum Species species)

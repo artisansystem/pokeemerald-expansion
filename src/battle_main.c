@@ -3954,11 +3954,8 @@ bool32 EndTurnEvents(void) // Called from Battle Script
     AssignUsableGimmicks();
     SetShellSideArmCategory();
     SetAiLogicDataForTurn(gAiLogicData); // get assumed abilities, hold effects, etc of all battlers
-<<<<<<< HEAD
     gBattleMainFunc = PlayerTryEvolution;
-=======
     SetBattleCallback(HandleTurnActionSelectionState);
->>>>>>> a9d9c29acc53c6f80c39729dfbb995001ff2d2f4
 
     return FALSE;
 }
@@ -4104,7 +4101,7 @@ static void Task_BeginBattleEvolutionScene(u8 taskId)
         battlerPosition = gTasks[taskId].tBattlerPosition;
         SpeciesToEvolveInto = gTasks[taskId].tSpeciesToEvolveInto;
         DestroyTask(taskId);
-        EvolutionScene(&gPlayerParty[battlerPosition], SpeciesToEvolveInto, TRUE, battlerPosition);
+        EvolutionScene(gParties[B_TRAINER_PLAYER][battlerPosition], SpeciesToEvolveInto, TRUE, battlerPosition);
     }
 }
 
@@ -4117,7 +4114,7 @@ static void PlayerTryEvolution(void)
     {
         bool32 canStopEvo = TRUE;
         gLeveledUpInBattle &= ~((1u << LEFT_PKMN)); // Mask the bit
-        species = GetEvolutionTargetSpecies(&gPlayerParty[LEFT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
+        species = GetEvolutionTargetSpecies(gParties[B_TRAINER_PLAYER][LEFT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
         if (species != SPECIES_NONE)
         {
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
@@ -4132,7 +4129,7 @@ static void PlayerTryEvolution(void)
     {
         bool32 canStopEvo = TRUE;
         gLeveledUpInBattle &= ~((1u << RIGHT_PKMN)); // Mask the bit
-        species = GetEvolutionTargetSpecies(&gPlayerParty[RIGHT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
+        species = GetEvolutionTargetSpecies(gParties[B_TRAINER_PLAYER][RIGHT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
         if (species != SPECIES_NONE)
         {
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);

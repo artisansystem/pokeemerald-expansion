@@ -579,7 +579,7 @@ u32 BirchCase_GiveMonParameterized(enum Species species, u8 level, enum Item ite
 
 #ifdef POKEMON_EXPANSION
     // In case a mon with a form changing item is given. Eg: SPECIES_ARCEUS_NORMAL with ITEM_SPLASH_PLATE will transform into SPECIES_ARCEUS_WATER upon gifted.
-    TryFormChange(&mon, FORM_CHANGE_ITEM_HOLD);
+    TryFormChange(&mon, FORM_CHANGE_ITEM_HOLD, B_TRAINER_PLAYER);
 #endif
 
     // assign OT name and gender
@@ -589,7 +589,7 @@ u32 BirchCase_GiveMonParameterized(enum Species species, u8 level, enum Item ite
     // find empty party slot to decide whether the Pokémon goes to the Player's party or the storage system.
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
+        if (GetMonData(gPartiesCount[B_TRAINER_PLAYER][i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
             break;
     }
     if (i >= PARTY_SIZE)
@@ -599,8 +599,8 @@ u32 BirchCase_GiveMonParameterized(enum Species species, u8 level, enum Item ite
     else
     {
         sentToPc = MON_GIVEN_TO_PARTY;
-        CopyMon(&gPlayerParty[i], &mon, sizeof(mon));
-        gPlayerPartyCount = i + 1;
+        CopyMon(gPartiesCount[B_TRAINER_PLAYER][i], &mon, sizeof(mon));
+        gPartiesCount[B_TRAINER_PLAYER] = i + 1;
     }
 
     // set pokédex flags
