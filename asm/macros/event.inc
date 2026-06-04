@@ -1287,11 +1287,7 @@
 
 	@ Opens the Pokemart system, offering the specified products for sale.
 	@ Products should be a list of .2byte item values preceded by an .align 2
-<<<<<<< HEAD
-	.macro pokemart products:req, shopType=NEW_SHOP_PRICE_TYPE_NORMAL
-=======
-	.macro pokemart products=Pokemart_DefaultItemList
->>>>>>> a9d9c29acc53c6f80c39729dfbb995001ff2d2f4
+	.macro pokemart products=Pokemart_DefaultItemList, shopType= NEW_SHOP_PRICE_TYPE_NORMAL
 	.byte SCR_OP_POKEMART
 	.4byte \products
 	.2byte \shopType
@@ -2475,21 +2471,6 @@
 	settotemboost \battler, 0, 0, 0, 0, 0, 0, 2
 	.endm
 
-<<<<<<< HEAD
-	@ Attempts to trigger a special evolution method in the overworld.
-	@ There may be other conditions required which are coded for in GetEvolutionTargetSpecies.
-	@ EX: tryspecialevo EVO_WATER_SCROLL, FALSE, FALSE triggers Kubfu's EVO_WATER_SCROLL evolution
-	@	  method, cannot be cancelled in the evolution scene, and will only evolve one Kubfu if there
-	@	  are multiple in the player's party.
-	.macro tryspecialevo evoMethod:req, canStopEvo=TRUE, tryMultiple=TRUE
-	setvar VAR_0x8000, \evoMethod
-	setvar VAR_0x8001, \canStopEvo
-	setvar VAR_0x8002, \tryMultiple
-	special TrySpecialScriptEvolution
-	.endm
-
-=======
->>>>>>> a9d9c29acc53c6f80c39729dfbb995001ff2d2f4
 	.macro ai_vs_ai_battle trainer1:req, trainer2:req
 	setflag B_FLAG_AI_VS_AI_BATTLE
 	setvar VAR_0x8004, \trainer1

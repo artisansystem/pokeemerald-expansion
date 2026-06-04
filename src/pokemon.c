@@ -55,6 +55,7 @@
 #include "trainer.h"
 #include "trainer_hill.h"
 #include "util.h"
+#include "config/wild_encounter.h"
 #include "constants/abilities.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_move_effects.h"
@@ -1082,7 +1083,7 @@ void CreateBoxMon_Legacy(struct BoxPokemon *boxMon, enum Species species, u8 lev
         {
             isShiny = TRUE;
         }
-        else if (P_ONLY_OBTAINABLE_SHINIES && (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || (B_FLAG_NO_CATCHING != 0 && FlagGet(B_FLAG_NO_CATCHING))))
+        else if (P_ONLY_OBTAINABLE_SHINIES && (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || (WE_FLAG_NO_CATCHING != 0 && FlagGet(WE_FLAG_NO_CATCHING))))
         {
             isShiny = FALSE;
         }
@@ -1214,14 +1215,6 @@ void CreateBoxMon_Legacy(struct BoxPokemon *boxMon, enum Species species, u8 lev
             }
         }
     }
-
-    if (GetSpeciesAbility(species, 1))
-    {
-        value = personality & 1;
-        SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
-    }
-
-    GiveBoxMonInitialMoveset(boxMon);
 }
 
 static bool32 IsValidGender(u32 gender)
@@ -2574,26 +2567,11 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_EFFORT_RIBBON:
             retVal = GetSubstruct3(boxMon)->effortRibbon;
             break;
-        case MON_DATA_MARINE_RIBBON:
-            retVal = GetSubstruct3(boxMon)->marineRibbon;
-            break;
-        case MON_DATA_LAND_RIBBON:
-            retVal = GetSubstruct3(boxMon)->landRibbon;
-            break;
-        case MON_DATA_SKY_RIBBON:
-            retVal = GetSubstruct3(boxMon)->skyRibbon;
-            break;
-        case MON_DATA_COUNTRY_RIBBON:
-            retVal = GetSubstruct3(boxMon)->countryRibbon;
-            break;
         case MON_DATA_NATIONAL_RIBBON:
             retVal = GetSubstruct3(boxMon)->nationalRibbon;
             break;
         case MON_DATA_EARTH_RIBBON:
             retVal = GetSubstruct3(boxMon)->earthRibbon;
-            break;
-        case MON_DATA_WORLD_RIBBON:
-            retVal = GetSubstruct3(boxMon)->worldRibbon;
             break;
         case MON_DATA_MODERN_FATEFUL_ENCOUNTER:
             retVal = GetSubstruct3(boxMon)->modernFatefulEncounter;
@@ -2648,13 +2626,8 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
                 retVal += substruct3->victoryRibbon;
                 retVal += substruct3->artistRibbon;
                 retVal += substruct3->effortRibbon;
-                retVal += substruct3->marineRibbon;
-                retVal += substruct3->landRibbon;
-                retVal += substruct3->skyRibbon;
-                retVal += substruct3->countryRibbon;
                 retVal += substruct3->nationalRibbon;
                 retVal += substruct3->earthRibbon;
-                retVal += substruct3->worldRibbon;
             }
             break;
         case MON_DATA_RIBBONS:
@@ -2671,13 +2644,8 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
                        | (substruct3->victoryRibbon << 17)
                        | (substruct3->artistRibbon << 18)
                        | (substruct3->effortRibbon << 19)
-                       | (substruct3->marineRibbon << 20)
-                       | (substruct3->landRibbon << 21)
-                       | (substruct3->skyRibbon << 22)
-                       | (substruct3->countryRibbon << 23)
-                       | (substruct3->nationalRibbon << 24)
-                       | (substruct3->earthRibbon << 25)
-                       | (substruct3->worldRibbon << 26);
+                       | (substruct3->nationalRibbon << 20)
+                       | (substruct3->earthRibbon << 21);
             }
             break;
         case MON_DATA_HYPER_TRAINED_HP:
@@ -3090,26 +3058,11 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_EFFORT_RIBBON:
             SET8(GetSubstruct3(boxMon)->effortRibbon);
             break;
-        case MON_DATA_MARINE_RIBBON:
-            SET8(GetSubstruct3(boxMon)->marineRibbon);
-            break;
-        case MON_DATA_LAND_RIBBON:
-            SET8(GetSubstruct3(boxMon)->landRibbon);
-            break;
-        case MON_DATA_SKY_RIBBON:
-            SET8(GetSubstruct3(boxMon)->skyRibbon);
-            break;
-        case MON_DATA_COUNTRY_RIBBON:
-            SET8(GetSubstruct3(boxMon)->countryRibbon);
-            break;
         case MON_DATA_NATIONAL_RIBBON:
             SET8(GetSubstruct3(boxMon)->nationalRibbon);
             break;
         case MON_DATA_EARTH_RIBBON:
             SET8(GetSubstruct3(boxMon)->earthRibbon);
-            break;
-        case MON_DATA_WORLD_RIBBON:
-            SET8(GetSubstruct3(boxMon)->worldRibbon);
             break;
         case MON_DATA_MODERN_FATEFUL_ENCOUNTER:
             SET8(GetSubstruct3(boxMon)->modernFatefulEncounter);
@@ -3711,6 +3664,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
 
 void CopyPartyMonToBattleData(enum BattlerId battler, u32 partyIndex)
 {
+    u32 side = GetBattlerSide(battler);
     struct Pokemon *party = GetBattlerParty(battler);
     PokemonToBattleMon(&party[partyIndex], &gBattleMons[battler]);
     gBattleStruct->battlerState[battler].hpOnSwitchout = gBattleMons[battler].hp;
@@ -5542,7 +5496,7 @@ u16 SpeciesToPokedexNum(enum Species species)
         if (species <= REGIONAL_DEX_COUNT)
             return species;
         return 0xFFFF;
-    }ma
+    }
 }
 
 bool32 IsSpeciesInRegionalDex(enum Species species)

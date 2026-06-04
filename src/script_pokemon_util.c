@@ -589,7 +589,7 @@ u32 BirchCase_GiveMonParameterized(enum Species species, u8 level, enum Item ite
     // find empty party slot to decide whether the Pokémon goes to the Player's party or the storage system.
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        if (GetMonData(gPartiesCount[B_TRAINER_PLAYER][i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
+        if (GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_SPECIES, NULL) == SPECIES_NONE)
             break;
     }
     if (i >= PARTY_SIZE)
@@ -599,7 +599,7 @@ u32 BirchCase_GiveMonParameterized(enum Species species, u8 level, enum Item ite
     else
     {
         sentToPc = MON_GIVEN_TO_PARTY;
-        CopyMon(gPartiesCount[B_TRAINER_PLAYER][i], &mon, sizeof(mon));
+        CopyMon(&gParties[B_TRAINER_PLAYER][i], &mon, sizeof(mon));
         gPartiesCount[B_TRAINER_PLAYER] = i + 1;
     }
 

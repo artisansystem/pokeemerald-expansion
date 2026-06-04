@@ -575,7 +575,7 @@ const union AnimCmd *const sBackAnims_OldManPokedude[] = {
     }}
 
 #define TRAINER_BACK_PIC(yOffset, sprite, pal, anim)                                         \
-    (const struct TrainerBackPicInfo[])                                                      \
+    (const struct TrainerBackPicInfo [])                                                      \
     {{                                                                                       \
         .coordinates = {.size = 8, .y_offset = yOffset},                                     \
         .image = {.data = sprite, .size = TRAINER_PIC_SIZE, .relativeFrames = TRUE},         \

@@ -509,6 +509,9 @@ void CB2_InitBattle(void)
             SetMainCallback2(CB2_PreInitIngamePlayerPartnerBattle);
         }
         gBattleCommunication[MULTIUSE_STATE] = 0;
+
+        gPlayerDoesNotWantToEvolveLeft = FALSE;
+        gPlayerDoesNotWantToEvolveRight = FALSE;
     }
     else
     {
@@ -4101,7 +4104,7 @@ static void Task_BeginBattleEvolutionScene(u8 taskId)
         battlerPosition = gTasks[taskId].tBattlerPosition;
         SpeciesToEvolveInto = gTasks[taskId].tSpeciesToEvolveInto;
         DestroyTask(taskId);
-        EvolutionScene(gParties[B_TRAINER_PLAYER][battlerPosition], SpeciesToEvolveInto, TRUE, battlerPosition);
+        EvolutionScene(&gPlayerParty[battlerPosition], SpeciesToEvolveInto, TRUE, battlerPosition);
     }
 }
 
@@ -4114,7 +4117,7 @@ static void PlayerTryEvolution(void)
     {
         bool32 canStopEvo = TRUE;
         gLeveledUpInBattle &= ~((1u << LEFT_PKMN)); // Mask the bit
-        species = GetEvolutionTargetSpecies(gParties[B_TRAINER_PLAYER][LEFT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
+        species = GetEvolutionTargetSpecies(&gPlayerParty[LEFT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
         if (species != SPECIES_NONE)
         {
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
@@ -4129,7 +4132,7 @@ static void PlayerTryEvolution(void)
     {
         bool32 canStopEvo = TRUE;
         gLeveledUpInBattle &= ~((1u << RIGHT_PKMN)); // Mask the bit
-        species = GetEvolutionTargetSpecies(gParties[B_TRAINER_PLAYER][RIGHT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
+        species = GetEvolutionTargetSpecies(&gPlayerParty[RIGHT_PKMN], EVO_MODE_NORMAL, 0, NULL, &canStopEvo, DO_EVO);
         if (species != SPECIES_NONE)
         {
             BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 0x10, RGB_BLACK);
@@ -4152,7 +4155,6 @@ static void WaitForEvolutionThenTryAnother(void)
         gBattleMainFunc = PlayerTryEvolution;
     }
 }
-
 
 static void HandleTurnActionSelectionState(void)
 {
