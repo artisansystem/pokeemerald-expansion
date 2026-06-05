@@ -11490,6 +11490,15 @@ bool8 PlayerIsUnderWaterfall(struct ObjectEvent *objectEvent)
     return FALSE;
 }
 
+const struct SpritePalette *GetObjectEventPaletteFromTag(u16 tag)
+{
+    u32 i = FindObjectEventPaletteIndexByTag(tag);
+    if (i == 0xFF)
+        i = 0; 
+
+    return &sObjectEventSpritePalettes[i];
+}
+
 // Get gfx data from daycare Pokémon and store it in vars
 void GetDaycareGraphics(struct ScriptContext *ctx)
 {
