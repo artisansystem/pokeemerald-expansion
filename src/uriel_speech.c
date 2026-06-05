@@ -337,8 +337,8 @@ static const u8 sUrielSpeech_GenderSelect[] = _(
 );
 
 static const u8 sUrielSpeech_HowDoYouLook[] = _(
-    "For the purposes of your ID card,\n"
-    "how do you look?\p"
+    "Alright. For the purpose of your\n"
+    "ID card, how do you look?\p"
 );
 
 static const u8 sUrielSpeech_AskPlayerName[] = _(
@@ -830,7 +830,7 @@ static void Task_UrielSpeech_ChooseGender(u8 taskId)
     if (gender == MALE || gender == FEMALE || gender == NONBINARY)
     {
         PlaySE(SE_SELECT);
-        gSaveBlock2Ptr->playerGender = gender;
+        gSaveBlock2Ptr->playerGender;
         gTasks[taskId].func = Task_UrielSpeech_FadeOutGenderSprite;
         return;
     }
@@ -1132,7 +1132,6 @@ static void Task_UrielSpeech_ChooseAppearance(u8 taskId)
     if(appearance == APPEARANCE_LIGHT || appearance == APPEARANCE_OLIVE || appearance == APPEARANCE_BROWN || appearance == APPEARANCE_DARK)
     {
         PlaySE(SE_SELECT);
-        gSaveBlock2Ptr->playerAppearance = appearance;
         gTasks[taskId].func = Task_UrielSpeech_YourName;
         return;
     }
