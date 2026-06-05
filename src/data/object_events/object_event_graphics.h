@@ -394,7 +394,7 @@ const u16 gObjectEventPal_Substitute[] = INCGFX_U16("graphics/object_events/pics
 const u16 gObjectEventPaletteEmotes[] = INCGFX_U16("graphics/misc/emotes.pal", ".gbapal");
 const u16 gObjectEventPaletteNeonLight[] = INCGFX_U16("graphics/object_events/palettes/neon_light.pal", ".gbapal");
 
-const u32 gObjectEventPic_Mercury[] = INCGFX_U32("graphics/object_events/pics/people/npcs/mercury.png", ".4bpp.smol", "-mwidth 2 -mheight 4");
+const u32 gObjectEventPic_Mercury[] = INCGFX_U32("graphics/object_events/pics/people/npcs/mercury.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_Mercury[] = INCGFX_U16("graphics/object_events/palettes/mercury.pal", ".gbapal");
 
 #if OW_FOLLOWERS_POKEBALLS

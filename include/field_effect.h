@@ -20,6 +20,7 @@ u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority);
 u8 AddNewGameUrielObject(s16 x, s16 y, u8 subpriority);
 u8 AddNewGamePlatformObjectLeft(s16 x, s16 y, u8 subpriority);
 u8 AddNewGamePlatformObjectRight(s16 x, s16 y, u8 subpriority);
+u8 AddNewGamePlatformObjectCursor(s16 x, s16 y, u8 subpriority);
 void FieldEffectStop(struct Sprite *sprite, u8 id);
 u8 CreateTrainerSprite(enum TrainerPicID trainerPicId, s16 x, s16 y, u8 subpriority, u8 *buffer);
 void FldEff_TeleportWarpOut(void);
