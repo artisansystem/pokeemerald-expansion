@@ -16,6 +16,7 @@
 #include "main_menu.h"
 #include "random.h"
 #include "scanline_effect.h"
+#include "script_menu.h"
 #include "sound.h"
 #include "strings.h"
 #include "trainer_pokemon_sprites.h"
@@ -83,7 +84,6 @@ enum Bgs
 enum WindowIds
 {
     WIN_TEXT = 0,
-    WIN_IMAGE,
     WIN_COUNT,
 };
 
@@ -278,6 +278,11 @@ static const u8 sUrielSpeech_Boy[] = _("BOY");
 static const u8 sUrielSpeech_Girl[] = _("GIRL");
 static const u8 sUrielSpeech_Nonbinary[] = _("NON-BINARY");
 
+static const u8 sUrielSpeech_1[] = _(" 1 ");
+static const u8 sUrielSpeech_2[] = _(" 2 ");
+static const u8 sUrielSpeech_3[] = _(" 3 ");
+static const u8 sUrielSpeech_4[] = _(" 4 ");
+
 static const struct MenuAction sMenuActions_GenderSelect[] =
 {
     { sUrielSpeech_Boy,       { .void_u8 = NULL } },
@@ -433,18 +438,18 @@ static const struct WindowTemplate sUrielSpeech_GenderWindow =
     .width = 9,
     .height = 6,
     .paletteNum = 15,
-    .baseBlock = (26*4)+2,
+    .baseBlock = (26*4)+55,
 };
 
 static const struct WindowTemplate sUrielSpeech_SpriteWindow =
 {
     .bg = BG_TEXT,
     .tilemapLeft = 2,
-    .tilemapTop = 5,
+    .tilemapTop = 4,
     .width = 3,
-    .height = 7,
+    .height = 8,
     .paletteNum = 15,
-    .baseBlock = (26*4)+3,
+    .baseBlock = (26*4)+79,
 };
 
 // Code
@@ -826,7 +831,7 @@ static void Task_UrielSpeech_ChooseGender(u8 taskId)
     {
         PlaySE(SE_SELECT);
         gSaveBlock2Ptr->playerGender = gender;
-        gTasks[taskId].func = Task_UrielSpeech_Appearance;
+        gTasks[taskId].func = Task_UrielSpeech_FadeOutGenderSprite;
         return;
     }
     // Handle cursor movement → sprite swap
@@ -942,13 +947,15 @@ static s8 UrielSpeech_ProcessGenderMenuInput(void)
 static void Task_UrielSpeech_Appearance(u8 taskId)
 {
     UrielSpeech_PrintMessageBox(sUrielSpeech_HowDoYouLook);
-    gTasks[taskId].func = Task_UrielSpeech_FadeOutGenderSprite;
+    gTasks[taskId].func = Task_UrielSpeech_WaitToShowAppearanceSelect;
 }
 
 static void Task_UrielSpeech_FadeOutGenderSprite(u8 taskId)
 {
     if(!IsTextPrinterActiveOnWindow(WIN_TEXT))
     {
+        ClearStdWindowAndFrameToTransparent(gTasks[taskId].tWindowId, TRUE);
+
      // make the sprites fade out somehow
         gSprites[sUrielSpeech->platformSpriteIdLeft].oam.priority  = 1;
         gSprites[sUrielSpeech->platformSpriteIdRight].oam.priority = 1;
@@ -973,7 +980,7 @@ static void Task_UrielSpeech_FadeOutGenderSprite(u8 taskId)
         
         gTasks[CreateTask(Task_UrielSpeech_FadeOut, 0)];
         
-        sUrielSpeech->timer = 64;
+        sUrielSpeech->timer = 30;
     gTasks[taskId].func = Task_UrielSpeech_PlayerAppearanceFadeIn;
     }
 }
@@ -1082,7 +1089,7 @@ static void Task_UrielSpeech_PlayerAppearanceFadeIn(u8 taskId)
             gSprites[spriteId].invisible = FALSE;
             gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
             
-            gTasks[taskId].func = Task_UrielSpeech_WaitToShowAppearanceSelect;
+            gTasks[taskId].func = Task_UrielSpeech_Appearance;
         }
     }
 }
@@ -1104,41 +1111,81 @@ static void Task_UrielSpeech_ShowAppearanceSelect(u8 taskId)
 
     DrawStdWindowFrame(windowId, FALSE);
 
-    Task_UrielSpeech_YourName(taskId);
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_1, 8, 1, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_2, 8, 17, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_3, 8, 33, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(windowId, 1, sUrielSpeech_4, 8, 49, TEXT_SKIP_DRAW, NULL);
+
+    InitMenuInUpperLeftCorner(windowId, 4, 0, TRUE);
+
+    PutWindowTilemap(windowId);
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+
+    gTasks[taskId].func = Task_UrielSpeech_ChooseAppearance;
+
+} 
+
+static void Task_UrielSpeech_ChooseAppearance(u8 taskId)
+{
+    int appearance = UrielSpeech_ProcessAppearanceMenuInput();
+
+    if(appearance == APPEARANCE_LIGHT || appearance == APPEARANCE_OLIVE || appearance == APPEARANCE_BROWN || appearance == APPEARANCE_DARK)
+    {
+        PlaySE(SE_SELECT);
+        gSaveBlock2Ptr->playerAppearance = appearance;
+        gTasks[taskId].func = Task_UrielSpeech_YourName;
+        return;
+    }
+
+    Task_UrielSpeech_SwitchSelectedSprite(taskId);
 
 }
-
-// static void Task_UrielSpeech_ChooseAppearance(u8 taskId)
-// {
-//     int appearance = UrielSpeech_ProcessAppearanceMenuInput();
-
-//     if(appearance == APPEARANCE_LIGHT || appearance == APPEARANCE_OLIVE || appearance == APPEARANCE_BROWN || appearance == APPEARANCE_DARK)
-//     {
-//         PlaySE(SE_SELECT);
-//         gSaveBlock2Ptr->playerAppearance = appearance;
-//         gTasks[taskId].func = Task_UrielSpeech_YourName;
-//         return;
-//     }
-
-//     Task_UrielSpeech_SwitchSelectedSprite(taskId);
-
-// }
 
 static void Task_UrielSpeech_SwitchSelectedSprite(u8 taskId)
 {
-    // FIGURE THIS OUT SOMEHOW
+    u8 cursorPos = Menu_GetCursorPos();
+    u32 spriteId;
+
+    switch (cursorPos)
+    {
+        case 0:
+            spriteId = sUrielSpeech->platformSpriteIdCursor;
+            gSprites[spriteId].x = 80;
+            gSprites[spriteId].y = 95;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            break;
+        case 1:
+            spriteId = sUrielSpeech->platformSpriteIdCursor;
+            gSprites[spriteId].x = 130;
+            gSprites[spriteId].y = 95;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            break;
+        case 2:
+            spriteId = sUrielSpeech->platformSpriteIdCursor;
+            gSprites[spriteId].x = 170;
+            gSprites[spriteId].y = 95;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            break;
+        case 3:
+            spriteId = sUrielSpeech->platformSpriteIdCursor;
+            gSprites[spriteId].x = 210;
+            gSprites[spriteId].y = 95;
+            gSprites[spriteId].invisible = FALSE;
+            gSprites[spriteId].oam.objMode = ST_OAM_OBJ_BLEND;
+            break;
+    }
+
+    gTasks[taskId].func = Task_UrielSpeech_ChooseAppearance;
+
 }
 
-// static s8 UrielSpeech_ProcessAppearanceMenuInput(void)
-//  {
-
-//     if (JOY_NEW(DPAD_LEFT))
-//     {
-        
-//     }
-
-//  }
-
+static s8 UrielSpeech_ProcessAppearanceMenuInput(void)
+ {
+    return Menu_ProcessInputNoWrap();
+ }
 
 static void Task_UrielSpeech_YourName(u8 taskId)
 {
