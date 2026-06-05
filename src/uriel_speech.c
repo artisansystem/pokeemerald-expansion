@@ -1132,6 +1132,7 @@ static void Task_UrielSpeech_ChooseAppearance(u8 taskId)
     if(appearance == APPEARANCE_LIGHT || appearance == APPEARANCE_OLIVE || appearance == APPEARANCE_BROWN || appearance == APPEARANCE_DARK)
     {
         PlaySE(SE_SELECT);
+        gSaveBlock2Ptr->playerAppearance;
         gTasks[taskId].func = Task_UrielSpeech_YourName;
         return;
     }
@@ -1181,9 +1182,14 @@ static void Task_UrielSpeech_SwitchSelectedSprite(u8 taskId)
 
 }
 
-static s8 UrielSpeech_ProcessAppearanceMenuInput(void)
+static s8 UrielSpeech_ProcessAppearanceMenuInput(u8 taskId)
  {
-    return Menu_ProcessInputNoWrap();
+    s32 = Menu_ProcessInputNoWrap();
+
+    switch(input)
+    {
+        
+    }
  }
 
 static void Task_UrielSpeech_YourName(u8 taskId)
