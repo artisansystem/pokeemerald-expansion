@@ -276,6 +276,8 @@ static const u32 sNewGamePlatformLeft_Gfx[] = INCGFX_U32("graphics/uriel_speech/
 static const u32 sNewGamePlatformRight_Gfx[] = INCGFX_U32("graphics/uriel_speech/shadow-right.png", ".4bpp");
 static const u16 sNewGamePlatformLeft_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-left.png", ".gbapal");
 static const u16 sNewGamePlatformRight_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-right.png", ".gbapal");
+static const u32 sNewGamePlatformCursor_Gfx[] = INCGFX_U32("graphics/uriel_speech/shadow-small.png", ".4bpp");
+static const u16 sNewGamePlatformCursor_Pal[16] = INCGFX_U16("graphics/uriel_speech/shadow-small.png", ".gbapal");
 
 static const u32 sPokeballGlow_Gfx[] = INCGFX_U32("graphics/field_effects/pics/pokeball_glow.png", ".4bpp");
 static const u16 sPokeballGlow_Pal[16] = INCGFX_U16("graphics/field_effects/palettes/pokeball_glow.pal", ".gbapal");
@@ -388,6 +390,10 @@ static const struct SpriteFrameImage sPicTable_NewGamePlatformRight[] =
     obj_frame_tiles(sNewGamePlatformRight_Gfx)
 };
 
+static const struct SpriteFrameImage sPicTable_NewGamePlatformCursor[] =
+{
+    obj_frame_tiles(sNewGamePlatformCursor_Gfx)
+};
 
 static const struct SpritePalette sSpritePalette_NewGameBirch =
 {
@@ -413,6 +419,11 @@ static const struct SpritePalette sSpritePalette_NewGamePlatformRight =
     .tag = 0x9001,
 };
 
+static const struct SpritePalette sSpritePalette_NewGamePlatformCursor =
+{
+    .data = sNewGamePlatformCursor_Pal,
+    .tag = 0x9002,
+};
 
 static const union AnimCmd sAnim_NewGameBirch[] =
 {
@@ -434,6 +445,17 @@ static const union AnimCmd sAnim_NewGamePlatform[] =
 static const union AnimCmd *const sAnimTable_NewGamePlatform[] =
 {
     sAnim_NewGamePlatform
+};
+
+static const union AnimCmd sAnim_NewGamePlatformCursor[] =
+{
+    ANIMCMD_FRAME(.imageValue = 0, .duration = 1),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnimTable_NewGamePlatformCursor[] =
+{
+    sAnim_NewGamePlatformCursor
 };
 
 static const struct SpriteTemplate sSpriteTemplate_NewGameBirch =
@@ -474,6 +496,17 @@ const struct SpriteTemplate sSpriteTemplate_NewGamePlatformRight =
     .oam = &sOam_64x32,
     .anims = sAnimTable_NewGamePlatform,
     .images = sPicTable_NewGamePlatformRight,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy
+};
+
+const struct SpriteTemplate sSpriteTemplate_NewGamePlatformCursor = 
+{
+    .tileTag = TAG_NONE,
+    .paletteTag = 0x9002,
+    .oam = &sOam_64x32,
+    .anims = sAnimTable_NewGamePlatformCursor,
+    .images = sPicTable_NewGamePlatformCursor,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
@@ -1136,6 +1169,12 @@ u8 AddNewGamePlatformObjectRight(s16 x, s16 y, u8 subpriority)
 {
     LoadSpritePalette(&sSpritePalette_NewGamePlatformRight);
     return CreateSprite(&sSpriteTemplate_NewGamePlatformRight, x, y, subpriority);
+}
+
+u8 AddNewGamePlatformObjectCursor(s16 x, s16 y, u8 subpriority)
+{
+    LoadSpritePalette(&sSpritePalette_NewGamePlatformCursor);
+    return CreateSprite(&sSpriteTemplate_NewGamePlatformCursor, x, y, subpriority);
 }
 
 u8 CreateMonSprite_PicBox(enum Species species, s16 x, s16 y, u8 subpriority)

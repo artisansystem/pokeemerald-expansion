@@ -1488,7 +1488,7 @@ static void ShowSaveInfoWindow(void)
     if (gender == MALE)
         color = TEXT_COLOR_BLUE;
 
-    if (gender == NONBINARY)
+    else if (gender == NONBINARY)
     {
         color = TEXT_COLOR_DARK_GRAY;
     }
