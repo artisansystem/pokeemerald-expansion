@@ -830,7 +830,7 @@ static void Task_UrielSpeech_ChooseGender(u8 taskId)
     if (gender == MALE || gender == FEMALE || gender == NONBINARY)
     {
         PlaySE(SE_SELECT);
-        gSaveBlock2Ptr->playerGender;
+        gSaveBlock2Ptr->playerGender = gender;
         gTasks[taskId].func = Task_UrielSpeech_FadeOutGenderSprite;
         return;
     }
@@ -1132,7 +1132,7 @@ static void Task_UrielSpeech_ChooseAppearance(u8 taskId)
     if(appearance == APPEARANCE_LIGHT || appearance == APPEARANCE_OLIVE || appearance == APPEARANCE_BROWN || appearance == APPEARANCE_DARK)
     {
         PlaySE(SE_SELECT);
-        gSaveBlock2Ptr->playerAppearance;
+        gSaveBlock2Ptr->playerAppearance = appearance;
         gTasks[taskId].func = Task_UrielSpeech_YourName;
         return;
     }
@@ -1182,14 +1182,9 @@ static void Task_UrielSpeech_SwitchSelectedSprite(u8 taskId)
 
 }
 
-static s8 UrielSpeech_ProcessAppearanceMenuInput(u8 taskId)
+static s8 UrielSpeech_ProcessAppearanceMenuInput(void)
  {
-    s32 = Menu_ProcessInputNoWrap();
-
-    switch(input)
-    {
-        
-    }
+    return Menu_ProcessInputNoWrap();
  }
 
 static void Task_UrielSpeech_YourName(u8 taskId)
@@ -1220,7 +1215,7 @@ static void Task_UrielSpeech_StartNamingScreen(u8 taskId)
     if (!gPaletteFade.active)
     {
         UrielSpeech_SetDefaultName(Random() % NUM_PRESET_NAMES);
-        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, 0, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen);
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance, 0, CB2_UrielSpeech_ReturnFromNamingScreen);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
     }
@@ -1300,7 +1295,7 @@ static void Task_UrielSpeech_StartNamingScreen2(u8 taskId)
     if (!gPaletteFade.active)
     {
         UrielSpeech_SetDefaultLastName(Random() % NUM_PRESET_NAMES);
-        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerLastName, 0, 0, 0, CB2_UrielSpeech_ReturnFromNamingScreen2);
+        DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerLastName, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance, 0, CB2_UrielSpeech_ReturnFromNamingScreen2);
         FreeAllWindowBuffers();
         DestroyTask(taskId);
     }
