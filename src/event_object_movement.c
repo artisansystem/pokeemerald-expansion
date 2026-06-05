@@ -11254,15 +11254,6 @@ static void DoShadowFieldEffect(struct ObjectEvent *objectEvent)
     }
 }
 
-const struct SpritePalette *GetObjectEventPaletteFromTag(u16 tag)
-{
-    u32 i = FindObjectEventPaletteIndexByTag(tag);
-    if (i == 0xFF)
-        i = 0; 
-
-    return &sObjectEventSpritePalettes[i];
-}
-
 static void DoRippleFieldEffect(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
     const struct ObjectEventGraphicsInfo *graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);

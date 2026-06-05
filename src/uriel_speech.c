@@ -1098,7 +1098,7 @@ static void Task_UrielSpeech_WaitToShowAppearanceSelect(u8 taskId)
 static void Task_UrielSpeech_ShowAppearanceSelect(u8 taskId)
 {
     u8 windowId;
-
+    
     windowId = AddWindow(&sUrielSpeech_SpriteWindow);
     gTasks[taskId].tWindowId = windowId;
 
