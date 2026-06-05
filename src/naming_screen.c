@@ -400,7 +400,7 @@ static bool8 IsWideLetter(u8);
 
 static const u8 sText_MoveOkBack[] = _("{DPAD_NONE}MOVE  {A_BUTTON}OK  {B_BUTTON}BACK");
 
-void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpeciesOrPlayerGender, u16 monGender, u32 monPersonality, MainCallback returnCallback)
+void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpeciesOrPlayerGender, u16 monGenderOrPlayerAppearance, u32 monPersonality, MainCallback returnCallback)
 {
     sNamingScreen = Alloc(sizeof(struct NamingScreenData));
     if (!sNamingScreen)
@@ -411,7 +411,7 @@ void DoNamingScreen(u8 templateNum, u8 *destBuffer, u16 monSpeciesOrPlayerGender
     {
         sNamingScreen->templateNum = templateNum;
         sNamingScreen->monSpecies = monSpeciesOrPlayerGender;
-        sNamingScreen->monGender = monGender;
+        sNamingScreen->monGender = monGenderOrPlayerAppearance;
         sNamingScreen->monPersonality = monPersonality;
         sNamingScreen->destBuffer = destBuffer;
         sNamingScreen->returnCallback = returnCallback;
@@ -1432,11 +1432,12 @@ static void NamingScreen_NoIcon(void)
  */
 static void NamingScreen_CreatePlayerIcon(void)
 {
-    u16 gfxId = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(DEFAULT_OUTFIT, PLAYER_AVATAR_STATE_NORMAL, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance);
+    u16 rivalGfxId;
     u8 spriteId;
-    // u32 outfit = sNamingScreen->monPersonality;
-    // gfxId = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(outfit, PLAYER_AVATAR_STATE_NORMAL, gSaveBlock2Ptr->playerGender);
-    spriteId = CreateObjectGraphicsSprite(gfxId, SpriteCallbackDummy, 56, 37, 0);
+
+    rivalGfxId = GetRivalAvatarGraphicsIdByStateIdAndGender(PLAYER_AVATAR_STATE_NORMAL, (enum Gender)sNamingScreen->monSpecies, (enum Appearance)sNamingScreen->monPersonality);
+    
+    spriteId = CreateObjectGraphicsSprite(rivalGfxId, SpriteCallbackDummy, 56, 37, 0);
     gSprites[spriteId].oam.priority = 3;
     StartSpriteAnim(&gSprites[spriteId], ANIM_STD_GO_SOUTH);
 }

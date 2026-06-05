@@ -735,7 +735,7 @@ static void Task_UrielSpeech_SlidePlatformAway_Gender(u8 taskId)
 
 static void Task_UrielSpeech_StartPlayerFadeIn(u8 taskId)
 {
-    // fade in platform and male player sprite
+    // fade in platform and light male player sprite
     u32 spriteId;
 
     if (sUrielSpeech->fadeFinished)
@@ -1082,7 +1082,7 @@ static void Task_UrielSpeech_PlayerAppearanceFadeIn(u8 taskId)
             }
             gTasks[taskId].tPlayerSpriteId = spriteId;
             gTasks[taskId].tPlayerGender = gSaveBlock2Ptr->playerGender;
-            gTasks[taskId].tPlayerAppearance = gSaveBlock2Ptr->playerAppearance;
+            gTasks[taskId].tPlayerAppearance = APPEARANCE_LIGHT;
             spriteId = sUrielSpeech->platformSpriteIdCursor;
             gSprites[spriteId].x = 80;
             gSprites[spriteId].y = 95;
