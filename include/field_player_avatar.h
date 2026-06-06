@@ -6,6 +6,7 @@ bool8 TryDoMetatileBehaviorForcedMovement();
 void ClearPlayerAvatarInfo(void);
 void SetPlayerAvatarExtraStateTransition(u16 graphicsId, u8 transitionFlag);
 enum Gender GetPlayerAvatarGenderByGraphicsId(u16 gfxId);
+// enum Appearance GetPlayerAvatarAppearanceByGraphicsId(u16 gfxId);
 u8 TestPlayerAvatarFlags(u8 flag);
 u8 GetPlayerAvatarSpriteId(void);
 void PlayerGetDestCoords(s16 *x, s16 *y);

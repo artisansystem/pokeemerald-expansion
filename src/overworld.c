@@ -2354,7 +2354,6 @@ static bool32 LoadMapInStepsLocal(u8 *state, bool32 a2)
 
 static bool32 ReturnToFieldLocal(u8 *state)
 {
-    struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
     switch (*state)
     {
     case 0:
@@ -2362,8 +2361,6 @@ static bool32 ReturnToFieldLocal(u8 *state)
         ResetScreenForMapLoad();
         ResumeMap(FALSE);
         InitObjectEventsReturnToField();
-        ObjectEventSetGraphicsId(player, GetPlayerAvatarGraphicsIdByCurrentState());
-        ObjectEventTurn(player, player->movementDirection);
         if (gFieldCallback == FieldCallback_UseFly)
             RemoveFollowingPokemon();
         else

@@ -2574,14 +2574,14 @@ static void DrawEmptySlot(u8 windowId)
 }
 
 //Custom party menu
-static void BlitBitmapToPartyWindow_Equal(u8 windowId, u8 x, u8 y, u8 width, u8 height, u8 isEgg)
+static void BlitBitmapToPartyWindow_Equal(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
 {
     if (width == 0 && height == 0)
     {
         width = 14;
         height = 5;
     }
-    if (isEgg == FALSE)
+    if (hideHP == FALSE)
         BlitBitmapToPartyWindow(windowId, sEqualMainSlotTileNums, 14, x, y, width, height);
     else
         BlitBitmapToPartyWindow(windowId, sEqualMainSlotTileNums_Egg, 14, x, y, width, height);

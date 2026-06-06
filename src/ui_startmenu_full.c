@@ -908,6 +908,7 @@ static void DestroyStatusSprites()
 void Task_OpenStartMenuFullScreen(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
+    
     if (!gPaletteFade.active)
     {
         CleanupOverworldWindowsAndTilemaps();
