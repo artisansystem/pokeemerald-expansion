@@ -11,6 +11,7 @@
 #include "item.h"
 #include "link.h"
 #include "link_rfu.h"
+#include "load_save.h"
 #include "main.h"
 #include "menu.h"
 #include "overworld.h"
@@ -18,6 +19,7 @@
 #include "palette.h"
 #include "party_menu.h"
 #include "pokedex.h"
+#include "pokeball.h"
 #include "pokemon.h"
 #include "pokemon_storage_system.h"
 #include "random.h"
@@ -31,13 +33,19 @@
 #include "constants/items.h"
 #include "constants/battle_frontier.h"
 #include "constants/abilities.h"
+#include "constants/pokeball.h"
 #include "wild_encounter.h"
 #include "pokevial.h" //Pokevial Branch
-#include "pokeball.h"
 
 static void CB2_ReturnFromChooseHalfParty(void);
 static void CB2_ReturnFromChooseBattleFrontierParty(void);
+static void CB2_ReturnFromChoosingParty(void);
 static void HealPlayerBoxes(void);
+
+// Temporary party backup for select-mons battles (separate from gSaveBlock1Ptr->playerParty)
+static struct Pokemon sSelectMonsBackupParty[PARTY_SIZE];
+static u8 sSelectMonsBackupCount;
+static bool8 sNeedRestorePartyAfterBattle = FALSE;
 
 void HealPlayerParty(void)
 {
@@ -248,6 +256,104 @@ void ReducePlayerPartyToSelectedMons(void)
         gParties[B_TRAINER_PLAYER][i] = party[i];
 
     CalculatePlayerPartyCount();
+}
+
+// Save party to temporary backup (won't be affected by battle auto-save)
+void SaveSelectMonsParty(void)
+{
+    u32 i;
+    sSelectMonsBackupCount = gPlayerPartyCount;
+    for (i = 0; i < PARTY_SIZE; i++)
+        sSelectMonsBackupParty[i] = gPlayerParty[i];
+    sNeedRestorePartyAfterBattle = TRUE;
+}
+
+// Restore party from temporary backup
+void LoadSelectMonsParty(void)
+{
+    u32 i;
+    struct Pokemon battleAffectedMons[MAX_FRONTIER_PARTY_SIZE];
+
+    // Guard against double-restore (C-side restore + script-side restore on win path)
+    if (!sNeedRestorePartyAfterBattle)
+        return;
+
+    // Save the complete battle-affected Pokemon (includes exp, level, evolution, HP, status, PP, etc.)
+    // These are in the compacted battle party order (positions 0, 1, 2... up to selected count)
+    for (i = 0; i < MAX_FRONTIER_PARTY_SIZE && i < gPlayerPartyCount; i++)
+    {
+        if (gSelectedOrderFromParty[i])
+            battleAffectedMons[i] = gPlayerParty[i];
+    }
+
+    // Restore full party from backup (gets non-selected mons back)
+    gPlayerPartyCount = sSelectMonsBackupCount;
+    for (i = 0; i < PARTY_SIZE; i++)
+        gPlayerParty[i] = sSelectMonsBackupParty[i];
+
+    // Transfer dead status from battle mons to restored party
+    for (i = 0; i < MAX_FRONTIER_PARTY_SIZE; i++)
+    {
+        if (gSelectedOrderFromParty[i])
+        {
+            // gSelectedOrderFromParty is 1-indexed, so subtract 1 to get original position
+            u8 originalPartyIndex = gSelectedOrderFromParty[i] - 1;
+
+            // Replace with battle-affected version (has all changes from battle)
+            gPlayerParty[originalPartyIndex] = battleAffectedMons[i];
+        }
+    }
+
+    // Also update the save block so it persists through whiteout warps
+    SavePlayerParty();
+    sNeedRestorePartyAfterBattle = FALSE;
+}
+
+// Check and restore party after battle if needed (called from CB2_EndTrainerBattle)
+void RestoreSelectMonsPartyAfterBattle(void)
+{
+    if (sNeedRestorePartyAfterBattle)
+    {
+        LoadSelectMonsParty();
+    }
+}
+
+// Check if we're in a select-mons battle (for Nuzlocke whiteout handling)
+bool8 IsSelectMonsBattleActive(void)
+{
+    return sNeedRestorePartyAfterBattle;
+}
+
+// Note: When control returns to the event script, gSpecialVar_Result will be
+// TRUE if the party selection was successful.
+// gSpecialVar_0x8004 should contain the number of Pokemon to select (1-6)
+void ChoosePartyForStandardBattle(void)
+{
+    u8 partyLimit = gSpecialVar_0x8004;
+
+    // Clamp to valid range
+    if (partyLimit < 1 || partyLimit > PARTY_SIZE)
+        partyLimit = 1;
+
+    SetPartySelectionLimit(partyLimit);
+    gMain.savedCallback = CB2_ReturnFromChoosingParty;
+    InitChooseHalfPartyForBattle(0);
+}
+
+static void CB2_ReturnFromChoosingParty(void)
+{
+    switch (gSelectedOrderFromParty[0])
+    {
+    case 0:
+        gSpecialVar_Result = FALSE;
+        break;
+    default:
+        gSpecialVar_Result = TRUE;
+        break;
+    }
+
+    ClearPartySelectionLimit();
+    SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
 }
 
 void CanHyperTrain(struct ScriptContext *ctx)

@@ -2,13 +2,36 @@ raw `
 RustboroCity_Gym_MapScripts::
 	.byte 0
 
+@ example of how to implement selectmons gym battle
 RustboroCity_Gym_EventScript_Roxanne::
-	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	lock
+	faceplayer
+	trainerbattle_selectmons TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_PostBattleHandler, 3
+	end
+
+RustboroCity_Gym_EventScript_PostBattleHandler::
+	@ VAR_RESULT contains battle outcome: 1 = win, 0 = loss
+	switch VAR_RESULT
+	case 1, RustboroCity_Gym_EventScript_RoxanneWon
+	case 0, RustboroCity_Gym_EventScript_WhiteOut
+	end
+
+RustboroCity_Gym_EventScript_RoxanneWon::
+	@ Check if first-time victory (badge not received yet)
+	goto_if_unset FLAG_BADGE01_GET, RustboroCity_Gym_EventScript_RoxanneDefeated
+	@ Check for rematch
 	specialvar VAR_RESULT, ShouldTryRematchBattle
 	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
+	@ Normal post-battle dialogue
 	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
 	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
 	release
+	end
+
+RustboroCity_Gym_EventScript_WhiteOut::
+	fadescreen FADE_TO_BLACK
+	special SetCB2WhiteOut
+	waitstate
 	end
 
 RustboroCity_Gym_EventScript_RoxanneDefeated::

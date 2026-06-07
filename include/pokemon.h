@@ -868,6 +868,7 @@ enum NationalDexOrder SpeciesToNationalPokedexNum(enum Species species);
 u32 SpeciesToRegionalPokedexNum(enum Species species);
 enum KantoDexOrder SpeciesToKantoPokedexNum(enum Species species);
 enum HoennDexOrder SpeciesToHoennPokedexNum(enum Species species);
+enum DawnsingerDexOrder SpeciesToDawnsingerPokedexNum(enum Species species);
 enum NationalDexOrder RegionalToNationalOrder(u32 regionNum);
 enum NationalDexOrder KantoToNationalOrder(enum KantoDexOrder kantoNum);
 enum NationalDexOrder HoennToNationalOrder(enum HoennDexOrder hoennNum);

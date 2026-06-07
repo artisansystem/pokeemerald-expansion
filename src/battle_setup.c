@@ -1120,6 +1120,9 @@ const u8 *BattleSetup_ConfigureTrainerBattle(const u8 *data)
     {
     case TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT:
         return EventScript_DoNoIntroTrainerBattle;
+    case TRAINER_BATTLE_CONTINUE_SCRIPT_NO_INTRO_TEXT:
+        SetMapVarsToTrainerA();
+        return EventScript_DoNoIntroTrainerBattleContinueScript;
     case TRAINER_BATTLE_DOUBLE:
         SetMapVarsToTrainerA();
         return EventScript_TryDoDoubleTrainerBattle;
@@ -1430,6 +1433,7 @@ static void HandleBattleVariantEndParty(void)
 static void CB2_EndTrainerBattle(void)
 {
     HandleBattleVariantEndParty();
+    RestoreSelectMonsPartyAfterBattle();
 
     gIsDebugBattle = FALSE;
     if (FollowerNPCIsBattlePartner())

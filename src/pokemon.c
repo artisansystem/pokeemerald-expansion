@@ -5089,7 +5089,7 @@ u32 SpeciesToRegionalPokedexNum(enum Species species)
 {
     if (IS_FRLG)
         return SpeciesToKantoPokedexNum(species);
-    return SpeciesToHoennPokedexNum(species);
+    return SpeciesToDawnsingerPokedexNum(species);
 }
 
 enum KantoDexOrder SpeciesToKantoPokedexNum(enum Species species)
@@ -5104,6 +5104,13 @@ enum HoennDexOrder SpeciesToHoennPokedexNum(enum Species species)
     if (!species)
         return 0;
     return NationalToHoennOrder(gSpeciesInfo[species].natDexNum);
+}
+
+enum DawnsingerDexOrder SpeciesToDawnsingerPokedexNum(enum Species species)
+{
+    if (!species)
+        return 0;
+    return NationalToDawnsingerOrder(gSpeciesInfo[species].natDexNum);
 }
 
 enum NationalDexOrder RegionalToNationalOrder(u32 regionalNum)

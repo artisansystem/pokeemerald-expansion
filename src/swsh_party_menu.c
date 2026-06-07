@@ -281,6 +281,7 @@ static EWRAM_DATA struct MoveSlot sMoveSlots[MAX_MON_MOVES];
 static EWRAM_DATA u8 sAbilityWindowId;
 static EWRAM_DATA u8 sMonShadowSpriteId = 0;
 static EWRAM_DATA u16 sMonAnimTimer = 0;
+static EWRAM_DATA u8 sPartySelectionLimit = 0;
 #if SWSH_PARTY_MENU_PC_ACCESS
 // Saved party menu state for reopening after opening the PC Move Pokémon UI
 static EWRAM_DATA u8 sSavedPartyMenuType = 0;
@@ -9262,10 +9263,14 @@ static const u8 *CheckBattleEntriesAndGetMessage(void)
     maxBattlers = GetMaxBattleEntries();
     for (i = 0; i < maxBattlers - 1; i++)
     {
+        if (order[i] == 0)
+            continue;   
         u16 species = GetMonData(&party[order[i] - 1], MON_DATA_SPECIES);
         enum Item item = GetMonData(&party[order[i] - 1], MON_DATA_HELD_ITEM);
         for (j = i + 1; j < maxBattlers; j++)
         {
+            if (order[j] == 0)
+                continue;
             if (species == GetMonData(&party[order[j] - 1], MON_DATA_SPECIES))
                 return sActionStringTable[PARTY_MSG_MONS_CANT_BE_SAME];
             if (item != ITEM_NONE && item == GetMonData(&party[order[j] - 1], MON_DATA_HELD_ITEM))
@@ -9317,6 +9322,9 @@ static void Task_ContinueChoosingHalfParty(u8 taskId)
 
 static u8 GetMaxBattleEntries(void)
 {
+    if (sPartySelectionLimit >= 1 && sPartySelectionLimit <= PARTY_SIZE)
+        return sPartySelectionLimit;
+
     switch (VarGet(VAR_FRONTIER_FACILITY))
     {
     case FACILITY_MULTI_OR_EREADER:
@@ -9330,6 +9338,9 @@ static u8 GetMaxBattleEntries(void)
 
 static u8 GetMinBattleEntries(void)
 {
+    if (sPartySelectionLimit >= 1 && sPartySelectionLimit <= PARTY_SIZE)
+        return sPartySelectionLimit;
+    
     switch (VarGet(VAR_FRONTIER_FACILITY))
     {
     case FACILITY_MULTI_OR_EREADER:
@@ -10932,6 +10943,17 @@ static void Task_PokevialLoop(u8 taskId)
 }
 
 //End Pokevial Branch
+
+void SetPartySelectionLimit(u8 limit)
+{
+    sPartySelectionLimit = limit;
+}
+
+void ClearPartySelectionLimit(void)
+{
+    sPartySelectionLimit = 0;
+}
+
 #if TESTING
 // I'm just here so I won't get fined. 
 s8 Test_UpdatePartySelectionSingleLayout(s8 slotId, s8 movementDir, bool8 chooseHalf, u8 lastSelectedSlot)
