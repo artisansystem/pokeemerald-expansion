@@ -15839,7 +15839,7 @@ const struct ItemInfo gItemsInfo[] =
         .price = 0,
         .description = COMPOUND_STRING(
             "Restores all\n"
-            "Pokémon to full.\n"
+            "Pokémon to full\n"
             "health."),
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
