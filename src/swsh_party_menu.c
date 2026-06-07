@@ -36,6 +36,7 @@
 #include "item_menu.h"
 #include "item_use.h"
 #include "pokemon_storage_system.h"
+#include "pokevial.h"
 #include "caps.h"
 #include "link.h"
 #include "link_rfu.h"
@@ -84,8 +85,7 @@
 #include "constants/pokemon_icon.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
-
-
+#include "ui_startmenu_full.h"
 
 #if SWSH_PARTY_MENU
 
@@ -291,6 +291,16 @@ static EWRAM_DATA TaskFunc sSavedPartyTask = NULL;
 static EWRAM_DATA MainCallback sSavedPartyExitCallback = NULL;
 static EWRAM_DATA u8 sSavedPartySlotId = 0;
 #endif
+
+//Pokevial Branch
+static bool8 IsMonNotFullyHealed(void);
+void HealMonFromSlotId(void);
+void ItemUseCB_UsePokevial(u8 taskId, TaskFunc task);
+static void Task_UsePokevialFromField(u8 taskId);
+void PokevialStartVariablesAndRun(u8 taskId, TaskFunc task);
+void InitPartyMenuForPokevialFromField(u8 taskId);
+void UsePokevial(u8 taskId);
+static void Task_PokevialLoop(u8 taskId);
 
 
 // IWRAM common
@@ -5369,7 +5379,7 @@ bool32 SetUpFieldMove_Fly(void)
 
 void CB2_ReturnToPartyMenuFromFlyMap(void)
 {
-    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, TRUE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToFieldWithOpenMenu);
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, TRUE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToFullScreenStartMenu);
 }
 
 static void FieldCallback_Waterfall(void)
@@ -8953,7 +8963,7 @@ static void TryTutorSelectedMon(u8 taskId)
 
 void CB2_PartyMenuFromStartMenu(void)
 {
-    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToFieldWithOpenMenu);
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_CHOOSE_MON, FALSE, PARTY_MSG_CHOOSE_MON, Task_HandleChooseMonInput, CB2_ReturnToFullScreenStartMenu);
 }
 
 // Giving an item by selecting Give from the bag menu
@@ -10753,4 +10763,168 @@ static void Task_FirstBattleEnterParty_WaitFadeNormal(u8 taskId)
         gTasks[taskId].func = Task_HandleChooseMonInput;
     }
 }
+
+//Start Pokevial Branch
+static bool8 IsMonNotFullyHealed(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 currentHP = GetMonData(mon,MON_DATA_HP);
+    u16 maxHP = GetMonData(mon,MON_DATA_MAX_HP);
+    u32 status = GetMonData(mon,MON_DATA_STATUS);
+
+    u8 currentPP = 0, maxPP = 0;
+    u8 ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
+
+    s32 j;
+
+    if (currentHP < maxHP)
+        return TRUE;  // Found a Pokémon with less than full HP
+
+    if (status != 0)
+        return TRUE;  // Found a Pokémon with a status condition
+
+    for (j = 0; j < MAX_MON_MOVES; j++)
+    {
+        currentPP = GetMonData(mon, MON_DATA_PP1 + j);
+        maxPP = CalculatePPWithBonus(GetMonData(mon,MON_DATA_MOVE1 + j), ppBonuses, j);
+
+        if (currentPP < maxPP)
+        {
+            return TRUE;  // Found a Pokémon with less than max PP
+        }
+    }
+
+    return FALSE;
+}
+
+void HealMonFromSlotId(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u32 i = 0, j = 0, ppBonuses = 0;
+    u8 arg[4] = {0,0,0,0};
+
+    // restore HP.
+    u16 maxHP = GetMonData(mon, MON_DATA_MAX_HP);
+    arg[0] = maxHP;
+    arg[1] = maxHP >> 8;
+    SetMonData(mon, MON_DATA_HP, arg);
+
+    // restore PP.
+    ppBonuses = GetMonData(mon, MON_DATA_PP_BONUSES);
+    for(j = 0; j < MAX_MON_MOVES; j++)
+    {
+        arg[0] = CalculatePPWithBonus(GetMonData(mon, MON_DATA_MOVE1 + j), ppBonuses, j);
+        SetMonData(mon, MON_DATA_PP1 + j, arg);
+    }
+
+    // since status is u32, the four 0 assignments here are probably for safety to prevent undefined data from reaching SetMonData.
+    arg[0] = 0;
+    arg[1] = 0;
+    arg[2] = 0;
+    arg[3] = 0;
+    SetMonData(mon, MON_DATA_STATUS, arg);
+}
+
+#define tUsedOnSlot   data[0]
+#define tHadEffect    data[1]
+#define tLastSlotUsed data[2]
+
+void ItemUseCB_UsePokevial(u8 taskId, TaskFunc task)
+{
+    PokevialStartVariablesAndRun(taskId, task);
+}
+
+static void Task_UsePokevialFromField(u8 taskId)
+{
+    PokevialStartVariablesAndRun(taskId,NULL);
+}
+
+void PokevialStartVariablesAndRun(u8 taskId, TaskFunc task)
+{
+    if (gPartyMenu.slotId == 1)
+        sPartyMenuInternal->tHadEffect = FALSE;
+
+    sPartyMenuInternal->tUsedOnSlot = FALSE;
+    sPartyMenuInternal->tLastSlotUsed = gPartyMenu.slotId;
+
+    UsePokevial(taskId);
+}
+
+void InitPartyMenuForPokevialFromField(u8 taskId)
+{
+    gPartyMenu.slotId = 0;
+    InitPartyMenu(PARTY_MENU_TYPE_FIELD, PARTY_LAYOUT_SINGLE, PARTY_ACTION_USE_ITEM, TRUE, PARTY_MSG_NONE, Task_UsePokevialFromField, CB2_ReturnToField);
+}
+
+void UsePokevial(u8 taskId)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 hp = 0, maxHP = 0;
+
+    if (GetMonData(mon, MON_DATA_SPECIES) == SPECIES_NONE)
+    {
+        gTasks[taskId].func = Task_PokevialLoop;
+        return;
+    }
+
+    if (!IsMonNotFullyHealed())
+    {
+        gTasks[taskId].func = Task_PokevialLoop;
+        return;
+    }
+
+    hp = GetMonData(mon, MON_DATA_HP);
+    maxHP = GetMonData(mon, MON_DATA_MAX_HP);
+
+    PlaySE(SE_USE_ITEM);
+    HealMonFromSlotId();
+    SetPartyMonAilmentGfx(mon, &sPartyMenuBoxes[gPartyMenu.slotId]);
+    if (gSprites[sPartyMenuBoxes[gPartyMenu.slotId].statusSpriteId].invisible)
+        DisplayPartyPokemonLevelCheck(mon, &sPartyMenuBoxes[gPartyMenu.slotId], 1);
+    AnimatePartySlot(sPartyMenuInternal->tLastSlotUsed, 0);
+    AnimatePartySlot(gPartyMenu.slotId, 1);
+    if (hp != maxHP)
+    {
+    PartyMenuModifyHP(taskId, gPartyMenu.slotId, 1, GetMonData(mon, MON_DATA_HP) - hp, Task_PokevialLoop);
+    ResetHPTaskData(taskId, 0, hp);
+    }
+
+    sPartyMenuInternal->tUsedOnSlot = TRUE;
+    sPartyMenuInternal->tHadEffect = TRUE;
+}
+
+static void Task_PokevialLoop(u8 taskId)
+{
+    if (IsPartyMenuTextPrinterActive())
+        return;
+
+    if (sPartyMenuInternal->tUsedOnSlot == TRUE)
+    {
+        sPartyMenuInternal->tUsedOnSlot = FALSE;
+        sPartyMenuInternal->tLastSlotUsed = gPartyMenu.slotId;
+    }
+
+    gPartyMenu.slotId++;
+    if (gPartyMenu.slotId < PARTY_SIZE)
+    {
+        UsePokevial(taskId);
+        return;
+    }
+
+    gPartyMenuUseExitCallback = FALSE;
+    if (sPartyMenuInternal->tHadEffect)
+    {
+        PokevialDoseDown(VIAL_STANDARD_DOSE);
+        DisplayPartyMenuMessage(gText_YourPkmnWereRestored, FALSE);
+    }
+    else
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+    gPartyMenu.slotId = 0;
+}
+
+//End Pokevial Branch
+
 #endif // SWSH_PARTY_MENU
