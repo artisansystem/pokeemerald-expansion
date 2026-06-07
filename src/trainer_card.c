@@ -131,6 +131,7 @@ static void SetUpTrainerCardTask(void);
 static void InitTrainerCardData(void);
 static u8 GetSetCardType(void);
 static void PrintNameOnCardFront(void);
+static void PrintLastNameOnCardFront(void);
 static void PrintIdOnCard(void);
 static void PrintMoneyOnCard(void);
 static void PrintPokedexOnCard(void);
@@ -737,6 +738,7 @@ static void SetPlayerCardData(struct TrainerCard *trainerCard, u8 cardType)
         trainerCard->easyChatProfile[i] = gSaveBlock1Ptr->easyChatProfile[i];
 
     StringCopy(trainerCard->playerName, gSaveBlock2Ptr->playerName);
+    StringCopy(trainerCard->playerLastName, gSaveBlock2Ptr->playerLastName);
 
     switch (cardType)
     {
@@ -946,6 +948,8 @@ static bool8 PrintAllOnCardFront(void)
     case 5:
         PrintProfilePhraseOnCard();
         break;
+    case 6:
+        PrintLastNameOnCardFront();
     default:
         sData->printState = 0;
         return TRUE;
@@ -1010,13 +1014,61 @@ static void PrintNameOnCardFront(void)
 {
     u8 buffer[32];
     u8 *txtPtr;
+
     txtPtr = StringCopy(buffer, gText_TrainerCardName);
     StringCopy(txtPtr, sData->trainerCard.playerName);
     ConvertInternationalString(txtPtr, sData->language);
+
     if (sData->cardType == CARD_TYPE_FRLG)
         AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 20, 28, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
     else
         AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 16, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+}
+
+static void PrintLastNameOnCardFront(void)
+{
+    u8 buffer[32];
+    u8 *txtPtr;
+    u8 stringLength;
+
+    txtPtr = StringCopy(buffer, sData->trainerCard.playerLastName);
+    ConvertInternationalString(txtPtr, sData->language);
+
+    if (sData->cardType == CARD_TYPE_FRLG)
+        AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 20, 28, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+    else
+    {        
+        stringLength = StringLength(sData->trainerCard.playerName);
+
+        switch(stringLength)
+        {
+            case 1:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 60, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+            case 2:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 65, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+            case 3:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 70, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+            case 4:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 75, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+            case 5:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 80, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+            case 6:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 85, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+            case 7:
+            default:
+                AddTextPrinterParameterized3(WIN_CARD_TEXT, FONT_NORMAL, 90, 33, sTrainerCardTextColors, TEXT_SKIP_DRAW, buffer);
+                break;
+
+        }
+
+    }
+        
 }
 
 static void PrintIdOnCard(void)

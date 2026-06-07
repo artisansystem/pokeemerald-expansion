@@ -63,16 +63,12 @@ static inline enum Gender SetQuickstartPlayerGender()
     switch (QUICKSTART_GENDER)
     {
         case GENDER_MALE:
+        default:
             return MALE;
         case GENDER_FEMALE:
             return FEMALE;
         case GENDER_NONBINARY:
-            return NONBINARY;
-        case GENDER_RANDOM:
-        default:
-            return RandomPercentage(RNG_NONE, 33);
-
-            
+            return NONBINARY;   
     }
 }
 
@@ -81,14 +77,14 @@ static inline enum Appearance SetQuickstartPlayerAppearance()
     switch (QUICKSTART_APPEARANCE)
     {
         case APPEARANCE_LIGHT:
-            return ;
-        case GENDER_FEMALE:
-            return FEMALE;
-        case APPEARANCE_RANDOM:
         default:
-            return RandomPercentage(RNG_NONE, 25);
-
-
+            return APPEARANCE_LIGHT;
+        case APPEARANCE_OLIVE:
+            return APPEARANCE_OLIVE;
+        case APPEARANCE_BROWN:
+            return APPEARANCE_BROWN;
+        case APPEARANCE_DARK:
+            return APPEARANCE_DARK;
 
     }
 }

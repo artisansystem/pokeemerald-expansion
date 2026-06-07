@@ -46,6 +46,7 @@ struct TrainerCard
     /*0x60*/ bool16 hasAllFrontierSymbols;
     /*0x62*/ u16 frontierBP;
              u8 appearance;
+             u8 playerLastName[PLAYER_NAME_LENGTH + 1];
 };
 
 extern struct TrainerCard gTrainerCards[4];

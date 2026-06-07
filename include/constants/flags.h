@@ -61,8 +61,8 @@
 
 #define FLAG_OW_FOLLOWERS_DISABLED 0x26 // Unused Flag
 #define FLAG_POKE_RIDER      0x27 // Unused Flag
-#define FLAG_UNUSED_0x028    0x28 // Unused Flag
-#define FLAG_UNUSED_0x029    0x29 // Unused Flag
+#define FLAG_DISABLE_OWES     0x28 // Unused Flag
+#define FLAG_DISABLE_WILD_ENCOUNTERS 0x29 // Unused Flag
 #define FLAG_UNUSED_0x02A    0x2A // Unused Flag
 #define FLAG_UNUSED_0x02B    0x2B // Unused Flag
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag
