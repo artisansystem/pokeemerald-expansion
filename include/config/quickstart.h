@@ -6,10 +6,17 @@
 #define GENDER_NONBINARY         2
 #define GENDER_RANDOM            3
 
+#define APPEARANCE_LIGHT 0
+#define APPEARANCE_OLIVE 1
+#define APPEARANCE_BROWN 2
+#define APPEARANCE_DARK 3
+#define APPEARANCE_RANDOM 4
+
 // Quickstart Settings
 #define ENABLE_QUICKSTART            TRUE  // If TRUE press SELECT to start a new game from the titlescreen (Disabled on Release Builds)
 #define QUICKSTART_HUD               TRUE  // Displays a small hud element on the titlescreen when Quickstart is enabled
 #define QUICKSTART_GENDER            GENDER_RANDOM
+#define QUICKSTART_APPEARANCE        APPEARANCE_RANDOM
 
 #define QUICKSTART_HUD_X             (DISPLAY_WIDTH - 32) // Quickstart HUD X Position
 #define QUICKSTART_HUD_Y             (16)                 // Quickstart HUD Y Position

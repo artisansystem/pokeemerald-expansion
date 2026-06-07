@@ -66,9 +66,30 @@ static inline enum Gender SetQuickstartPlayerGender()
             return MALE;
         case GENDER_FEMALE:
             return FEMALE;
+        case GENDER_NONBINARY:
+            return NONBINARY;
         case GENDER_RANDOM:
         default:
-            return RandomPercentage(RNG_NONE, 50) ? FEMALE : MALE;
+            return RandomPercentage(RNG_NONE, 33);
+
+            
+    }
+}
+
+static inline enum Appearance SetQuickstartPlayerAppearance()
+{
+    switch (QUICKSTART_APPEARANCE)
+    {
+        case APPEARANCE_LIGHT:
+            return ;
+        case GENDER_FEMALE:
+            return FEMALE;
+        case APPEARANCE_RANDOM:
+        default:
+            return RandomPercentage(RNG_NONE, 25);
+
+
+
     }
 }
 
@@ -79,15 +100,38 @@ static void CB2_SkipToNewGame(void)
     static const u8 sText_PlayerFemale[] = _("LEAF");
     static const u8 sText_Rival[] = _("BLUE");
 #else
-    static const u8 sText_PlayerMale[] = _("BRENDAN");
-    static const u8 sText_PlayerFemale[] = _("MAY");
+    static const u8 sText_PlayerMale[] = _("Brendan");
+    static const u8 sText_PlayerFemale[] = _("May");
+    static const u8 sText_PlayerNonbinary[] = _("Wally");
+    static const u8 sText_PlayerLastName[] = _("Birch");
 #endif  // IS_FRLG
 
     if (!UpdatePaletteFade())
     {
         gSaveBlock2Ptr->playerGender = SetQuickstartPlayerGender();
-        const u8* textPtr = gSaveBlock2Ptr->playerGender == FEMALE ? sText_PlayerFemale : sText_PlayerMale;
-        StringCopy_PlayerName(gSaveBlock2Ptr->playerName, textPtr);
+        gSaveBlock2Ptr->playerAppearance = SetQuickstartPlayerAppearance();
+
+        const u8* textPtr;
+        
+        if (gSaveBlock2Ptr->playerGender == MALE)
+        {
+            textPtr = sText_PlayerMale; 
+            StringCopy_PlayerName(gSaveBlock2Ptr->playerName, textPtr);
+            textPtr = sText_PlayerLastName;
+        }
+        else if (gSaveBlock2Ptr->playerGender == FEMALE)
+        {
+            textPtr = sText_PlayerFemale;
+            StringCopy_PlayerName(gSaveBlock2Ptr->playerName, textPtr);
+        }
+        else
+        {
+            textPtr = sText_PlayerNonbinary;
+            StringCopy_PlayerName(gSaveBlock2Ptr->playerName, textPtr);
+        }
+
+        textPtr = sText_PlayerLastName;
+        StringCopy_PlayerName(gSaveBlock2Ptr->playerLastName, textPtr);
 
 #if IS_FRLG
         StringCopy_PlayerName(gSaveBlock1Ptr->rivalName, sText_Rival);

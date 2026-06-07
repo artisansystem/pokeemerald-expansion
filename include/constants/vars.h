@@ -276,8 +276,9 @@
 #define VAR_WILLOWBLOOM_SECTOR_RANK                      0x40FE
 #define VAR_ROSESONG_SECTOR_RANK                         0x40FF
 #define VAR_LOCKWOOD_SECTOR_RANK                         0x4100
+#define VAR_NO_BAG_USE                                   0x4101
 
-#define VARS_END                                         0x4100
+#define VARS_END                                         0x4101
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)
 
 #define SPECIAL_VARS_START            0x8000
