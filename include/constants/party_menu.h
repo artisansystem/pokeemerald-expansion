@@ -1,14 +1,7 @@
 #ifndef GUARD_CONSTANTS_PARTY_MENU_H
 #define GUARD_CONSTANTS_PARTY_MENU_H
 
-<<<<<<< HEAD
-#define SWSH_PARTY_MENU                   TRUE
-#define SWSH_PARTY_MENU_PC_ACCESS         FALSE
-#define SWSH_PARTY_MON_IDLE_ANIMS         TRUE
-#define SWSH_PARTY_MON_IDLE_ANIMS_FRAMES  300 // Number of frames before mon animation loops
-=======
 #include "config/swsh_party_menu.h"
->>>>>>> 9691b0e4e2d9d11127c75cba0f71bb2eaace873a
 
 #define PC_MON_CHOSEN 0xFE
 #define PARTY_NOTHING_CHOSEN 0xFF
