@@ -17,7 +17,7 @@ BattleFrontier_Lounge5_EventScript_NatureGirl::
 # 9 "data/maps/BattleFrontier_Lounge5/scripts.pory"
 	goto_if_eq VAR_RESULT, NO, BattleFrontier_Lounge5_EventScript_NatureGirlNoneShown
 # 10 "data/maps/BattleFrontier_Lounge5/scripts.pory"
-	special ChoosePartyMon
+	chooseboxmon
 # 11 "data/maps/BattleFrontier_Lounge5/scripts.pory"
 	waitstate
 # 12 "data/maps/BattleFrontier_Lounge5/scripts.pory"

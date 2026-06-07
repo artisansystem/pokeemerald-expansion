@@ -28,7 +28,7 @@ AcademySign::
 
 Kingsisle_MagicGuy::
 # 20 "data/maps/KingsisleInstitute/scripts.pory"
-	speakername CommonName_Text_Student
+	setspeaker SP_NAME_STUDENT
 # 21 "data/maps/KingsisleInstitute/scripts.pory"
 	msgbox MagicIsAmazing, MSGBOX_NPC
 	return

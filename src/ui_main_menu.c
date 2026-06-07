@@ -199,35 +199,35 @@ static const struct HWWindowPosition HWinCoords[6] =
 //
 //  Graphic and Tilemap Pointers for Bgs and Mughsots
 //
-static const u32 sMainBgTiles[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.4bpp.smol");
+static const u32 sMainBgTiles[] = INCGFX_U32("graphics/ui_main_menu/main_tiles.png", ".4bpp.smol");
 static const u32 sMainBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.bin.smolTM");
-static const u16 sMainBgPalette[] = INCBIN_U16("graphics/ui_main_menu/main_tiles.gbapal");
+static const u16 sMainBgPalette[] = INCGFX_U16("graphics/ui_main_menu/main_tiles.png", ".gbapal");
 
-static const u32 sMainBgTilesFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.4bpp.smol");
+static const u32 sMainBgTilesFem[] = INCGFX_U32("graphics/ui_main_menu/main_tiles_fem.png", ".4bpp.smol");
 static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.smolTM");
-static const u16 sMainBgPaletteFem[] = INCBIN_U16("graphics/ui_main_menu/main_tiles_fem.gbapal");
+static const u16 sMainBgPaletteFem[] = INCGFX_U16("graphics/ui_main_menu/main_tiles_fem.png", ".gbapal");
 
-static const u32 sMainBgTilesEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.4bpp.smol");
+static const u32 sMainBgTilesEnby[] = INCGFX_U32("graphics/ui_main_menu/main_tiles_enby.png", ".4bpp.smol");
 static const u32 sMainBgTilemapEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.bin.smolTM");
-static const u32 sMainBgPaletteEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.gbapal");
+static const u32 sMainBgPaletteEnby[] = INCGFX_U32("graphics/ui_main_menu/main_tiles_enby.png", ".gbapal");
 
-static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.4bpp.smol");
+static const u32 sScrollBgTiles[] = INCGFX_U32("graphics/ui_main_menu/scroll_tiles.png", ".4bpp.smol");
 static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.bin.smolTM");
-static const u16 sScrollBgPalette[] = INCBIN_U16("graphics/ui_main_menu/scroll_tiles.gbapal");
+static const u16 sScrollBgPalette[] = INCGFX_U16("graphics/ui_main_menu/scroll_tiles.png", ".gbapal");
 
-static const u16 sIconBox_Pal[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow.gbapal");
-static const u32 sIconBox_Gfx[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow.4bpp.smol");
+static const u16 sIconBox_Pal[] = INCGFX_U16("graphics/ui_main_menu/icon_shadow.png", ".gbapal");
+static const u32 sIconBox_Gfx[] = INCGFX_U32("graphics/ui_main_menu/icon_shadow.png", ".4bpp.smol");
 
-static const u16 sIconBox_PalFem[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_fem.gbapal");
-static const u32 sIconBox_GfxFem[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_fem.4bpp.smol");
+static const u16 sIconBox_PalFem[] = INCGFX_U16("graphics/ui_main_menu/icon_shadow_fem.png", ".gbapal");
+static const u32 sIconBox_GfxFem[] = INCGFX_U32("graphics/ui_main_menu/icon_shadow_fem.png", ".4bpp.smol");
 
-static const u16 sIconBox_PalEnby[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_enby.gbapal");
-static const u32 sIconBox_GfxEnby[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_enby.4bpp.smol");
+static const u16 sIconBox_PalEnby[] = INCGFX_U16("graphics/ui_main_menu/icon_shadow_enby.png", ".gbapal");
+static const u32 sIconBox_GfxEnby[] = INCGFX_U32("graphics/ui_main_menu/icon_shadow_enby.png", ".4bpp.smol");
 
-static const u16 sBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
-static const u32 sBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.smol");
-static const u16 sMayMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/may_mugshot.gbapal");
-static const u32 sMayMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/may_mugshot.4bpp.smol");
+static const u16 sBrendanMugshot_Pal[] = INCGFX_U16("graphics/ui_main_menu/brendan_mugshot.png", ".gbapal");
+static const u32 sBrendanMugshot_Gfx[] = INCGFX_U32("graphics/ui_main_menu/brendan_mugshot.png", ".4bpp.smol");
+static const u16 sMayMugshot_Pal[] = INCGFX_U16("graphics/ui_main_menu/may_mugshot.png", ".gbapal");
+static const u32 sMayMugshot_Gfx[] = INCGFX_U32("graphics/ui_main_menu/may_mugshot.png", ".4bpp.smol");
 
 
 //
