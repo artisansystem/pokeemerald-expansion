@@ -25,6 +25,7 @@
 #include "battle_pyramid.h"
 #include "overworld.h"
 #include "math_util.h"
+#include "outfit_menu.h"
 #include "constants/battle_frontier.h"
 #include "constants/rgb.h"
 #include "constants/region_map_sections.h"
@@ -106,7 +107,7 @@ enum {
 
 struct FrontierPassData
 {
-    void (*callback)(void);
+    MainCallback callback;
     u16 state;
     u16 battlePoints;
     s16 cursorX;
@@ -137,14 +138,14 @@ struct FrontierPassGfx
 
 struct FrontierPassSaved
 {
-    void (*callback)(void);
+    MainCallback callback;
     s16 cursorX;
     s16 cursorY;
 };
 
 struct FrontierMapData
 {
-    void (*callback)(void);
+    MainCallback callback;
     struct Sprite *cursorSprite;
     struct Sprite *playerHeadSprite;
     struct Sprite *mapIndicatorSprite;
@@ -160,8 +161,8 @@ static EWRAM_DATA struct FrontierPassGfx *sPassGfx = NULL;
 static EWRAM_DATA struct FrontierMapData *sMapData = NULL;
 static EWRAM_DATA struct FrontierPassSaved sSavedPassData = {0};
 
-static u32 AllocateFrontierPassData(void (*callback)(void));
-static void ShowFrontierMap(void (*callback)(void));
+static u32 AllocateFrontierPassData(MainCallback callback);
+static void ShowFrontierMap(MainCallback callback);
 static void CB2_InitFrontierPass(void);
 static void DrawFrontierPassBg(void);
 static void FreeCursorAndSymbolSprites(void);
@@ -176,17 +177,17 @@ static void PrintAreaDescription(u8);
 static void ShowHideZoomingArea(bool8, bool8);
 static void SpriteCB_PlayerHead(struct Sprite *);
 
-static const u16 sMaleHead_Pal[]                 = INCBIN_U16("graphics/frontier_pass/map_heads.gbapal");
-static const u16 sFemaleHead_Pal[]               = INCBIN_U16("graphics/frontier_pass/map_heads_female.gbapal");
-static const u32 sMapScreen_Gfx[]                = INCBIN_U32("graphics/frontier_pass/map_screen.4bpp.lz");
-static const u32 sCursor_Gfx[]                   = INCBIN_U32("graphics/frontier_pass/cursor.4bpp.lz");
-static const u32 sHeads_Gfx[]                    = INCBIN_U32("graphics/frontier_pass/map_heads.4bpp.lz");
-static const u32 sMapCursor_Gfx[]                = INCBIN_U32("graphics/frontier_pass/map_cursor.4bpp.lz");
-static const u32 sMapScreen_Tilemap[]            = INCBIN_U32("graphics/frontier_pass/map_screen.bin.lz");
-static const u32 sMapAndCard_ZoomedOut_Tilemap[] = INCBIN_U32("graphics/frontier_pass/small_map_and_card.bin.lz");
+static const u16 sMaleHead_Pal[]                 = INCGFX_U16("graphics/frontier_pass/map_heads.png", ".gbapal");
+static const u16 sFemaleHead_Pal[]               = INCGFX_U16("graphics/frontier_pass/map_heads_female.pal", ".gbapal");
+static const u32 sMapScreen_Gfx[]                = INCGFX_U32("graphics/frontier_pass/map_screen.png", ".4bpp.smol");
+static const u32 sCursor_Gfx[]                   = INCGFX_U32("graphics/frontier_pass/cursor.png", ".4bpp.smol");
+static const u32 sHeads_Gfx[]                    = INCGFX_U32("graphics/frontier_pass/map_heads.png", ".4bpp.smol");
+static const u32 sMapCursor_Gfx[]                = INCGFX_U32("graphics/frontier_pass/map_cursor.png", ".4bpp.smol");
+static const u32 sMapScreen_Tilemap[]            = INCGFX_U32("graphics/frontier_pass/map_screen.bin", ".smolTM");
+static const u32 sMapAndCard_ZoomedOut_Tilemap[] = INCGFX_U32("graphics/frontier_pass/small_map_and_card.bin", ".smolTM");
 static const u32 sCardBall_Filled_Tilemap[]      = INCBIN_U32("graphics/frontier_pass/card_ball_filled.bin"); // Unused
-static const u32 sBattleRecord_Tilemap[]         = INCBIN_U32("graphics/frontier_pass/record_frame.bin.lz");
-static const u32 sMapAndCard_Zooming_Tilemap[]   = INCBIN_U32("graphics/frontier_pass/small_map_and_card_affine.bin.lz");
+static const u32 sBattleRecord_Tilemap[]         = INCGFX_U32("graphics/frontier_pass/record_frame.bin", ".smolTM");
+static const u32 sMapAndCard_Zooming_Tilemap[]   = INCGFX_U32("graphics/frontier_pass/small_map_and_card_affine.bin", ".smolTM");
 
 static const s16 sBgAffineCoords[][2] =
 {
@@ -367,20 +368,12 @@ static const struct CompressedSpriteSheet sCursorSpriteSheets[] =
     {gFrontierPassMedals_Gfx, 0x380, TAG_MEDAL_SILVER},
 };
 
-static const struct CompressedSpriteSheet sHeadsSpriteSheet[] =
-{
-    {sHeads_Gfx, 0x100, TAG_HEAD_MALE},
-    {}
-};
-
 static const struct SpritePalette sSpritePalettes[] =
 {
     {gFrontierPassCursor_Pal,       TAG_CURSOR},
     {gFrontierPassMapCursor_Pal,    TAG_MAP_INDICATOR},
     {gFrontierPassMedalsSilver_Pal, TAG_MEDAL_SILVER},
     {gFrontierPassMedalsGold_Pal,   TAG_MEDAL_GOLD},
-    {sMaleHead_Pal,                 TAG_HEAD_MALE},
-    {sFemaleHead_Pal,               TAG_HEAD_FEMALE},
     {}
 };
 
@@ -489,9 +482,6 @@ static const struct SpriteTemplate sSpriteTemplates_Cursors[] =
         .paletteTag = TAG_CURSOR,
         .oam = &gOamData_AffineOff_ObjNormal_16x16,
         .anims = sAnims_TwoFrame,
-        .images = NULL,
-        .affineAnims = gDummySpriteAffineAnimTable,
-        .callback = SpriteCallbackDummy,
     },
     // Map indicator cursor
     {
@@ -499,9 +489,6 @@ static const struct SpriteTemplate sSpriteTemplates_Cursors[] =
         .paletteTag = TAG_MAP_INDICATOR,
         .oam = &gOamData_AffineOff_ObjNormal_32x16,
         .anims = sAnims_MapIndicatorCursor,
-        .images = NULL,
-        .affineAnims = gDummySpriteAffineAnimTable,
-        .callback = SpriteCallbackDummy,
     },
 };
 
@@ -511,19 +498,14 @@ static const struct SpriteTemplate sSpriteTemplate_Medal =
     .paletteTag = TAG_MEDAL_SILVER,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = sAnims_Medal,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct SpriteTemplate sSpriteTemplate_PlayerHead =
 {
     .tileTag = TAG_HEAD_MALE,
-    .paletteTag = TAG_HEAD_MALE,
+    .paletteTag = TAG_HEAD_FEMALE,
     .oam = &gOamData_AffineOff_ObjNormal_16x16,
     .anims = sAnims_TwoFrame,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_PlayerHead,
 };
 
@@ -604,9 +586,11 @@ static void LeaveFrontierPass(void)
     FreeFrontierPassData();
 }
 
-static u32 AllocateFrontierPassData(void (*callback)(void))
+static u32 AllocateFrontierPassData(MainCallback callback)
 {
-    u8 i;
+    // This variable is a MAPSEC initially, but is recycled as a
+    // bare integer near the end of the function.
+    mapsec_u8_t i;
 
     if (sPassData != NULL)
         return ERR_ALREADY_DONE;
@@ -1363,7 +1347,7 @@ static void PrintOnFrontierMap(void);
 static void InitFrontierMapSprites(void);
 static void HandleFrontierMapCursorMove(u8 direction);
 
-static void ShowFrontierMap(void (*callback)(void))
+static void ShowFrontierMap(MainCallback callback)
 {
     if (sMapData != NULL)
         SetMainCallback2(callback); // This line doesn't make sense at all, since it gets overwritten later anyway.
@@ -1630,13 +1614,15 @@ static u8 MapNumToFrontierFacilityId(u16 mapNum) // id + 1, zero means not a fro
 
 static void InitFrontierMapSprites(void)
 {
-    struct SpriteTemplate sprite;
+    struct SpriteSheet gfx = { GetPlayerHeadGfxOrPal(GFX, TRUE), 0x80, TAG_HEAD_MALE };
+    struct SpritePalette pal = { GetPlayerHeadGfxOrPal(PAL, TRUE), TAG_HEAD_FEMALE };
     u8 spriteId;
     u8 id;
     s16 x = 0, y;
 
     FreeAllSpritePalettes();
     LoadSpritePalettes(sSpritePalettes);
+    LoadSpritePalette(&pal);
 
     LoadCompressedSpriteSheet(&sCursorSpriteSheets[0]);
     spriteId = CreateSprite(&sSpriteTemplates_Cursors[0], 155, (sMapData->cursorPos * 16) + 8, 2);
@@ -1691,24 +1677,20 @@ static void InitFrontierMapSprites(void)
             }
         }
 
-        LoadCompressedSpriteSheet(sHeadsSpriteSheet);
-        sprite = sSpriteTemplate_PlayerHead;
-        sprite.paletteTag = gSaveBlock2Ptr->playerGender + TAG_HEAD_MALE; // TAG_HEAD_FEMALE if gender is FEMALE
+        LoadSpriteSheet(&gfx);
         if (id != 0)
         {
-            spriteId = CreateSprite(&sprite, x, y, 0);
+            spriteId = CreateSprite(&sSpriteTemplate_PlayerHead, x, y, 0);
         }
         else
         {
             x *= 8;
             y *= 8;
-            spriteId = CreateSprite(&sprite, x + 20, y + 36, 0);
+            spriteId = CreateSprite(&sSpriteTemplate_PlayerHead, x + 20, y + 36, 0);
         }
 
         sMapData->playerHeadSprite = &gSprites[spriteId];
         sMapData->playerHeadSprite->oam.priority = 0;
-        if (gSaveBlock2Ptr->playerGender != MALE)
-            StartSpriteAnim(sMapData->playerHeadSprite, 1);
     }
 }
 

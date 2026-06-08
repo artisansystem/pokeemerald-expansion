@@ -29,6 +29,13 @@ static const struct BgTemplate sPartyMenuBgTemplates[] =
     },
 };
 
+enum
+{
+    PARTY_BOX_LEFT_COLUMN,
+    PARTY_BOX_RIGHT_COLUMN,
+    PARTY_BOX_EQUAL_COLUMN //Custom party menu
+};
+
 static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
 {
     [PARTY_BOX_LEFT_COLUMN] =
@@ -59,6 +66,20 @@ static const struct PartyMenuBoxInfoRects sPartyBoxInfoRects[] =
         },
         77, 4, 64, 16        // Description text
     },
+    [PARTY_BOX_EQUAL_COLUMN] = //Custom party menu
+    {
+        BlitBitmapToPartyWindow_Equal, 
+        {
+            //The below are the x, y, width, and height for each of the following info
+            33,  2, 40, 13, // Nickname
+             3, 25, 32,  8, // Level 85,  1, 32,  8,
+           100,  1,  8,  8, // Gender 79,  1,  8,  8, 
+            48, 25, 24,  8, // HP
+            63, 25, 24,  8, // Max HP
+            48, 18, 56,  3  // HP bar
+        }, 
+        33, 13, 64, 16      // Description text (e.g. NO USE)
+    },//
 };
 
 
@@ -69,12 +90,12 @@ static const u8 sPartyMenuSpriteCoords[PARTY_LAYOUT_COUNT][PARTY_SIZE][4 * 2] =
 {
     [PARTY_LAYOUT_SINGLE] =
     {
-        { 16,  40,  20,  50,  50,  52,  16,  34},
-        {104,  18, 108,  28, 136,  27, 102,  25},
-        {104,  42, 108,  52, 136,  51, 102,  49},
-        {104,  66, 108,  76, 136,  75, 102,  73},
-        {104,  90, 108, 100, 136,  99, 102,  97},
-        {104, 114, 108, 124, 136, 123, 102, 121},
+        { 24,  14,  38,  33, 105,  33,  24,  18},
+        {136,  22, 150,  41, 217,  41, 136,  26},
+        { 24,  54,  38,  73, 105,  73,  24,  58},
+        {136,  62, 150,  81, 217,  81, 136,  66},
+        { 24,  94,  38, 113, 105, 113,  24,  98},
+        {136, 102, 150, 121, 217, 121, 136, 106},
     },
     [PARTY_LAYOUT_DOUBLE] =
     {
@@ -103,6 +124,42 @@ static const u8 sPartyMenuSpriteCoords[PARTY_LAYOUT_COUNT][PARTY_SIZE][4 * 2] =
         {104, 106, 106, 116, 136, 115, 102, 113},
         {104, 130, 106, 140, 136, 139, 102, 137},
     },
+    [PARTY_LAYOUT_MULTI_FULL] =
+    {
+        { 16,  40,  20,  50,  50,  52,  16,  34},
+        {104,  18, 108,  28, 136,  27, 102,  25},
+        {104,  42, 108,  52, 136,  51, 102,  49},
+        {104,  66, 108,  76, 136,  75, 102,  73},
+        {104,  90, 108, 100, 136,  99, 102,  97},
+        {104, 114, 108, 124, 136, 123, 102, 121},
+    },
+    [PARTY_LAYOUT_MULTI_FULL_PARTNER] =
+    {
+        { 16,  40,  20,  50,  50,  52,  16,  34},
+        {104,  18, 108,  28, 136,  27, 102,  25},
+        {104,  42, 108,  52, 136,  51, 102,  49},
+        {104,  66, 108,  76, 136,  75, 102,  73},
+        {104,  90, 108, 100, 136,  99, 102,  97},
+        {104, 114, 108, 124, 136, 123, 102, 121},
+    },
+    [PARTY_LAYOUT_MULTI_FULL_SHOWCASE] =
+    {
+        { 16,  40,  20,  50,  50,  52,  16,  34},
+        {104,  18, 108,  28, 136,  27, 102,  25},
+        {104,  42, 108,  52, 136,  51, 102,  49},
+        {104,  66, 108,  76, 136,  75, 102,  73},
+        {104,  90, 108, 100, 136,  99, 102,  97},
+        {104, 114, 108, 124, 136, 123, 102, 121},
+    },
+    [PARTY_LAYOUT_MULTI_FULL_SHOWCASE_PARTNER] =
+    {
+        { 16,  40,  20,  50,  50,  52,  16,  34},
+        {104,  18, 108,  28, 136,  27, 102,  25},
+        {104,  42, 108,  52, 136,  51, 102,  49},
+        {104,  66, 108,  76, 136,  75, 102,  73},
+        {104,  90, 108, 100, 136,  99, 102,  97},
+        {104, 114, 108, 124, 136, 123, 102, 121},
+    },
 };
 
 // Used only when both Cancel and Confirm are present
@@ -118,6 +175,7 @@ static const u8 sFontColorTable[][3] =
     {TEXT_COLOR_WHITE,       TEXT_COLOR_DARK_GRAY,  TEXT_COLOR_LIGHT_GRAY}, // Selection actions
     {TEXT_COLOR_WHITE,       TEXT_COLOR_BLUE,       TEXT_COLOR_LIGHT_BLUE}, // Field moves
     {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE,      TEXT_COLOR_DARK_GRAY},  // Unused
+    {TEXT_COLOR_WHITE,       TEXT_COLOR_RED,        TEXT_COLOR_LIGHT_RED},  // Move relearner
 };
 
 static const struct WindowTemplate sSinglePartyMenuWindowTemplate[] =
@@ -187,6 +245,74 @@ static const struct WindowTemplate sSinglePartyMenuWindowTemplate[] =
     },
     DUMMY_WIN_TEMPLATE
 };
+
+static const struct WindowTemplate sSinglePartyMenuWindowTemplate_Equal[] = //Custom party menu
+{
+    {//Slot 0 left
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 0,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 3,
+        .baseBlock = 0x63,
+    },
+    {//Slot 1 right
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 1,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 4,
+        .baseBlock = 0xA9,
+    },
+    {//Slot 2 left
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 5,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 5,
+        .baseBlock = 0xEF, //0xDF,
+    },
+    {//Slot 3 right
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 6,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 6,
+        .baseBlock = 0x135, //0x115,
+    },
+    {//Slot 4 left
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 10,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 7,
+        .baseBlock = 0x17B, //0x14B,
+    },
+    {//Slot 5 right
+        .bg = 0,
+        .tilemapLeft = 15,
+        .tilemapTop = 11,
+        .width = 14,
+        .height = 5,
+        .paletteNum = 8,
+        .baseBlock = 0x1C1, //0x181,
+    },
+    {
+        .bg = 2,
+        .tilemapLeft = 1,
+        .tilemapTop = 15,
+        .width = 28,
+        .height = 4,
+        .paletteNum = 14,
+        .baseBlock = 0x21F, //0x1DF,
+    },
+    DUMMY_WIN_TEMPLATE
+};//
 
 static const struct WindowTemplate sDoublePartyMenuWindowTemplate[] =
 {
@@ -383,6 +509,65 @@ static const struct WindowTemplate sShowcaseMultiPartyMenuWindowTemplate[] =
     DUMMY_WIN_TEMPLATE
 };
 
+static const struct WindowTemplate sShowcaseMultiFullPartyMenuWindowTemplate[] =
+{
+    { // Party mon 1
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 2,
+        .width = 10,
+        .height = 7,
+        .paletteNum = 3,
+        .baseBlock = 0x63,
+    },
+    { // Party mon 2
+        .bg = 0,
+        .tilemapLeft = 12,
+        .tilemapTop = 3,
+        .width = 18,
+        .height = 3,
+        .paletteNum = 5,
+        .baseBlock = 0xA9,
+    },
+    { // Party mon 3
+        .bg = 0,
+        .tilemapLeft = 12,
+        .tilemapTop = 6,
+        .width = 18,
+        .height = 3,
+        .paletteNum = 6,
+        .baseBlock = 0xDF,
+    },
+    { // Party mon 4
+        .bg = 0,
+        .tilemapLeft = 1,
+        .tilemapTop = 11,
+        .width = 10,
+        .height = 7,
+        .paletteNum = 4,
+        .baseBlock = 0x115,
+    },
+    { // Party mon 5
+        .bg = 0,
+        .tilemapLeft = 12,
+        .tilemapTop = 12,
+        .width = 18,
+        .height = 3,
+        .paletteNum = 7,
+        .baseBlock = 0x16B,
+    },
+    { // Party mon 6
+        .bg = 0,
+        .tilemapLeft = 12,
+        .tilemapTop = 15,
+        .width = 18,
+        .height = 3,
+        .paletteNum = 8,
+        .baseBlock = 0x1A1,
+    },
+    DUMMY_WIN_TEMPLATE
+};
+
 static const struct WindowTemplate sCancelButtonWindowTemplate =
 {
     .bg = 0,
@@ -391,7 +576,17 @@ static const struct WindowTemplate sCancelButtonWindowTemplate =
     .width = 6,
     .height = 2,
     .paletteNum = 3,
-    .baseBlock = 0x1C7,
+    .baseBlock = 0x207,
+};
+static const struct WindowTemplate sCancelButtonWindowTemplate_equal =
+{
+    .bg = 0,
+    .tilemapLeft = 24,
+    .tilemapTop = 17,
+    .width = 6,
+    .height = 2,
+    .paletteNum = 3,
+    .baseBlock = 0x207, //0x1C7,  //Custom party menu
 };
 
 static const struct WindowTemplate sMultiCancelButtonWindowTemplate =
@@ -402,7 +597,17 @@ static const struct WindowTemplate sMultiCancelButtonWindowTemplate =
     .width = 6,
     .height = 2,
     .paletteNum = 3,
-    .baseBlock = 0x1C7,
+    .baseBlock = 0x207,
+};
+static const struct WindowTemplate sMultiCancelButtonWindowTemplate_equal =
+{
+    .bg = 0,
+    .tilemapLeft = 24,
+    .tilemapTop = 18,
+    .width = 6,
+    .height = 2,
+    .paletteNum = 3,
+    .baseBlock = 0x207, //0x1C7,  //Custom party menu
 };
 
 static const struct WindowTemplate sConfirmButtonWindowTemplate =
@@ -414,6 +619,16 @@ static const struct WindowTemplate sConfirmButtonWindowTemplate =
     .height = 2,
     .paletteNum = 3,
     .baseBlock = 0x1D3,
+};
+static const struct WindowTemplate sConfirmButtonWindowTemplate_equal =
+{
+    .bg = 0,
+    .tilemapLeft = 24,
+    .tilemapTop = 16,
+    .width = 6,
+    .height = 2,
+    .paletteNum = 3,
+    .baseBlock = 0x213, //0x1D3,  //Custom party menu
 };
 
 static const struct WindowTemplate sDefaultPartyMsgWindowTemplate =
@@ -570,7 +785,7 @@ static const struct WindowTemplate sLevelUpStatsWindowTemplate =
     .baseBlock = 0x2E9,
 };
 
-static const struct WindowTemplate sUnusedWindowTemplate1 =
+static const struct WindowTemplate sWindowTemplate_FirstBattleOakVoiceover =
 {
     .bg = 2,
     .tilemapLeft = 2,
@@ -592,6 +807,17 @@ static const struct WindowTemplate sUnusedWindowTemplate2 =
     .baseBlock = 0x39D,
 };
 
+static const struct WindowTemplate sGiveHowManyItemsWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 24,
+    .tilemapTop = 11,
+    .width = 4,
+    .height = 2,
+    .paletteNum = 14,
+    .baseBlock = 0x2E9,
+};
+
 // Plain tilemaps for party menu slots.
 // The versions with no HP bar are used by eggs, and in certain displays like registering at a battle facility.
 // There is no empty version of the main slot because it shouldn't ever be empty.
@@ -601,6 +827,31 @@ static const u8 sSlotTilemap_Wide[]      = INCBIN_U8("graphics/party_menu/slot_w
 static const u8 sSlotTilemap_WideNoHP[]  = INCBIN_U8("graphics/party_menu/slot_wide_no_hp.bin");
 static const u8 sSlotTilemap_WideEmpty[] = INCBIN_U8("graphics/party_menu/slot_wide_empty.bin");
 
+
+ //Custom party menu
+static const u8 sEqualMainSlotTileNums[] =      {43, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 45,
+                                                 49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
+                                                 49, 33, 33, 33, 52, 53, 51, 51, 51, 51, 51, 51, 51, 54,
+                                                 49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
+                                                 55, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 57};
+
+static const u8 sEqualMainSlotTileNums_Egg[] =  {43, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 45,
+                                                 49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
+                                                 49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
+                                                 49, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 33, 50,
+                                                 55, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 56, 57};
+
+static const u8 sEqualEmptySlotTileNums[] = {21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23,
+                                             30,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31,
+                                             30,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31,
+                                             30,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 31,
+                                             37, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 39};
+
+static const u8 sEmptySlotTileNums[] = {21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23,
+                                        30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 31,
+                                        37, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 38, 39};
+
+//
 // Palette offsets
 static const u8 sGenderPalOffsets[] = {11, 12};
 static const u8 sHPBarPalOffsets[] = {9, 10};
@@ -785,55 +1036,6 @@ static const u8 sPartyMenuActionCounts[] =
     [ACTIONS_ZYGARDE_CUBE]  = ARRAY_COUNT(sPartyMenuAction_ZygardeCube),
 };
 
-static const u16 sFieldMoves[FIELD_MOVES_COUNT + 1] =
-{
-    [FIELD_MOVE_CUT]          = MOVE_CUT,
-    [FIELD_MOVE_FLASH]        = MOVE_FLASH,
-    [FIELD_MOVE_ROCK_SMASH]   = MOVE_ROCK_SMASH,
-    [FIELD_MOVE_STRENGTH]     = MOVE_STRENGTH,
-    [FIELD_MOVE_SURF]         = MOVE_SURF,
-    [FIELD_MOVE_FLY]          = MOVE_FLY,
-    [FIELD_MOVE_DIVE]         = MOVE_DIVE,
-    [FIELD_MOVE_WATERFALL]    = MOVE_WATERFALL,
-    [FIELD_MOVE_TELEPORT]     = MOVE_TELEPORT,
-    [FIELD_MOVE_DIG]          = MOVE_DIG,
-    [FIELD_MOVE_SECRET_POWER] = MOVE_SECRET_POWER,
-    [FIELD_MOVE_MILK_DRINK]   = MOVE_MILK_DRINK,
-    [FIELD_MOVE_SOFT_BOILED]  = MOVE_SOFT_BOILED,
-    [FIELD_MOVE_SWEET_SCENT]  = MOVE_SWEET_SCENT,
-#if OW_DEFOG_FIELD_MOVE == TRUE
-    [FIELD_MOVE_DEFOG]        = MOVE_DEFOG,
-#endif
-    // NOTE: This value is used as the terminal value for the table. There's no reason to do this, as the size of the table is known.
-    //       Whichever move shares this value (MOVE_SWORDS_DANCE by default) if present will be treated as the end of the array rather than a field move.
-    [FIELD_MOVES_COUNT]       = FIELD_MOVES_COUNT
-};
-
-struct
-{
-    bool8 (*fieldMoveFunc)(void);
-    u8 msgId;
-} static const sFieldMoveCursorCallbacks[FIELD_MOVES_COUNT] =
-{
-    [FIELD_MOVE_CUT]          = {SetUpFieldMove_Cut,         PARTY_MSG_NOTHING_TO_CUT},
-    [FIELD_MOVE_FLASH]        = {SetUpFieldMove_Flash,       PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_ROCK_SMASH]   = {SetUpFieldMove_RockSmash,   PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_STRENGTH]     = {SetUpFieldMove_Strength,    PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_SURF]         = {SetUpFieldMove_Surf,        PARTY_MSG_CANT_SURF_HERE},
-    [FIELD_MOVE_FLY]          = {SetUpFieldMove_Fly,         PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_DIVE]         = {SetUpFieldMove_Dive,        PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_WATERFALL]    = {SetUpFieldMove_Waterfall,   PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_TELEPORT]     = {SetUpFieldMove_Teleport,    PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_DIG]          = {SetUpFieldMove_Dig,         PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_SECRET_POWER] = {SetUpFieldMove_SecretPower, PARTY_MSG_CANT_USE_HERE},
-    [FIELD_MOVE_MILK_DRINK]   = {SetUpFieldMove_SoftBoiled,  PARTY_MSG_NOT_ENOUGH_HP},
-    [FIELD_MOVE_SOFT_BOILED]  = {SetUpFieldMove_SoftBoiled,  PARTY_MSG_NOT_ENOUGH_HP},
-    [FIELD_MOVE_SWEET_SCENT]  = {SetUpFieldMove_SweetScent,  PARTY_MSG_CANT_USE_HERE},
-#if OW_DEFOG_FIELD_MOVE == TRUE
-    [FIELD_MOVE_DEFOG]        = {SetUpFieldMove_Defog,       PARTY_MSG_CANT_USE_HERE},
-#endif
-};
-
 static const u8 *const sUnionRoomTradeMessages[] =
 {
     [UR_TRADE_MSG_NOT_MON_PARTNER_WANTS - 1]       = gText_NotPkmnOtherTrainerWants,
@@ -847,8 +1049,8 @@ static const u8 *const sUnionRoomTradeMessages[] =
     [UR_TRADE_MSG_CANT_TRADE_WITH_PARTNER_2 - 1]   = gText_CantTradeWithTrainer,
 };
 
-static const u32 sHeldItemGfx[] = INCBIN_U32("graphics/party_menu/hold_icons.4bpp");
-const u16 gHeldItemPalette[] = INCBIN_U16("graphics/party_menu/hold_icons.gbapal");
+static const u32 sHeldItemGfx[] = INCGFX_U32("graphics/party_menu/hold_icons.png", ".4bpp");
+const u16 gHeldItemPalette[] = INCGFX_U16("graphics/party_menu/hold_icons.png", ".gbapal");
 
 static const struct OamData sOamData_HeldItem =
 {
@@ -901,9 +1103,6 @@ static const struct SpriteTemplate sSpriteTemplate_HeldItem =
     .paletteTag = TAG_HELD_ITEM,
     .oam = &sOamData_HeldItem,
     .anims = sSpriteAnimTable_HeldItem,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy
 };
 
 static const struct OamData sOamData_MenuPokeball =
@@ -958,9 +1157,6 @@ static const struct SpriteTemplate sSpriteTemplate_MenuPokeball =
     .paletteTag = TAG_POKEBALL,
     .oam = &sOamData_MenuPokeball,
     .anims = sSpriteAnimTable_MenuPokeball,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sOamData_MenuPokeballSmall =
@@ -1039,9 +1235,6 @@ static const struct SpriteTemplate sSpriteTemplate_MenuPokeballSmall =
     .paletteTag = TAG_POKEBALL,
     .oam = &sOamData_MenuPokeballSmall,
     .anims = sSpriteAnimTable_MenuPokeballSmall,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const struct OamData sOamData_StatusCondition =
@@ -1137,9 +1330,6 @@ const struct SpriteTemplate gSpriteTemplate_StatusIcons =
     .paletteTag = TAG_STATUS_ICONS,
     .oam = &sOamData_StatusCondition,
     .anims = sSpriteTemplate_StatusCondition,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 static const u8 *const sUnused_StatStrings[] =

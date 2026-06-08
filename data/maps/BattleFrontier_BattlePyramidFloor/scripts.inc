@@ -215,7 +215,7 @@ BattlePyramid_WarpToTop::
 # 108 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 BattlePyramid_TrainerBattle::
 # 109 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
-	trainerbattle TRAINER_BATTLE_HILL, LOCALID_NONE, TRAINER_PHILLIP, BattleFacility_TrainerBattle_PlaceholderText, BattleFacility_TrainerBattle_PlaceholderText, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, FALSE, FALSE, FALSE
+	facilitytrainerbattle FACILITY_BATTLE_PYRAMID
 # 110 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 	pyramid_showhint
 # 111 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"

@@ -32,6 +32,7 @@
 #include "fldeff_misc.h"
 #include "trainer_pokemon_sprites.h"
 #include "data.h"
+#include "outfit_menu.h"
 #include "confetti_util.h"
 #include "constants/rgb.h"
 
@@ -310,14 +311,12 @@ static const struct SpriteTemplate sSpriteTemplate_HofConfetti =
     .paletteTag = TAG_CONFETTI,
     .oam = &sOamData_Confetti,
     .anims = sAnims_Confetti,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCB_HofConfetti
 };
 
-static const u16 sHallOfFame_Pal[] = INCBIN_U16("graphics/misc/japanese_hof.gbapal");
+static const u16 sHallOfFame_Pal[] = INCGFX_U16("graphics/misc/japanese_hof.png", ".gbapal");
 
-static const u32 sHallOfFame_Gfx[] = INCBIN_U32("graphics/misc/japanese_hof.4bpp.lz");
+static const u32 sHallOfFame_Gfx[] = INCGFX_U32("graphics/misc/japanese_hof.png", ".4bpp.smol", "-num_tiles 29 -Wnum_tiles");
 
 static const struct HallofFameMon sDummyFameMon =
 {
@@ -437,14 +436,14 @@ static void Task_Hof_InitMonData(u8 taskId)
     for (i = 0; i < PARTY_SIZE; i++)
     {
         u8 nickname[POKEMON_NAME_LENGTH + 1];
-        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES))
+        if (GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_SPECIES))
         {
-            sHofMonPtr->mon[i].species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
-            sHofMonPtr->mon[i].tid = GetMonData(&gPlayerParty[i], MON_DATA_OT_ID);
-            sHofMonPtr->mon[i].isShiny = GetMonData(&gPlayerParty[i], MON_DATA_IS_SHINY);
-            sHofMonPtr->mon[i].personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
-            sHofMonPtr->mon[i].lvl = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
-            GetMonData(&gPlayerParty[i], MON_DATA_NICKNAME, nickname);
+            sHofMonPtr->mon[i].species = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_SPECIES_OR_EGG);
+            sHofMonPtr->mon[i].tid = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_OT_ID);
+            sHofMonPtr->mon[i].isShiny = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_IS_SHINY);
+            sHofMonPtr->mon[i].personality = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_PERSONALITY);
+            sHofMonPtr->mon[i].lvl = GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_LEVEL);
+            GetMonData(&gParties[B_TRAINER_PLAYER][i], MON_DATA_NICKNAME, nickname);
             for (j = 0; j < POKEMON_NAME_LENGTH; j++)
                 sHofMonPtr->mon[i].nickname[j] = nickname[j];
             gTasks[taskId].tMonNumber++;
@@ -696,11 +695,12 @@ static void Task_Hof_WaitToDisplayPlayer(u8 taskId)
 
 static void Task_Hof_DisplayPlayer(u8 taskId)
 {
+    u16 picId = GetPlayerTrainerPicIdByOutfitGenderType(gSaveBlock2Ptr->currOutfitId, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance, 0);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
     ShowBg(0);
     ShowBg(1);
     ShowBg(3);
-    gTasks[taskId].tPlayerSpriteID = CreateTrainerPicSprite(PlayerGenderToFrontTrainerPicId_Debug(gSaveBlock2Ptr->playerGender, TRUE), TRUE, 120, 72, 6, TAG_NONE);
+    gTasks[taskId].tPlayerSpriteID = CreateTrainerPicSprite(picId, TRUE, 120, 72, 6, TAG_NONE);
     AddWindow(&sHof_WindowTemplate);
     LoadWindowGfx(1, gSaveBlock2Ptr->optionsWindowFrameType, 0x21D, BG_PLTT_ID(13));
     LoadPalette(GetTextWindowPalette(1), BG_PLTT_ID(14), PLTT_SIZE_4BPP);

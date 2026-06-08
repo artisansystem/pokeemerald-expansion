@@ -1,0 +1,17 @@
+mapscripts Kingsisle_PokemonCenter_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION: Kingsisle_PokemonCenter_OnTransition
+}
+
+script Kingsisle_PokemonCenter_OnTransition {
+    setrespawn(HEAL_LOCATION_KINGSISLE_INSTITUTE)
+    end
+}
+
+script Kingisle_PokemonCenter_EventScript_Nurse {
+    setvar(VAR_0x800B, LOCALID_KINGSISLE_NURSE)
+    call(Common_EventScript_PkmnCenterNurse)
+    waitmessage
+    waitbuttonpress
+    release
+    end
+}

@@ -4,6 +4,7 @@
 #include "librfu.h"
 #include "link.h"
 #include "AgbRfu_LinkManager.h"
+#include "constants/species.h"
 
 #define RFUCMD_MASK                0xFF00
 
@@ -103,10 +104,10 @@ struct __attribute__((packed, aligned(2))) RfuGameData
 {
     struct RfuGameCompatibilityData compatibility;
     u8 partnerInfo[RFU_CHILD_MAX];
-    u16 tradeSpecies;
+    enum Species tradeSpecies;
     u8 activity:7;
     u8 startedActivity:1;
-    u8 playerGender:1;
+    u8 playerGender:2;
     u8 tradeLevel:7;
     u8 tradeType:6;
     u8 filler:2;
@@ -127,7 +128,7 @@ struct RfuBlockSend
 {
     /* 0x00 */ u16 next;
     /* 0x02 */ u16 count;
-    /* 0x04 */ const u8 *payload;
+    /* 0x04 */ const u16 *payload;
     /* 0x08 */ u32 receivedFlags;
     /* 0x0c */ u32 failedFlags;
     /* 0x10 */ bool8 sending;
@@ -247,7 +248,7 @@ bool32 IsSendingKeysToRfu(void);
 void StartSendingKeysToRfu(void);
 void Rfu_SetBerryBlenderLinkCallback(void);
 u8 Rfu_GetBlockReceivedStatus(void);
-bool32 Rfu_InitBlockSend(const u8 *src, size_t size);
+bool32 Rfu_InitBlockSend(const u16 *src, size_t size);
 void ClearLinkRfuCallback(void);
 u8 Rfu_GetLinkPlayerCount(void);
 u8 Rfu_GetMultiplayerId(void);
@@ -294,7 +295,7 @@ void UpdateGameData_SetActivity(u8 activity, u32 partnerInfo, bool32 startedActi
 void CreateTask_RfuReconnectWithParent(const u8 *name, u16 trainerId);
 void SetHostRfuWonderFlags(bool32 hasNews, bool32 hasCard);
 void ResetHostRfuGameData(void);
-void SetTradeBoardRegisteredMonInfo(u32 type, u32 species, u32 level);
+void SetTradeBoardRegisteredMonInfo(u32 type, enum Species species, u32 level);
 void InitializeRfuLinkManager_EnterUnionRoom(void);
 void TryConnectToUnionRoomParent(const u8 *name, struct RfuGameData *parent, u8 activity);
 bool32 IsUnionRoomListenTaskActive(void);

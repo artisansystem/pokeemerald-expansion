@@ -43,6 +43,7 @@
 #include "mystery_event_menu.h"
 #include "mystery_gift_menu.h"
 #include "link.h"
+#include "uriel_speech.h"
 
 /*
  * 
@@ -123,7 +124,6 @@ static u32 GetHPEggCyclePercent(u32 partyIndex);
 static void CreatePartyMonIcons();
 static void DestroyMonIcons();
 
-
 //==========Background and Window Data==========//
 static const struct BgTemplate sMainMenuBgTemplates[] =
 {
@@ -199,28 +199,35 @@ static const struct HWWindowPosition HWinCoords[6] =
 //
 //  Graphic and Tilemap Pointers for Bgs and Mughsots
 //
-static const u32 sMainBgTiles[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.4bpp.lz");
-static const u32 sMainBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.bin.lz");
-static const u16 sMainBgPalette[] = INCBIN_U16("graphics/ui_main_menu/main_tiles.gbapal");
+static const u32 sMainBgTiles[] = INCGFX_U32("graphics/ui_main_menu/main_tiles.png", ".4bpp.smol");
+static const u32 sMainBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/main_tiles.bin.smolTM");
+static const u16 sMainBgPalette[] = INCGFX_U16("graphics/ui_main_menu/main_tiles.png", ".gbapal");
 
-static const u32 sMainBgTilesFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.4bpp.lz");
-static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.lz");
-static const u16 sMainBgPaletteFem[] = INCBIN_U16("graphics/ui_main_menu/main_tiles_fem.gbapal");
+static const u32 sMainBgTilesFem[] = INCGFX_U32("graphics/ui_main_menu/main_tiles_fem.png", ".4bpp.smol");
+static const u32 sMainBgTilemapFem[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_fem.bin.smolTM");
+static const u16 sMainBgPaletteFem[] = INCGFX_U16("graphics/ui_main_menu/main_tiles_fem.png", ".gbapal");
 
-static const u32 sScrollBgTiles[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.4bpp.lz");
-static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.bin.lz");
-static const u16 sScrollBgPalette[] = INCBIN_U16("graphics/ui_main_menu/scroll_tiles.gbapal");
+static const u32 sMainBgTilesEnby[] = INCGFX_U32("graphics/ui_main_menu/main_tiles_enby.png", ".4bpp.smol");
+static const u32 sMainBgTilemapEnby[] = INCBIN_U32("graphics/ui_main_menu/main_tiles_enby.bin.smolTM");
+static const u32 sMainBgPaletteEnby[] = INCGFX_U32("graphics/ui_main_menu/main_tiles_enby.png", ".gbapal");
 
-static const u16 sIconBox_Pal[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow.gbapal");
-static const u32 sIconBox_Gfx[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow.4bpp.lz");
+static const u32 sScrollBgTiles[] = INCGFX_U32("graphics/ui_main_menu/scroll_tiles.png", ".4bpp.smol");
+static const u32 sScrollBgTilemap[] = INCBIN_U32("graphics/ui_main_menu/scroll_tiles.bin.smolTM");
+static const u16 sScrollBgPalette[] = INCGFX_U16("graphics/ui_main_menu/scroll_tiles.png", ".gbapal");
 
-static const u16 sIconBox_PalFem[] = INCBIN_U16("graphics/ui_main_menu/icon_shadow_fem.gbapal");
-static const u32 sIconBox_GfxFem[] = INCBIN_U32("graphics/ui_main_menu/icon_shadow_fem.4bpp.lz");
+static const u16 sIconBox_Pal[] = INCGFX_U16("graphics/ui_main_menu/icon_shadow.png", ".gbapal");
+static const u32 sIconBox_Gfx[] = INCGFX_U32("graphics/ui_main_menu/icon_shadow.png", ".4bpp.smol");
 
-static const u16 sBrendanMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/brendan_mugshot.gbapal");
-static const u32 sBrendanMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/brendan_mugshot.4bpp.lz");
-static const u16 sMayMugshot_Pal[] = INCBIN_U16("graphics/ui_main_menu/may_mugshot.gbapal");
-static const u32 sMayMugshot_Gfx[] = INCBIN_U32("graphics/ui_main_menu/may_mugshot.4bpp.lz");
+static const u16 sIconBox_PalFem[] = INCGFX_U16("graphics/ui_main_menu/icon_shadow_fem.png", ".gbapal");
+static const u32 sIconBox_GfxFem[] = INCGFX_U32("graphics/ui_main_menu/icon_shadow_fem.png", ".4bpp.smol");
+
+static const u16 sIconBox_PalEnby[] = INCGFX_U16("graphics/ui_main_menu/icon_shadow_enby.png", ".gbapal");
+static const u32 sIconBox_GfxEnby[] = INCGFX_U32("graphics/ui_main_menu/icon_shadow_enby.png", ".4bpp.smol");
+
+static const u16 sBrendanMugshot_Pal[] = INCGFX_U16("graphics/ui_main_menu/brendan_mugshot.png", ".gbapal");
+static const u32 sBrendanMugshot_Gfx[] = INCGFX_U32("graphics/ui_main_menu/brendan_mugshot.png", ".4bpp.smol");
+static const u16 sMayMugshot_Pal[] = INCGFX_U16("graphics/ui_main_menu/may_mugshot.png", ".gbapal");
+static const u32 sMayMugshot_Gfx[] = INCGFX_U32("graphics/ui_main_menu/may_mugshot.png", ".4bpp.smol");
 
 
 //
@@ -304,6 +311,13 @@ static const struct CompressedSpriteSheet sSpriteSheet_IconBoxFem =
     .tag = TAG_ICON_BOX,
 };
 
+static const struct CompressedSpriteSheet sSpriteSheet_IconBoxEnby =
+{
+    .data = sIconBox_GfxEnby,
+    .size = 32*32*1/2,
+    .tag = TAG_ICON_BOX,
+};
+
 static const struct SpritePalette sSpritePal_IconBox =
 {
     .data = sIconBox_Pal,
@@ -313,6 +327,12 @@ static const struct SpritePalette sSpritePal_IconBox =
 static const struct SpritePalette sSpritePal_IconBoxFem =
 {
     .data = sIconBox_PalFem,
+    .tag = TAG_ICON_BOX
+};
+
+static const struct SpritePalette sSpritePal_IconBoxEnby =
+{
+    .data = sIconBox_PalEnby,
     .tag = TAG_ICON_BOX
 };
 
@@ -348,8 +368,8 @@ void Task_OpenMainMenu(u8 taskId)
         {                //  where the UI is initialized by swapping a task func with this one 
             case HAS_NO_SAVED_GAME:
             default:
-                SetMainCallback2(CB2_NewGameBirchSpeech_FromNewMainMenu);
                 DestroyTask(taskId);
+                SetMainCallback2(CB2_NewGameUrielSpeech_FromNewMainMenu);
                 return;
             case HAS_SAVED_GAME:       
             case HAS_MYSTERY_GIFT:
@@ -362,6 +382,7 @@ void Task_OpenMainMenu(u8 taskId)
         DestroyTask(taskId);
     }
 }
+
 
 //
 //  Setup Menu Functions
@@ -611,9 +632,13 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
         {
             DecompressAndCopyTileDataToVram(1, sMainBgTiles, 0, 0, 0);
         }
-        else
+        else if (gSaveBlock2Ptr->playerGender == FEMALE)
         {
             DecompressAndCopyTileDataToVram(1, sMainBgTilesFem, 0, 0, 0);
+        }
+        else
+        {
+            DecompressAndCopyTileDataToVram(1, sMainBgTilesEnby, 0, 0, 0);
         }
         sMainMenuDataPtr->gfxLoadState++;
         break;
@@ -622,11 +647,15 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
         {
             if (gSaveBlock2Ptr->playerGender == MALE)
             {
-                LZDecompressWram(sMainBgTilemap, sBg1TilemapBuffer);
+                DecompressDataWithHeaderWram(sMainBgTilemap, sBg1TilemapBuffer);
+            }
+            else if (gSaveBlock2Ptr->playerGender == FEMALE)
+            {
+                DecompressDataWithHeaderWram(sMainBgTilemapFem, sBg1TilemapBuffer);
             }
             else
             {
-                LZDecompressWram(sMainBgTilemapFem, sBg1TilemapBuffer);
+                DecompressDataWithHeaderWram(sMainBgTilemapEnby, sBg1TilemapBuffer);
             }
             sMainMenuDataPtr->gfxLoadState++;
         }
@@ -639,7 +668,7 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
     case 3:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            LZDecompressWram(sScrollBgTilemap, sBg2TilemapBuffer);
+            DecompressDataWithHeaderWram(sScrollBgTilemap, sBg2TilemapBuffer);
             sMainMenuDataPtr->gfxLoadState++;
         }
         break;
@@ -653,13 +682,21 @@ static bool8 MainMenu_LoadGraphics(void) // Load all the tilesets, tilemaps, spr
             LoadSpritePalette(&sSpritePal_BrendanMugshot);
             LoadPalette(sMainBgPalette, 0, 32);
         }
-        else
+        else if (gSaveBlock2Ptr->playerGender == FEMALE)
         {
             LoadCompressedSpriteSheet(&sSpriteSheet_IconBoxFem);
             LoadSpritePalette(&sSpritePal_IconBoxFem);
             LoadCompressedSpriteSheet(&sSpriteSheet_MayMugshot);
             LoadSpritePalette(&sSpritePal_MayMugshot);
             LoadPalette(sMainBgPaletteFem, 0, 32);
+        }
+        else 
+        {
+            LoadCompressedSpriteSheet(&sSpriteSheet_IconBoxEnby);
+            LoadSpritePalette(&sSpritePal_IconBoxEnby);
+            LoadCompressedSpriteSheet(&sSpriteSheet_BrendanMugshot);
+            LoadSpritePalette(&sSpritePal_BrendanMugshot);
+            LoadPalette(sMainBgPaletteEnby, 0, 32);
         }
         LoadPalette(sScrollBgPalette, 16, 32);
     }
@@ -903,7 +940,7 @@ static void Task_MainMenuMain(u8 taskId)
                 sSelectedOption = HW_WIN_CONTINUE;
                 break;
             case HW_WIN_NEW_GAME:
-                sMainMenuDataPtr->savedCallback = CB2_NewGameBirchSpeech_FromNewMainMenu;
+                sMainMenuDataPtr->savedCallback = CB2_NewGameUrielSpeech_FromNewMainMenu;
                 sSelectedOption = HW_WIN_CONTINUE;
                 break;
             case HW_WIN_OPTIONS:

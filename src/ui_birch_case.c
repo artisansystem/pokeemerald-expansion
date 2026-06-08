@@ -114,6 +114,7 @@ enum BallPositions
 struct MonChoiceData{ // This is the format used to define a mon, everything left out will default to 0 and be blank or use the in game defaults
     u16 species; // Mon Species ID
     u8 level;   // Mon Level 5
+    enum StarterIds starterId; // starter Id to pass to gSpecialVar_Result <---
     u16 item;   // Held item, just ITEM_POTION
     u8 ball; // this ballid does not change the design of the ball in the case, only in summary/throwing out to battle 
     u8 nature; // NATURE_JOLLY, NATURE_ETC...
@@ -132,17 +133,17 @@ struct MonChoiceData{ // This is the format used to define a mon, everything lef
 //
 static const struct MonChoiceData sStarterChoices[9] = 
 {
-    [BALL_TOP_FIRST]        = {SPECIES_MUDKIP, 5, ITEM_POTION, BALL_NET, NATURE_JOLLY, 1, MON_MALE, {255, 255, 0, 0, 0, 0}, {31, 31, 31, 31, 31, 31}, {MOVE_FIRE_BLAST, MOVE_SHEER_COLD, MOVE_WATER_GUN, MOVE_THUNDER}, 0, 0, 0},
-    [BALL_TOP_SECOND]       = {SPECIES_TREECKO, 5},
-    [BALL_MIDDLE_FIRST]     = {SPECIES_TORCHIC, 5},
+    [BALL_TOP_FIRST]        = {SPECIES_NONE, 5},
+    [BALL_TOP_SECOND]       = {SPECIES_NONE, 5},
+    [BALL_MIDDLE_FIRST]     = {SPECIES_NONE, 5},
 
-    [BALL_TOP_THIRD]        = {SPECIES_CHIKORITA, 5},
+    [BALL_TOP_THIRD]        = {SPECIES_NONE, 5},
     [BALL_TOP_FOURTH]       = {SPECIES_NONE, 5},
-    [BALL_MIDDLE_THIRD]     = {SPECIES_CYNDAQUIL, 5},
+    [BALL_MIDDLE_THIRD]     = {SPECIES_NONE, 5},
 
-    [BALL_MIDDLE_SECOND]    = {SPECIES_BULBASAUR, 5},
-    [BALL_BOTTOM_FIRST]     = {SPECIES_CHARMANDER, 5},
-    [BALL_BOTTOM_SECOND]    = {SPECIES_NONE, 5},
+    [BALL_MIDDLE_SECOND]    = {SPECIES_SNIVY, 5, GRASS_STARTER, ITEM_ORAN_BERRY, BALL_POKE},
+    [BALL_BOTTOM_FIRST]     = {SPECIES_PIPLUP, 5, WATER_STARTER, ITEM_ORAN_BERRY, BALL_POKE},
+    [BALL_BOTTOM_SECOND]    = {SPECIES_FENNEKIN, 5, FIRE_STARTER, ITEM_ORAN_BERRY, BALL_POKE},
 };
 
 //==========EWRAM==========//
@@ -205,16 +206,16 @@ static const struct WindowTemplate sMenuWindowTemplates[] =
 //
 //  Graphics Pointers to Tilemaps, Tilesets, Spritesheets, Palettes
 //
-static const u32 sCaseTiles[]   = INCBIN_U32("graphics/ui_birch_case/case_tiles.4bpp.lz");
-static const u32 sCaseTilemap[] = INCBIN_U32("graphics/ui_birch_case/case_tiles.bin.lz");
-static const u16 sCasePalette[] = INCBIN_U16("graphics/ui_birch_case/case_tiles.gbapal");
+static const u32 sCaseTiles[]   = INCGFX_U32("graphics/ui_birch_case/case_tiles.png", ".4bpp.smol");
+static const u32 sCaseTilemap[] = INCBIN_U32("graphics/ui_birch_case/case_tiles.bin.smolTM");
+static const u16 sCasePalette[] = INCGFX_U16("graphics/ui_birch_case/case_tiles.pal", ".gbapal");
 
-static const u32 sTextBgTiles[]   = INCBIN_U32("graphics/ui_birch_case/text_bg_tiles.4bpp.lz");
-static const u32 sTextBgTilemap[] = INCBIN_U32("graphics/ui_birch_case/text_bg_tiles.bin.lz");
-static const u16 sTextBgPalette[] = INCBIN_U16("graphics/ui_birch_case/text_bg_tiles.gbapal");
+static const u32 sTextBgTiles[]   = INCGFX_U32("graphics/ui_birch_case/text_bg_tiles.png", ".4bpp.smol");
+static const u32 sTextBgTilemap[] = INCBIN_U32("graphics/ui_birch_case/text_bg_tiles.bin.smolTM");
+static const u16 sTextBgPalette[] = INCGFX_U16("graphics/ui_birch_case/text_bg_tiles.pal", ".gbapal");
 
-static const u32 sPokeballHand_Gfx[] = INCBIN_U32("graphics/ui_birch_case/pokeball_hand.4bpp.lz");
-static const u16 sPokeballHand_Pal[] = INCBIN_U16("graphics/ui_birch_case/pokeball_hand.gbapal");
+static const u32 sPokeballHand_Gfx[] = INCGFX_U32("graphics/ui_birch_case/pokeball_hand.png", ".4bpp.smol");
+static const u16 sPokeballHand_Pal[] = INCGFX_U16("graphics/ui_birch_case/pokeball_hand.pal", ".gbapal");
 
 //
 //  Sprite Data for Pokeball Hand Sprite
@@ -429,7 +430,6 @@ static void DestroyPokeballSprites()
     }
 }
 
-
 //
 //  Draw The Pokemon Sprites
 //
@@ -471,6 +471,25 @@ static void BirchCase_GiveMon() // Function that calls the GiveMon function pull
                 sStarterChoices[sBirchCaseDataPtr->handPosition].gender, evs, ivs, moves, \
                 sStarterChoices[sBirchCaseDataPtr->handPosition].ggMaxFactor, sStarterChoices[sBirchCaseDataPtr->handPosition].teraType,\
                 sStarterChoices[sBirchCaseDataPtr->handPosition].isShinyExpansion);
+}
+
+static void BirchCase_GiveStarter() // Function that calls the GiveMon function pulled from Expansion by Lunos and Ghoulslash
+{
+    u8 *evs = (u8 *) sStarterChoices[sBirchCaseDataPtr->handPosition].evs;
+    u8 *ivs = (u8 *) sStarterChoices[sBirchCaseDataPtr->handPosition].ivs;
+    u16 *moves = (u16 *) sStarterChoices[sBirchCaseDataPtr->handPosition].moves;
+    FlagSet(FLAG_SYS_POKEMON_GET);
+    BirchCase_GiveMonParameterized(sStarterChoices[sBirchCaseDataPtr->handPosition].species, sStarterChoices[sBirchCaseDataPtr->handPosition].level, \
+                sStarterChoices[sBirchCaseDataPtr->handPosition].item, sStarterChoices[sBirchCaseDataPtr->handPosition].ball, \
+                sStarterChoices[sBirchCaseDataPtr->handPosition].nature, sStarterChoices[sBirchCaseDataPtr->handPosition].abilityNum, \
+                sStarterChoices[sBirchCaseDataPtr->handPosition].gender, evs, ivs, moves, \
+                sStarterChoices[sBirchCaseDataPtr->handPosition].ggMaxFactor, sStarterChoices[sBirchCaseDataPtr->handPosition].teraType,\
+                sStarterChoices[sBirchCaseDataPtr->handPosition].isShinyExpansion);
+    
+    //store hand position can use that to get starter choice
+    //need to also translate into fire water grass value for varstarter mon
+    //nvm don't need hand position just need fire water grass value
+    gSpecialVar_Result = sStarterChoices[sBirchCaseDataPtr->handPosition].starterId;
 }
 
 //==========FUNCTIONS==========//
@@ -687,8 +706,8 @@ static bool8 BirchCaseLoadGraphics(void) // load tilesets, tilemaps, spritesheet
     case 1:
         if (FreeTempTileDataBuffersIfPossible() != TRUE)
         {
-            LZDecompressWram(sCaseTilemap, sBg1TilemapBuffer);
-            LZDecompressWram(sTextBgTilemap, sBg2TilemapBuffer);
+            DecompressDataWithHeaderWram(sCaseTilemap, sBg1TilemapBuffer);
+            DecompressDataWithHeaderWram(sTextBgTilemap, sBg2TilemapBuffer);
             sBirchCaseDataPtr->gfxLoadState++;
         }
         break;
@@ -853,8 +872,14 @@ static void Task_BirchCaseConfirmSelection(u8 taskId)
     if(JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
+        
         PrintTextToBottomBar(RECIEVED_MON);
-        BirchCase_GiveMon();
+
+        if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
+            BirchCase_GiveMon();
+        else
+            BirchCase_GiveStarter();
+            
         gTasks[taskId].func = Task_BirchCaseRecievedMon;
         return;
     }

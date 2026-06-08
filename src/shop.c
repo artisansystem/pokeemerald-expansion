@@ -34,6 +34,8 @@
 #include "strings.h"
 #include "text_window.h"
 #include "tv.h"
+#include "outfit_menu.h"
+#include "shop_criteria.h"
 #include "constants/decorations.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
@@ -45,7 +47,7 @@
 #define TAG_ITEM_ICON_BASE 9110 // immune to time blending
 
 #define MAX_ITEMS_SHOWN 8
-#define SHOP_MENU_PALETTE_ID 12
+#define SHOP_MENU_PALETTE_ID (gMapHeader.mapLayout->isFrlg ? 11 : 12)
 
 enum {
     WIN_BUY_SELL_QUIT,
@@ -71,6 +73,7 @@ enum {
     MART_TYPE_NORMAL,
     MART_TYPE_DECOR,
     MART_TYPE_DECOR2,
+    MART_TYPE_OUTFIT,
 };
 
 // shop view window NPC info enum
@@ -128,9 +131,9 @@ static void BuyMenuBuildListMenuTemplate(void);
 static void BuyMenuInitBgs(void);
 static void BuyMenuInitWindows(void);
 static void BuyMenuDecompressBgGraphics(void);
-static void BuyMenuSetListEntry(struct ListMenuItem *, u16, u8 *);
-static void BuyMenuAddItemIcon(u16, u8);
-static void BuyMenuRemoveItemIcon(u16, u8);
+static void BuyMenuSetListEntry(struct ListMenuItem *, enum Item, u8 *);
+static void BuyMenuAddItemIcon(enum Item, u8);
+static void BuyMenuRemoveItemIcon(enum Item, u8);
 static void BuyMenuPrint(u8 windowId, const u8 *text, u8 x, u8 y, s8 speed, u8 colorSet);
 static void BuyMenuDrawMapGraphics(void);
 static void BuyMenuCopyMenuBgToBg1TilemapBuffer(void);
@@ -153,6 +156,7 @@ static void BuyMenuSubtractMoney(u8 taskId);
 static void RecordItemPurchase(u8 taskId);
 static void Task_ReturnToItemListAfterItemPurchase(u8 taskId);
 static void Task_ReturnToItemListAfterDecorationPurchase(u8 taskId);
+static void Task_ReturnToItemListAfterOutfitPurchase(u8 taskId);
 static void Task_HandleShopMenuBuy(u8 taskId);
 static void Task_HandleShopMenuSell(u8 taskId);
 static void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, struct ListMenu *list);
@@ -340,6 +344,8 @@ static const u8 sShopBuyMenuTextColors[][3] =
     [COLORID_GRAY_CURSOR] = {0, 3, 2},
 };
 
+static const u16 sShopItemsListDummy[] = { ITEM_NONE };
+
 static u8 CreateShopMenu(u8 martType)
 {
     int numMenuItems;
@@ -384,6 +390,12 @@ static void SetShopItemsForSale(const u16 *items)
 
     sMartInfo.itemList = items;
     sMartInfo.itemCount = 0;
+
+    assertf(items != NULL, "Shop items list should never be set as NULL")
+    {
+        sMartInfo.itemList = sShopItemsListDummy;
+        return;
+    }
 
     // Read items until ITEM_NONE / DECOR_NONE is reached
     while (sMartInfo.itemList[i])
@@ -458,7 +470,7 @@ static void Task_GoToBuyOrSellMenu(u8 taskId)
     if (!gPaletteFade.active)
     {
         DestroyTask(taskId);
-        SetMainCallback2((void *)((u16)tCallbackHi << 16 | (u16)tCallbackLo));
+        SetMainCallback2((MainCallback)((u16)tCallbackHi << 16 | (u16)tCallbackLo));
     }
 }
 
@@ -521,6 +533,8 @@ static void CB2_InitBuyMenu(void)
         sShopData->scrollIndicatorsTaskId = TASK_NONE;
         sShopData->itemSpriteIds[0] = SPRITE_NONE;
         sShopData->itemSpriteIds[1] = SPRITE_NONE;
+        if (sMartInfo.martType == MART_TYPE_NORMAL)
+            TryBuildDynamicShopItemList(&sMartInfo.itemList, &sMartInfo.itemCount);
         BuyMenuBuildListMenuTemplate();
         BuyMenuInitBgs();
         FillBgTilemapBufferRect_Palette0(0, 0, 0, 0, 0x20, 0x20);
@@ -550,6 +564,9 @@ static void CB2_InitBuyMenu(void)
 
 static void BuyMenuFreeMemory(void)
 {
+    if (sMartInfo.martType == MART_TYPE_NORMAL)
+        TryFreeDynamicShopItemList(&sMartInfo.itemList);
+
     Free(sShopData);
     Free(sListMenuItems);
     Free(sItemNames);
@@ -580,10 +597,12 @@ static void BuyMenuBuildListMenuTemplate(void)
     sShopData->itemsShowed = gMultiuseListMenuTemplate.maxShowed;
 }
 
-static void BuyMenuSetListEntry(struct ListMenuItem *menuItem, u16 item, u8 *name)
+static void BuyMenuSetListEntry(struct ListMenuItem *menuItem, enum Item item, u8 *name)
 {
     if (sMartInfo.martType == MART_TYPE_NORMAL)
         CopyItemName(item, name);
+    else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+        BufferOutfitStrings(name, item, OUTFIT_BUFFER_NAME);
     else
         StringCopy(name, gDecorations[item].name);
 
@@ -608,6 +627,8 @@ static void BuyMenuPrintItemDescriptionAndShowItemIcon(s32 item, bool8 onInit, s
     {
         if (sMartInfo.martType == MART_TYPE_NORMAL)
             description = GetItemDescription(item);
+        else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+            description = gOutfits[item].name; // the actual desc is a bit too long oops
         else
             description = gDecorations[item].description;
     }
@@ -634,6 +655,10 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
                 STR_CONV_MODE_LEFT_ALIGN,
                 6);
         }
+        else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+        {
+            ConvertIntToDecimalStringN(gStringVar1, GetOutfitPrice(itemId), STR_CONV_MODE_LEFT_ALIGN, 6);
+        }
         else
         {
             ConvertIntToDecimalStringN(
@@ -643,7 +668,7 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
                 6);
         }
 
-        if (GetItemImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+        if ((GetItemImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1))) || GetOutfitStatus(itemId))
             StringCopy(gStringVar4, gText_SoldOut);
         else
             StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
@@ -683,7 +708,7 @@ static void BuyMenuPrintCursor(u8 scrollIndicatorsTaskId, u8 colorSet)
     BuyMenuPrint(WIN_ITEM_LIST, gText_SelectorArrow2, 0, y, 0, colorSet);
 }
 
-static void BuyMenuAddItemIcon(u16 item, u8 iconSlot)
+static void BuyMenuAddItemIcon(enum Item item, u8 iconSlot)
 {
     u8 spriteId;
     u8 *spriteIdPtr = &sShopData->itemSpriteIds[iconSlot];
@@ -700,6 +725,16 @@ static void BuyMenuAddItemIcon(u16 item, u8 iconSlot)
             gSprites[spriteId].y2 = 88;
         }
     }
+    else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+    {
+        u16 gfxId = GetPlayerAvatarGraphicsIdByOutfitStateIdAndGender(item, PLAYER_AVATAR_STATE_NORMAL, gSaveBlock2Ptr->playerGender, gSaveBlock2Ptr->playerAppearance);
+        spriteId = CreateObjectGraphicsSprite(gfxId, SpriteCallbackDummy, 20, 80, 0);
+        if (spriteId != MAX_SPRITES)
+        {
+            *spriteIdPtr = spriteId;
+            gSprites[spriteId].oam.priority = 0;
+        }
+    }
     else
     {
         spriteId = AddDecorationIconObject(item, 20, 84, 1, iconSlot + TAG_ITEM_ICON_BASE, iconSlot + TAG_ITEM_ICON_BASE);
@@ -708,7 +743,7 @@ static void BuyMenuAddItemIcon(u16 item, u8 iconSlot)
     }
 }
 
-static void BuyMenuRemoveItemIcon(u16 item, u8 iconSlot)
+static void BuyMenuRemoveItemIcon(enum Item item, u8 iconSlot)
 {
     u8 *spriteIdPtr = &sShopData->itemSpriteIds[iconSlot];
     if (*spriteIdPtr == SPRITE_NONE)
@@ -746,7 +781,7 @@ static void BuyMenuInitBgs(void)
 static void BuyMenuDecompressBgGraphics(void)
 {
     DecompressAndCopyTileDataToVram(1, gShopMenu_Gfx, 0x3A0, 0x3E3, 0);
-    LZDecompressWram(gShopMenu_Tilemap, sShopData->tilemapBuffers[0]);
+    DecompressDataWithHeaderWram(gShopMenu_Tilemap, sShopData->tilemapBuffers[0]);
     LoadPalette(gShopMenu_Pal, BG_PLTT_ID(SHOP_MENU_PALETTE_ID), PLTT_SIZE_4BPP);
 }
 
@@ -797,9 +832,11 @@ static void BuyMenuDrawMapBg(void)
     s16 x, y;
     const struct MapLayout *mapLayout;
     u16 metatile;
+    u16 numMetatilesInPrimary;
     u8 metatileLayerType;
 
     mapLayout = gMapHeader.mapLayout;
+    numMetatilesInPrimary = GetNumMetatilesInPrimary(mapLayout);
     GetXYCoordsOneStepInFrontOfPlayer(&x, &y);
     x -= 4;
     y -= 4;
@@ -814,10 +851,10 @@ static void BuyMenuDrawMapBg(void)
             else
                 metatileLayerType = METATILE_LAYER_TYPE_COVERED;
 
-            if (metatile < NUM_METATILES_IN_PRIMARY)
+            if (metatile < numMetatilesInPrimary)
                 BuyMenuDrawMapMetatile(i, j, mapLayout->primaryTileset->metatiles + metatile * NUM_TILES_PER_METATILE, metatileLayerType);
             else
-                BuyMenuDrawMapMetatile(i, j, mapLayout->secondaryTileset->metatiles + ((metatile - NUM_METATILES_IN_PRIMARY) * NUM_TILES_PER_METATILE), metatileLayerType);
+                BuyMenuDrawMapMetatile(i, j, mapLayout->secondaryTileset->metatiles + ((metatile - numMetatilesInPrimary) * NUM_TILES_PER_METATILE), metatileLayerType);
         }
     }
 }
@@ -892,7 +929,7 @@ static void BuyMenuCollectObjectEventData(void)
         {
             u8 objEventId = GetObjectEventIdByXY(facingX - 4 + x, facingY - 2 + y);
 
-            // skip if invalid or an overworld pokemon that is not following the player
+            // skip if invalid or an overworld Pokémon that is not following the player
             if (objEventId != OBJECT_EVENTS_COUNT && !(gObjectEvents[objEventId].active && gObjectEvents[objEventId].graphicsId & OBJ_EVENT_MON && gObjectEvents[objEventId].localId != OBJ_EVENT_ID_FOLLOWER))
             {
                 sShopData->viewportObjects[numObjects][OBJ_EVENT_ID] = objEventId;
@@ -1022,10 +1059,12 @@ static void Task_BuyMenu(u8 taskId)
 
             if (sMartInfo.martType == MART_TYPE_NORMAL)
                 sShopData->totalCost = (GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
+            else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+                sShopData->totalCost = GetOutfitPrice(itemId);
             else
                 sShopData->totalCost = gDecorations[itemId].price;
 
-            if (GetItemImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+            if ((GetItemImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1))) || GetOutfitStatus(itemId))
                 BuyMenuDisplayMessage(taskId, gText_ThatItemIsSoldOut, BuyMenuReturnToItemList);
             else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
             {
@@ -1053,6 +1092,13 @@ static void Task_BuyMenu(u8 taskId)
                     {
                         BuyMenuDisplayMessage(taskId, gText_Var1CertainlyHowMany, Task_BuyHowManyDialogueInit);
                     }
+                }
+                else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+                {
+                    BufferOutfitStrings(gStringVar1, itemId, OUTFIT_BUFFER_NAME);
+                    ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, 6);
+                    StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1OutfitThatllBeVar2);
+                    BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuConfirmPurchase);
                 }
                 else
                 {
@@ -1162,6 +1208,11 @@ static void BuyMenuTryMakePurchase(u8 taskId)
             BuyMenuDisplayMessage(taskId, gText_NoMoreRoomForThis, BuyMenuReturnToItemList);
         }
     }
+    else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+    {
+        UnlockOutfit(tItemId);
+        BuyMenuDisplayMessage(taskId, gText_HereIsTheOutfitThankYou, BuyMenuSubtractMoney);
+    }
     else
     {
         if (DecorationAdd(tItemId))
@@ -1187,6 +1238,8 @@ static void BuyMenuSubtractMoney(u8 taskId)
 
     if (sMartInfo.martType == MART_TYPE_NORMAL)
         gTasks[taskId].func = Task_ReturnToItemListAfterItemPurchase;
+    else if (sMartInfo.martType == MART_TYPE_OUTFIT)
+        gTasks[taskId].func = Task_ReturnToItemListAfterOutfitPurchase;
     else
         gTasks[taskId].func = Task_ReturnToItemListAfterDecorationPurchase;
 }
@@ -1226,6 +1279,15 @@ static void Task_ReturnToItemListAfterItemPurchase(u8 taskId)
 }
 
 static void Task_ReturnToItemListAfterDecorationPurchase(u8 taskId)
+{
+    if (JOY_NEW(A_BUTTON | B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        BuyMenuReturnToItemList(taskId);
+    }
+}
+
+static void Task_ReturnToItemListAfterOutfitPurchase(u8 taskId)
 {
     if (JOY_NEW(A_BUTTON | B_BUTTON))
     {
@@ -1333,6 +1395,13 @@ void CreateDecorationShop1Menu(const u16 *itemsForSale)
 void CreateDecorationShop2Menu(const u16 *itemsForSale)
 {
     CreateShopMenu(MART_TYPE_DECOR2);
+    SetShopItemsForSale(itemsForSale);
+    SetShopMenuCallback(ScriptContext_Enable);
+}
+
+void CreateOutfitShopMenu(const u16 *itemsForSale)
+{
+    CreateShopMenu(MART_TYPE_OUTFIT);
     SetShopItemsForSale(itemsForSale);
     SetShopMenuCallback(ScriptContext_Enable);
 }

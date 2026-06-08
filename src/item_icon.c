@@ -51,9 +51,6 @@ const struct SpriteTemplate gItemIconSpriteTemplate =
     .paletteTag = 0,
     .oam = &sOamData_ItemIcon,
     .anims = sSpriteAnimTable_ItemIcon,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCallbackDummy,
 };
 
 // code
@@ -87,7 +84,7 @@ void CopyItemIconPicTo4x4Buffer(const void *src, void *dest)
         CpuCopy16(src + i * 96, dest + i * 128, 0x60);
 }
 
-u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
+u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, enum Item itemId)
 {
     if (!AllocItemIconTemporaryBuffers())
     {
@@ -100,7 +97,7 @@ u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
         struct SpritePalette spritePalette;
         struct SpriteTemplate *spriteTemplate;
 
-        LZDecompressWram(GetItemIconPic(itemId), gItemIconDecompressionBuffer);
+        DecompressDataWithHeaderWram(GetItemIconPic(itemId), gItemIconDecompressionBuffer);
         CopyItemIconPicTo4x4Buffer(gItemIconDecompressionBuffer, gItemIcon4x4Buffer);
         spriteSheet.data = gItemIcon4x4Buffer;
         spriteSheet.size = 0x200;
@@ -124,7 +121,7 @@ u8 AddItemIconSprite(u16 tilesTag, u16 paletteTag, u16 itemId)
     }
 }
 
-u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u16 tilesTag, u16 paletteTag, u16 itemId)
+u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u16 tilesTag, u16 paletteTag, enum Item itemId)
 {
     if (!AllocItemIconTemporaryBuffers())
     {
@@ -137,7 +134,7 @@ u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u1
         struct SpritePalette spritePalette;
         struct SpriteTemplate *spriteTemplate;
 
-        LZDecompressWram(GetItemIconPic(itemId), gItemIconDecompressionBuffer);
+        DecompressDataWithHeaderWram(GetItemIconPic(itemId), gItemIconDecompressionBuffer);
         CopyItemIconPicTo4x4Buffer(gItemIconDecompressionBuffer, gItemIcon4x4Buffer);
         spriteSheet.data = gItemIcon4x4Buffer;
         spriteSheet.size = 0x200;
@@ -161,17 +158,17 @@ u8 AddCustomItemIconSprite(const struct SpriteTemplate *customSpriteTemplate, u1
     }
 }
 
-const void *GetItemIconPic(u16 itemId)
+const void *GetItemIconPic(enum Item itemId)
 {
     if (itemId == ITEM_LIST_END)
         return gItemIcon_ReturnToFieldArrow; // Use last icon, the "return to field" arrow
     if (itemId >= ITEMS_COUNT)
         return gItemsInfo[0].iconPic;
-    if (itemId >= ITEM_TM01 && itemId < ITEM_HM01 + NUM_HIDDEN_MACHINES)
+    if (gItemsInfo[itemId].pocket == POCKET_TM_HM)
     {
-        if (itemId < ITEM_TM01 + NUM_TECHNICAL_MACHINES)
-            return gItemIcon_TM;
-        return gItemIcon_HM;
+        if (GetItemTMHMIndex(itemId) > NUM_TECHNICAL_MACHINES)
+            return gItemIcon_HM;
+        return gItemIcon_TM;
     }
     if (itemId == ITEM_POKEVIAL)
         return PokevialGetDoseIcon();
@@ -179,14 +176,14 @@ const void *GetItemIconPic(u16 itemId)
     return gItemsInfo[itemId].iconPic;
 }
 
-const u16 *GetItemIconPalette(u16 itemId)
+const u16 *GetItemIconPalette(enum Item itemId)
 {
     if (itemId == ITEM_LIST_END)
         return gItemIconPalette_ReturnToFieldArrow;
     if (itemId >= ITEMS_COUNT)
         return gItemsInfo[0].iconPalette;
-    if (itemId >= ITEM_TM01 && itemId < ITEM_HM01 + NUM_HIDDEN_MACHINES)
-        return gTypesInfo[GetMoveType(gItemsInfo[itemId].secondaryId)].paletteTMHM;
+    if (gItemsInfo[itemId].pocket == POCKET_TM_HM)
+        return gTypesInfo[GetMoveType(GetItemTMHMMoveId(itemId))].paletteTMHM;
 
     return gItemsInfo[itemId].iconPalette;
 }

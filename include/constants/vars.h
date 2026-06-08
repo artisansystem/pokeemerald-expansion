@@ -1,6 +1,8 @@
 #ifndef GUARD_CONSTANTS_VARS_H
 #define GUARD_CONSTANTS_VARS_H
 
+#include "constants/vars_frlg.h"
+
 #define VARS_START 0x4000
 
 // temporary vars
@@ -264,17 +266,19 @@
 #define VAR_ROXANNE_CALL_STEP_COUNTER                    0x40F4
 #define VAR_SCOTT_BF_CALL_STEP_COUNTER                   0x40F5
 #define VAR_RIVAL_RAYQUAZA_CALL_STEP_COUNTER             0x40F6
-#define VAR_UNUSED_0x40F7                                0x40F7 // Unused Var
-#define VAR_UNUSED_0x40F8                                0x40F8 // Unused Var
-#define VAR_UNUSED_0x40F9                                0x40F9 // Unused Var
-#define VAR_UNUSED_0x40FA                                0x40FA // Unused Var
-#define VAR_UNUSED_0x40FB                                0x40FB // Unused Var
-#define VAR_UNUSED_0x40FC                                0x40FC // Unused Var
-#define VAR_UNUSED_0x40FD                                0x40FD // Unused Var
-#define VAR_UNUSED_0x40FE                                0x40FE // Unused Var
-#define VAR_UNUSED_0x40FF                                0x40FF // Unused Var
+#define VAR_KINGSISLE_INTRO_STATE                        0x40F7 // 0-4 are for the intro sequence and take you through the setting of the clock. 6 is for when you've recieved a Pokemon and are sent to speak to Nadia. 7 is intro complete! 
+#define VAR_UNDERGROUND_DEX                              0x40F8
+#define VAR_DAWNSINGER_SECTOR_RANK                       0x40F9
+#define VAR_WISEMORE_SECTOR_RANK                         0x40FA
+#define VAR_SUMMERSPELL_SECTOR_RANK                      0x40FB
+#define VAR_TITANBLAZE_SECTOR_RANK                       0x40FC
+#define VAR_AUBERON_SECTOR_RANK                          0x40FD
+#define VAR_WILLOWBLOOM_SECTOR_RANK                      0x40FE
+#define VAR_ROSESONG_SECTOR_RANK                         0x40FF
+#define VAR_LOCKWOOD_SECTOR_RANK                         0x4100
+#define VAR_NO_BAG_USE                                   0x4101
 
-#define VARS_END                                         0x40FF
+#define VARS_END                                         0x4101
 #define VARS_COUNT                                       (VARS_END - VARS_START + 1)
 
 #define SPECIAL_VARS_START            0x8000
@@ -327,8 +331,8 @@
 #if TESTING
 #define TESTING_VARS_START                  0x9000
 #define TESTING_VAR_DIFFICULTY              (TESTING_VARS_START + 0x0)
-#define TESTING_VAR_STARTING_STATUS         (TESTING_VARS_START + 0x1)
-#define TESTING_VAR_STARTING_STATUS_TIMER   (TESTING_VARS_START + 0x2)
+#define TESTING_VAR_TRAINER_SLIDES          (TESTING_VARS_START + 0x1)
+#define TESTING_VAR_UNUSED_2                (TESTING_VARS_START + 0x2)
 #define TESTING_VAR_UNUSED_3                (TESTING_VARS_START + 0x3)
 #define TESTING_VAR_UNUSED_4                (TESTING_VARS_START + 0x4)
 #define TESTING_VAR_UNUSED_5                (TESTING_VARS_START + 0x5)

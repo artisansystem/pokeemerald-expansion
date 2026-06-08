@@ -1,0 +1,94 @@
+mapscripts KingsisleDorm_1F_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_KINGSISLE_INTRO_STATE, 2: KingsisleDorm_EventScript_DormExplanation
+    ]
+}
+
+script KingsisleDorm_EventScript_DormExplanation {
+    delay(15)
+    setvar(VAR_KINGSISLE_INTRO_STATE, 3)
+    applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_up *2, face_down))
+    waitmovement(0)
+    lockall
+    setspeaker(SP_NAME_MERCURY)
+    msgbox(KingsisleDorm_Text_ThisIsIt, MSGBOX_DEFAULT)
+    goto(KingsisleDorm_EventScript_AnyQuestions)
+}
+
+
+script KingsisleDorm_EventScript_AnyQuestions {
+    
+    if(var(VAR_TEMP_1) == 0) {
+       dynmultipush("Are you also a student?", 0) 
+    }
+    if(var(VAR_TEMP_0) == 0) {
+        dynmultipush("When do classes start?", 1)
+    }
+    dynmultipush("I'm good.", 2)
+    dynmultistack(0, 0, TRUE, 6, FALSE, 0, DYN_MULTICHOICE_CB_NONE)
+    
+    switch(var(VAR_RESULT)) {
+        case 0: goto(KingsisleDorm_EventScript_VeryFunny)
+        case 1: goto(KingsisleDorm_EventScript_ClassesStart)
+        case 2: goto(KingsisleDorm_EventScript_Reminder)
+    }
+}
+
+script KingsisleDorm_EventScript_VeryFunny {
+    setspeaker(SP_NAME_MERCURY)
+    msgbox(KingsisleDorm_Text_VeryFunny, MSGBOX_DEFAULT)
+    setvar(VAR_TEMP_1, 1)
+    goto(KingsisleDorm_EventScript_AnyQuestions)
+}
+
+script KingsisleDorm_EventScript_ClassesStart {
+    setspeaker(SP_NAME_MERCURY)
+    msgbox(KingsisleDorm_Text_ClassesStart, MSGBOX_DEFAULT)
+    setvar(VAR_TEMP_0, 1)
+    goto(KingsisleDorm_EventScript_AnyQuestions)
+}
+
+
+script KingsisleDorm_EventScript_Reminder {
+    setspeaker(SP_NAME_MERCURY)
+    msgbox(KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT)
+    closemessage
+    applymovement(LOCALID_KINGSISLE_MERCURY_DORM, moves(walk_down *2, set_invisible))
+    waitmovement(0)
+    setflag(FLAG_HIDE_MERCURY_INSIDE)
+    goto(KingsisleDorm_EventScript_PlayerSetClock)
+    end
+}
+
+script KingsisleDorm_EventScript_PlayerSetClock {
+    applymovement(LOCALID_PLAYER, KingsisleDorm_MovePlayerSecondFloor)
+    waitmovement(0)
+    warpsilent(MAP_KINGSISLE_DORM_2F, 2, 1)
+    return
+}
+
+movement KingsisleDorm_MovePlayerSecondFloor {
+    delay_8
+    walk_up * 4
+    walk_left * 3
+    walk_up * 2
+    walk_left *4
+    walk_up * 2
+    step_end
+}
+    
+text KingsisleDorm_Text_ThisIsIt {
+    format("Huh, not bad. They must've renovated recently.\p Well, this is it. Your home away from home for the next year or two. Your room's on the second floor, last door on the right. So, any questions for me before I send you on your merry way?")
+}
+
+text KingsisleDorm_Text_VeryFunny {
+    format("Ha. If I had a nickel for every time someone asked me that question, I could afford to quit this job.\p No, I'm the Dawnsinger family's head of security. Feel free to stop by my office, if you ever need anything.")
+}
+
+text KingsisleDorm_Text_ClassesStart {
+    format("Should be about a week or so of orientation-related activities until classes are fully underway.")
+}
+
+text KingsisleDorm_Text_Reminder {
+    format("Alright. In that case, I'll head out and let you get settled. I bought you a clock, should be up in your room. Don't forget to set it. And remember to go see Headmaster Dawnsinger at some point. Special request from the man himself.")
+}
