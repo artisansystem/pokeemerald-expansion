@@ -157,7 +157,6 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = B_SECRET_POWER_EFFECT >= GEN_4 ? SECRET_POWER_ATK_MINUS_1 : SECRET_POWER_SPD_MINUS_1,
         .camouflageType = TYPE_WATER,
         .camouflageBlend = RGB(11, 22, 31),
-        .entry = ENVIRONMENT_ENTRY(PondWater),
         .background = ENVIRONMENT_BACKGROUND(PondWater),
         .palette = gBattleEnvironmentPalette_PondWater,
         .battleIntroSlide = BattleIntroSlide1,
@@ -401,6 +400,20 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .background = ENVIRONMENT_BACKGROUND(Rayquaza),
         .palette = gBattleEnvironmentPalette_Rayquaza,
         .battleIntroSlide = PLAIN_BATTLE_INTRO_SLIDE,
+    },
+
+    [BATTLE_ENVIRONMENT_GRASSY_PLAINS] =
+    {
+        .name = _("Grassy Plains"),
+        .naturePower = MOVE_ENERGY_BALL,
+        .secretPowerAnimation = gBattleAnimMove_NeedleArm,
+        .secretPowerEffect = B_SECRET_POWER_EFFECT >= GEN_4 ? MOVE_EFFECT_SLEEP : MOVE_EFFECT_POISON,
+        .camouflageType = TYPE_GRASS,
+        .camouflageBlend = RGB(12, 24, 2),
+        .entry = ENVIRONMENT_ENTRY(TallGrass),
+        .background = ENVIRONMENT_BACKGROUND(GrassyPlains),
+        .palette = gBattleEnvironmentPalette_GrassyPlains,
+        .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_SOARING] =
