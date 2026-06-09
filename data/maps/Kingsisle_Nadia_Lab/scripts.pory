@@ -19,7 +19,7 @@ script Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft {
     applymovement(LOCALID_NADIA_BULBASAUR, Kingsisle_NadiaLab_GoToNadia_TopLeft)
     waitmovement(0)
     applymovement(LOCALID_NADIA_LAB, moves(face_right))
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox("...")
     closemessage
     applymovement(LOCALID_NADIA_LAB, moves(walk_down, walk_right * 3, face_down))
@@ -27,18 +27,18 @@ script Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft {
     waitmovement(0)
     applymovement(LOCALID_PLAYER, moves(face_up))
     applymovement(LOCALID_FOLLOWING_POKEMON, moves(face_up))
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_HaveAPokemon, MSGBOX_DEFAULT)
     applymovement(LOCALID_NADIA_LAB, moves(face_left))
     waitmovement(0)
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_InThatCase, MSGBOX_DEFAULT)
     applymovement(LOCALID_NADIA_LAB, moves(walk_left * 3, walk_down, face_left, delay_8))
     waitmovement(0)
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_Pokedex1, MSGBOX_DEFAULT)
     applymovement(LOCALID_NADIA_LAB, moves(face_right))
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_Pokedex2, MSGBOX_DEFAULT)
     goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
 }
@@ -63,14 +63,14 @@ script Kingsisle_NadiaLab_EventScript_PokedexReactions {
 }
 
 script Kingsisle_NadiaLab_EventScript_RewardPromise {
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_RewardPromise)
     setvar(VAR_TEMP_1, 1)
     goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
 }
 
 script Kingsisle_NadiaLab_EventScript_UrielJudgement {
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_UrielJudgement)
     setvar(VAR_TEMP_2, 1)
     goto(Kingsisle_NadiaLab_EventScript_PokedexReactions)
@@ -78,7 +78,7 @@ script Kingsisle_NadiaLab_EventScript_UrielJudgement {
 
 script Kingsisle_NadiaLab_EventScript_AcceptedPokedex {
     applymovement(LOCALID_NADIA_LAB, moves(walk_right * 3, face_down))
-    speakername(UniqueName_Text_Nadia)
+    setspeaker(SP_NAME_NADIA)
     msgbox(Kingsisle_NadiaLab_Text_GoodLuck)
     closemessage
     applymovement(LOCALID_NADIA_LAB, moves(walk_up * 2, walk_left * 3))

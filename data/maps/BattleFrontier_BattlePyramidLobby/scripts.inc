@@ -277,523 +277,523 @@ BattleFrontier_BattlePyramidLobby_EventScript_TryEnterChallenge::
 # 139 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	special ChoosePartyForBattleFrontier
 # 140 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitstate
-# 141 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_LoadPartyAndCancelChallenge
-# 142 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 141 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePyramidLobby_Text_OkayToSaveBeforeChallenge, MSGBOX_YESNO
+# 142 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	switch VAR_RESULT
 # 143 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	switch VAR_RESULT
-# 144 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	case NO, BattleFrontier_BattlePyramidLobby_EventScript_LoadPartyAndCancelChallenge
-# 145 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 144 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	case YES, BattleFrontier_BattlePyramidLobby_EventScript_SaveBeforeChallenge
-# 146 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 145 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_LoadPartyAndCancelChallenge
+# 146 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
 # 147 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 148 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 BattleFrontier_BattlePyramidLobby_EventScript_SaveBeforeChallenge::
+# 148 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 # 149 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0
-# 150 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
-# 151 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 150 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	pyramid_init
-# 152 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 151 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	pyramid_set PYRAMID_DATA_WIN_STREAK_ACTIVE, TRUE
-# 153 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 152 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
-# 154 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 153 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	frontier_set FRONTIER_DATA_PAUSED, FALSE
-# 155 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 154 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	pyramid_seedfloor
-# 156 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 155 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	pyramid_settrainers
+# 156 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	special LoadPlayerParty
 # 157 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special LoadPlayerParty
+	closemessage
 # 158 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	closemessage
-# 159 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	delay 2
-# 160 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 159 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	call Common_EventScript_SaveGame
-# 161 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 160 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
-# 162 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 161 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_CancelChallengeSaveFailed
-# 163 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 162 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 BattleFrontier_BattlePyramidLobby_EventScript_EnterChallenge::
-# 164 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 163 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	special SavePlayerParty
-# 165 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 164 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	frontier_setpartyorder FRONTIER_PARTY_SIZE
-# 166 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 165 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePyramidLobby_Text_ShowYouIntoPyramid, MSGBOX_DEFAULT
+# 166 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	closemessage
 # 167 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	closemessage
-# 168 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	call BattleFrontier_BattlePyramidLobby_EventScript_WalkToPanelAndReceiveBag
+# 168 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 # 169 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	setvar VAR_RESULT, 0
 # 170 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	setvar VAR_RESULT, 0
-# 171 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	special HealPlayerParty
-# 172 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 171 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	warp MAP_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR, 1, 1
-# 173 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 172 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	setvar VAR_TEMP_CHALLENGE_STATUS, 0
-# 174 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 173 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	waitstate
+# 174 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
 # 175 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+
 # 176 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 177 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 BattleFrontier_BattlePyramidLobby_EventScript_ExplainChallenge::
-# 178 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 177 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainBattlePyramid, MSGBOX_DEFAULT
-# 179 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 178 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	goto BattleFrontier_BattlePyramidLobby_EventScript_AskTakeChallenge
+# 179 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
 # 180 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 181 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 BattleFrontier_BattlePyramidLobby_EventScript_NotEnoughValidMons::
+# 181 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	switch VAR_RESULT
 # 182 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	switch VAR_RESULT
-# 183 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	case FRONTIER_LVL_50, BattleFrontier_BattlePyramidLobby_EventScript_NotEnoughValidMonsLv50
-# 184 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 183 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	case FRONTIER_LVL_OPEN, BattleFrontier_BattlePyramidLobby_EventScript_NotEnoughValidMonsLvOpen
+# 184 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
 # 185 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 186 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 BattleFrontier_BattlePyramidLobby_EventScript_NotEnoughValidMonsLv50::
-# 187 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 186 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLv50, MSGBOX_DEFAULT
+# 187 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	call BattleFrontier_ShowCaughtBannedSpecies
 # 188 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_EndCancelChallenge
+	msgbox BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsEnd, MSGBOX_DEFAULT
 # 189 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 190 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_NotEnoughValidMonsLvOpen::
-# 191 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
-# 192 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	goto BattleFrontier_BattlePyramidLobby_EventScript_EndCancelChallenge
+# 190 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 191 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_NotEnoughValidMonsLvOpen::
+# 192 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
 # 193 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	call BattleFrontier_ShowCaughtBannedSpecies
 # 194 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_CancelChallengeSaveFailed::
+	msgbox BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsEnd, MSGBOX_DEFAULT
 # 195 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	goto BattleFrontier_BattlePyramidLobby_EventScript_EndCancelChallenge
 # 196 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_CancelChallenge
+
 # 197 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+BattleFrontier_BattlePyramidLobby_EventScript_CancelChallengeSaveFailed::
 # 198 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_LoadPartyAndCancelChallenge::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 # 199 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special LoadPlayerParty
+	goto BattleFrontier_BattlePyramidLobby_EventScript_CancelChallenge
 # 200 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	callnative UpdateFollowingPokemon
+
 # 201 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_CancelChallenge::
+BattleFrontier_BattlePyramidLobby_EventScript_LoadPartyAndCancelChallenge::
 # 202 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_AwaitFutureChallenge, MSGBOX_DEFAULT
+	special LoadPlayerParty
 # 203 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_EndCancelChallenge::
+	callnative UpdateFollowingPokemon
 # 204 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	release
+BattleFrontier_BattlePyramidLobby_EventScript_CancelChallenge::
 # 205 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+	msgbox BattleFrontier_BattlePyramidLobby_Text_AwaitFutureChallenge, MSGBOX_DEFAULT
 # 206 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+BattleFrontier_BattlePyramidLobby_EventScript_EndCancelChallenge::
 # 207 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintGiver::
+	release
 # 208 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	lockall
+	end
 # 209 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	applymovement LOCALID_PYRAMID_LOBBY_HINT_GIVER, Common_Movement_FacePlayer
+
 # 210 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmovement 0
+BattleFrontier_BattlePyramidLobby_EventScript_HintGiver::
 # 211 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_TellYouWhatMisfortunesAwait, MSGBOX_DEFAULT
-# 212 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	call BattleFrontier_BattlePyramidLobby_EventScript_GiveHint
-# 213 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_BelieveMyFortunesOrNot, MSGBOX_DEFAULT
-# 214 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	releaseall
-# 215 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 216 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 217 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_GiveHint::
-# 218 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	multichoice 17, 6, MULTI_LEVEL_MODE, FALSE
-# 219 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	switch VAR_RESULT
-# 220 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case FRONTIER_LVL_50, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLv50
-# 221 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case FRONTIER_LVL_OPEN, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLvOpen
-# 222 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case FRONTIER_LVL_TENT, BattleFrontier_BattlePyramidLobby_EventScript_NoHint
-# 223 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_NoHint
-# 224 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 225 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 226 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-@ Shouldnt occur
-# 227 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_NoHint::
-# 228 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 229 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 230 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLv50::
-# 231 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_Aah, MSGBOX_DEFAULT
-# 232 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	pyramid_get PYRAMID_DATA_WIN_STREAK_ACTIVE_50
-# 233 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLv50Streak
-# 234 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	setvar VAR_RESULT, 0
-# 235 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
-# 236 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 237 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 238 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLv50Streak::
-# 239 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	pyramid_get PYRAMID_DATA_WIN_STREAK_50
-# 240 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
-# 241 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 242 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 243 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLvOpen::
-# 244 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_Aah, MSGBOX_DEFAULT
-# 245 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	pyramid_get PYRAMID_DATA_WIN_STREAK_ACTIVE_OPEN
-# 246 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLvOpenStreak
-# 247 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	setvar VAR_RESULT, 0
-# 248 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
-# 249 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 250 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 251 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLvOpenStreak::
-# 252 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	pyramid_get PYRAMID_DATA_WIN_STREAK_OPEN
-# 253 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
-# 254 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 255 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 256 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment::
-# 257 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	copyvar VAR_0x8004, VAR_RESULT
-# 258 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special GetBattlePyramidHint
-# 259 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	switch VAR_RESULT
-# 260 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 0, BattleFrontier_BattlePyramidLobby_EventScript_HintParalysis
-# 261 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 1, BattleFrontier_BattlePyramidLobby_EventScript_HintPoison
-# 262 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 2, BattleFrontier_BattlePyramidLobby_EventScript_HintBurn
-# 263 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 3, BattleFrontier_BattlePyramidLobby_EventScript_HintPPWaste
-# 264 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 4, BattleFrontier_BattlePyramidLobby_EventScript_HintLevitate
-# 265 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 5, BattleFrontier_BattlePyramidLobby_EventScript_HintTrapAbility
-# 266 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 6, BattleFrontier_BattlePyramidLobby_EventScript_HintIce
-# 267 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 7, BattleFrontier_BattlePyramidLobby_EventScript_HintExplosion
-# 268 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 8, BattleFrontier_BattlePyramidLobby_EventScript_HintPsychic
-# 269 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 9, BattleFrontier_BattlePyramidLobby_EventScript_HintRock
-# 270 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 10, BattleFrontier_BattlePyramidLobby_EventScript_HintFighting
-# 271 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 11, BattleFrontier_BattlePyramidLobby_EventScript_HintWeather
-# 272 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 12, BattleFrontier_BattlePyramidLobby_EventScript_HintBug
-# 273 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 13, BattleFrontier_BattlePyramidLobby_EventScript_HintDark
-# 274 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 14, BattleFrontier_BattlePyramidLobby_EventScript_HintWater
-# 275 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 15, BattleFrontier_BattlePyramidLobby_EventScript_HintGhost
-# 276 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 16, BattleFrontier_BattlePyramidLobby_EventScript_HintSteel
-# 277 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 17, BattleFrontier_BattlePyramidLobby_EventScript_HintFlyingDragon
-# 278 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 18, BattleFrontier_BattlePyramidLobby_EventScript_HintStoneEvolve
-# 279 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 19, BattleFrontier_BattlePyramidLobby_EventScript_HintNormal
-# 280 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 281 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 282 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintParalysis::
-# 283 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintParalysis, MSGBOX_DEFAULT
-# 284 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 285 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 286 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintPoison::
-# 287 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintPoison, MSGBOX_DEFAULT
-# 288 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 289 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 290 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintBurn::
-# 291 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintBurn, MSGBOX_DEFAULT
-# 292 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 293 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 294 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintPPWaste::
-# 295 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintPPWaste, MSGBOX_DEFAULT
-# 296 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 297 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 298 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintLevitate::
-# 299 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintLevitate, MSGBOX_DEFAULT
-# 300 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 301 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 302 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintTrapAbility::
-# 303 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintTrapAbility, MSGBOX_DEFAULT
-# 304 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 305 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 306 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintIce::
-# 307 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintIce, MSGBOX_DEFAULT
-# 308 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 309 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 310 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintExplosion::
-# 311 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintExplosion, MSGBOX_DEFAULT
-# 312 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 313 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 314 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintPsychic::
-# 315 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintPsychic, MSGBOX_DEFAULT
-# 316 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 317 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 318 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintRock::
-# 319 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintRock, MSGBOX_DEFAULT
-# 320 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 321 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 322 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintFighting::
-# 323 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintFighting, MSGBOX_DEFAULT
-# 324 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 325 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 326 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintWeather::
-# 327 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintWeather, MSGBOX_DEFAULT
-# 328 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 329 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 330 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintBug::
-# 331 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintBug, MSGBOX_DEFAULT
-# 332 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 333 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 334 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintDark::
-# 335 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintDark, MSGBOX_DEFAULT
-# 336 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 337 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 338 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintWater::
-# 339 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintWater, MSGBOX_DEFAULT
-# 340 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 341 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 342 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintGhost::
-# 343 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintGhost, MSGBOX_DEFAULT
-# 344 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 345 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 346 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintSteel::
-# 347 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintSteel, MSGBOX_DEFAULT
-# 348 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 349 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 350 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintFlyingDragon::
-# 351 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintFlyingDragon, MSGBOX_DEFAULT
-# 352 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 353 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 354 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintStoneEvolve::
-# 355 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintStoneEvolve, MSGBOX_DEFAULT
-# 356 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 357 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 358 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HintNormal::
-# 359 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HintNormal, MSGBOX_DEFAULT
-# 360 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
-# 361 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 362 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_ShowResults::
-# 363 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	lockall
-# 364 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	frontier_results FRONTIER_FACILITY_PYRAMID
-# 365 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitbuttonpress
-# 366 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special RemoveRecordsWindow
-# 367 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 212 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	applymovement LOCALID_PYRAMID_LOBBY_HINT_GIVER, Common_Movement_FacePlayer
+# 213 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmovement 0
+# 214 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_TellYouWhatMisfortunesAwait, MSGBOX_DEFAULT
+# 215 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	call BattleFrontier_BattlePyramidLobby_EventScript_GiveHint
+# 216 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_BelieveMyFortunesOrNot, MSGBOX_DEFAULT
+# 217 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	releaseall
-# 368 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 218 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	end
-# 369 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 219 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 
-# 370 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_WalkToPanelAndReceiveBag::
-# 371 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	applymovement LOCALID_PYRAMID_LOBBY_ATTENDANT, BattleFrontier_BattlePyramidLobby_Movement_AttendantWalkToPanel
-# 372 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	applymovement LOCALID_PLAYER, BattleFrontier_BattlePyramidLobby_Movement_PlayerWalkToPanel
-# 373 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmovement 0
-# 374 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_WeWillHoldBagForSafekeeping, MSGBOX_DEFAULT
-# 375 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	pyramid_get PYRAMID_DATA_WIN_STREAK
-# 376 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_ReceiveNewBattleBag
-# 377 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_PleaseTakePreviousBattleBag, MSGBOX_DEFAULT
-# 378 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_ReceiveBattleBag
-# 379 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 380 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_ReceiveNewBattleBag::
-# 381 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_PleaseTakeThisBattleBag, MSGBOX_DEFAULT
-# 382 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_ReceiveBattleBag::
-# 383 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	message BattleFrontier_BattlePyramidLobby_Text_ExchangedBagForBattleBag
-# 384 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmessage
-# 385 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	playse SE_EXP_MAX
-# 386 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitse
-# 387 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_StepOnFloorPanel, MSGBOX_DEFAULT
-# 388 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	closemessage
-# 389 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	applymovement LOCALID_PYRAMID_LOBBY_ATTENDANT, BattleFrontier_BattlePyramidLobby_Movement_AttendantMoveAside
-# 390 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmovement 0
-# 391 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	applymovement LOCALID_PLAYER, BattleFrontier_BattlePyramidLobby_Movement_PlayerStepOnPanel
-# 392 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmovement 0
-# 393 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 220 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_GiveHint::
+# 221 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	multichoice 17, 6, MULTI_LEVEL_MODE, FALSE
+# 222 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	switch VAR_RESULT
+# 223 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case FRONTIER_LVL_50, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLv50
+# 224 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case FRONTIER_LVL_OPEN, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLvOpen
+# 225 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case FRONTIER_LVL_TENT, BattleFrontier_BattlePyramidLobby_EventScript_NoHint
+# 226 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_NoHint
+# 227 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	return
-# 394 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 228 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 
+# 229 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+@ Shouldnt occur
+# 230 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_NoHint::
+# 231 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 232 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 233 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLv50::
+# 234 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_Aah, MSGBOX_DEFAULT
+# 235 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	pyramid_get PYRAMID_DATA_WIN_STREAK_ACTIVE_50
+# 236 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLv50Streak
+# 237 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	setvar VAR_RESULT, 0
+# 238 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
+# 239 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 240 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 241 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLv50Streak::
+# 242 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	pyramid_get PYRAMID_DATA_WIN_STREAK_50
+# 243 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
+# 244 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 245 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 246 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_GiveHintLvOpen::
+# 247 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_Aah, MSGBOX_DEFAULT
+# 248 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	pyramid_get PYRAMID_DATA_WIN_STREAK_ACTIVE_OPEN
+# 249 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto_if_ne VAR_RESULT, FALSE, BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLvOpenStreak
+# 250 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	setvar VAR_RESULT, 0
+# 251 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
+# 252 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 253 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 254 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_GiveHintGetLvOpenStreak::
+# 255 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	pyramid_get PYRAMID_DATA_WIN_STREAK_OPEN
+# 256 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment
+# 257 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 258 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 259 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_DoHintComment::
+# 260 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	copyvar VAR_0x8004, VAR_RESULT
+# 261 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	special GetBattlePyramidHint
+# 262 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	switch VAR_RESULT
+# 263 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 0, BattleFrontier_BattlePyramidLobby_EventScript_HintParalysis
+# 264 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 1, BattleFrontier_BattlePyramidLobby_EventScript_HintPoison
+# 265 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 2, BattleFrontier_BattlePyramidLobby_EventScript_HintBurn
+# 266 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 3, BattleFrontier_BattlePyramidLobby_EventScript_HintPPWaste
+# 267 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 4, BattleFrontier_BattlePyramidLobby_EventScript_HintLevitate
+# 268 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 5, BattleFrontier_BattlePyramidLobby_EventScript_HintTrapAbility
+# 269 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 6, BattleFrontier_BattlePyramidLobby_EventScript_HintIce
+# 270 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 7, BattleFrontier_BattlePyramidLobby_EventScript_HintExplosion
+# 271 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 8, BattleFrontier_BattlePyramidLobby_EventScript_HintPsychic
+# 272 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 9, BattleFrontier_BattlePyramidLobby_EventScript_HintRock
+# 273 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 10, BattleFrontier_BattlePyramidLobby_EventScript_HintFighting
+# 274 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 11, BattleFrontier_BattlePyramidLobby_EventScript_HintWeather
+# 275 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 12, BattleFrontier_BattlePyramidLobby_EventScript_HintBug
+# 276 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 13, BattleFrontier_BattlePyramidLobby_EventScript_HintDark
+# 277 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 14, BattleFrontier_BattlePyramidLobby_EventScript_HintWater
+# 278 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 15, BattleFrontier_BattlePyramidLobby_EventScript_HintGhost
+# 279 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 16, BattleFrontier_BattlePyramidLobby_EventScript_HintSteel
+# 280 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 17, BattleFrontier_BattlePyramidLobby_EventScript_HintFlyingDragon
+# 281 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 18, BattleFrontier_BattlePyramidLobby_EventScript_HintStoneEvolve
+# 282 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 19, BattleFrontier_BattlePyramidLobby_EventScript_HintNormal
+# 283 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 284 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 285 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintParalysis::
+# 286 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintParalysis, MSGBOX_DEFAULT
+# 287 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 288 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 289 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintPoison::
+# 290 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintPoison, MSGBOX_DEFAULT
+# 291 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 292 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 293 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintBurn::
+# 294 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintBurn, MSGBOX_DEFAULT
+# 295 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 296 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 297 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintPPWaste::
+# 298 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintPPWaste, MSGBOX_DEFAULT
+# 299 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 300 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 301 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintLevitate::
+# 302 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintLevitate, MSGBOX_DEFAULT
+# 303 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 304 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 305 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintTrapAbility::
+# 306 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintTrapAbility, MSGBOX_DEFAULT
+# 307 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 308 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 309 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintIce::
+# 310 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintIce, MSGBOX_DEFAULT
+# 311 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 312 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 313 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintExplosion::
+# 314 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintExplosion, MSGBOX_DEFAULT
+# 315 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 316 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 317 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintPsychic::
+# 318 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintPsychic, MSGBOX_DEFAULT
+# 319 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 320 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 321 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintRock::
+# 322 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintRock, MSGBOX_DEFAULT
+# 323 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 324 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 325 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintFighting::
+# 326 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintFighting, MSGBOX_DEFAULT
+# 327 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 328 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 329 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintWeather::
+# 330 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintWeather, MSGBOX_DEFAULT
+# 331 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 332 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 333 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintBug::
+# 334 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintBug, MSGBOX_DEFAULT
+# 335 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 336 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 337 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintDark::
+# 338 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintDark, MSGBOX_DEFAULT
+# 339 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 340 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 341 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintWater::
+# 342 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintWater, MSGBOX_DEFAULT
+# 343 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 344 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 345 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintGhost::
+# 346 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintGhost, MSGBOX_DEFAULT
+# 347 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 348 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 349 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintSteel::
+# 350 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintSteel, MSGBOX_DEFAULT
+# 351 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 352 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 353 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintFlyingDragon::
+# 354 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintFlyingDragon, MSGBOX_DEFAULT
+# 355 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 356 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 357 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintStoneEvolve::
+# 358 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintStoneEvolve, MSGBOX_DEFAULT
+# 359 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 360 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 361 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_HintNormal::
+# 362 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HintNormal, MSGBOX_DEFAULT
+# 363 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 364 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 365 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_ShowResults::
+# 366 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	lockall
+# 367 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	frontier_results FRONTIER_FACILITY_PYRAMID
+# 368 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitbuttonpress
+# 369 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	special RemoveRecordsWindow
+# 370 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	releaseall
+# 371 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 372 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 373 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_WalkToPanelAndReceiveBag::
+# 374 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	applymovement LOCALID_PYRAMID_LOBBY_ATTENDANT, BattleFrontier_BattlePyramidLobby_Movement_AttendantWalkToPanel
+# 375 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePyramidLobby_Movement_PlayerWalkToPanel
+# 376 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmovement 0
+# 377 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_WeWillHoldBagForSafekeeping, MSGBOX_DEFAULT
+# 378 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	pyramid_get PYRAMID_DATA_WIN_STREAK
+# 379 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_ReceiveNewBattleBag
+# 380 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_PleaseTakePreviousBattleBag, MSGBOX_DEFAULT
+# 381 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_ReceiveBattleBag
+# 382 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 383 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_ReceiveNewBattleBag::
+# 384 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_PleaseTakeThisBattleBag, MSGBOX_DEFAULT
+# 385 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_ReceiveBattleBag::
+# 386 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	message BattleFrontier_BattlePyramidLobby_Text_ExchangedBagForBattleBag
+# 387 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmessage
+# 388 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	playse SE_EXP_MAX
+# 389 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitse
+# 390 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_StepOnFloorPanel, MSGBOX_DEFAULT
+# 391 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	closemessage
+# 392 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	applymovement LOCALID_PYRAMID_LOBBY_ATTENDANT, BattleFrontier_BattlePyramidLobby_Movement_AttendantMoveAside
+# 393 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmovement 0
+# 394 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePyramidLobby_Movement_PlayerStepOnPanel
 # 395 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Movement_AttendantWalkToPanel:
+	waitmovement 0
 # 396 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
+	return
 # 397 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
+
 # 398 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
+BattleFrontier_BattlePyramidLobby_Movement_AttendantWalkToPanel:
 # 399 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	walk_up
 # 400 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
@@ -803,19 +803,19 @@ BattleFrontier_BattlePyramidLobby_Movement_AttendantWalkToPanel:
 # 402 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	walk_up
 # 403 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	face_down
+	walk_up
 # 404 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	step_end
+	walk_up
 # 405 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	walk_up
 # 406 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Movement_PlayerWalkToPanel:
+	face_down
 # 407 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
+	step_end
 # 408 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
+
 # 409 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
+BattleFrontier_BattlePyramidLobby_Movement_PlayerWalkToPanel:
 # 410 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	walk_up
 # 411 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
@@ -825,984 +825,986 @@ BattleFrontier_BattlePyramidLobby_Movement_PlayerWalkToPanel:
 # 413 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	walk_up
 # 414 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	step_end
+	walk_up
 # 415 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	walk_up
 # 416 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Movement_AttendantMoveAside:
+	walk_up
 # 417 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_right
+	step_end
 # 418 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	face_left
+
 # 419 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	step_end
+BattleFrontier_BattlePyramidLobby_Movement_AttendantMoveAside:
 # 420 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	walk_right
 # 421 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Movement_PlayerStepOnPanel:
+	face_left
 # 422 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
-# 423 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	walk_up
-# 424 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	step_end
+# 423 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 424 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Movement_PlayerStepOnPanel:
 # 425 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	walk_up
 # 426 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_StoreHeldItemsInPyramidBag::
+	walk_up
 # 427 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_MonHoldingItemCannotTake, MSGBOX_DEFAULT
+	step_end
 # 428 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	setflag FLAG_STORING_ITEMS_IN_PYRAMID_BAG
+
 # 429 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special TryStoreHeldItemsInPyramidBag
+BattleFrontier_BattlePyramidLobby_EventScript_StoreHeldItemsInPyramidBag::
 # 430 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_HeldItemsStoredInPyramidBag
+	msgbox BattleFrontier_BattlePyramidLobby_Text_MonHoldingItemCannotTake, MSGBOX_DEFAULT
 # 431 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	message BattleFrontier_BattlePyramidLobby_Text_BagCannotHoldPickItemsToKeep
+	setflag FLAG_STORING_ITEMS_IN_PYRAMID_BAG
 # 432 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmessage
+	special TryStoreHeldItemsInPyramidBag
 # 433 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
+	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_HeldItemsStoredInPyramidBag
 # 434 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+	message BattleFrontier_BattlePyramidLobby_Text_BagCannotHoldPickItemsToKeep
 # 435 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	waitmessage
 # 436 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_HeldItemsStoredInPyramidBag::
+	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
 # 437 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_HeldItemsMovedToBag, MSGBOX_DEFAULT
+	end
 # 438 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	return
+
 # 439 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+BattleFrontier_BattlePyramidLobby_EventScript_HeldItemsStoredInPyramidBag::
 # 440 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-@ When exiting Battle Pyramid with a full pyramid bag and held items the player must select to keep/toss party held items and make room for any kept items by tossing from the pyramid bag
+	msgbox BattleFrontier_BattlePyramidLobby_Text_HeldItemsMovedToBag, MSGBOX_DEFAULT
 # 441 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep::
-# 442 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	multichoice 17, 6, MULTI_FRONTIER_ITEM_CHOOSE, FALSE
-# 443 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	switch VAR_RESULT
-# 444 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 0, BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromBag
-# 445 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 1, BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromParty
-# 446 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 2, BattleFrontier_BattlePyramidLobby_EventScript_ExitPickItems
-# 447 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_ExitPickItems
-# 448 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 449 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 450 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromBag::
-# 451 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special ChooseItemsToTossFromPyramidBag
-# 452 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitstate
-# 453 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	message BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep
-# 454 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmessage
-# 455 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
-# 456 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 457 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 458 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromParty::
-# 459 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special BattlePyramidChooseMonHeldItems
-# 460 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitstate
-# 461 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	message BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep
-# 462 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmessage
-# 463 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
-# 464 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 465 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 466 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_ExitPickItems::
-# 467 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	special DoBattlePyramidMonsHaveHeldItem
-# 468 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattlePyramidLobby_EventScript_PartyStillHasHeldItems
-# 469 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	return
-# 470 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 442 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 
-# 471 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_PartyStillHasHeldItems::
-# 472 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_LeastOneMonHoldingItem, MSGBOX_DEFAULT
-# 473 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	message BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep
-# 474 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmessage
-# 475 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
-# 476 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 477 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 478 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_Woman::
-# 479 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_TrainersNoticeRunning, MSGBOX_NPC
-# 480 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 481 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 482 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_FatMan::
-# 483 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_LostLotOfItems, MSGBOX_NPC
-# 484 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 485 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 486 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_RulesBoard::
-# 487 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	lockall
-# 488 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_RulesAreListed, MSGBOX_DEFAULT
-# 489 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
-# 490 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 491 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 492 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard::
-# 493 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	message BattleFrontier_BattlePyramidLobby_Text_ReadWhichHeading
-# 494 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	waitmessage
-# 495 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	multichoice 15, 2, MULTI_BATTLE_PYRAMID_RULES, FALSE
-# 496 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 443 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+@ When exiting Battle Pyramid with a full pyramid bag and held items the player must select to keep/toss party held items and make room for any kept items by tossing from the pyramid bag
+# 444 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep::
+# 445 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	multichoice 17, 6, MULTI_FRONTIER_ITEM_CHOOSE, FALSE
+# 446 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	switch VAR_RESULT
+# 447 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 0, BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromBag
+# 448 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 1, BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromParty
+# 449 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case 2, BattleFrontier_BattlePyramidLobby_EventScript_ExitPickItems
+# 450 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_ExitPickItems
+# 451 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 452 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 453 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromBag::
+# 454 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	special ChooseItemsToTossFromPyramidBag
+# 455 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	message BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep
+# 456 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmessage
+# 457 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
+# 458 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 459 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 460 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_PickItemsFromParty::
+# 461 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	special BattlePyramidChooseMonHeldItems
+# 462 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	message BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep
+# 463 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmessage
+# 464 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
+# 465 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 466 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 467 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_ExitPickItems::
+# 468 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	special DoBattlePyramidMonsHaveHeldItem
+# 469 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto_if_eq VAR_RESULT, TRUE, BattleFrontier_BattlePyramidLobby_EventScript_PartyStillHasHeldItems
+# 470 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	return
+# 471 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 472 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_PartyStillHasHeldItems::
+# 473 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_LeastOneMonHoldingItem, MSGBOX_DEFAULT
+# 474 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	message BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep
+# 475 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmessage
+# 476 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_PickItemsToKeep
+# 477 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 478 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 479 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_Woman::
+# 480 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_TrainersNoticeRunning, MSGBOX_NPC
+# 481 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 482 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 483 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_FatMan::
+# 484 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_LostLotOfItems, MSGBOX_NPC
+# 485 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 486 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 487 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_RulesBoard::
+# 488 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	lockall
+# 489 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+# 490 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
+# 491 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 492 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 493 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard::
+# 494 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	message BattleFrontier_BattlePyramidLobby_Text_ReadWhichHeading
+# 495 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	waitmessage
+# 496 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	multichoice 15, 2, MULTI_BATTLE_PYRAMID_RULES, FALSE
 # 497 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 0, BattleFrontier_BattlePyramidLobby_EventScript_RulesPokemon
+	switch VAR_RESULT
 # 498 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 1, BattleFrontier_BattlePyramidLobby_EventScript_RulesTrainers
+	case 0, BattleFrontier_BattlePyramidLobby_EventScript_RulesPokemon
 # 499 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 2, BattleFrontier_BattlePyramidLobby_EventScript_RulesMaze
+	case 1, BattleFrontier_BattlePyramidLobby_EventScript_RulesTrainers
 # 500 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 3, BattleFrontier_BattlePyramidLobby_EventScript_RulesBag
+	case 2, BattleFrontier_BattlePyramidLobby_EventScript_RulesMaze
 # 501 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case 4, BattleFrontier_BattlePyramidLobby_EventScript_ExitRules
+	case 3, BattleFrontier_BattlePyramidLobby_EventScript_RulesBag
 # 502 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_ExitRules
+	case 4, BattleFrontier_BattlePyramidLobby_EventScript_ExitRules
 # 503 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+	case MULTI_B_PRESSED, BattleFrontier_BattlePyramidLobby_EventScript_ExitRules
 # 504 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	end
 # 505 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_RulesPokemon::
+
 # 506 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainMonRules, MSGBOX_DEFAULT
+BattleFrontier_BattlePyramidLobby_EventScript_RulesPokemon::
 # 507 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
+	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainMonRules, MSGBOX_DEFAULT
 # 508 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
 # 509 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	end
 # 510 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_RulesTrainers::
+
 # 511 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainTrainerRules, MSGBOX_DEFAULT
+BattleFrontier_BattlePyramidLobby_EventScript_RulesTrainers::
 # 512 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
+	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainTrainerRules, MSGBOX_DEFAULT
 # 513 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
 # 514 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	end
 # 515 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_RulesMaze::
+
 # 516 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainMazeRules, MSGBOX_DEFAULT
+BattleFrontier_BattlePyramidLobby_EventScript_RulesMaze::
 # 517 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
+	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainMazeRules, MSGBOX_DEFAULT
 # 518 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
-# 519 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 520 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_RulesBag::
-# 521 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules, MSGBOX_DEFAULT
-# 522 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
+# 519 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	end
+# 520 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 521 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_RulesBag::
+# 522 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules, MSGBOX_DEFAULT
 # 523 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	end
+	goto BattleFrontier_BattlePyramidLobby_EventScript_ReadRulesBoard
 # 524 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 525 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_EventScript_ExitRules::
-# 526 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	releaseall
-# 527 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	end
+# 525 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 526 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_EventScript_ExitRules::
+# 527 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	releaseall
 # 528 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	end
 # 529 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_WelcomeToBattlePyramid:
+
 # 530 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Where the courage of TRAINERS\n"
+BattleFrontier_BattlePyramidLobby_Text_WelcomeToBattlePyramid:
 # 531 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "is put to the test!\p"
+	.string "Where the courage of TRAINERS\n"
 # 532 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Welcome to the BATTLE PYRAMID!\p"
+	.string "is put to the test!\p"
 # 533 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I am your guide to\n"
+	.string "Welcome to the BATTLE PYRAMID!\p"
 # 534 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the Battle Quest.$"
+	.string "I am your guide to\n"
 # 535 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the Battle Quest.$"
 # 536 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_EmbarkOnChallenge:
+
 # 537 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Have you the courage to embark on\n"
+BattleFrontier_BattlePyramidLobby_Text_EmbarkOnChallenge:
 # 538 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the Battle Quest challenge?$"
+	.string "Have you the courage to embark on\n"
 # 539 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the Battle Quest challenge?$"
 # 540 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_AwaitFutureChallenge:
+
 # 541 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "We await your challenge in the future!$"
+BattleFrontier_BattlePyramidLobby_Text_AwaitFutureChallenge:
 # 542 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "We await your challenge in the future!$"
 # 543 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ExplainBattlePyramid:
+
 # 544 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The Battle Quest is a battling\n"
+BattleFrontier_BattlePyramidLobby_Text_ExplainBattlePyramid:
 # 545 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "event in which you must explore\l"
+	.string "The Battle Quest is a battling\n"
 # 546 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the PYRAMID and try to reach the top.\p"
+	.string "event in which you must explore\l"
 # 547 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "In the PYRAMID are seven floors of\n"
+	.string "the PYRAMID and try to reach the top.\p"
 # 548 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "mazes, all of them filled with not only\l"
+	.string "In the PYRAMID are seven floors of\n"
 # 549 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "skilled TRAINERS but also wild POKéMON.\p"
+	.string "mazes, all of them filled with not only\l"
 # 550 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You must enter with three POKéMON,\n"
+	.string "skilled TRAINERS but also wild POKéMON.\p"
 # 551 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "none of them holding an item.\p"
+	.string "You must enter with three POKéMON,\n"
 # 552 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "On your ascent, you will be provided\n"
+	.string "none of them holding an item.\p"
 # 553 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "with a BATTLE BAG for items.\p"
+	.string "On your ascent, you will be provided\n"
 # 554 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "If you fail in your challenge, any item\n"
+	.string "with a BATTLE BAG for items.\p"
 # 555 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "placed in the BATTLE BAG disappears.\p"
+	.string "If you fail in your challenge, any item\n"
 # 556 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "If you want to interrupt your\n"
+	.string "placed in the BATTLE BAG disappears.\p"
 # 557 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "challenge, you must select “REST”\l"
+	.string "If you want to interrupt your\n"
 # 558 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "and save the game.\p"
+	.string "challenge, you must select “REST”\l"
 # 559 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "If you don't save before interrupting,\n"
+	.string "and save the game.\p"
 # 560 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "you will be disqualified.$"
+	.string "If you don't save before interrupting,\n"
 # 561 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "you will be disqualified.$"
 # 562 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_WhichLevelMode:
+
 # 563 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The PYRAMID offers two courses,\n"
+BattleFrontier_BattlePyramidLobby_Text_WhichLevelMode:
 # 564 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Level 50 and Open Level.\l"
+	.string "The PYRAMID offers two courses,\n"
 # 565 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Which will you enter?$"
+	.string "Level 50 and Open Level.\l"
 # 566 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "Which will you enter?$"
 # 567 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_SelectThreeMons:
+
 # 568 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Very good. Now, please select the three\n"
+BattleFrontier_BattlePyramidLobby_Text_SelectThreeMons:
 # 569 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "POKéMON you wish to accompany you.$"
+	.string "Very good. Now, please select the three\n"
 # 570 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "POKéMON you wish to accompany you.$"
 # 571 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLvOpen:
+
 # 572 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "A slight problem, adventurer!\p"
+BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLvOpen:
 # 573 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You seem to not have the three\n"
-# 574 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "POKéMON qualified for the challenge.\p"
-# 575 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Please also remember to take all\n"
-# 576 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "items from your POKéMON.\p"
-# 577 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
-# 578 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "When you are ready, please have\n"
-# 579 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "a word with me.$"
-# 580 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 581 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLv50:
-# 582 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "A slight problem, adventurer!\p"
-# 583 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 574 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "You seem to not have the three\n"
-# 584 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 575 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "POKéMON qualified for the challenge.\p"
-# 585 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The three POKéMON must be different\n"
-# 586 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "and each no higher than Level 50.\p"
-# 587 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 576 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "Please also remember to take all\n"
-# 588 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 577 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "items from your POKéMON.\p"
+# 578 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "EGGS{STR_VAR_1}.$"
+# 579 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 580 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsLv50:
+# 581 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "A slight problem, adventurer!\p"
+# 582 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "You seem to not have the three\n"
+# 583 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "POKéMON qualified for the challenge.\p"
+# 584 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The three POKéMON must be different\n"
+# 585 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "and each no higher than Level 50.\p"
+# 586 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Please also remember to take all\n"
+# 587 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "items from your POKéMON.\p"
+# 588 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "EGGS{STR_VAR_1}.$"
 # 589 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
+
 # 590 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "When you are ready, please have\n"
+BattleFrontier_BattlePyramidLobby_Text_NotEnoughValidMonsEnd:
 # 591 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "a word with me.$"
+	.string "When you are ready, please have\n"
 # 592 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "a word with me.$"
 # 593 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_OkayToSaveBeforeChallenge:
+
 # 594 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Before you enter the BATTLE PYRAMID,\n"
+BattleFrontier_BattlePyramidLobby_Text_OkayToSaveBeforeChallenge:
 # 595 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the game must be saved. Is that okay?$"
+	.string "Before you enter the BATTLE PYRAMID,\n"
 # 596 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the game must be saved. Is that okay?$"
 # 597 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ShowYouIntoPyramid:
+
 # 598 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Very good. I will now show you into\n"
+BattleFrontier_BattlePyramidLobby_Text_ShowYouIntoPyramid:
 # 599 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the BATTLE PYRAMID.$"
+	.string "Very good. I will now show you into\n"
 # 600 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the BATTLE PYRAMID.$"
 # 601 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_WeWillHoldBagForSafekeeping:
+
 # 602 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "We will hold your BAG for safekeeping,\n"
+BattleFrontier_BattlePyramidLobby_Text_WeWillHoldBagForSafekeeping:
 # 603 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{PLAYER}, while you are exploring.$"
+	.string "We will hold your BAG for safekeeping,\n"
 # 604 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "{PLAYER}, while you are exploring.$"
 # 605 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_PleaseTakePreviousBattleBag:
+
 # 606 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "In exchange, please take this BATTLE\n"
+BattleFrontier_BattlePyramidLobby_Text_PleaseTakePreviousBattleBag:
 # 607 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "BAG, the one you used previously.$"
+	.string "In exchange, please take this BATTLE\n"
 # 608 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "BAG, the one you used previously.$"
 # 609 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_PleaseTakeThisBattleBag:
+
 # 610 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "In exchange, please take this\n"
+BattleFrontier_BattlePyramidLobby_Text_PleaseTakeThisBattleBag:
 # 611 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "BATTLE BAG.$"
+	.string "In exchange, please take this\n"
 # 612 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "BATTLE BAG.$"
 # 613 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ExchangedBagForBattleBag:
+
 # 614 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{PLAYER} exchanged the BAG for\n"
+BattleFrontier_BattlePyramidLobby_Text_ExchangedBagForBattleBag:
 # 615 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the BATTLE BAG.$"
+	.string "{PLAYER} exchanged the BAG for\n"
 # 616 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the BATTLE BAG.$"
 # 617 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_StepOnFloorPanel:
+
 # 618 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "When you step on this floor panel,\n"
+BattleFrontier_BattlePyramidLobby_Text_StepOnFloorPanel:
 # 619 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "you will be transported to a higher\l"
+	.string "When you step on this floor panel,\n"
 # 620 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "floor in the PYRAMID.\p"
+	.string "you will be transported to a higher\l"
 # 621 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I hope for your sake that your\n"
+	.string "floor in the PYRAMID.\p"
 # 622 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "quest goes safely!$"
+	.string "I hope for your sake that your\n"
 # 623 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "quest goes safely!$"
 # 624 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_DidntSaveBeforeQuittingTakeBag:
+
 # 625 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "A major problem, explorer!\p"
+BattleFrontier_BattlePyramidLobby_Text_DidntSaveBeforeQuittingTakeBag:
 # 626 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You did not save before ending\n"
+	.string "A major problem, explorer!\p"
 # 627 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "your challenge the last time.\p"
+	.string "You did not save before ending\n"
 # 628 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Consequently, your challenge has\n"
+	.string "your challenge the last time.\p"
 # 629 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "been disqualified, I'm sorry to say.\p"
+	.string "Consequently, your challenge has\n"
 # 630 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Here is the BAG we've been holding\n"
+	.string "been disqualified, I'm sorry to say.\p"
 # 631 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "for you.\p"
-# 632 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{PLAYER} got the BAG back.$"
-# 633 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 634 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_YouveConqueredPyramid:
-# 635 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Excellent to see you back!\p"
-# 636 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You've conquered the PYRAMID!\n"
-# 637 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "How splendid!$"
-# 638 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 639 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_MonHoldingItemCannotTake:
-# 640 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Ah, a slight problem.\p"
-# 641 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "At least one POKéMON is holding\n"
-# 642 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "an item.\p"
-# 643 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I'm sorry to say, items obtained in\n"
-# 644 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the PYRAMID cannot be taken away.$"
-# 645 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 646 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HeldItemsMovedToBag:
-# 647 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "All items held by your POKéMON will be\n"
-# 648 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "moved to your BATTLE BAG, {PLAYER}.$"
-# 649 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 650 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_BagCannotHoldPickItemsToKeep:
-# 651 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The BATTLE BAG cannot hold all your\n"
-# 652 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "items, I'm sorry to say.\p"
-# 653 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Please pick the items you'll keep in the\n"
-# 654 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "BATTLE BAG, and with your POKéMON.$"
-# 655 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 656 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_LeastOneMonHoldingItem:
-# 657 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "At least one POKéMON is still\n"
-# 658 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "holding an item.$"
-# 659 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 660 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep:
-# 661 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Please pick the items you'll keep in the\n"
-# 662 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "BATTLE BAG, and with your POKéMON.$"
-# 663 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 664 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-@ Unused
-# 665 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ReturnedEverythingMonsHeld:
-# 666 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{PLAYER} returned everything that\n"
-# 667 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the POKéMON held.$"
-# 668 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 669 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_UsedBattleBagWillBeKept:
-# 670 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The BATTLE BAG you used will be kept\n"
-# 671 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "in readiness for your next challenge.\p"
-# 672 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{PLAYER} turned the BATTLE BAG over\n"
-# 673 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "for the BAG's return.$"
-# 674 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 675 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_RecordResultsWait:
-# 676 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I must record your results.\n"
-# 677 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Please wait.$"
-# 678 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 679 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-@ Unused
-# 680 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ForConqueringPyramidTakeThis:
-# 681 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "As a memento for conquering\n"
-# 682 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the BATTLE PYRAMID, please take this.$"
-# 683 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 684 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-@ Unused
-# 685 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ReceivedPrizeItem:
-# 686 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{PLAYER} received the prize\n"
-# 687 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "{STR_VAR_1}.$"
-# 688 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 689 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-@ Unused
-# 690 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_BagIsFull:
-# 691 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…Ah…\n"
-# 692 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Your BAG appears to be filled.\p"
-# 693 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Please return after you've organized\n"
-# 694 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "your BAG's contents.$"
-# 695 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 696 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_DisappointingHereIsBag:
-# 697 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "How disappointing for you…\p"
-# 698 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "Here is the BAG we've been holding\n"
-# 699 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 632 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "for you.\p"
-# 700 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 633 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "{PLAYER} got the BAG back.$"
-# 701 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 634 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 
-# 702 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_LookForwardToNextChallenge:
-# 703 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "We look forward to your\n"
-# 704 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "next challenge!$"
-# 705 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 635 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_YouveConqueredPyramid:
+# 636 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Excellent to see you back!\p"
+# 637 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "You've conquered the PYRAMID!\n"
+# 638 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "How splendid!$"
+# 639 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 
-# 706 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+# 640 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_MonHoldingItemCannotTake:
+# 641 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Ah, a slight problem.\p"
+# 642 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "At least one POKéMON is holding\n"
+# 643 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "an item.\p"
+# 644 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "I'm sorry to say, items obtained in\n"
+# 645 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "the PYRAMID cannot be taken away.$"
+# 646 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 647 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_HeldItemsMovedToBag:
+# 648 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "All items held by your POKéMON will be\n"
+# 649 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "moved to your BATTLE BAG, {PLAYER}.$"
+# 650 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 651 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_BagCannotHoldPickItemsToKeep:
+# 652 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The BATTLE BAG cannot hold all your\n"
+# 653 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "items, I'm sorry to say.\p"
+# 654 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Please pick the items you'll keep in the\n"
+# 655 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "BATTLE BAG, and with your POKéMON.$"
+# 656 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 657 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_LeastOneMonHoldingItem:
+# 658 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "At least one POKéMON is still\n"
+# 659 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "holding an item.$"
+# 660 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 661 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_PickItemsToKeep:
+# 662 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Please pick the items you'll keep in the\n"
+# 663 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "BATTLE BAG, and with your POKéMON.$"
+# 664 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 665 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 @ Unused
+# 666 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_ReturnedEverythingMonsHeld:
+# 667 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "{PLAYER} returned everything that\n"
+# 668 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "the POKéMON held.$"
+# 669 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 670 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_UsedBattleBagWillBeKept:
+# 671 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The BATTLE BAG you used will be kept\n"
+# 672 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "in readiness for your next challenge.\p"
+# 673 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "{PLAYER} turned the BATTLE BAG over\n"
+# 674 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "for the BAG's return.$"
+# 675 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 676 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_RecordResultsWait:
+# 677 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "I must record your results.\n"
+# 678 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Please wait.$"
+# 679 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 680 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+@ Unused
+# 681 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_ForConqueringPyramidTakeThis:
+# 682 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "As a memento for conquering\n"
+# 683 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "the BATTLE PYRAMID, please take this.$"
+# 684 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 685 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+@ Unused
+# 686 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_ReceivedPrizeItem:
+# 687 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "{PLAYER} received the prize\n"
+# 688 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "{STR_VAR_1}.$"
+# 689 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 690 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+@ Unused
+# 691 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_BagIsFull:
+# 692 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "…Ah…\n"
+# 693 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Your BAG appears to be filled.\p"
+# 694 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Please return after you've organized\n"
+# 695 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "your BAG's contents.$"
+# 696 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 697 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_DisappointingHereIsBag:
+# 698 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "How disappointing for you…\p"
+# 699 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "Here is the BAG we've been holding\n"
+# 700 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "for you.\p"
+# 701 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "{PLAYER} got the BAG back.$"
+# 702 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 703 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_LookForwardToNextChallenge:
+# 704 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "We look forward to your\n"
+# 705 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "next challenge!$"
+# 706 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
 # 707 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HereIsPrize:
+@ Unused
 # 708 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "We have been looking forward to\n"
+BattleFrontier_BattlePyramidLobby_Text_HereIsPrize:
 # 709 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "your arrival!\p"
+	.string "We have been looking forward to\n"
 # 710 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Here is your prize for conquering\n"
+	.string "your arrival!\p"
 # 711 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the PYRAMID.$"
+	.string "Here is your prize for conquering\n"
 # 712 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the PYRAMID.$"
 # 713 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_TellYouWhatMisfortunesAwait:
+
 # 714 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Welcome…\p"
+BattleFrontier_BattlePyramidLobby_Text_TellYouWhatMisfortunesAwait:
 # 715 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I shall be pleased to tell you what\n"
+	.string "Welcome…\p"
 # 716 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "misfortunes await in the PYRAMID…$"
+	.string "I shall be pleased to tell you what\n"
 # 717 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "misfortunes await in the PYRAMID…$"
 # 718 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_Aah:
+
 # 719 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "… … … … … …\n"
+BattleFrontier_BattlePyramidLobby_Text_Aah:
 # 720 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "… … … … … …\p"
-# 721 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "… … … … … …\n"
+# 721 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "… … … … … …\p"
 # 722 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Aah!$"
+	.string "… … … … … …\n"
 # 723 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "Aah!$"
 # 724 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintParalysis:
+
 # 725 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see a shower of sparks…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintParalysis:
 # 726 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And in it, I see your POKéMON\n"
+	.string "I see a shower of sparks…\p"
 # 727 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "struggling with paralysis…$"
+	.string "…And in it, I see your POKéMON\n"
 # 728 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "struggling with paralysis…$"
 # 729 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintPoison:
+
 # 730 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see poison…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintPoison:
 # 731 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see poison…\p"
 # 732 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from the effects of poison…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 733 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from the effects of poison…$"
 # 734 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintBurn:
+
 # 735 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see bright red flames…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintBurn:
 # 736 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see bright red flames…\p"
 # 737 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from burns…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 738 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from burns…$"
 # 739 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintPPWaste:
+
 # 740 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I sense the tremendous pressure of\n"
+BattleFrontier_BattlePyramidLobby_Text_HintPPWaste:
 # 741 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "unrequited anger…\p"
+	.string "I sense the tremendous pressure of\n"
 # 742 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "It is a curse…\p"
+	.string "unrequited anger…\p"
 # 743 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON drained of\n"
+	.string "It is a curse…\p"
 # 744 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Power Points and having no recourse\l"
+	.string "…And, I see your POKéMON drained of\n"
 # 745 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "but to use STRUGGLE…$"
+	.string "Power Points and having no recourse\l"
 # 746 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "but to use STRUGGLE…$"
 # 747 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintLevitate:
+
 # 748 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see POKéMON loftily airborne…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintLevitate:
 # 749 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON frustrated\n"
+	.string "I see POKéMON loftily airborne…\p"
 # 750 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "by powerless GROUND-type moves…$"
+	.string "…And, I see your POKéMON frustrated\n"
 # 751 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "by powerless GROUND-type moves…$"
 # 752 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintTrapAbility:
+
 # 753 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I sense terrific energy rising from\n"
+BattleFrontier_BattlePyramidLobby_Text_HintTrapAbility:
 # 754 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the ground below…\p"
+	.string "I sense terrific energy rising from\n"
 # 755 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON unable to\n"
+	.string "the ground below…\p"
 # 756 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "escape the power's clutches…$"
+	.string "…And, I see your POKéMON unable to\n"
 # 757 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "escape the power's clutches…$"
 # 758 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintIce:
+
 # 759 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see ICE-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintIce:
 # 760 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON fighting\n"
+	.string "I see ICE-type POKéMON…\p"
 # 761 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the freezing effects of ice…$"
+	.string "…And, I see your POKéMON fighting\n"
 # 762 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "the freezing effects of ice…$"
 # 763 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintExplosion:
+
 # 764 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see a flurry of moves that imperil\n"
+BattleFrontier_BattlePyramidLobby_Text_HintExplosion:
 # 765 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the user…\p"
+	.string "I see a flurry of moves that imperil\n"
 # 766 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON falling\n"
+	.string "the user…\p"
 # 767 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "to them…$"
+	.string "…And, I see your POKéMON falling\n"
 # 768 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "to them…$"
 # 769 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintPsychic:
+
 # 770 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see PSYCHIC-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintPsychic:
 # 771 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON in torment\n"
+	.string "I see PSYCHIC-type POKéMON…\p"
 # 772 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from PSYCHIC moves…$"
+	.string "…And, I see your POKéMON in torment\n"
 # 773 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from PSYCHIC moves…$"
 # 774 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintRock:
+
 # 775 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see ROCK-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintRock:
 # 776 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see ROCK-type POKéMON…\p"
 # 777 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from ROCK moves…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 778 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from ROCK moves…$"
 # 779 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintFighting:
+
 # 780 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see FIGHTING-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintFighting:
 # 781 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON pummeled\n"
+	.string "I see FIGHTING-type POKéMON…\p"
 # 782 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "by FIGHTING moves…$"
+	.string "…And, I see your POKéMON pummeled\n"
 # 783 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "by FIGHTING moves…$"
 # 784 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintWeather:
+
 # 785 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "RAIN DANCE… SUNNY DAY…\n"
+BattleFrontier_BattlePyramidLobby_Text_HintWeather:
 # 786 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "SANDSTORM… HAIL…\p"
+	.string "RAIN DANCE… SUNNY DAY…\n"
 # 787 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see POKéMON that become stronger\n"
+	.string "SANDSTORM… HAIL…\p"
 # 788 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "with the weather…\p"
+	.string "I see POKéMON that become stronger\n"
 # 789 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON confounded\n"
+	.string "with the weather…\p"
 # 790 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "by different types of moves…$"
+	.string "…And, I see your POKéMON confounded\n"
 # 791 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "by different types of moves…$"
 # 792 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintBug:
+
 # 793 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see BUG-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintBug:
 # 794 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see BUG-type POKéMON…\p"
 # 795 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from different kinds of attacks…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 796 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from different kinds of attacks…$"
 # 797 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintDark:
+
 # 798 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see DARK-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintDark:
 # 799 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see DARK-type POKéMON…\p"
 # 800 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from DARK-type moves…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 801 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from DARK-type moves…$"
 # 802 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintWater:
+
 # 803 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see WATER-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintWater:
 # 804 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see WATER-type POKéMON…\p"
 # 805 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from WATER-type moves…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 806 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from WATER-type moves…$"
 # 807 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintGhost:
+
 # 808 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see GHOST-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintGhost:
 # 809 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see GHOST-type POKéMON…\p"
 # 810 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from GHOST-type moves…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 811 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from GHOST-type moves…$"
 # 812 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintSteel:
+
 # 813 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see STEEL-type POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintSteel:
 # 814 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see STEEL-type POKéMON…\p"
 # 815 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from enormously powerful moves…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 816 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from enormously powerful moves…$"
 # 817 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintFlyingDragon:
+
 # 818 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see flying POKéMON…\p"
+BattleFrontier_BattlePyramidLobby_Text_HintFlyingDragon:
 # 819 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
+	.string "I see flying POKéMON…\p"
 # 820 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from enormously powerful moves…$"
+	.string "…And, I see your POKéMON suffering\n"
 # 821 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 822 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintStoneEvolve:
-# 823 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see those that have evolved from\n"
-# 824 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the power of stones…\p"
-# 825 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I also sense fire, water,\n"
-# 826 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "and electricity…\p"
-# 827 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
-# 828 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "from those three powers…$"
-# 829 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
-# 830 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_HintNormal:
-# 831 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I see NORMAL-type POKéMON…\p"
-# 832 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "…And, I see your POKéMON suffering\n"
-# 833 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "from enormously powerful moves…$"
+# 822 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 823 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_HintStoneEvolve:
+# 824 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "I see those that have evolved from\n"
+# 825 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "the power of stones…\p"
+# 826 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "I also sense fire, water,\n"
+# 827 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "and electricity…\p"
+# 828 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "…And, I see your POKéMON suffering\n"
+# 829 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "from those three powers…$"
+# 830 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+
+# 831 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_HintNormal:
+# 832 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "I see NORMAL-type POKéMON…\p"
+# 833 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "…And, I see your POKéMON suffering\n"
 # 834 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "from enormously powerful moves…$"
 # 835 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_BelieveMyFortunesOrNot:
+
 # 836 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Whether you believe my fortunes\n"
+BattleFrontier_BattlePyramidLobby_Text_BelieveMyFortunesOrNot:
 # 837 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "or not, the choice is yours…\p"
+	.string "Whether you believe my fortunes\n"
 # 838 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The future can be changed anytime…\n"
+	.string "or not, the choice is yours…\p"
 # 839 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I wish you safe passage…$"
+	.string "The future can be changed anytime…\n"
 # 840 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "I wish you safe passage…$"
 # 841 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_TrainersNoticeRunning:
+
 # 842 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Did you know?\p"
+BattleFrontier_BattlePyramidLobby_Text_TrainersNoticeRunning:
 # 843 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "If you run fast, TRAINERS may notice\n"
+	.string "Did you know?\p"
 # 844 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "and come after you for a battle.\p"
+	.string "If you run fast, TRAINERS may notice\n"
 # 845 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "So, if you want to avoid TRAINERS,\n"
+	.string "and come after you for a battle.\p"
 # 846 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "don't catch their eyes, but sneak\l"
+	.string "So, if you want to avoid TRAINERS,\n"
 # 847 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "cautiously and quietly past them.$"
+	.string "don't catch their eyes, but sneak\l"
 # 848 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "cautiously and quietly past them.$"
 # 849 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_LostLotOfItems:
+
 # 850 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Awaaaaaaarrrrgh!\p"
+BattleFrontier_BattlePyramidLobby_Text_LostLotOfItems:
 # 851 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "I had a whole lot of items, but I lost\n"
+	.string "Awaaaaaaarrrrgh!\p"
 # 852 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "them all when I lost!\p"
+	.string "I had a whole lot of items, but I lost\n"
 # 853 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Awaaaaaaarrrrgh!$"
+	.string "them all when I lost!\p"
 # 854 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "Awaaaaaaarrrrgh!$"
 # 855 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_YouveDefeatedPyramidKing:
+
 # 856 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Welcome back!\n"
+BattleFrontier_BattlePyramidLobby_Text_YouveDefeatedPyramidKing:
 # 857 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You've done the unthinkable!\p"
+	.string "Welcome back!\n"
 # 858 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You've defeated the PYRAMID KING\n"
+	.string "You've done the unthinkable!\p"
 # 859 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "and conquered the BATTLE PYRAMID!$"
+	.string "You've defeated the PYRAMID KING\n"
 # 860 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "and conquered the BATTLE PYRAMID!$"
 # 861 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_GiveYouTheseBattlePoints:
+
 # 862 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Young explorer!\n"
+BattleFrontier_BattlePyramidLobby_Text_GiveYouTheseBattlePoints:
 # 863 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "In commendation of your courage,\l"
+	.string "Young explorer!\n"
 # 864 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "we give you these Battle Point(s)!$"
+	.string "In commendation of your courage,\l"
 # 865 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "we give you these Battle Point(s)!$"
 # 866 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_RulesAreListed:
+
 # 867 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The Battle Quest rules are listed.$"
+BattleFrontier_BattlePyramidLobby_Text_RulesAreListed:
 # 868 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "The Battle Quest rules are listed.$"
 # 869 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ReadWhichHeading:
+
 # 870 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Which heading do you want to read?$"
+BattleFrontier_BattlePyramidLobby_Text_ReadWhichHeading:
 # 871 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "Which heading do you want to read?$"
 # 872 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ExplainMonRules:
+
 # 873 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "When the PYRAMID is conquered,\n"
+BattleFrontier_BattlePyramidLobby_Text_ExplainMonRules:
 # 874 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "the wild POKéMON that appear in it\l"
+	.string "When the PYRAMID is conquered,\n"
 # 875 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "are replaced by different kinds.\p"
+	.string "the wild POKéMON that appear in it\l"
 # 876 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Explore, observe, and learn what kinds\n"
+	.string "are replaced by different kinds.\p"
 # 877 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "of wild POKéMON you may encounter.$"
+	.string "Explore, observe, and learn what kinds\n"
 # 878 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "of wild POKéMON you may encounter.$"
 # 879 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ExplainTrainerRules:
+
 # 880 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "TRAINERS are lying in wait for you\n"
+BattleFrontier_BattlePyramidLobby_Text_ExplainTrainerRules:
 # 881 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "inside the PYRAMID.\p"
+	.string "TRAINERS are lying in wait for you\n"
 # 882 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "On each floor, there are up to\n"
+	.string "inside the PYRAMID.\p"
 # 883 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "eight TRAINERS.\p"
+	.string "On each floor, there are up to\n"
 # 884 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "When you defeat a TRAINER, you will\n"
+	.string "eight TRAINERS.\p"
 # 885 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "get a helpful hint for your adventure.$"
+	.string "When you defeat a TRAINER, you will\n"
 # 886 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-
+	.string "get a helpful hint for your adventure.$"
 # 887 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ExplainMazeRules:
-# 888 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The mazes in the PYRAMID rearrange\n"
-# 889 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "themselves every time you enter it.\p"
-# 890 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The mazes are poorly lit.\n"
-# 891 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "You must advance with caution.\p"
-# 892 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The light grows brighter whenever you\n"
-# 893 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "defeat a wild POKéMON or a TRAINER.$"
-# 894 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 
+# 888 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+BattleFrontier_BattlePyramidLobby_Text_ExplainMazeRules:
+# 889 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The mazes in the PYRAMID rearrange\n"
+# 890 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "themselves every time you enter it.\p"
+# 891 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The mazes are poorly lit.\n"
+# 892 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "You must advance with caution.\p"
+# 893 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The light grows brighter whenever you\n"
+# 894 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "defeat a wild POKéMON or a TRAINER.$"
 # 895 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
+
 # 896 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The BATTLE BAG serves as your BAG\n"
+BattleFrontier_BattlePyramidLobby_Text_ExplainBagRules:
 # 897 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "while in the PYRAMID.\p"
+	.string "The BATTLE BAG serves as your BAG\n"
 # 898 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "There are two separate BATTLE BAGS--\n"
+	.string "while in the PYRAMID.\p"
 # 899 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "one each for the Level 50 and\l"
+	.string "There are two separate BATTLE BAGS--\n"
 # 900 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "Open Level adventures.\p"
+	.string "one each for the Level 50 and\l"
 # 901 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "They each can hold up to 99 pieces\n"
+	.string "Open Level adventures.\p"
 # 902 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "of ten kinds of items.\p"
+	.string "They each can hold up to 99 pieces\n"
 # 903 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
-	.string "The contents of the BATTLE BAG are\n"
+	.string "of ten kinds of items.\p"
 # 904 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
+	.string "The contents of the BATTLE BAG are\n"
+# 905 "data/maps/BattleFrontier_BattlePyramidLobby/scripts.pory"
 	.string "lost if you fail in your quest.$"

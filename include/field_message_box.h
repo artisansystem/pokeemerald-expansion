@@ -20,10 +20,8 @@ bool8 IsFieldMessageBoxHidden(void);
 u8 GetFieldMessageBoxMode(void);
 void StopFieldMessage(void);
 void InitFieldMessageBox(void);
-void SetSpeakerName(const u8* name);
 void FillDialogFramePlate(void);
 
 extern u8 gWalkAwayFromSignpostTimer;
-extern const u8* gSpeakerName;
 
 #endif // GUARD_FIELD_MESSAGE_BOX_H
