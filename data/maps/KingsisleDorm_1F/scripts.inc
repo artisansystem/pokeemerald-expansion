@@ -21,7 +21,7 @@ KingsisleDorm_EventScript_DormExplanation::
 # 12 "data/maps/KingsisleDorm_1F/scripts.pory"
 	lockall
 # 13 "data/maps/KingsisleDorm_1F/scripts.pory"
-	speakername UniqueName_Text_Mercury
+	setspeaker SP_NAME_MERCURY
 # 14 "data/maps/KingsisleDorm_1F/scripts.pory"
 	msgbox KingsisleDorm_Text_ThisIsIt, MSGBOX_DEFAULT
 # 15 "data/maps/KingsisleDorm_1F/scripts.pory"
@@ -80,7 +80,7 @@ KingsisleDorm_EventScript_AnyQuestions_10:
 
 KingsisleDorm_EventScript_VeryFunny::
 # 38 "data/maps/KingsisleDorm_1F/scripts.pory"
-	speakername UniqueName_Text_Mercury
+	setspeaker SP_NAME_MERCURY
 # 39 "data/maps/KingsisleDorm_1F/scripts.pory"
 	msgbox KingsisleDorm_Text_VeryFunny, MSGBOX_DEFAULT
 # 40 "data/maps/KingsisleDorm_1F/scripts.pory"
@@ -92,7 +92,7 @@ KingsisleDorm_EventScript_VeryFunny::
 
 KingsisleDorm_EventScript_ClassesStart::
 # 45 "data/maps/KingsisleDorm_1F/scripts.pory"
-	speakername UniqueName_Text_Mercury
+	setspeaker SP_NAME_MERCURY
 # 46 "data/maps/KingsisleDorm_1F/scripts.pory"
 	msgbox KingsisleDorm_Text_ClassesStart, MSGBOX_DEFAULT
 # 47 "data/maps/KingsisleDorm_1F/scripts.pory"
@@ -104,7 +104,7 @@ KingsisleDorm_EventScript_ClassesStart::
 
 KingsisleDorm_EventScript_Reminder::
 # 53 "data/maps/KingsisleDorm_1F/scripts.pory"
-	speakername UniqueName_Text_Mercury
+	setspeaker SP_NAME_MERCURY
 # 54 "data/maps/KingsisleDorm_1F/scripts.pory"
 	msgbox KingsisleDorm_Text_Reminder, MSGBOX_DEFAULT
 # 55 "data/maps/KingsisleDorm_1F/scripts.pory"

@@ -4,14 +4,6 @@ mapscripts KingsisleInstituteMainCampus_MapScripts {
     ]
 }
 
-raw `
-CommonName_Text_Student:
-    .string "Student$"
-
-UniqueName_Text_Mercury:
-    .string "Mercury$"
-`
-
 script KingsisleInstitute_EventScript_StepOffTruck {
     lockall
     call(KingsisleInstitute_EventScript_GoInsideWithMercury)
@@ -29,7 +21,7 @@ script KingsisleInstitute_EventScript_GoInsideWithMercury {
     waitmovement(0)
     applymovement(LOCALID_KINGSISLE_MERCURY, KingsisleInstitute_Movement_MercuryWalkToPlayer)
     waitmovement(0)
-    speakername(UniqueName_Text_Mercury)
+    setspeaker(SP_NAME_MERCURY)
     msgbox(KingsisleInstitute_Text_YourNewHome, MSGBOX_DEFAULT)
     closemessage
     applymovement(LOCALID_KINGSISLE_MERCURY, KingsisleInstitute_Movement_MercuryWalkInside)

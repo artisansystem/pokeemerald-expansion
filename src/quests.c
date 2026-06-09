@@ -201,9 +201,9 @@ static void Task_QuestMenuTurnOff2(u8 taskId);
 
 // Tiles, palettes and tilemaps for the Quest Menu
 static const u32 sQuestMenuTiles[] =
-        INCBIN_U32("graphics/quest_menu/menu.4bpp.smol");
+        INCGFX_U32("graphics/quest_menu/menu.png", ".4bpp.smol");
 static const u32 sQuestMenuBgPals[] =
-        INCBIN_U32("graphics/quest_menu/menu.gbapal.lz");
+        INCGFX_U32("graphics/quest_menu/menu.pal", ".gbapal.lz");
 static const u32 sQuestMenuTilemap[] =
         INCBIN_U32("graphics/quest_menu/menu.bin.smolTM");
 

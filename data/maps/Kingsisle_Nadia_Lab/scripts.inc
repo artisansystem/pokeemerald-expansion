@@ -37,7 +37,7 @@ Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft::
 # 21 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	applymovement LOCALID_NADIA_LAB, Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft_Movement_0
 # 22 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 23 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft_Text_0
 # 24 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
@@ -53,7 +53,7 @@ Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft::
 # 29 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	applymovement LOCALID_FOLLOWING_POKEMON, Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft_Movement_3
 # 30 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 31 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_HaveAPokemon, MSGBOX_DEFAULT
 # 32 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
@@ -61,7 +61,7 @@ Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft::
 # 33 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	waitmovement 0
 # 34 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 35 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_InThatCase, MSGBOX_DEFAULT
 # 36 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
@@ -69,13 +69,13 @@ Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft::
 # 37 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	waitmovement 0
 # 38 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 39 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_Pokedex1, MSGBOX_DEFAULT
 # 40 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	applymovement LOCALID_NADIA_LAB, Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft_Movement_0
 # 41 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 42 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_Pokedex2, MSGBOX_DEFAULT
 # 43 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
@@ -141,7 +141,7 @@ Kingsisle_NadiaLab_EventScript_PokedexReactions_13:
 
 Kingsisle_NadiaLab_EventScript_RewardPromise::
 # 66 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 67 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_RewardPromise
 # 68 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
@@ -153,7 +153,7 @@ Kingsisle_NadiaLab_EventScript_RewardPromise::
 
 Kingsisle_NadiaLab_EventScript_UrielJudgement::
 # 73 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 74 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_UrielJudgement
 # 75 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
@@ -167,7 +167,7 @@ Kingsisle_NadiaLab_EventScript_AcceptedPokedex::
 # 80 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	applymovement LOCALID_NADIA_LAB, Kingsisle_NadiaLab_EventScript_AcceptedPokedex_Movement_0
 # 81 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
-	speakername UniqueName_Text_Nadia
+	setspeaker SP_NAME_NADIA
 # 82 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"
 	msgbox Kingsisle_NadiaLab_Text_GoodLuck
 # 83 "data/maps/Kingsisle_Nadia_Lab/scripts.pory"

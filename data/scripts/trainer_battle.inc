@@ -4,7 +4,6 @@ EventScript_StartTrainerApproach::
 EventScript_TrainerApproach::
 	special PlayTrainerEncounterMusic
 	special DoTrainerApproach
-	waitstate
 	goto EventScript_ShowTrainerIntroMsg
 
 EventScript_TryDoNormalTrainerBattle::
@@ -54,6 +53,16 @@ EventScript_DoNoIntroTrainerBattle::
 	dotrainerbattle
 	gotopostbattlescript
 
+EventScript_DoNoIntroTrainerBattleContinueScript::
+	setflag FLAG_SAFE_FOLLOWER_MOVEMENT
+	applymovement VAR_LAST_TALKED, Movement_RevealTrainer
+	waitmovement 0
+	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
+	special PlayTrainerEncounterMusic
+	dotrainerbattle
+	gotobeatenscript
+	end
+
 EventScript_TryDoRematchBattle::
 	call EventScript_RevealTrainer
 	specialvar VAR_RESULT, IsTrainerReadyForRematch
@@ -64,7 +73,6 @@ EventScript_TryDoRematchBattle::
 	waitmessage
 	waitbuttonpress
 	special BattleSetup_StartRematchBattle
-	waitstate
 	releaseall
 	end
 
@@ -82,7 +90,6 @@ EventScript_TryDoDoubleRematchBattle::
 	waitmessage
 	waitbuttonpress
 	special BattleSetup_StartRematchBattle
-	waitstate
 	releaseall
 	end
 

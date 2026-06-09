@@ -4,7 +4,7 @@ KINGSISLE_GATEHOUSE_MapScripts::
 
 JealousStudent::
 # 4 "data/maps/KINGSISLE_GATEHOUSE/scripts.pory"
-	speakername CommonName_Text_Student
+	setspeaker SP_NAME_STUDENT
 # 5 "data/maps/KINGSISLE_GATEHOUSE/scripts.pory"
 	goto_if_set FLAG_RECIEVED_SITRUS_BERRIES, JealousStudent_1
 # 7 "data/maps/KINGSISLE_GATEHOUSE/scripts.pory"
@@ -37,7 +37,7 @@ JealousStudent_6:
 
 JealousStudent_7:
 # 12 "data/maps/KINGSISLE_GATEHOUSE/scripts.pory"
-	speakername CommonName_Text_Student
+	setspeaker SP_NAME_STUDENT
 # 13 "data/maps/KINGSISLE_GATEHOUSE/scripts.pory"
 	msgbox BagIsFull
 	goto JealousStudent_6

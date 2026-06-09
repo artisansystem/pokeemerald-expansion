@@ -83,7 +83,6 @@ static const u16 sGardenSubregionMapsecs[GARDEN_SUBREGION_COUNT][60] = {
     },
     [GARDEN_SUBREGION_LOCKWOOD] = 
     {
-        MAPSEC_LOCKWOOD,
         MAPSEC_NONE,
     },
     [GARDEN_SUBREGION_SUMMERSPELL] = 

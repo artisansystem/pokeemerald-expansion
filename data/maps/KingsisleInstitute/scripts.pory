@@ -17,7 +17,7 @@ script AcademySign{
 }
 
 script Kingsisle_MagicGuy{
-    speakername(CommonName_Text_Student)
+    setspeaker(SP_NAME_STUDENT)
     msgbox(MagicIsAmazing, MSGBOX_NPC)
 }
 

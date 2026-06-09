@@ -253,618 +253,622 @@ BattleFrontier_BattlePikeLobby_EventScript_TryEnterChallenge::
 # 127 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	special ChoosePartyForBattleFrontier
 # 128 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	waitstate
-# 129 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePikeLobby_EventScript_LoadPartyAndCancelChallenge
-# 130 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 129 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePikeLobby_Text_SaveBeforeChallenge, MSGBOX_YESNO
+# 130 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	switch VAR_RESULT
 # 131 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	switch VAR_RESULT
-# 132 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	case NO, BattleFrontier_BattlePikeLobby_EventScript_LoadPartyAndCancelChallenge
-# 133 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 132 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	case YES, BattleFrontier_BattlePikeLobby_EventScript_SaveBeforeChallenge
-# 134 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 133 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	case MULTI_B_PRESSED, BattleFrontier_BattlePikeLobby_EventScript_LoadPartyAndCancelChallenge
+# 134 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
 # 135 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 136 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 BattleFrontier_BattlePikeLobby_EventScript_SaveBeforeChallenge::
+# 136 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	setvar VAR_TEMP_CHALLENGE_STATUS, 0
 # 137 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	setvar VAR_TEMP_CHALLENGE_STATUS, 0
-# 138 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	setvar VAR_TEMP_1, 0
-# 139 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 138 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	frontier_set FRONTIER_DATA_SELECTED_MON_ORDER
-# 140 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 139 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	pike_init
-# 141 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 140 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, CHALLENGE_STATUS_SAVING
-# 142 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 141 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	pike_set PIKE_DATA_WIN_STREAK_ACTIVE, TRUE
+# 142 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	pike_savehelditems
 # 143 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	pike_savehelditems
-# 144 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	frontier_set FRONTIER_DATA_PAUSED, FALSE
+# 144 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	special LoadPlayerParty
 # 145 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	special LoadPlayerParty
+	closemessage
 # 146 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	closemessage
-# 147 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	delay 2
-# 148 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 147 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	call Common_EventScript_SaveGame
-# 149 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 148 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
-# 150 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 149 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	pike_savehelditems
-# 151 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 150 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePikeLobby_EventScript_CancelChallengeSaveFailed
-# 152 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 151 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	special SavePlayerParty
-# 153 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 152 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	frontier_setpartyorder FRONTIER_PARTY_SIZE
-# 154 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 153 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePikeLobby_Text_StepThisWay, MSGBOX_DEFAULT
-# 155 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 154 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	closemessage
-# 156 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 155 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	frontier_settrainers
-# 157 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 156 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	call BattleFrontier_BattlePikeLobby_EventScript_WalkToCorridor
-# 158 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 157 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	special HealPlayerParty
-# 159 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 158 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	call BattleFrontier_BattlePike_EventScript_CloseCurtain
-# 160 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 159 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	warpsilent MAP_BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR, 6, 7
-# 161 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 160 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	setvar VAR_TEMP_CHALLENGE_STATUS, 0
-# 162 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 161 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	waitstate
+# 162 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	end
 # 163 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+
 # 164 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 165 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 BattleFrontier_BattlePikeLobby_EventScript_ExplainChallenge::
-# 166 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 165 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainBattlePike, MSGBOX_DEFAULT
-# 167 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 166 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	goto BattleFrontier_BattlePikeLobby_EventScript_AskTakeChallenge
+# 167 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
 # 168 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 169 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 BattleFrontier_BattlePikeLobby_EventScript_NotEnoughValidMons::
-# 170 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 169 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	switch VAR_RESULT
-# 171 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 170 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	case FRONTIER_LVL_50, BattleFrontier_BattlePikeLobby_EventScript_NotEnoughValidMonsLv50
-# 172 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 171 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	case FRONTIER_LVL_OPEN, BattleFrontier_BattlePikeLobby_EventScript_NotEnoughValidMonsLvOpen
+# 172 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
 # 173 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 174 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 BattleFrontier_BattlePikeLobby_EventScript_NotEnoughValidMonsLv50::
-# 175 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 174 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	msgbox BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLv50, MSGBOX_DEFAULT
+# 175 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	call BattleFrontier_ShowCaughtBannedSpecies
 # 176 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	goto BattleFrontier_BattlePikeLobby_EventScript_EndCancelChallenge
+	msgbox BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsEnd, MSGBOX_DEFAULT
 # 177 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 178 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_NotEnoughValidMonsLvOpen::
-# 179 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
-# 180 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	goto BattleFrontier_BattlePikeLobby_EventScript_EndCancelChallenge
+# 178 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 179 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_EventScript_NotEnoughValidMonsLvOpen::
+# 180 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	msgbox BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLvOpen, MSGBOX_DEFAULT
 # 181 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	call BattleFrontier_ShowCaughtBannedSpecies
 # 182 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_CancelChallengeSaveFailed::
+	msgbox BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsEnd, MSGBOX_DEFAULT
 # 183 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	goto BattleFrontier_BattlePikeLobby_EventScript_EndCancelChallenge
 # 184 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	goto BattleFrontier_BattlePikeLobby_EventScript_CancelChallenge
+
 # 185 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_EventScript_CancelChallengeSaveFailed::
 # 186 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_LoadPartyAndCancelChallenge::
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 # 187 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	special LoadPlayerParty
+	goto BattleFrontier_BattlePikeLobby_EventScript_CancelChallenge
 # 188 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	callnative UpdateFollowingPokemon
+
 # 189 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_CancelChallenge::
+BattleFrontier_BattlePikeLobby_EventScript_LoadPartyAndCancelChallenge::
 # 190 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou, MSGBOX_DEFAULT
+	special LoadPlayerParty
 # 191 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_EndCancelChallenge::
+	callnative UpdateFollowingPokemon
 # 192 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	release
+BattleFrontier_BattlePikeLobby_EventScript_CancelChallenge::
 # 193 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+	msgbox BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou, MSGBOX_DEFAULT
 # 194 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_EventScript_EndCancelChallenge::
 # 195 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_ShowResults::
+	release
 # 196 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	lockall
-# 197 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	frontier_results FRONTIER_FACILITY_PIKE
-# 198 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	waitbuttonpress
-# 199 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	special RemoveRecordsWindow
-# 200 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	releaseall
-# 201 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	end
+# 197 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 198 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_EventScript_ShowResults::
+# 199 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	lockall
+# 200 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	frontier_results FRONTIER_FACILITY_PIKE
+# 201 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	waitbuttonpress
 # 202 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	special RemoveRecordsWindow
 # 203 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_WalkToCorridor::
+	releaseall
 # 204 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	applymovement LOCALID_PIKE_LOBBY_ATTENDANT, BattleFrontier_BattlePikeLobby_Movement_AttendantWalkToCorridor
+	end
 # 205 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	applymovement LOCALID_PLAYER, BattleFrontier_BattlePikeLobby_Movement_PlayerWalkToCorridor
-# 206 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	waitmovement 0
-# 207 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	return
-# 208 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
+# 206 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_EventScript_WalkToCorridor::
+# 207 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	applymovement LOCALID_PIKE_LOBBY_ATTENDANT, BattleFrontier_BattlePikeLobby_Movement_AttendantWalkToCorridor
+# 208 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	applymovement LOCALID_PLAYER, BattleFrontier_BattlePikeLobby_Movement_PlayerWalkToCorridor
 # 209 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Movement_PlayerWalkToCorridor:
+	waitmovement 0
 # 210 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	walk_up
+	return
 # 211 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Movement_AttendantWalkToCorridor:
+
 # 212 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	walk_up
+BattleFrontier_BattlePikeLobby_Movement_PlayerWalkToCorridor:
 # 213 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	walk_up
 # 214 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	set_invisible
+BattleFrontier_BattlePikeLobby_Movement_AttendantWalkToCorridor:
 # 215 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	step_end
+	walk_up
 # 216 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	walk_up
 # 217 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_Hiker::
+	set_invisible
 # 218 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_OneRoomAwayFromGoal, MSGBOX_NPC
+	step_end
 # 219 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+
 # 220 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_EventScript_Hiker::
 # 221 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_Twin::
+	msgbox BattleFrontier_BattlePikeLobby_Text_OneRoomAwayFromGoal, MSGBOX_NPC
 # 222 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_NeverHadToBattleTrainer, MSGBOX_NPC
+	end
 # 223 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+
 # 224 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_EventScript_Twin::
 # 225 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_Beauty::
+	msgbox BattleFrontier_BattlePikeLobby_Text_NeverHadToBattleTrainer, MSGBOX_NPC
 # 226 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_ThinkAbilitiesUsefulHere, MSGBOX_NPC
+	end
 # 227 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+
 # 228 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_EventScript_Beauty::
 # 229 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_RulesBoard::
+	msgbox BattleFrontier_BattlePikeLobby_Text_ThinkAbilitiesUsefulHere, MSGBOX_NPC
 # 230 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	lockall
+	end
 # 231 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_RulesAreListed, MSGBOX_DEFAULT
+
 # 232 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
+BattleFrontier_BattlePikeLobby_EventScript_RulesBoard::
 # 233 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+	lockall
 # 234 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	msgbox BattleFrontier_BattlePikeLobby_Text_RulesAreListed, MSGBOX_DEFAULT
 # 235 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard::
+	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
 # 236 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	message BattleFrontier_BattlePikeLobby_Text_ReadWhichHeading
+	end
 # 237 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	waitmessage
+
 # 238 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	multichoice 16, 4, MULTI_BATTLE_PIKE_RULES, FALSE
+BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard::
 # 239 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	switch VAR_RESULT
+	message BattleFrontier_BattlePikeLobby_Text_ReadWhichHeading
 # 240 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	case 0, BattleFrontier_BattlePikeLobby_EventScript_RulesPokenavBag
+	waitmessage
 # 241 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	case 1, BattleFrontier_BattlePikeLobby_EventScript_RulesHeldItems
+	multichoice 16, 4, MULTI_BATTLE_PIKE_RULES, FALSE
 # 242 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	case 2, BattleFrontier_BattlePikeLobby_EventScript_RulesMonOrder
+	switch VAR_RESULT
 # 243 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	case 3, BattleFrontier_BattlePikeLobby_EventScript_ExitRules
+	case 0, BattleFrontier_BattlePikeLobby_EventScript_RulesPokenavBag
 # 244 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	case MULTI_B_PRESSED, BattleFrontier_BattlePikeLobby_EventScript_ExitRules
+	case 1, BattleFrontier_BattlePikeLobby_EventScript_RulesHeldItems
 # 245 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+	case 2, BattleFrontier_BattlePikeLobby_EventScript_RulesMonOrder
 # 246 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	case 3, BattleFrontier_BattlePikeLobby_EventScript_ExitRules
 # 247 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_RulesPokenavBag::
+	case MULTI_B_PRESSED, BattleFrontier_BattlePikeLobby_EventScript_ExitRules
 # 248 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainPokenavBagRules, MSGBOX_DEFAULT
+	end
 # 249 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
+
 # 250 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+BattleFrontier_BattlePikeLobby_EventScript_RulesPokenavBag::
 # 251 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainPokenavBagRules, MSGBOX_DEFAULT
 # 252 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_RulesHeldItems::
+	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
 # 253 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainHeldItemRules, MSGBOX_DEFAULT
+	end
 # 254 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
+
 # 255 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+BattleFrontier_BattlePikeLobby_EventScript_RulesHeldItems::
 # 256 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainHeldItemRules, MSGBOX_DEFAULT
 # 257 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_RulesMonOrder::
-# 258 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainMonOrderRules, MSGBOX_DEFAULT
-# 259 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
+# 258 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	end
+# 259 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
 # 260 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	end
+BattleFrontier_BattlePikeLobby_EventScript_RulesMonOrder::
 # 261 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	msgbox BattleFrontier_BattlePikeLobby_Text_ExplainMonOrderRules, MSGBOX_DEFAULT
 # 262 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_EventScript_ExitRules::
+	goto BattleFrontier_BattlePikeLobby_EventScript_ReadRulesBoard
 # 263 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	releaseall
-# 264 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	end
+# 264 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
 # 265 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_EventScript_ExitRules::
 # 266 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePike_EventScript_CloseCurtain::
+	releaseall
 # 267 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	playse SE_PIKE_CURTAIN_CLOSE
+	end
 # 268 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	special CloseBattlePikeCurtain
+
 # 269 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	waitstate
+BattleFrontier_BattlePike_EventScript_CloseCurtain::
 # 270 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	waitse
+	playse SE_PIKE_CURTAIN_CLOSE
 # 271 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	return
+	special CloseBattlePikeCurtain
 # 272 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	waitse
 # 273 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_WelcomeToBattlePike:
+	return
 # 274 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Where the luck of TRAINERS\n"
+
 # 275 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "is put to the test…\p"
+BattleFrontier_BattlePikeLobby_Text_WelcomeToBattlePike:
 # 276 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Welcome to the BATTLE PIKE…\p"
+	.string "Where the luck of TRAINERS\n"
 # 277 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I am your guide to the BATTLE PIKE…$"
+	.string "is put to the test…\p"
 # 278 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	.string "Welcome to the BATTLE PIKE…\p"
 # 279 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_TakeChallenge:
+	.string "I am your guide to the BATTLE PIKE…$"
 # 280 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Would you like to take the Battle\n"
+
 # 281 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Choice challenge?$"
+BattleFrontier_BattlePikeLobby_Text_TakeChallenge:
 # 282 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	.string "Would you like to take the Battle\n"
 # 283 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ExplainBattlePike:
+	.string "Choice challenge?$"
 # 284 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Here we conduct an event we call\n"
+
 # 285 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "the Battle Choice.\p"
+BattleFrontier_BattlePikeLobby_Text_ExplainBattlePike:
 # 286 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "The Battle Choice rules are very\n"
+	.string "Here we conduct an event we call\n"
 # 287 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "simple…\p"
+	.string "the Battle Choice.\p"
 # 288 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Choose one of three paths and make\n"
+	.string "The Battle Choice rules are very\n"
 # 289 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "your way to the goal room at the end\l"
+	.string "simple…\p"
 # 290 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "of the BATTLE PIKE. It's that simple.\p"
+	.string "Choose one of three paths and make\n"
 # 291 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "However, what happens on the chosen\n"
+	.string "your way to the goal room at the end\l"
 # 292 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "path depends entirely on the luck\l"
+	.string "of the BATTLE PIKE. It's that simple.\p"
 # 293 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "of the challenger…\p"
+	.string "However, what happens on the chosen\n"
 # 294 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "If you reach the goal, you will be\n"
+	.string "path depends entirely on the luck\l"
 # 295 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "rewarded with Battle Points.\p"
+	.string "of the challenger…\p"
 # 296 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "If you want to interrupt your\n"
+	.string "If you reach the goal, you will be\n"
 # 297 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "challenge, please have a word with\l"
+	.string "rewarded with Battle Points.\p"
 # 298 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "our staff in the big rooms on the way.\p"
+	.string "If you want to interrupt your\n"
 # 299 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "If you don't save before interrupting,\n"
+	.string "challenge, please have a word with\l"
 # 300 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "you will be disqualified.$"
+	.string "our staff in the big rooms on the way.\p"
 # 301 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	.string "If you don't save before interrupting,\n"
 # 302 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou:
+	.string "you will be disqualified.$"
 # 303 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "We look forward to seeing you\n"
+
 # 304 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "on another occasion…$"
+BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou:
 # 305 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	.string "We look forward to seeing you\n"
 # 306 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_WhichChallengeMode:
+	.string "on another occasion…$"
 # 307 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You have the choice of two courses,\n"
-# 308 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Level 50 and Open Level.\l"
-# 309 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Which will you challenge?$"
-# 310 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
+# 308 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_WhichChallengeMode:
+# 309 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You have the choice of two courses,\n"
+# 310 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Level 50 and Open Level.\l"
 # 311 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLv50:
+	.string "Which will you challenge?$"
 # 312 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I beg your pardon, but…\p"
+
 # 313 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You do not have three eligible\n"
+BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLv50:
 # 314 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "POKéMON for the Battle Choice event.\p"
+	.string "I beg your pardon, but…\p"
 # 315 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You must have three different POKéMON\n"
+	.string "You do not have three eligible\n"
 # 316 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "of Level 50 or less to enter.\p"
+	.string "POKéMON for the Battle Choice event.\p"
 # 317 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "They also must be holding different\n"
+	.string "You must have three different POKéMON\n"
 # 318 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "kinds of items.\p"
+	.string "of Level 50 or less to enter.\p"
 # 319 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
+	.string "They also must be holding different\n"
 # 320 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Please come see me when\n"
+	.string "kinds of items.\p"
 # 321 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "you are ready…$"
+	.string "EGGS{STR_VAR_1}.$"
 # 322 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
 # 323 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLvOpen:
+BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsEnd:
 # 324 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I beg your pardon, but…\p"
-# 325 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You do not have three eligible\n"
-# 326 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "POKéMON for the Battle Choice event.\p"
-# 327 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You must have three different\n"
-# 328 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "POKéMON to enter.\p"
-# 329 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "They also must be holding different\n"
-# 330 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "kinds of items.\p"
-# 331 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "EGGS{STR_VAR_1} ineligible.\p"
-# 332 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	.string "Please come see me when\n"
-# 333 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 325 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	.string "you are ready…$"
-# 334 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 326 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 335 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_PleaseChooseThreeMons:
-# 336 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Please choose the three POKéMON\n"
-# 337 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "you wish to enter in the challenge…$"
-# 338 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 339 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_SaveBeforeChallenge:
-# 340 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Before starting your Battle Choice\n"
-# 341 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "challenge, I must save the game.\l"
-# 342 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Is that acceptable?$"
-# 343 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 344 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_StepThisWay:
-# 345 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Please step this way…$"
-# 346 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 347 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ChallengeEndedRecordResults:
-# 348 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Your challenge has ended…\p"
-# 349 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I shall record your results.\n"
-# 350 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Please wait…$"
-# 351 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 352 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_PossessLuckInAbundance:
-# 353 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You have completed the challenge…\p"
-# 354 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I must say… You seem to possess luck\n"
-# 355 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "in abundance…$"
-# 356 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 357 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ShallRecordResults:
-# 358 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I shall record your results.\n"
-# 359 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Please wait…$"
-# 360 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 361 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-@ Unused
-# 362 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_AwardYouTheseBattlePoints2:
-# 363 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "To commemorate your completion of\n"
-# 364 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "the Battle Choice challenge, we award\l"
-# 365 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "you these Battle Point(s)…$"
-# 366 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 367 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-@ Unused
-# 368 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ReachedBattlePointLimit:
-# 369 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You appear to have reached the limit\n"
-# 370 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "for Battle Points…\p"
-# 371 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Please exchange some Battle Points\n"
-# 372 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "for prizes, then return…$"
-# 373 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
-# 374 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_FailedToSaveBeforeQuitting:
-# 375 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 327 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_NotEnoughValidMonsLvOpen:
+# 328 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	.string "I beg your pardon, but…\p"
-# 376 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You failed to save before you quit\n"
-# 377 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "your challenge the last time.\p"
-# 378 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Because of that, your challenge so far\n"
-# 379 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "has been disqualified. I am sorry…$"
-# 380 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 329 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You do not have three eligible\n"
+# 330 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "POKéMON for the Battle Choice event.\p"
+# 331 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You must have three different\n"
+# 332 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "POKéMON to enter.\p"
+# 333 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "They also must be holding different\n"
+# 334 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "kinds of items.\p"
+# 335 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "EGGS{STR_VAR_1}.$"
+# 336 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 381 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_SnatchedVictoryFromQueen:
-# 382 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Congratulations…\p"
-# 383 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "You have snatched victory from the\n"
-# 384 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "PIKE QUEEN and cleared the event…$"
-# 385 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 337 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_PleaseChooseThreeMons:
+# 338 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Please choose the three POKéMON\n"
+# 339 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "you wish to enter in the challenge…$"
+# 340 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 386 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_AwardYouTheseBattlePoints:
-# 387 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "In recognition of your amazing luck,\n"
-# 388 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "we award you these Battle Point(s)…$"
-# 389 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 341 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_SaveBeforeChallenge:
+# 342 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Before starting your Battle Choice\n"
+# 343 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "challenge, I must save the game.\l"
+# 344 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Is that acceptable?$"
+# 345 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 390 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_OneRoomAwayFromGoal:
-# 391 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Arrgh! I blew my chance!\n"
-# 392 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I was one room away from the goal!\p"
-# 393 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "In this place, you'd better watch out\n"
-# 394 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "for poison, freezing, and so on.$"
-# 395 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 346 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_StepThisWay:
+# 347 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Please step this way…$"
+# 348 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 396 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_NeverHadToBattleTrainer:
-# 397 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I've completed the challenge 10 times\n"
-# 398 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "now, but I've never had to battle\l"
-# 399 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "a TRAINER once.$"
-# 400 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 349 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_ChallengeEndedRecordResults:
+# 350 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Your challenge has ended…\p"
+# 351 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "I shall record your results.\n"
+# 352 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Please wait…$"
+# 353 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 401 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ThinkAbilitiesUsefulHere:
-# 402 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Listen! Listen!\p"
-# 403 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Don't you think that the special\n"
-# 404 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "abilities of POKéMON will be useful\l"
-# 405 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "here?$"
-# 406 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 354 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_PossessLuckInAbundance:
+# 355 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You have completed the challenge…\p"
+# 356 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "I must say… You seem to possess luck\n"
+# 357 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "in abundance…$"
+# 358 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 407 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 359 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_ShallRecordResults:
+# 360 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "I shall record your results.\n"
+# 361 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Please wait…$"
+# 362 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 363 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 @ Unused
+# 364 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_AwardYouTheseBattlePoints2:
+# 365 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "To commemorate your completion of\n"
+# 366 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "the Battle Choice challenge, we award\l"
+# 367 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "you these Battle Point(s)…$"
+# 368 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 369 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+@ Unused
+# 370 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_ReachedBattlePointLimit:
+# 371 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You appear to have reached the limit\n"
+# 372 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "for Battle Points…\p"
+# 373 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Please exchange some Battle Points\n"
+# 374 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "for prizes, then return…$"
+# 375 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 376 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_FailedToSaveBeforeQuitting:
+# 377 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "I beg your pardon, but…\p"
+# 378 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You failed to save before you quit\n"
+# 379 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "your challenge the last time.\p"
+# 380 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Because of that, your challenge so far\n"
+# 381 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "has been disqualified. I am sorry…$"
+# 382 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 383 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_SnatchedVictoryFromQueen:
+# 384 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Congratulations…\p"
+# 385 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "You have snatched victory from the\n"
+# 386 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "PIKE QUEEN and cleared the event…$"
+# 387 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 388 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_AwardYouTheseBattlePoints:
+# 389 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "In recognition of your amazing luck,\n"
+# 390 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "we award you these Battle Point(s)…$"
+# 391 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 392 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_OneRoomAwayFromGoal:
+# 393 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Arrgh! I blew my chance!\n"
+# 394 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "I was one room away from the goal!\p"
+# 395 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "In this place, you'd better watch out\n"
+# 396 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "for poison, freezing, and so on.$"
+# 397 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 398 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_NeverHadToBattleTrainer:
+# 399 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "I've completed the challenge 10 times\n"
+# 400 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "now, but I've never had to battle\l"
+# 401 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "a TRAINER once.$"
+# 402 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
+# 403 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_ThinkAbilitiesUsefulHere:
+# 404 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Listen! Listen!\p"
+# 405 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "Don't you think that the special\n"
+# 406 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "abilities of POKéMON will be useful\l"
+# 407 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "here?$"
 # 408 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_TrainersWhicheverPathIChoose:
+
 # 409 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "What is this weird place?\n"
+@ Unused
 # 410 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I can't figure it out at all!\p"
+BattleFrontier_BattlePikeLobby_Text_TrainersWhicheverPathIChoose:
 # 411 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "I've taken the challenge a bunch\n"
+	.string "What is this weird place?\n"
 # 412 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "of times, but all I ever do is run into\l"
+	.string "I can't figure it out at all!\p"
 # 413 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "TRAINERS whichever path I choose.$"
+	.string "I've taken the challenge a bunch\n"
 # 414 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	.string "of times, but all I ever do is run into\l"
 # 415 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_RulesAreListed:
+	.string "TRAINERS whichever path I choose.$"
 # 416 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "The Battle Choice's rules are listed.$"
+
 # 417 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_Text_RulesAreListed:
 # 418 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ReadWhichHeading:
+	.string "The Battle Choice's rules are listed.$"
 # 419 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "Which heading do you want to read?$"
+
 # 420 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+BattleFrontier_BattlePikeLobby_Text_ReadWhichHeading:
 # 421 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ExplainPokenavBagRules:
+	.string "Which heading do you want to read?$"
 # 422 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "The BAG and POKéNAV may not be used\n"
+
 # 423 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "during a Battle Choice challenge.$"
+BattleFrontier_BattlePikeLobby_Text_ExplainPokenavBagRules:
 # 424 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-
+	.string "The BAG and POKéNAV may not be used\n"
 # 425 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ExplainHeldItemRules:
+	.string "during a Battle Choice challenge.$"
 # 426 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "During a Battle Choice challenge,\n"
-# 427 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "any BERRY or HERB held by POKéMON\l"
-# 428 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "will be effective only once.$"
-# 429 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 
-# 430 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-BattleFrontier_BattlePikeLobby_Text_ExplainMonOrderRules:
-# 431 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+# 427 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+BattleFrontier_BattlePikeLobby_Text_ExplainHeldItemRules:
+# 428 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	.string "During a Battle Choice challenge,\n"
+# 429 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "any BERRY or HERB held by POKéMON\l"
+# 430 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "will be effective only once.$"
+# 431 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+
 # 432 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "the sequence of POKéMON cannot be\l"
+BattleFrontier_BattlePikeLobby_Text_ExplainMonOrderRules:
 # 433 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "changed.\p"
+	.string "During a Battle Choice challenge,\n"
 # 434 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
-	.string "The sequence must be set before\n"
+	.string "the sequence of POKéMON cannot be\l"
 # 435 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "changed.\p"
+# 436 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
+	.string "The sequence must be set before\n"
+# 437 "data/maps/BattleFrontier_BattlePikeLobby/scripts.pory"
 	.string "starting your challenge.$"
