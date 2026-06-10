@@ -17,21 +17,21 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_SeedotBrother::
 # 9 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	msgbox SootopolisCity_LotadAndSeedotHouse_Text_PleaseShowMeBigSeedot, MSGBOX_DEFAULT
 # 10 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	special ChoosePartyMon
+	setvar VAR_0x8009, SPECIES_SEEDOT
 # 11 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	waitstate
+	chooseboxmon SELECT_PC_MON_TRADE
 # 12 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	copyvar VAR_RESULT, VAR_0x8004
+	waitstate
 # 13 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	goto_if_eq VAR_RESULT, PARTY_NOTHING_CHOSEN, SootopolisCity_LotadAndSeedotHouse_EventScript_CancelShowSeedot
 # 14 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	special CompareSeedotSize
 # 15 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	goto_if_eq VAR_RESULT, 1, SootopolisCity_LotadAndSeedotHouse_EventScript_NotSeedot
+	goto_if_eq VAR_RESULT, COMPARE_SIZE_INCORRECT_SPECIES, SootopolisCity_LotadAndSeedotHouse_EventScript_NotSeedot
 # 16 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	goto_if_eq VAR_RESULT, 2, SootopolisCity_LotadAndSeedotHouse_EventScript_SmallSeedot
+	goto_if_eq VAR_RESULT, COMPARE_SIZE_SMALLER, SootopolisCity_LotadAndSeedotHouse_EventScript_SmallSeedot
 # 17 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	goto_if_eq VAR_RESULT, 3, SootopolisCity_LotadAndSeedotHouse_EventScript_BigSeedot
+	goto_if_eq VAR_RESULT, COMPARE_SIZE_LARGER, SootopolisCity_LotadAndSeedotHouse_EventScript_BigSeedot
 # 18 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	release
 # 19 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
@@ -105,21 +105,21 @@ SootopolisCity_LotadAndSeedotHouse_EventScript_LotadBrother::
 # 53 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	msgbox SootopolisCity_LotadAndSeedotHouse_Text_PleaseShowMeBigLotad, MSGBOX_DEFAULT
 # 54 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	special ChoosePartyMon
+	setvar VAR_0x8009, SPECIES_LOTAD
 # 55 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	waitstate
+	chooseboxmon SELECT_PC_MON_TRADE
 # 56 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	copyvar VAR_RESULT, VAR_0x8004
+	waitstate
 # 57 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	goto_if_eq VAR_RESULT, PARTY_NOTHING_CHOSEN, SootopolisCity_LotadAndSeedotHouse_EventScript_CancelShowLotad
 # 58 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	special CompareLotadSize
 # 59 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	goto_if_eq VAR_RESULT, 1, SootopolisCity_LotadAndSeedotHouse_EventScript_NotLotad
+	goto_if_eq VAR_RESULT, COMPARE_SIZE_INCORRECT_SPECIES, SootopolisCity_LotadAndSeedotHouse_EventScript_NotLotad
 # 60 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	goto_if_eq VAR_RESULT, 2, SootopolisCity_LotadAndSeedotHouse_EventScript_SmallLotad
+	goto_if_eq VAR_RESULT, COMPARE_SIZE_SMALLER, SootopolisCity_LotadAndSeedotHouse_EventScript_SmallLotad
 # 61 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
-	goto_if_eq VAR_RESULT, 3, SootopolisCity_LotadAndSeedotHouse_EventScript_BigLotad
+	goto_if_eq VAR_RESULT, COMPARE_SIZE_LARGER, SootopolisCity_LotadAndSeedotHouse_EventScript_BigLotad
 # 62 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"
 	release
 # 63 "data/maps/SootopolisCity_LotadAndSeedotHouse/scripts.pory"

@@ -10,10 +10,10 @@
 #include "script.h"
 #include "field_mugshot.h"
 #include "sprite.h"
+#include "field_name_box.h"
 
 static EWRAM_DATA u8 sFieldMessageBoxMode = 0;
 EWRAM_DATA u8 gWalkAwayFromSignpostTimer = 0;
-EWRAM_DATA const u8* gSpeakerName = NULL;
 
 static void ExpandStringAndStartDrawFieldMessage(const u8 *, bool32);
 static void StartDrawFieldMessage(void);
@@ -43,18 +43,14 @@ static void Task_DrawFieldMessage(u8 taskId)
         task->tState++;
         break;
     case 1:
-        if (gSpeakerName != NULL && !(FlagGet(OW_FLAG_SUPPRESS_SPEAKER_NAME) || OW_SUPPRESS_SPEAKER_NAME)) 
-        {
-            DrawDialogueFrameWithNameplate(0, TRUE);
-            PutWindowTilemap(1);
-            CopyWindowToVram(1, COPYWIN_FULL);
-        }
-        else 
-        {
-            DrawDialogueFrame(0, TRUE);
-        } 
+    {
+        u32 nameboxWinId = GetNameboxWindowId();
+        DrawDialogueFrame(0, TRUE);
+        if (nameboxWinId != WINDOW_NONE)
+            DrawNamebox(nameboxWinId, NAME_BOX_BASE_TILE_NUM - NAME_BOX_BASE_TILES_TOTAL, TRUE);
         task->tState++;
         break;
+    }
     case 2:
         if (RunTextPrintersAndIsPrinter0Active() != TRUE)
         {
@@ -136,28 +132,8 @@ bool8 ShowFieldMessageFromBuffer(void)
 
 static void ExpandStringAndStartDrawFieldMessage(const u8 *str, bool32 allowSkippingDelayWithButtonPress)
 {
-    if (gSpeakerName != NULL && !(FlagGet(OW_FLAG_SUPPRESS_SPEAKER_NAME) || OW_SUPPRESS_SPEAKER_NAME)) 
-    {
-        int strLen = GetStringWidth(FONT_SMALL, gSpeakerName, -1);
-        if (strLen > 0) {
-            strLen = (DLW_WIN_PLATE_SIZE * 8) / 2 - (strLen / 2);
-            gNamePlateBuffer[0] = EXT_CTRL_CODE_BEGIN;
-            gNamePlateBuffer[1] = EXT_CTRL_CODE_CLEAR_TO;
-            gNamePlateBuffer[2] = strLen;
-            StringExpandPlaceholders(&gNamePlateBuffer[3], gSpeakerName);
-        } 
-        else 
-        {
-            StringExpandPlaceholders(&gNamePlateBuffer[0], gSpeakerName);
-        }
-
-        FillDialogFramePlate();
-        AddTextPrinterParameterized2(1, FONT_SMALL, gNamePlateBuffer, 0, NULL, 1, 0, 2);
-        PutWindowTilemap(1);
-        CopyWindowToVram(1, COPYWIN_FULL);
-    }
-
     StringExpandPlaceholders(gStringVar4, str);
+    TrySpawnNamebox(gStringVar4, NAME_BOX_BASE_TILE_NUM);
     AddTextPrinterForMessage(allowSkippingDelayWithButtonPress);
     CreateTask_DrawFieldMessage();
     if (IsFieldMugshotActive())
@@ -176,6 +152,7 @@ void HideFieldMessageBox(void)
 {
     DestroyTask_DrawFieldMessage();
     ClearDialogWindowAndFrame(0, TRUE);
+    DestroyNamebox();
     sFieldMessageBoxMode = FIELD_MESSAGE_BOX_HIDDEN;
     gSpeakerName = NULL;
     if (IsFieldMugshotActive())
@@ -208,9 +185,4 @@ void StopFieldMessage(void)
 {
     DestroyTask_DrawFieldMessage();
     sFieldMessageBoxMode = FIELD_MESSAGE_BOX_HIDDEN;
-}
-
-void SetSpeakerName(const u8* name)
-{
-    gSpeakerName = name;
 }

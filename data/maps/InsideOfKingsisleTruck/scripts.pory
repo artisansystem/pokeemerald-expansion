@@ -4,7 +4,7 @@ script InsideOfKingsisleTruck_EventScripts_SetIntroFlags {
     lockall
     setflag(FLAG_HIDE_MAP_NAME_POPUP)
     setvar(VAR_KINGSISLE_INTRO_STATE, 1)
-    setdynamicwarp(MAP_KINGSISLE_INSTITUTE, 24, 16)
+    setdynamicwarp(MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS, 25, 16)
     releaseall
     end
 }

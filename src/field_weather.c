@@ -141,6 +141,7 @@ static const struct WeatherCallbacks sWeatherFuncs[] =
     [WEATHER_DROUGHT]            = {Drought_InitVars,       Drought_Main,       Drought_InitAll,       Drought_Finish},
     [WEATHER_DOWNPOUR]           = {Downpour_InitVars,      Thunderstorm_Main,  Downpour_InitAll,      Thunderstorm_Finish},
     [WEATHER_UNDERWATER_BUBBLES] = {Bubbles_InitVars,       Bubbles_Main,       Bubbles_InitAll,       Bubbles_Finish},
+    [WEATHER_HARSH_SUN]          = {HarshSun_InitVars,      HarshSun_Main,      HarshSun_InitAll,      HarshSun_Finish}   
 };
 
 void (*const gWeatherPalStateFuncs[])(void) =
@@ -169,7 +170,7 @@ static const u8 ALIGNED(2) sBasePaletteColorMapTypes[32] =
     COLOR_MAP_DARK_CONTRAST,
     COLOR_MAP_DARK_CONTRAST,
     COLOR_MAP_DARK_CONTRAST,
-    COLOR_MAP_DARK_CONTRAST,
+    COLOR_MAP_NONE,
     COLOR_MAP_NONE,
     COLOR_MAP_NONE,
     // sprite palettes
@@ -191,7 +192,7 @@ static const u8 ALIGNED(2) sBasePaletteColorMapTypes[32] =
     COLOR_MAP_DARK_CONTRAST,
 };
 
-const u16 ALIGNED(4) gFogPalette[] = INCBIN_U16("graphics/weather/fog.gbapal");
+const u16 ALIGNED(4) gFogPalette[] = INCGFX_U16("graphics/weather/fog.pal", ".gbapal");
 
 void StartWeather(void)
 {
@@ -246,9 +247,9 @@ static void UpdateWeatherForms(void)
     s32 i;
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        struct Pokemon *mon = &gPlayerParty[i];
-        u16 species = GetMonData(mon, MON_DATA_SPECIES);
-        u16 targetSpecies = GetOverworldWeatherSpecies(species);
+        struct Pokemon *mon = &gParties[B_TRAINER_PLAYER][i];
+        enum Species species = GetMonData(mon, MON_DATA_SPECIES);
+        enum Species targetSpecies = GetOverworldWeatherSpecies(species);
         if (species != targetSpecies)
         {
             SetMonData(mon, MON_DATA_SPECIES, &targetSpecies);
@@ -730,6 +731,11 @@ void ApplyWeatherColorMapIfIdle_Gradual(u8 colorMapIndex, u8 targetColorMapIndex
 
 void FadeScreen(u8 mode, s8 delay)
 {
+    FadeSelectedPals(mode, delay, PALETTES_ALL);
+}
+
+void FadeSelectedPals(u8 mode, s8 delay, u32 selectedPalettes)
+{
     u32 fadeColor;
     bool8 fadeOut;
     bool8 useWeatherPal;
@@ -778,7 +784,7 @@ void FadeScreen(u8 mode, s8 delay)
         // For cases like that, use fadescreenswapbuffers
         CpuFastCopy(gPlttBufferFaded, gPlttBufferUnfaded, PLTT_BUFFER_SIZE * 2);
 
-        BeginNormalPaletteFade(PALETTES_ALL, delay, 0, 16, fadeColor);
+        BeginNormalPaletteFade(selectedPalettes, delay, 0, 16, fadeColor);
         gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_OUT;
     }
     else
@@ -791,12 +797,12 @@ void FadeScreen(u8 mode, s8 delay)
         }
         else if (MapHasNaturalLight(gMapHeader.mapType))
         {
-            UpdateAltBgPalettes(PALETTES_BG);
-            BeginTimeOfDayPaletteFade(PALETTES_ALL, delay, 16, 0, &gTimeBlend.startBlend, &gTimeBlend.endBlend, gTimeBlend.weight, fadeColor);
+            UpdateAltBgPalettes(selectedPalettes & PALETTES_BG);
+            BeginTimeOfDayPaletteFade(selectedPalettes, delay, 16, 0, &gTimeBlend.startBlend, &gTimeBlend.endBlend, gTimeBlend.weight, fadeColor);
         }
         else
         {
-            BeginNormalPaletteFade(PALETTES_ALL, delay, 16, 0, fadeColor);
+            BeginNormalPaletteFade(selectedPalettes, delay, 16, 0, fadeColor);
         }
 
         gWeatherPtr->palProcessingState = WEATHER_PAL_STATE_SCREEN_FADING_IN;
@@ -1083,6 +1089,9 @@ static void UNUSED SetFieldWeather(u8 weather)
     case COORD_EVENT_WEATHER_SHADE:
         SetWeather(WEATHER_SHADE);
         break;
+    case COORD_EVENT_WEATHER_HARSH_SUN:
+        SetWeather(WEATHER_HARSH_SUN);
+        break;
     }
 }
 
@@ -1207,6 +1216,7 @@ static const u8 sWeatherNames[WEATHER_COUNT][24] = {
     [WEATHER_ROUTE119_CYCLE]     = _("ROUTE119 CYCLE"),
     [WEATHER_ROUTE123_CYCLE]     = _("ROUTE123 CYCLE"),
     [WEATHER_FOG]                = _("FOG"),
+    [WEATHER_HARSH_SUN]          = _("HARSH SUN")
 };
 
 static const u8 sDebugText_WeatherNotDefined[] = _("NOT DEFINED!!!");

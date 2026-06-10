@@ -4,6 +4,7 @@
 #include "event_data.h"
 #include "seasons.h"
 #include "constants/vars.h"
+#include "string_util.h"
 
 void AdvanceSeason(void) 
 {
@@ -25,7 +26,8 @@ void CurrentSeasonSet(enum Seasons new_season)
     VarSet(VAR_CURRENT_SEASON, new_season);
 }
 
-enum Seasons NextSeasonGet(enum Seasons current_season) {
+enum Seasons NextSeasonGet(enum Seasons current_season) 
+{
     current_season++;
     if (current_season >= SEASONS_COUNT)
         return SEASON_SPRING;
