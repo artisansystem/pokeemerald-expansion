@@ -131,9 +131,65 @@ KingsisleInstitute_Movement_PlayerWalkInside:
 # 68 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
 	step_end
 
+Kingsisle_MagicGuy::
+# 72 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	setspeaker SP_NAME_STUDENT
+# 73 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	msgbox MagicIsAmazing, MSGBOX_NPC
+	return
+
+
+DormSign::
+# 81 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	msgbox DormSign_Text_0, MSGBOX_SIGN
+	return
+
+
+RightExitSign::
+# 85 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	msgbox RightExitSign_Text_0, MSGBOX_SIGN
+	return
+
+
+LeftExitSign::
+# 89 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	msgbox LeftExitSign_Text_0, MSGBOX_SIGN
+	return
+
+
+NorthExitSign::
+# 93 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	msgbox NorthExitSign_Text_0, MSGBOX_SIGN
+	return
+
+
+DormSign_Text_0:
+# 81 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	.string "SOLGALEO HALL$"
+
+RightExitSign_Text_0:
+# 85 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	.string "{RIGHT_ARROW} QUANDRIX & CYBERMEND$"
+
+LeftExitSign_Text_0:
+# 89 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	.string "{LEFT_ARROW} SILVERQUILL & PRISMARI$"
+
+NorthExitSign_Text_0:
+# 93 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	.string "{UP_ARROW} HEADMASTER'S HOUSE & LOREHOLD$"
+
 KingsisleInstitute_Text_YourNewHome::
 # 51 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
 	.string "Alright, kid, we're here.\p"
 	.string "This is the first-year dorm, you'll stay\n"
 	.string "here until you pick a college. Let's head\l"
 	.string "inside, yeah?$"
+
+MagicIsAmazing::
+# 76 "data/maps/KingsisleInstituteMainCampus/scripts.pory"
+	.string "Magic is amazing!\p"
+	.string "I heard that students at the top of\n"
+	.string "their class are able to instantly travel\l"
+	.string "to other Underground sectors using\l"
+	.string "teleportation circles!$"

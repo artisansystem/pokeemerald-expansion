@@ -1,10 +1,5 @@
 mapscripts Kingsisle_Nadia_Lab_MapScripts {}
 
-raw `
-UniqueName_Text_Nadia:
-    .string "Nadia$"
-`
-
 script Kingsisle_NadiaLab_EventScript_RecievePokedex_TopLeft {
     lockall
     setflag(FLAG_SAFE_FOLLOWER_MOVEMENT)

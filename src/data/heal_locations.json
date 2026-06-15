@@ -199,7 +199,7 @@
     {
       "id": "HEAL_LOCATION_KINGSISLE_INSTITUTE_2",
       "map": "MAP_KINGSISLE_INSTITUTE",
-      "x": 21,
+      "x": 16,
       "y": 24
     },
     {
@@ -363,6 +363,14 @@
       "y": 12,
       "respawn_map": "MAP_SIX_ISLAND_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_SIX_ISLAND_NURSE"
+    },
+    {
+      "id": "HEAL_LOCATION_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "x": 3,
+      "y": 16,
+      "respawn_map": "MAP_KINGSISLE_POKEMON_CENTER",
+      "respawn_npc": "LOCALID_KINGSISLE_NURSE"
     }
   ]
 }

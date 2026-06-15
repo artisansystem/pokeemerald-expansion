@@ -68,3 +68,27 @@ movement KingsisleInstitute_Movement_PlayerWalkInside {
     step_end
 }
 
+script Kingsisle_MagicGuy{
+    setspeaker(SP_NAME_STUDENT)
+    msgbox(MagicIsAmazing, MSGBOX_NPC)
+}
+
+text MagicIsAmazing{
+    format("Magic is amazing!\p I heard that students at the top of their class are able to instantly travel to other Underground sectors using teleportation circles!")
+}
+
+script DormSign{
+    msgbox("SOLGALEO HALL", MSGBOX_SIGN)
+}
+
+script RightExitSign{
+    msgbox("{RIGHT_ARROW} QUANDRIX & CYBERMEND", MSGBOX_SIGN)
+}
+
+script LeftExitSign{
+    msgbox("{LEFT_ARROW} SILVERQUILL & PRISMARI", MSGBOX_SIGN)
+}
+
+script NorthExitSign{
+    msgbox("{UP_ARROW} HEADMASTER'S HOUSE & LOREHOLD", MSGBOX_SIGN)
+}

@@ -694,7 +694,8 @@
   ],
   "gMapGroup_Custom_Gatehouses": [
     "KINGSISLE_GATEHOUSE",
-    "Academy_Gatehouse"
+    "Academy_Gatehouse",
+    "NaturePreserveGatehouse"
   ],
   "gMapGroup_Custom_Dungeons": [],
   "gMapGroup_Link_Frlg": [
