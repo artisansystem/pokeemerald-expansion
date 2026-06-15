@@ -1,0 +1,160 @@
+{
+  "id": "MAP_NATURE_PRESERVE_GATEHOUSE",
+  "name": "NaturePreserveGatehouse",
+  "layout": "LAYOUT_NATURE_PRESERVE_GATEHOUSE",
+  "music": "MUS_RUSTBORO",
+  "region_map_section": "MAPSEC_KINGSISLE",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "local_id": "LOCALID_KINGSISLE_PARTYCHECKER",
+      "graphics_id": "OBJ_EVENT_GFX_CAMPER",
+      "x": 1,
+      "y": 10,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 8,
+      "y": 2,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_MAIN_CAMPUS",
+      "dest_warp_id": "7"
+    },
+    {
+      "x": 8,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 9,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 7,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 10,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
+      "dest_warp_id": "2"
+    }
+  ],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger03"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger04"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger05"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger06"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger07"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger08"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger01"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger02"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_KINGSISLE_INTRO_STATE",
+      "var_value": "4",
+      "script": "NaturePreserveGatehouse_PartyChecker_Trigger00"
+    }
+  ],
+  "bg_events": []
+}
