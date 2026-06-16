@@ -6,4 +6,5 @@ const u8 *const gSpeakerNamesTable[SP_NAME_COUNT] =
     [SP_NAME_MERCURY] = COMPOUND_STRING("Mercury"),
     [SP_NAME_NADIA] = COMPOUND_STRING("Nadia"),
     [SP_NAME_URIEL] = COMPOUND_STRING("Uriel"),
+    [SP_NAME_CYRUS] = COMPOUND_STRING("Cyrus")
 };

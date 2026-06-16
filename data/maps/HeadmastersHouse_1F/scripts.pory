@@ -1,1 +1,37 @@
 mapscripts HeadmastersHouse_1F_MapScripts {}
+
+script KingsisleInstitute_HeadmastersHouse_Cyrus
+{   
+    lock
+    faceplayer
+    if (!flag(FLAG_MET_CYRUS)) { 
+        setspeaker(SP_NAME_CYRUS)
+        msgbox(HeadmastersHouse_Text_CyrusIntroduction, MSGBOX_DEFAULT)
+        setflag(FLAG_MET_CYRUS)
+        release
+        end
+    } else {
+        setspeaker(SP_NAME_CYRUS)
+        msgbox(HeadmastersHouse_Text_MuchToDo, MSGBOX_DEFAULT)
+        closemessage
+        msgbox(HeadmastersHouse_Text_ShouldntBother, MSGBOX_DEFAULT)
+    }
+   release
+   end
+}
+
+text HeadmastersHouse_Text_CyrusIntroduction
+{
+    format("Oh, hello there. Are you one of the new students? I don't believe we've met. My name's Cyrus. If you're looking for my father, he should be in his study, down the hall.")
+}
+
+text HeadmastersHouse_Text_MuchToDo
+{
+    format("I need to revise tomorrow's lesson plan... and grade last week's papers... and find a time for dinner with Sylvie...")
+}
+
+
+text HeadmastersHouse_Text_ShouldntBother
+{
+    format("He seems wound up. You probably shouldn't bother him.")
+}

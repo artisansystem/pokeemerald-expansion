@@ -1,19 +1,1 @@
 mapscripts KingsisleInstitute_HeadmastersHouse_MapScripts {}
-
-script KingsisleInstitute_HeadmastersHouse_Cyrus
-{
-    if (!flag(FLAG_MET_CYRUS))
-    {
-        setspeaker(SP_NAME_CYRUS)
-        msgbox(HeadmastersHouse_Text_CyrusIntroduction, MSGBOX_DEFAULT)
-        setflag(FLAG_MET_CYRUS)
-    }
-    else 
-    {
-        setspeaker(SP_NAME_CYRUS)
-        msgbox(HeadmastersHouse_Text_MuchToDo, MSGBOX_DEFAULT)
-        
-    }
-
-}
-
