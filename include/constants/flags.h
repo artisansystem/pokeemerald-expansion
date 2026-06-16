@@ -671,7 +671,7 @@
 #define FLAG_HIDE_KINGSISLE_TRUCK  0x266 // Hides the truck after the intro sequence.
 #define FLAG_HIDE_MERCURY_OUTSIDE  0x267 // Hides Mercury after the intro sequence.
 #define FLAG_HIDE_MERCURY_INSIDE  0x268 // Hides Mercury after the dorm sequence.
-#define FLAG_UNUSED_0x269  0x269 // Unused Flag
+#define FLAG_HIDE_HEADMASTERSHOUSE_CYRUS  0x269 // Hides Cyrus when he's not meant to be in the front hall of the Headmaster's house.
 #define FLAG_UNUSED_0x26A  0x26A // Unused Flag
 #define FLAG_UNUSED_0x26B  0x26B // Unused Flag
 #define FLAG_UNUSED_0x26C  0x26C // Unused Flag

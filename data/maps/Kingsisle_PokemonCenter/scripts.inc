@@ -63,7 +63,7 @@ Kingisle_PokemonCenter_EventScript_Nurse_Movement_0:
 Kingsisle_PkmnCenterNurse_Text_NoPokemon::
 # 35 "data/maps/Kingsisle_PokemonCenter/scripts.pory"
 	.string "Hello, and welcome to the Pokémon\n"
-	.string "Center. I can't help but notice you\l"
+	.string "Center. I can't help but notice that you\l"
 	.string "don't have any Pokémon with you. We\l"
 	.string "would be happy to serve you once you\l"
 	.string "obtain a Pokémon.$"
