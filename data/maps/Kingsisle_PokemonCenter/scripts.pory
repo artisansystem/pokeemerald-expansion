@@ -9,9 +9,35 @@ script Kingsisle_PokemonCenter_OnTransition {
 
 script Kingisle_PokemonCenter_EventScript_Nurse {
     setvar(VAR_0x800B, LOCALID_KINGSISLE_NURSE)
-    call(Common_EventScript_PkmnCenterNurse)
-    waitmessage
-    waitbuttonpress
-    release
-    end
+    if (getpartysize == 0)
+    {
+        lock
+        faceplayer
+        msgbox(Kingsisle_PkmnCenterNurse_Text_NoPokemon, MSGBOX_DEFAULT)
+        applymovement(LOCALID_KINGSISLE_NURSE, moves(nurse_joy_bow, delay_4))
+        msgbox(Kingsisle_PkmnCenterNurse_Text_SeeYouAgain, MSGBOX_DEFAULT)
+        waitmovement
+        release
+        end
+
+    }
+    elif (getpartysize > 0)
+    {
+        call(Common_EventScript_PkmnCenterNurse)
+        waitmessage
+        waitbuttonpress
+        release
+        end  
+    }
+
+}
+
+text Kingsisle_PkmnCenterNurse_Text_NoPokemon
+{
+    format("Hello, and welcome to the Pokémon Center. I can't help but notice that you don't have any Pokémon with you. We would be happy to serve you once you obtain a Pokémon.")
+}
+
+text Kingsisle_PkmnCenterNurse_Text_SeeYouAgain
+{
+    format("We hope to see you again!")
 }
