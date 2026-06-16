@@ -8,6 +8,7 @@ enum SpeakerNames {
     SP_NAME_STUDENT,
     SP_NAME_MERCURY,
     SP_NAME_URIEL,
+    SP_NAME_CYRUS,
     SP_NAME_NADIA,
     SP_NAME_COUNT
 };

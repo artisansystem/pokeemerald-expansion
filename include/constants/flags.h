@@ -672,7 +672,7 @@
 #define FLAG_HIDE_MERCURY_OUTSIDE  0x267 // Hides Mercury after the intro sequence.
 #define FLAG_HIDE_MERCURY_INSIDE  0x268 // Hides Mercury after the dorm sequence.
 #define FLAG_HIDE_HEADMASTERSHOUSE_CYRUS  0x269 // Hides Cyrus when he's not meant to be in the front hall of the Headmaster's house.
-#define FLAG_UNUSED_0x26A  0x26A // Unused Flag
+#define FLAG_MET_CYRUS // Right now, interactions with Cyrus at the Headmaster's house are progressive based on flags... because I'm pretty sure that's the best way to do it? So this is the "first" flag.
 #define FLAG_UNUSED_0x26B  0x26B // Unused Flag
 #define FLAG_UNUSED_0x26C  0x26C // Unused Flag
 #define FLAG_UNUSED_0x26D  0x26D // Unused Flag
