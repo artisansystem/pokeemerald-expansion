@@ -9531,6 +9531,16 @@
       "secondary_tileset": "gTileset_General_Secondary_GatehouseAlt",
       "border_filepath": "data/layouts/NaturePreserveGatehouse/border.bin",
       "blockdata_filepath": "data/layouts/NaturePreserveGatehouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_HEADMASTERS_HOUSE_URIEL_STUDY",
+      "name": "HeadmastersHouse_UrielStudy_Layout",
+      "width": 10,
+      "height": 10,
+      "primary_tileset": "gTileset_Building_Headmaster_Primary",
+      "secondary_tileset": "gTileset_Building_Headmaster_Secondary",
+      "border_filepath": "data/layouts/HeadmastersHouse_UrielStudy/border.bin",
+      "blockdata_filepath": "data/layouts/HeadmastersHouse_UrielStudy/map.bin"
     }
   ]
 }

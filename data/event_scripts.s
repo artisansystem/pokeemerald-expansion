@@ -1780,3 +1780,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wild_encounter.inc"
 
 	.include "data/maps/NaturePreserveGatehouse/scripts.inc"
+
+	.include "data/maps/HeadmastersHouse_UrielStudy/scripts.inc"

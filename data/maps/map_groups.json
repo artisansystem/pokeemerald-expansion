@@ -690,7 +690,8 @@
     "HeadmastersHouse_1F",
     "Player_DormRoom",
     "Kingsisle_PokemonCenter",
-    "Kingsisle_Nadia_Lab"
+    "Kingsisle_Nadia_Lab",
+    "HeadmastersHouse_UrielStudy"
   ],
   "gMapGroup_Custom_Gatehouses": [
     "KINGSISLE_GATEHOUSE",
