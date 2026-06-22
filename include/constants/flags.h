@@ -673,10 +673,10 @@
 #define FLAG_HIDE_MERCURY_INSIDE  0x268 // Hides Mercury after the dorm sequence.
 #define FLAG_HIDE_HEADMASTERSHOUSE_CYRUS  0x269 // Hides Cyrus when he's not meant to be in the front hall of the Headmaster's house.
 #define FLAG_MET_CYRUS 0x26A // Right now, interactions with Cyrus at the Headmaster's house are progressive based on flags... because I'm pretty sure that's the best way to do it? So this is the "first" flag.
-#define FLAG_UNUSED_0x26B  0x26B // Unused Flag
-#define FLAG_UNUSED_0x26C  0x26C // Unused Flag
-#define FLAG_UNUSED_0x26D  0x26D // Unused Flag
-#define FLAG_UNUSED_0x26E  0x26E // Unused Flag
+#define FLAG_HIDE_INTRO_URIEL  0x26B // Hides the study Uriel from the intro... to replace him with another Uriel that can move around... because I'm not sure there's any other way to do that.
+#define FLAG_HIDE_STUDY_URIEL  0x26C // Hides wandering study Uriel in favor of fixed-position Intro Uriel, see above.
+#define FLAG_HIDE_STUDY_RIVAL_F  0x26D // Can be set and unset to hide/show the intro version of female Rival.
+#define FLAG_HIDE_STUDY_RIVAL_M  0x26E // Can be set and unset to hide/show the intro version of the male Rival. 
 #define FLAG_UNUSED_0x26F  0x26F // Unused Flag
 #define FLAG_UNUSED_0x270  0x270 // Unused Flag
 #define FLAG_UNUSED_0x271  0x271 // Unused Flag
