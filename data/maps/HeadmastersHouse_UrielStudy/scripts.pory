@@ -1,1 +1,68 @@
-mapscripts HeadmastersHouse_UrielStudy_MapScripts {}
+mapscripts HeadmastersHouse_UrielStudy_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION {
+        if (var(VAR_KINGSISLE_INTRO_STATE) == 4) {
+            setflag(FLAG_HIDE_STUDY_URIEL)
+        }
+        elif (var(VAR_KINGSISLE_INTRO_STATE) == 6 || var(VAR_KINGSISLE_INTRO_STATE) == 7) {
+            clearflag(FLAG_HIDE_STUDY_URIEL)
+            setflag(FLAG_HIDE_INTRO_URIEL)
+            setflag(FLAG_HIDE_STUDY_RIVAL_F)
+            setflag(FLAG_HIDE_STUDY_RIVAL_F)
+        }
+    }
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_KINGSISLE_INTRO_STATE, 4: HeadmastersHouse_UrielIntroduction
+    ]
+}
+
+script HeadmastersHouse_UrielIntroduction {
+    lockall
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(face_down, emote_exclamation_mark))
+    waitmovement
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_GoodOfYouToJoinUs, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down))
+    setspeaker(SP_NAME_ESME)
+    msgbox(HeadmastersHouse_Esme_ThatsNewStudent, MSGBOX_DEFAULT)
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_EsmeBeNice, MSGBOX_DEFAULT)
+    applymovement(LOCALID_PLAYER, moves(walk_up * 2, walk_right * 1))
+    waitmovement
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_Speech, MSGBOX_DEFAULT)
+    setvar(VAR_KINGSISLE_INTRO_STATE, 5)
+    releaseall
+    end
+}
+
+script HeadmastersHouse_Bag_StarterSelection
+{
+    lockall
+    callnative StartNewPokeballCaseUI
+    setvar(VAR_KINGSISLE_INTRO_STATE, 6)
+    waitstate
+    goto(HeadmastersHouse_RecievedPokemon)
+}
+
+script HeadmastersHouse_RecievedPokemon
+{
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_JourneyBegins, MSGBOX_DEFAULT)
+    setspeaker(SP_NAME_LEVI)
+    msgbox(HeadmastersHouse_Levi_ThankYou, MSGBOX_DEFAULT)
+    applymovement()
+    setspeaker(SP_NAME_ESME)
+    msgbox(HeadmastersHouse_Esme_ThankYouSeeYouOutside, MSGBOX_DEFAULT)
+    releaseall
+    end
+}
+
+script HeadmastersHouse_DontLeaveYet
+{
+    lockall
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_ChooseAPokemon, MSGBOX_DEFAULT)
+    applymovement(LOCALID_PLAYER, moves(walk_up * 2))
+    releaseall
+    end
+}

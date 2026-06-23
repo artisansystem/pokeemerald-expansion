@@ -200,8 +200,12 @@ Debug_EventScript_Text_OffensiveIVs:
 Debug_EventScript_Text_DefensiveIVs:
 	.string "HP IVs: {STR_VAR_1}, DEF IVs: {STR_VAR_2}, SPDEF IVs: {STR_VAR_3}$"
 
-Debug_EventScript_Script_1::
-	release
+Debug_EventScript_Script_StarterChoose::
+	lockall
+	callnative StartNewPokeballCaseUI
+	setvar VAR_KINGSISLE_INTRO_STATE, 6
+   	waitstate
+	releaseall
 	end
 
 Debug_EventScript_Script_2::

@@ -139,6 +139,7 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
             gOverworldPalette_Snivy,
             gShinyOverworldPalette_Snivy
         )
+        .perfectIVCount = STARTER_PERFECT_IV_COUNT,
         .levelUpLearnset = sSnivyLevelUpLearnset,
         .teachableLearnset = sSnivyTeachableLearnset,
         .eggMoveLearnset = sSnivyEggMoveLearnset,

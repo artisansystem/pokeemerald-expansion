@@ -43,6 +43,13 @@
       "elevation": 0,
       "dest_map": "MAP_KINGSISLE_INSTITUTE_HEADMASTERS_HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 18,
+      "y": 2,
+      "elevation": 0,
+      "dest_map": "MAP_HEADMASTERS_HOUSE_URIEL_STUDY",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

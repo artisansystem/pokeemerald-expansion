@@ -341,6 +341,7 @@ const struct SpeciesInfo gSpeciesInfoGen6[] =
             gOverworldPalette_Fennekin,
             gShinyOverworldPalette_Fennekin
         )
+        .perfectIVCount = STARTER_PERFECT_IV_COUNT,
         .levelUpLearnset = sFennekinLevelUpLearnset,
         .teachableLearnset = sFennekinTeachableLearnset,
         .eggMoveLearnset = sFennekinEggMoveLearnset,
