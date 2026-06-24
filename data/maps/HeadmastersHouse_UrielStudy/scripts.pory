@@ -29,7 +29,52 @@ script HeadmastersHouse_UrielIntroduction {
     applymovement(LOCALID_PLAYER, moves(walk_up * 2, walk_right * 1))
     waitmovement
     setspeaker(SP_NAME_URIEL)
-    msgbox(HeadmastersHouse_Uriel_Speech, MSGBOX_DEFAULT)
+    msgbox(HeadmastersHouse_Uriel_WelcomeSpeech, MSGBOX_DEFAULT)
+    setspeaker (SP_NAME_LEVI)
+    msgbox(HeadmastersHouse_Levi_PleasureToMeetYou, MSGBOX_DEFAULT)
+    setspeaker (SP_NAME_ESME)
+    msgbox(HeadmastersHouse_Esme_HaveYouRetired, MSGBOX_DEFAULT)
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_MoreOrLess, MSGBOX_DEFAULT)
+    goto(HeadmastersHouse_PlayerQuestion)
+}
+
+script HeadmastersHouse_PlayerQuestion {
+    if(var(VAR_TEMP_1) == 0) {
+       dynmultipush("Retired? From what, exactly?", 0) 
+    }
+    if(var(VAR_TEMP_0) == 0) {
+        dynmultipush("You were assigned to us?", 1)
+    }
+    dynmultipush("Why did you call us here?", 2)
+    dynmultistack(0, 0, TRUE, 6, FALSE, 0, DYN_MULTICHOICE_CB_NONE)
+    
+    switch(var(VAR_RESULT)) {
+        case 0: goto(HeadmastersHouse_EightFamiliesExplanation)
+        case 1: goto(HeadmastersHouse_PotentialProdigyExplanation)
+        case 2: goto(HeadmastersHouse_GladYouAsked)
+    }
+}
+
+script HeadmastersHouse_EightFamiliesExplanation {
+    setspeaker(SP_NAME_ESME)
+    msgbox(HeadmastersHouse_Esme_JokeQuestion, MSGBOX_DEFAULT)
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_EightFamilies, MSGBOX_DEFAULT)
+    setvar(VAR_TEMP_1, 1)
+    goto(HeadmastersHouse_PlayerQuestion)
+}
+
+script HeadmastersHouse_PotentialProdigyExplanation {
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_Potential, MSGBOX_DEFAULT)
+    setvar(VAR_TEMP_0, 1)
+    goto(HeadmastersHouse_PlayerQuestion)
+}
+
+script HeadmastersHouse_GladYouAsked {
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_GladYouAsked, MSGBOX_DEFAULT)
     setvar(VAR_KINGSISLE_INTRO_STATE, 5)
     releaseall
     end
@@ -66,3 +111,52 @@ script HeadmastersHouse_DontLeaveYet
     releaseall
     end
 }
+
+text HeadmastersHouse_Uriel_GoodOfYouToJoinUs {
+    format("Ah, {PLAYER} {PLAYER_LAST NAME}. I appreciate you joining us. Could you come over here? I have something important to discuss with the three of you.")
+}
+
+text HeadmastersHouse_Esme_ThatsNewStudent {
+    format("That's the other new student? How... plain. Where are they from?")
+}
+
+text HeadmastersHouse_Uriel_EsmeBeNice {
+    format("Now, now, Esme. I'm sure they'll tell you themselves, in time. For now... {PLAYER}, if you please.")
+}
+
+text HeadmastersHouse_Uriel_WelcomeSpeech {
+    format("Thank you. Now, first, introductions. As you know, my name is Uriel Dawnsinger, and I am the Headmaster of this university. \p I would like to take this opportunity to personally welcome the three of you to our campus, and to your first year at our Institute.\p {PLAYER}, to your left are two of the other members of your cohort, Esme Rousseau and Levi Duncan. \p I have been assigned to the three of you as your first-year academic advisor. Any questions for me so far?")
+}
+
+text HeadmastersHouse_Levi_PleasureToMeetYou {
+    format("Nothin' from me, sir. It's a pleasure to meet you all.")
+}
+
+text HeadmastersHouse_Esme_HaveYouRetired {
+    format("Have you officially retired? It's... strange, hearing you introduce yourself as just the Headmaster.")
+}
+
+text HeadmastersHouse_Uriel_MoreOrLess {HeadmastersHouse_Uriel_GladYouAsked
+    format("I'd say more or less, yes. My children have taken over the sociopolitical aspects of my previous position. And, well. This university may have been founded by my father, but it was always my pride and joy.\p {PLAYER}, anything to ask?")
+}
+
+text HeadmastersHouse_Esme_JokeQuestion {
+    format("That's a joke, right? Do you know who you're talking to?")
+}
+
+text HeadmastersHouse_Uriel_EightFamilies {
+    format("No, it's a fair question, given everything. Thank you, {PLAYER}. \p My family has the privilege of being one of eight families who serves the Guardians. We're pledged to Rulekeeper, the Guardian of Order. For many years, politics was my primary job. Does that answer your question?")
+}
+
+text HeadmastersHouse_Uriel_Potential {
+    format("I suppose assigned isn't the correct word. For the past five years, I've concerned myself with selecting a small group of students I believe exhibit a unique potential and mentoring them directly. You three stood out to me.")
+}
+
+text HeadmastersHouse_Uriel_GladYouAsked {
+    format("Thank you for asking. \p Put simply, I have a gift for each of you. You each have different levels of experience working with and raising Pokémon, so I thought perhaps it would be worthwhile to give you each a rare Pokémon of your own in the hopes that you might raise it as one of your partners during your time here. \p {PLAYER}, I'd like to give you the opportunity to choose first, if you don't mind.")
+}
+
+
+
+
+
