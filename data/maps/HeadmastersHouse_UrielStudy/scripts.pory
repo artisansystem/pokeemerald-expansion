@@ -95,7 +95,13 @@ script HeadmastersHouse_RecievedPokemon
     msgbox(HeadmastersHouse_Uriel_JourneyBegins, MSGBOX_DEFAULT)
     setspeaker(SP_NAME_LEVI)
     msgbox(HeadmastersHouse_Levi_ThankYou, MSGBOX_DEFAULT)
-    applymovement()
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(face_up, face_down))
+    waitmovement
+    setspeaker(SP_NAME_LEVI)
+    msgbox(HeadmastersHouse_Levi_SeeYouAround, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_left, walk_down * 3))
+    waitmovement
+    removeobject(LOCALID_STUDY_RIVAL_MALE)
     setspeaker(SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_ThankYouSeeYouOutside, MSGBOX_DEFAULT)
     releaseall
@@ -136,8 +142,8 @@ text HeadmastersHouse_Esme_HaveYouRetired {
     format("Have you officially retired? It's... strange, hearing you introduce yourself as just the Headmaster.")
 }
 
-text HeadmastersHouse_Uriel_MoreOrLess {HeadmastersHouse_Uriel_GladYouAsked
-    format("I'd say more or less, yes. My children have taken over the sociopolitical aspects of my previous position. And, well. This university may have been founded by my father, but it was always my pride and joy.\p {PLAYER}, anything to ask?")
+text HeadmastersHouse_Uriel_MoreOrLess {
+    format("I'd say more or less, yes. My children have taken over the sociopolitical aspects of my previous position. And, well. This university may have been founded by my father, but it was always my pride and joy.")
 }
 
 text HeadmastersHouse_Esme_JokeQuestion {
@@ -153,10 +159,18 @@ text HeadmastersHouse_Uriel_Potential {
 }
 
 text HeadmastersHouse_Uriel_GladYouAsked {
-    format("Thank you for asking. \p Put simply, I have a gift for each of you. You each have different levels of experience working with and raising Pokémon, so I thought perhaps it would be worthwhile to give you each a rare Pokémon of your own in the hopes that you might raise it as one of your partners during your time here. \p {PLAYER}, I'd like to give you the opportunity to choose first, if you don't mind.")
+    format("Thank you for asking. \p Put simply, I have a gift for each of you. You each have different levels of experience working with and raising Pokémon, so I thought perhaps it would be worthwhile to give you each a rare Pokémon of your own in the hopes that you might raise it as one of your partners during your time here. \p {PLAYER}, I'd like to give you the opportunity to choose first, if you don't mind. Please step forward.")
 }
 
+text HeadmastersHouse_Uriel_JourneyBegins {
+    format("With that, I think your journey as students can officially begin. \p Please take care of the Pokémon I've given you. I'll be interested in seeing how they're brought up under your care.")
+}
 
+text HeadmastersHouse_Levi_ThankYou {
+    format("Thank you, sir. I'll do my best not to disappoint ya.")
+}
 
-
+text HeadmastersHouse_Levi_SeeYouAround {
+    
+}
 
