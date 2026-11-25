@@ -125,8 +125,10 @@ script HeadmastersHouse_EsmeLeviChoice
     setspeaker(SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_ChooseThisOne, MSGBOX_DEFAULT)
     applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_left, face_right))
-    
-    
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_right, walk_up, face_right))
+    setspeaker(SP_NAME_LEVI)
+    msgbox(HeadmastersHouse_Levi_ChooseThisOne, MSGBOX_DEFAULT)
+
     goto(HeadmastersHouse_RecievedPokemon)
 }
 
@@ -177,7 +179,7 @@ text HeadmastersHouse_Esme_ThatsNewStudent {
 }
 
 text HeadmastersHouse_Uriel_EsmeBeNice {
-    format("Now, now, Esme. I'm sure they'll tell you themselves, in time. For now... {PLAYER}, if you please.")
+    format("Now, now, Esme. I'm sure they'll tell you themselves, in time. \p For now... {PLAYER}, if you please.")
 }
 
 text HeadmastersHouse_Uriel_WelcomeSpeech {
@@ -210,6 +212,22 @@ text HeadmastersHouse_Uriel_Potential {
 
 text HeadmastersHouse_Uriel_GladYouAsked {
     format("Thank you for asking. \p Put simply, I have a gift for each of you. You each have different levels of experience working with and raising Pokémon, so I thought perhaps it would be worthwhile to give you each a rare Pokémon of your own in the hopes that you might raise it as one of your partners during your time here. \p {PLAYER}, I'd like to give you the opportunity to choose first, if you don't mind. Please step forward.")
+}
+
+text HeadmastersHouse_Uriel_EsmeLeviChoose {
+    format("Now. Esme, Levi. Which one of you would like to choose next?")
+}
+
+text HeadmastersHouse_Levi_LadiesFirst {
+    format("Well, I was always taught it's ladies first, so...")
+}
+
+text HeadmastersHouse_Esme_IfYouInsist {
+    format("If you insist.")
+}
+
+text HeadmastersHouse_Esme_ChooseThisOne {
+    format("I suppose... I'll choose this one, hm?")
 }
 
 text HeadmastersHouse_Uriel_JourneyBegins {
