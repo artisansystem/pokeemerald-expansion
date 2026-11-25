@@ -8,6 +8,7 @@ mapscripts HeadmastersHouse_UrielStudy_MapScripts {
             setflag(FLAG_HIDE_INTRO_URIEL)
             setflag(FLAG_HIDE_STUDY_RIVAL_F)
             setflag(FLAG_HIDE_STUDY_RIVAL_F)
+            setflag(FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG)
         }
     }
     MAP_SCRIPT_ON_FRAME_TABLE [
@@ -21,19 +22,26 @@ script HeadmastersHouse_UrielIntroduction {
     waitmovement
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_GoodOfYouToJoinUs, MSGBOX_DEFAULT)
-    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down))
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down, walk_in_place_down))
+    waitmovement
     setspeaker(SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_ThatsNewStudent, MSGBOX_DEFAULT)
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(face_left, walk_in_place_left))
+    waitmovement
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_EsmeBeNice, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_right))
     applymovement(LOCALID_PLAYER, moves(walk_up * 2, walk_right * 1))
     waitmovement
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_WelcomeSpeech, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_in_place_right))
     setspeaker (SP_NAME_LEVI)
     msgbox(HeadmastersHouse_Levi_PleasureToMeetYou, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_in_place_right))
     setspeaker (SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_HaveYouRetired, MSGBOX_DEFAULT)
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(walk_in_place_left))
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_MoreOrLess, MSGBOX_DEFAULT)
     goto(HeadmastersHouse_PlayerQuestion)
@@ -57,15 +65,22 @@ script HeadmastersHouse_PlayerQuestion {
 }
 
 script HeadmastersHouse_EightFamiliesExplanation {
+    applymovement(LOCALID_PLAYER, moves(walk_in_place_right))
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(emote_exclamation_mark, face_down, walk_in_place_down))
+    waitmovement
     setspeaker(SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_JokeQuestion, MSGBOX_DEFAULT)
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(walk_in_place_left))
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_EightFamilies, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_right))
+    waitmovement
     setvar(VAR_TEMP_1, 1)
     goto(HeadmastersHouse_PlayerQuestion)
 }
 
 script HeadmastersHouse_PotentialProdigyExplanation {
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(walk_in_place_left))
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_Potential, MSGBOX_DEFAULT)
     setvar(VAR_TEMP_0, 1)
@@ -73,6 +88,7 @@ script HeadmastersHouse_PotentialProdigyExplanation {
 }
 
 script HeadmastersHouse_GladYouAsked {
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(walk_in_place_left))
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_GladYouAsked, MSGBOX_DEFAULT)
     setvar(VAR_KINGSISLE_INTRO_STATE, 5)
@@ -83,9 +99,34 @@ script HeadmastersHouse_GladYouAsked {
 script HeadmastersHouse_Bag_StarterSelection
 {
     lockall
-    callnative StartNewPokeballCaseUI
+    callnative(StartNewPokeballCaseUI)
     setvar(VAR_KINGSISLE_INTRO_STATE, 6)
     waitstate
+    goto(HeadmastersHouse_EsmeLeviChoice)
+}
+
+script HeadmastersHouse_EsmeLeviChoice
+{
+    applymovement(LOCALID_PLAYER, moves(walk_down * 2, walk_left, face_right))
+    waitmovement
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(walk_in_place_left))
+    setspeaker(SP_NAME_URIEL)
+    msgbox(HeadmastersHouse_Uriel_EsmeLeviChoose, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down))
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(face_up, walk_in_place_up))
+    setspeaker(SP_NAME_LEVI)
+    msgbox(HeadmastersHouse_Levi_LadiesFirst, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_in_place_down))
+    waitmovement
+    setspeaker(SP_NAME_ESME)
+    msgbox(HeadmastersHouse_Esme_IfYouInsist, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_right, walk_in_place_right))
+    waitmovement
+    setspeaker(SP_NAME_ESME)
+    msgbox(HeadmastersHouse_Esme_ChooseThisOne, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_left, face_right))
+    
+    
     goto(HeadmastersHouse_RecievedPokemon)
 }
 
@@ -103,7 +144,13 @@ script HeadmastersHouse_RecievedPokemon
     waitmovement
     removeobject(LOCALID_STUDY_RIVAL_MALE)
     setspeaker(SP_NAME_ESME)
-    msgbox(HeadmastersHouse_Esme_ThankYouSeeYouOutside, MSGBOX_DEFAULT)
+    msgbox(HeadmastersHouse_Esme_ThankYou, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down))
+    waitmovement
+    msgbox(HeadmastersHouse_Esme_SeeYouOutside, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_left, walk_down * 4))
+    waitmovement
+    removeobject(LOCALID_STUDY_RIVAL_FEMALE)
     releaseall
     end
 }
@@ -111,15 +158,18 @@ script HeadmastersHouse_RecievedPokemon
 script HeadmastersHouse_DontLeaveYet
 {
     lockall
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(face_down, walk_in_place_down))
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_ChooseAPokemon, MSGBOX_DEFAULT)
-    applymovement(LOCALID_PLAYER, moves(walk_up * 2))
+    applymovement(LOCALID_PLAYER, moves(walk_up))
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(face_left))
+    waitmovement
     releaseall
     end
 }
 
 text HeadmastersHouse_Uriel_GoodOfYouToJoinUs {
-    format("Ah, {PLAYER} {PLAYER_LAST NAME}. I appreciate you joining us. Could you come over here? I have something important to discuss with the three of you.")
+    format("Ah, {PLAYER} {PLAYER_LAST_NAME}. I appreciate you joining us. Could you come over here? I have something important to discuss with the three of you.")
 }
 
 text HeadmastersHouse_Esme_ThatsNewStudent {
@@ -135,7 +185,7 @@ text HeadmastersHouse_Uriel_WelcomeSpeech {
 }
 
 text HeadmastersHouse_Levi_PleasureToMeetYou {
-    format("Nothin' from me, sir. It's a pleasure to meet you all.")
+    format("Nothin' from me, sir. It's a pleasure to meet y'all.")
 }
 
 text HeadmastersHouse_Esme_HaveYouRetired {
@@ -171,6 +221,20 @@ text HeadmastersHouse_Levi_ThankYou {
 }
 
 text HeadmastersHouse_Levi_SeeYouAround {
-    
+    format("I'll see you two around, yeah? Maybe we'll share some classes.")
 }
 
+text HeadmastersHouse_Esme_ThankYou
+{
+    format("Thank you, Headmaster.")
+}
+
+text HeadmastersHouse_Esme_SeeYouOutside
+{
+    format("And you. {PLAYER}. I'll see you in the courtyard. I have a few questions I'd like to ask you.")
+}
+
+text HeadmastersHouse_Uriel_ChooseAPokemon
+{
+    format("{PLAYER}, before you go, please choose a Pokémon.")
+}

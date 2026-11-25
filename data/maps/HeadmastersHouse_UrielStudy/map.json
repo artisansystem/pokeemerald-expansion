@@ -24,7 +24,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "HeadmastersHouse_Bag_StarterSelection",
       "flag": "FLAG_HIDE_ROUTE_101_BIRCH_STARTERS_BAG"
     },
     {
@@ -84,25 +84,40 @@
       "flag": "FLAG_HIDE_STUDY_URIEL"
     }
   ],
-  "warp_events": [],
+  "warp_events": [
+    {
+      "x": 4,
+      "y": 9,
+      "elevation": 0,
+      "dest_map": "MAP_HEADMASTERS_HOUSE_1F",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "elevation": 0,
+      "dest_map": "MAP_HEADMASTERS_HOUSE_1F",
+      "dest_warp_id": "2"
+    }
+  ],
   "coord_events": [
     {
       "type": "trigger",
       "x": 5,
-      "y": 9,
+      "y": 8,
       "elevation": 0,
       "var": "VAR_KINGSISLE_INTRO_STATE",
       "var_value": "5",
-      "script": "NULL"
+      "script": "HeadmastersHouse_DontLeaveYet"
     },
     {
       "type": "trigger",
       "x": 4,
-      "y": 9,
+      "y": 8,
       "elevation": 0,
       "var": "VAR_KINGSISLE_INTRO_STATE",
       "var_value": "5",
-      "script": "NULL"
+      "script": "HeadmastersHouse_DontLeaveYet"
     }
   ],
   "bg_events": [
