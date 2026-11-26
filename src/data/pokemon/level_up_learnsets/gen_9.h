@@ -14974,7 +14974,7 @@ static const struct LevelUpMove sChesnaughtLevelUpLearnset[] = {
 static const struct LevelUpMove sFennekinLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_SCRATCH),
     LEVEL_UP_MOVE( 1, MOVE_TAIL_WHIP),
-    LEVEL_UP_MOVE( 5, MOVE_EMBER),
+    LEVEL_UP_MOVE( 7, MOVE_EMBER),
     LEVEL_UP_MOVE(11, MOVE_HOWL),
     LEVEL_UP_MOVE(14, MOVE_FLAME_CHARGE),
     LEVEL_UP_MOVE(17, MOVE_PSYBEAM),

@@ -49,14 +49,14 @@
       "y": 9,
       "elevation": 0,
       "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
-      "dest_warp_id": "0"
+      "dest_warp_id": "1"
     },
     {
       "x": 5,
       "y": 9,
       "elevation": 0,
       "dest_map": "MAP_KINGSISLE_INSTITUTE_NATURE_PRESERVE",
-      "dest_warp_id": "0"
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

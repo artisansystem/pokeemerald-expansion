@@ -98,11 +98,15 @@ script HeadmastersHouse_GladYouAsked {
 
 script HeadmastersHouse_Bag_StarterSelection
 {
-    lockall
-    callnative(StartNewPokeballCaseUI)
-    setvar(VAR_KINGSISLE_INTRO_STATE, 6)
-    waitstate
-    goto(HeadmastersHouse_EsmeLeviChoice)
+    if (var(VAR_KINGSISLE_INTRO_STATE) < 6) {
+        lockall
+        callnative(StartNewPokeballCaseUI)
+        setvar(VAR_KINGSISLE_INTRO_STATE, 6)
+        waitstate
+        goto(HeadmastersHouse_EsmeLeviChoice)
+    } else {
+        msgbox(HeadmastersHouse_StarterBagEmpty, MSGBOX_DEFAULT)
+    }
 }
 
 script HeadmastersHouse_EsmeLeviChoice
@@ -266,4 +270,9 @@ text HeadmastersHouse_Esme_SeeYouOutside
 text HeadmastersHouse_Uriel_ChooseAPokemon
 {
     format("{PLAYER}, before you go, please choose a Pokémon.")
+}
+
+text HeadmastersHouse_StarterBagEmpty
+{
+    format("The bag has no more Pokéballs inside.")
 }
