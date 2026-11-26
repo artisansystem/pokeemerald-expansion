@@ -2763,9 +2763,13 @@ BattleScript_FaintedMonTryChoose:
 	jumpifbattletype BATTLE_TYPE_FRONTIER, BattleScript_FaintedMonSendOutNew
 	jumpifbattletype BATTLE_TYPE_DOUBLE, BattleScript_FaintedMonSendOutNew
 	jumpifword CMP_COMMON_BITS, gHitMarker, HITMARKER_PLAYER_FAINTED, BattleScript_FaintedMonSendOutNew
+	jumpifbyte CMP_EQUAL, sBATTLE_STYLE, OPTIONS_BATTLE_STYLE_SHIFT, BattleScript_Shift
+	jumpifbyte CMP_EQUAL, sBATTLE_STYLE, OPTIONS_BATTLE_STYLE_SHIFTNOINFO, BattleScript_ShiftNoInfoSwitch
 	jumpifbyte CMP_EQUAL, sBATTLE_STYLE, OPTIONS_BATTLE_STYLE_SET, BattleScript_FaintedMonSendOutNew
 	jumpifcantswitch BS_PLAYER1, BattleScript_FaintedMonSendOutNew
 	setbyte sILLUSION_NICK_HACK, 1
+
+BattleScript_Shift:
 @ Yes/No for sending out a new Pokémon when the opponent is switching
 	printstring STRINGID_ENEMYABOUTTOSWITCHPKMN
 	setbyte gBattleCommunication, 0
@@ -2796,6 +2800,39 @@ BattleScript_FaintedMonTryChoose:
 	switchinanim BS_ATTACKER, FALSE, FALSE
 	waitstate
 	setbyte sSHIFT_SWITCHED, 1
+
+BattleScript_ShiftNoInfoSwitch:
+@ Yes/No for sending out a new Pokémon when the opponent is switching
+	printstring STRINGID_ENEMYABOUTTOSWITCHPKMN_NOINFO
+	setbyte gBattleCommunication, 0
+	yesnobox
+	jumpifbyte CMP_EQUAL, gBattleCommunication + 1, 1, BattleScript_FaintedMonSendOutNew
+@ Player said yes, go to party screen (note optional flag, player may exit the menu instead)
+	setatktoplayer0
+	openpartyscreen BS_ATTACKER | PARTY_SCREEN_OPTIONAL, BattleScript_FaintedMonSendOutNew
+	switchhandleorder BS_ATTACKER, 2
+	jumpifbyte CMP_EQUAL, gBattleCommunication, PARTY_SIZE, BattleScript_FaintedMonSendOutNew
+@ Switch Pokémon before opponent
+	atknameinbuff1
+	resetswitchinabilitybits
+	hpthresholds2 BS_ATTACKER
+	printstring STRINGID_RETURNMON
+	switchoutabilities BS_ATTACKER
+	waitstate
+	returnatktoball
+	waitstate
+	drawpartystatussummary BS_ATTACKER
+	getswitchedmondata BS_ATTACKER
+	switchindataupdate BS_ATTACKER
+	hpthresholds BS_ATTACKER
+	trytoclearprimalweather
+	flushtextbox
+	printstring STRINGID_SWITCHINMON
+	hidepartystatussummary BS_ATTACKER
+	switchinanim BS_ATTACKER, FALSE, FALSE
+	waitstate
+	setbyte sSHIFT_SWITCHED, 1
+
 BattleScript_FaintedMonSendOutNew:
 	drawpartystatussummary BS_FAINTED
 	getswitchedmondata BS_FAINTED

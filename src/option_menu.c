@@ -79,6 +79,7 @@ static const u8 gText_TextSpeedFast[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_BattleSceneOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 static const u8 gText_BattleSceneOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 static const u8 gText_BattleStyleShift[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
+static const u8 gText_BattleStyleShiftNoInfo[] = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}NO INFO");
 static const u8 gText_BattleStyleSet[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
 static const u8 gText_SoundMono[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");
 static const u8 gText_SoundStereo[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}STEREO");
@@ -482,25 +483,48 @@ static void BattleScene_DrawChoices(u8 selection)
 
 static u8 BattleStyle_ProcessInput(u8 selection)
 {
-    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    if (JOY_NEW(DPAD_RIGHT))
     {
-        selection ^= 1;
+        if (selection <= 1)
+            selection++;
+        else
+            selection = 0;
+
         sArrowPressed = TRUE;
     }
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        if (selection != 0)
+            selection--;
+        else
+            selection = 2;
 
+        sArrowPressed = TRUE;
+    }
     return selection;
 }
 
 static void BattleStyle_DrawChoices(u8 selection)
 {
-    u8 styles[2];
+    u8 styles[3];
+    s32 widthShift, widthShiftNoInfo, widthSet, xMid; 
 
     styles[0] = 0;
     styles[1] = 0;
+    styles[2] = 0;
     styles[selection] = 1;
 
     DrawOptionMenuChoice(gText_BattleStyleShift, 104, YPOS_BATTLESTYLE, styles[0]);
-    DrawOptionMenuChoice(gText_BattleStyleSet, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleStyleSet, 198), YPOS_BATTLESTYLE, styles[1]);
+
+    widthShift = GetStringWidth(FONT_NORMAL, gText_BattleStyleShift, 0);
+    widthShiftNoInfo = GetStringWidth(FONT_NORMAL, gText_BattleStyleShiftNoInfo, 0);
+    widthSet = GetStringWidth(FONT_NORMAL, gText_BattleStyleSet, 0);
+
+    widthShiftNoInfo -= 94;
+    xMid = (widthShift - widthShiftNoInfo - widthSet) / 2 + 104;
+    DrawOptionMenuChoice(gText_BattleStyleShiftNoInfo, xMid, YPOS_BATTLESTYLE, styles[1]);
+    
+    DrawOptionMenuChoice(gText_BattleStyleSet, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleStyleSet, 198), YPOS_BATTLESTYLE, styles[2]);
 }
 
 static u8 Sound_ProcessInput(u8 selection)
