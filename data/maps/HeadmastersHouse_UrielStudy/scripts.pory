@@ -125,29 +125,36 @@ script HeadmastersHouse_EsmeLeviChoice
     setspeaker(SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_ChooseThisOne, MSGBOX_DEFAULT)
     applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_left, face_right))
-    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_right, walk_up, face_right))
+    waitmovement
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_right, walk_up, face_right, walk_in_place_right))
+    waitmovement
     setspeaker(SP_NAME_LEVI)
     msgbox(HeadmastersHouse_Levi_ChooseThisOne, MSGBOX_DEFAULT)
-
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_down, walk_left, face_right))
+    waitmovement
     goto(HeadmastersHouse_RecievedPokemon)
 }
 
 script HeadmastersHouse_RecievedPokemon
 {
+    applymovement(LOCALID_HEADMASTERSHOUSE_URIEL_INTRO, moves(walk_in_place_left))
+    waitmovement             
     setspeaker(SP_NAME_URIEL)
     msgbox(HeadmastersHouse_Uriel_JourneyBegins, MSGBOX_DEFAULT)
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_in_place_right))
     setspeaker(SP_NAME_LEVI)
     msgbox(HeadmastersHouse_Levi_ThankYou, MSGBOX_DEFAULT)
-    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(face_up, face_down))
+    applymovement(LOCALID_STUDY_RIVAL_MALE, moves(face_up, face_down, walk_in_place_down))
     waitmovement
     setspeaker(SP_NAME_LEVI)
     msgbox(HeadmastersHouse_Levi_SeeYouAround, MSGBOX_DEFAULT)
     applymovement(LOCALID_STUDY_RIVAL_MALE, moves(walk_left, walk_down * 3))
     waitmovement
     removeobject(LOCALID_STUDY_RIVAL_MALE)
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_in_place_right))
     setspeaker(SP_NAME_ESME)
     msgbox(HeadmastersHouse_Esme_ThankYou, MSGBOX_DEFAULT)
-    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down))
+    applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(face_down, walk_in_place_down))
     waitmovement
     msgbox(HeadmastersHouse_Esme_SeeYouOutside, MSGBOX_DEFAULT)
     applymovement(LOCALID_STUDY_RIVAL_FEMALE, moves(walk_left, walk_down * 4))
@@ -228,6 +235,10 @@ text HeadmastersHouse_Esme_IfYouInsist {
 
 text HeadmastersHouse_Esme_ChooseThisOne {
     format("I suppose... I'll choose this one, hm?")
+}
+
+text HeadmastersHouse_Levi_ChooseThisOne {
+    format("I'll take this lil fella, then.")
 }
 
 text HeadmastersHouse_Uriel_JourneyBegins {
