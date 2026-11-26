@@ -20,5 +20,7 @@ void SaveSelectMonsParty(void);
 void LoadSelectMonsParty(void);
 void RestoreSelectMonsPartyAfterBattle(void);
 bool8 IsSelectMonsBattleActive(void);
+u32 ScriptGiveMonParameterized(u8 side, u8 slot, struct PokemonTemplate *monTemplate);
+u8 HasEnoughMonsForDoubleBattle2(void);
 
 #endif // GUARD_SCRIPT_POKEMON_UTIL_H

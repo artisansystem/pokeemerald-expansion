@@ -680,6 +680,7 @@ void Task_FollowerNPCOutOfDoor(u8 taskId)
         }
         break;
     case REALLOW_MOVEMENT:
+    {
         struct MapPosition position;
         enum Direction playerDirection;
 
@@ -696,6 +697,7 @@ void Task_FollowerNPCOutOfDoor(u8 taskId)
         }
         DestroyTask(taskId);
         break;
+    }
     }
 }
 
@@ -1506,12 +1508,6 @@ void FollowerNPC_FollowerToWater(void)
     SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_NEW);
 }
 
-void FollowerNPC_SetIndicatorToRecreateSurfBlob(void)
-{
-    if (PlayerHasFollowerNPC())
-        SetFollowerNPCData(FNPC_DATA_SURF_BLOB, FNPC_SURF_BLOB_RECREATE);
-}
-
 void FollowerNPC_BindToSurfBlobOnReloadScreen(void)
 {
     struct ObjectEvent *follower;
@@ -1663,11 +1659,6 @@ bool32 FollowerNPCIsBattlePartner(void)
     return FALSE;
 }
 
-u32 GetFollowerNPCBattlePartner(void)
-{
-    return GetFollowerNPCData(FNPC_DATA_BATTLE_PARTNER);
-}
-
 bool32 IsNPCFollowerWildBattle(void)
 {
     if (FollowerNPCIsBattlePartner() && FNPC_FLAG_PARTNER_WILD_BATTLES != 0
@@ -1682,12 +1673,15 @@ void PrepareForFollowerNPCBattle(void)
     // Load the partner party if the NPC follower should participate.
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && FollowerNPCIsBattlePartner())
     {
-        SavePlayerParty();
-        ChooseFirstThreeEligibleMons();
-        ReducePlayerPartyToSelectedMons();
-        VarSet(VAR_0x8004, FRONTIER_UTIL_FUNC_SET_DATA);
-        VarSet(VAR_0x8005, FRONTIER_DATA_SELECTED_MON_ORDER);
-        CallFrontierUtilFunc();
+        if (!AreMultiPartiesFullTeams())
+        {
+            SavePlayerParty();
+            ChooseFirstThreeEligibleMons();
+            ReducePlayerPartyToSelectedMons();
+            VarSet(VAR_0x8004, FRONTIER_UTIL_FUNC_SET_DATA);
+            VarSet(VAR_0x8005, FRONTIER_DATA_SELECTED_MON_ORDER);
+            CallFrontierUtilFunc();
+        }
         gPartnerTrainerId = TRAINER_PARTNER(GetFollowerNPCData(FNPC_DATA_BATTLE_PARTNER));
         FillPartnerParty(gPartnerTrainerId);
     }
@@ -1695,9 +1689,12 @@ void PrepareForFollowerNPCBattle(void)
 
 void RestorePartyAfterFollowerNPCBattle(void)
 {
-    VarSet(VAR_0x8004, FRONTIER_UTIL_FUNC_SAVE_PARTY);
-    CallFrontierUtilFunc();
-    LoadPlayerParty();
+    if (!AreMultiPartiesFullTeams())
+    {
+        VarSet(VAR_0x8004, FRONTIER_UTIL_FUNC_SAVE_PARTY);
+        CallFrontierUtilFunc();
+        LoadPlayerParty();
+    }
 }
 
 void FollowerNPC_TryRemoveFollowerOnWhiteOut(void)

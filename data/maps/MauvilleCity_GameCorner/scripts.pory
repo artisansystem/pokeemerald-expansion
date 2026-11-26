@@ -22,7 +22,7 @@ MauvilleCity_GameCorner_EventScript_CoinsClerk::
 	message MauvilleCity_GameCorner_Text_WereYouLookingForCoins
 	waitmessage
 	showmoneybox 0, 0
-	showcoinsbox 1, 6
+	showcoinsbox 0, 5
 	goto MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50
 
 MauvilleCity_GameCorner_EventScript_ChooseCoinsDefault50::

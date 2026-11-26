@@ -328,18 +328,8 @@ extern const u8 gText_Plus[];
 //Pokédex text
 extern const u8 gText_CryOf[];
 extern const u8 gText_SizeComparedTo[];
-extern const u8 gText_PokedexRegistration[];
 extern const u8 gText_NumberClear01[];
 extern const u8 gText_5MarksPokemon[];
-extern const u8 gText_UnkHeight[];
-extern const u8 gText_UnkHeightMetric[];
-extern const u8 gText_UnkWeight[];
-extern const u8 gText_UnkWeightMetric[];
-extern const u8 gText_HTHeight[];
-extern const u8 gText_WTWeight[];
-extern const u8 gText_SearchingPleaseWait[];
-extern const u8 gText_SearchCompleted[];
-extern const u8 gText_NoMatchingPkmnWereFound[];
 extern const u8 gText_SelectorArrow[];
 
 // birch dex rating text
@@ -1367,7 +1357,7 @@ extern const u8 gText_PokemonCantBeSame[];
 extern const u8 gText_NoIdenticalHoldItems[];
 extern const u8 gText_DoWhatWithPokemon[];
 extern const u8 gText_RestoreWhichMove[];
-extern const u8 gText_BoostPp[];
+extern const u8 gText_BoostPP[];
 extern const u8 gText_DoWhatWithItem[];
 extern const u8 gText_DoWhatWithMail[];
 extern const u8 gText_AlreadyHoldingOne[];

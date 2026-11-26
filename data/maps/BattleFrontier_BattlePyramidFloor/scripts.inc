@@ -210,9 +210,6 @@ BattlePyramid_WarpToTop::
 	end
 # 106 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 
-# 107 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
-@ TRAINER_PHILLIP is used as a placeholder
-# 108 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 BattlePyramid_TrainerBattle::
 # 109 "data/maps/BattleFrontier_BattlePyramidFloor/scripts.pory"
 	facilitytrainerbattle FACILITY_BATTLE_PYRAMID
