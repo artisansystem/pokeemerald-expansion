@@ -17,6 +17,7 @@
 #include "menu_helpers.h"
 #include "palette.h"
 #include "party_menu.h"
+#include "pokenav.h"
 #include "scanline_effect.h"
 #include "sound.h"
 #include "string_util.h"
@@ -75,6 +76,7 @@ EWRAM_DATA static u8 **questNameArray = NULL;
 
 // This File's Functions
 void QuestMenu_Init(u8 a0, MainCallback callback);
+u32 PokeNavMenuQuestsCallback(void);
 static void MainCB(void);
 static void VBlankCB(void);
 static void RunSetup(void);
@@ -986,6 +988,22 @@ void QuestMenu_Init(u8 a0, MainCallback callback)
 	}
 
 	SetMainCallback2(RunSetup);
+}
+
+u32 PokeNavMenuQuestsCallback(void)
+{
+	CreateTask(Task_OpenQuestMenuFromPokenav, 0);
+	return TRUE;
+}
+
+void Task_OpenQuestMenuFromPokenav(u8 taskId)
+{
+	if (!gPaletteFade.active)
+    {
+        CleanupOverworldWindowsAndTilemaps();
+        QuestMenu_Init(0, CB2_InitPokeNav);
+        DestroyTask(taskId);
+    }
 }
 
 static void MainCB(void)

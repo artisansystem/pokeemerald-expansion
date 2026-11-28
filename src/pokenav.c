@@ -4,6 +4,7 @@
 #include "main.h"
 #include "overworld.h"
 #include "dexnav.h"
+#include "quests.h"
 #include "field_weather.h"
 #include "palette.h"
 #include "pokemon_storage_system.h"
@@ -141,6 +142,17 @@ const struct PokenavCallbacks PokenavMenuCallbacks[17] =
         .isLoopTaskActive = IsConditionGraphMenuLoopedTaskActive,
         .free1 = FreeConditionGraphMenuSubstruct1,
         .free2 = FreeConditionGraphMenuSubstruct2,
+    },
+    [POKENAV_QUESTS - POKENAV_MENU_IDS_START] = 
+    {
+        .init = PokeNavMenuQuestsCallback,
+        .callback = GetConditionGraphMenuCallback,
+        .open = OpenConditionGraphMenu,
+        .createLoopTask = CreateConditionGraphMenuLoopedTask,
+        .isLoopTaskActive = IsConditionGraphMenuLoopedTaskActive,
+        .free1 = FreeConditionGraphMenuSubstruct1,
+        .free2 = FreeConditionGraphMenuSubstruct2,
+
     },
     [POKENAV_CONDITION_GRAPH_PARTY - POKENAV_MENU_IDS_START] =
     {

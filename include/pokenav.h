@@ -125,6 +125,7 @@ enum
     POKENAV_MAIN_MENU_CURSOR_ON_RIBBONS,
     POKENAV_REGION_MAP,
     POKENAV_DEXNAV,
+    POKENAV_QUESTS,
     POKENAV_CONDITION_GRAPH_PARTY,              // The Condition graph screen when Party has been selected
     POKENAV_CONDITION_SEARCH_RESULTS,           // The list of results from a Condition search
     POKENAV_CONDITION_GRAPH_SEARCH,             // The Condition graph screen when a search result has been selected
@@ -252,6 +253,7 @@ enum RegionMapFuncIds
     POKENAV_MENU_FUNC_RESHOW_DESCRIPTION,
     POKENAV_MENU_FUNC_OPEN_FEATURE,
     POKENAV_MENU_FUNC_OPEN_DEXNAV,
+    POKENAV_MENU_FUNC_OPEN_QUESTS
 };
 
 enum
